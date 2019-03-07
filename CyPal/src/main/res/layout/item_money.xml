@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/tv_withdraw_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_15"
+            android:layout_weight="1"
+            android:text="100"
+            android:textColor="@color/yellow_f4"
+            android:textSize="@dimen/text_16" />
+
+        <TextView
+            android:id="@+id/tv_withdraw_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/margin_15"
+            android:text="+50"
+            android:textColor="@color/actionbar_title_color"
+            android:textSize="@dimen/text_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/tv_withdraw_end_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_15"
+            android:layout_weight="1"
+            android:text="已取消"
+            android:textColor="@color/jiujiujiu"
+            android:textSize="@dimen/text_13" />
+
+        <TextView
+            android:id="@+id/tv_withdraw_stauts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_15"
+            android:text="代打款"
+            android:textColor="@color/actionbar_title_color"
+            android:textSize="@dimen/text_13" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height_px"
+        android:layout_marginLeft="@dimen/margin_15"
+        android:background="@color/gray" />
+</LinearLayout>

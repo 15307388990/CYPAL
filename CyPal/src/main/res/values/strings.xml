@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">飞毛腿</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="sure">确定</string>
+    <string name="update_tips">更新提示</string>
+    <string name="update_tips_content">您确定要下载最新版本吗？</string>
+    <string name="need_update">发现新版本</string>
+    <string name="download_failure">下载失败!</string>
+    <string name="soft_updating">正在更新</string>
+    <string name="soft_update_cancel">取消</string>
+    <string name="tips_unkown_error">发生错误,请重试!</string>
+</resources>
