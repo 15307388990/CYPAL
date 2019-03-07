@@ -58,7 +58,7 @@
             android:textSize="30.0dip"
             android:visibility="invisible" />
 
-        <com.fmt.ming.paotui.dialog.SideBar
+        <com.cypal.ming.paotui.dialog.SideBar
             android:id="@+id/sidrbar"
             android:layout_width="30.0dip"
             android:layout_height="match_parent"
