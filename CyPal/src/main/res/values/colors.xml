@@ -62,4 +62,8 @@
     <color name="darkgray">#1b99ed</color>
     <color name="system_default_color"> #F9F9F9</color>
     <color name="FMT_ECC6B0"> #ECC6B0</color>
+    <color name="base_000000"> #000000</color>
+    <color name="CY_007AFF"> #007AFF</color>
+    <color name="CY_F76260"> #F76260</color>
+
 </resources>
