@@ -45,21 +45,21 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <com.cypal.ming.paotui.view.WheelView
+        <com.cypal.ming.cypal.view.WheelView
             android:id="@+id/year"
             android:layout_width="0.0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/white" />
 
-        <com.cypal.ming.paotui.view.WheelView
+        <com.cypal.ming.cypal.view.WheelView
             android:id="@+id/month"
             android:layout_width="0.0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/white" />
 
-        <com.cypal.ming.paotui.view.WheelView
+        <com.cypal.ming.cypal.view.WheelView
             android:id="@+id/day"
             android:layout_width="0.0dip"
             android:layout_height="match_parent"

@@ -14,7 +14,7 @@
         android:layout_height="131dp"
         android:background="#1B99ED">
 
-        <com.cypal.ming.paotui.view.CircleImageView
+        <com.cypal.ming.cypal.view.CircleImageView
             android:id="@+id/myicon"
             android:layout_width="80dp"
             android:layout_height="80dp"

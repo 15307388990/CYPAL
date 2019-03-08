@@ -11,7 +11,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.fmt.ming.paotui"
+        applicationId "com.cypal.ming.cypal"
         minSdkVersion 19
         targetSdkVersion 25
         signingConfig signingConfigs.CCH
