@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.cypal.ming.cypal.bean.StoreBean;
@@ -87,7 +88,12 @@ public class Tools {
         }
         return false;
     }
-
+    //获取屏幕宽度
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm.widthPixels;
+    }
     /**
      * 价格 分转元
      */

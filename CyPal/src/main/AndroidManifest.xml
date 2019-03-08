@@ -149,6 +149,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 账户列表 -->
         <activity
+            android:name="com.cypal.ming.cypal.activity.RegisteredActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 注册 -->
+        <activity
             android:name="com.cypal.ming.cypal.activity.HelpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 帮助-->

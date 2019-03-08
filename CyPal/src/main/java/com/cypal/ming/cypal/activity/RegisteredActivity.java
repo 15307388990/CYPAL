@@ -30,12 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
-import okhttp3.internal.platform.Platform;
 
 /**
- * 找回密码
+ * 注册
  */
-public class RetrievePasswordActivity extends BaseActivity implements View.OnClickListener {
+public class RegisteredActivity extends BaseActivity implements View.OnClickListener {
 
 
     private AuthCodeDialog authCodeDialog;
@@ -61,7 +60,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_retrueve_password );
+        setContentView( R.layout.activity_registered );
         StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
         ButterKnife.bind( this );
         initView();
@@ -91,7 +90,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
 
     public void initEvent() {
         params = (RelativeLayout.LayoutParams) cursor.getLayoutParams();
-        cursorWidth = params.width = Tools.getScreenWidth( RetrievePasswordActivity.this ) / 2;
+        cursorWidth = params.width = Tools.getScreenWidth( RegisteredActivity.this ) / 2;
         cursor.setLayoutParams( params );
         rd_group.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -178,7 +177,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
                 Tools.showToast( this, msg );
                 finish();
             } else if (stauts == 403) {
-                Tools.showToast( RetrievePasswordActivity.this, "登录过期请重新登录" );
+                Tools.showToast( RegisteredActivity.this, "登录过期请重新登录" );
                 Tools.jump( this, LoginActivity.class, true );
             } else {
                 Tools.showToast( this, msg );

@@ -57,13 +57,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         initView();
-        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.white));
+        StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
         Tools.webacts.add( this );
         ButterKnife.bind( this );
         tv_f_password.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Tools.jump( LoginActivity.this, RetrievePasswordActivity.class, false );
+            }
+        } );
+        tv_registered.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( LoginActivity.this, RegisteredActivity.class, false );
             }
         } );
         Intent intent = new Intent();
