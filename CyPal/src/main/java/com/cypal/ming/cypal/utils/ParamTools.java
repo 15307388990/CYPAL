@@ -20,11 +20,8 @@ public class ParamTools {
 		if (!url.contains("http")) {
 			url = Const.BASE_URL + url;
 		}
-		String string = "";
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			string = string + "&" + entry.getKey() + "=" + entry.getValue();
-		}
-		System.out.println("url" + url + string);
+        map.put( "os", "android" );
+        map.put( "version", "1001" );
 		StringRequest stringRequest = new StringRequest(Method.POST, url,
 				listener, errorListener) {
 			@Override
@@ -37,7 +34,30 @@ public class ParamTools {
 				.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 1, 1.0f));
 		return stringRequest;
 	}
-
+	/** 生成参数 */
+	public static StringRequest packParam(String url,
+										  Listener<String> listener, ErrorListener errorListener,
+										  final Map<String, String> map,int method) {
+		map.put( "os", "android" );
+		map.put( "version", "1001" );
+		if (!url.contains("http")) {
+			url = Const.BASE_URL + url;
+		}
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			url = url + "&" + entry.getKey() + "=" + entry.getValue();
+		}
+		StringRequest stringRequest = new StringRequest(method, url,
+				listener, errorListener) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				return map;
+			}
+		};
+		stringRequest.setCharset("UTF-8");
+		stringRequest
+				.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 1, 1.0f));
+		return stringRequest;
+	}
 	private static long lastClickTime;
 
 	/**

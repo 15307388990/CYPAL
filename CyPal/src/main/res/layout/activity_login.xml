@@ -37,12 +37,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12dp"
-                    android:drawableLeft="@drawable/login_icon_name"
-                    android:drawablePadding="12dp"
+                    android:background="@drawable/login_icon_name"
                     android:textColor="@color/actionbar_title_color"
                     android:textSize="16sp" />
 
@@ -83,20 +82,20 @@
                 android:background="@drawable/input_bg">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12dp"
-                    android:drawableLeft="@drawable/login_icon_password"
-                    android:drawablePadding="12dp"
+                    android:background="@drawable/login_icon_password"
                     android:textColor="@color/actionbar_title_color"
                     android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_login_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:background="@null"
                     android:gravity="left|center"
                     android:hint="请输入密码"
@@ -107,6 +106,15 @@
                     android:textColorHint="#d2d2d7"
                     android:textSize="16sp" />
 
+                <CheckBox
+                    android:id="@+id/tv_change"
+                    android:layout_width="16dp"
+                    android:layout_height="11dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:checked="true"
+                    android:background="@drawable/cb_change"
+                    android:button="@null" />
             </LinearLayout>
 
             <TextView

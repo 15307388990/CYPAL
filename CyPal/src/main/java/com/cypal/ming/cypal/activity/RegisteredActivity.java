@@ -3,8 +3,12 @@ package com.cypal.ming.cypal.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,8 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.AuthCodeDialog;
 import com.cypal.ming.cypal.utils.MyCountTimer;
@@ -34,7 +40,7 @@ import butterknife.ButterKnife;
 /**
  * 注册
  */
-public class RegisteredActivity extends BaseActivity implements View.OnClickListener {
+public class RegisteredActivity extends BaseActivity implements View.OnClickListener, BaseView {
 
 
     private AuthCodeDialog authCodeDialog;
@@ -56,6 +62,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout.LayoutParams params;
     private int cursorWidth;
     private int currentSelectTab;
+    private CheckBox tv_change;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +90,22 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         et_new = (EditText) findViewById( R.id.et_new );
         et_new2 = (EditText) findViewById( R.id.et_new2 );
         btn_next = (Button) findViewById( R.id.btn_next );
-        countTimer = new MyCountTimer( this, tv_code, "获取验证码", R.color.tab_text_color_select, R.color.darkgray );
+        countTimer = new MyCountTimer( this, tv_code, "发送验证码", R.color.darkgray, R.color.CY_9B9B9B );
         rd_phone.setChecked( true );
-        currentSelectTab=0;
+        currentSelectTab = 0;
+        tv_change = (CheckBox) findViewById( R.id.tv_change );
+        tv_change.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    et_new2.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                } else {
+                    et_new2.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+
+                }
+
+            }
+        } );
     }
 
     public void initEvent() {
@@ -99,10 +119,12 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
                     currentSelectTab = 0;
                     params.leftMargin = 0;
                     cursor.setLayoutParams( params );
+                    et_iphone.setHint( "请输入手机号" );
                 } else if (checkedId == R.id.rd_email) {
                     currentSelectTab = 1;
                     params.leftMargin = (int) cursorWidth;
                     cursor.setLayoutParams( params );
+                    et_iphone.setHint( "请输入邮箱" );
                 }
             }
         } );
@@ -118,18 +140,13 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         btn_next.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Repassword();
+                Register();
             }
         } );
         tv_code.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendPhoneMsg();
-                if (authCodeDialog != null && authCodeDialog.isShowing()) {
-                    authCodeDialog.dismiss();
-                }
-                countTimer.start();// 开启定时器
-                tv_code.setVisibility( View.VISIBLE );
             }
         } );
     }
@@ -137,7 +154,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
     //手动输入的手机号
     private void sendPhoneMsg() {
         //防止重复点击操作
-        if (!tv_code.getText().toString().equals( "获取验证码" )) {
+        if (!tv_code.getText().toString().equals( "发送验证码" )) {
             return;
         }
         if (et_iphone.getText().toString().length() == 0) {
@@ -150,42 +167,31 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put( "phone", et_iphone.getText().toString() );
-        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map ) );
-        loading();
-    }
-
-    /* 修改密码 */
-    public void Repassword() {
-        Map<String, String> map = new HashMap<>();
-        map.put( "token", mSavePreferencesData.getStringData( "token" ) );
-        map.put( "israpp", "1" );
-        map.put( "renewpassword", et_new.getText().toString() );
-        mQueue.add( ParamTools.packParam( Const.repassword, this, this, map ) );
-        loading();
-    }
-
-
-    @Override
-    public void onResponse(String response, String url) {
-        dismissLoading();
-        try {
-            JSONObject json = new JSONObject( response );
-            int stauts = json.optInt( "status" );
-            String msg = json.optString( "msg" );
-            if (stauts == 0) {
-                Tools.showToast( this, msg );
-                finish();
-            } else if (stauts == 403) {
-                Tools.showToast( RegisteredActivity.this, "登录过期请重新登录" );
-                Tools.jump( this, LoginActivity.class, true );
-            } else {
-                Tools.showToast( this, msg );
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Tools.showToast( this, "发生错误,请重试!" );
+        map.put( "account", et_iphone.getText().toString() );
+        if (currentSelectTab == 0) {
+            map.put( "registerType", "PHONE" );
+        } else {
+            map.put( "registerType", "EMAIL" );
         }
+
+        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map , Request.Method.GET) );
+        loading();
+    }
+
+    /* 注册 */
+    public void Register() {
+        Map<String, String> map = new HashMap<>();
+        map.put( "account", et_iphone.getText().toString() );
+        if (currentSelectTab == 0) {
+            map.put( "registerType", "PHONE" );
+        } else {
+            map.put( "registerType", "EMAIL" );
+        }
+        map.put( "password", et_new.getText().toString() );
+        map.put( "verifyCode", et_code.getText().toString() );
+        map.put( "inviteCode", et_new.getText().toString() );
+        mQueue.add( ParamTools.packParam( Const.register, this, this, map ) );
+        loading();
     }
 
 
@@ -228,4 +234,21 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
 
 
     }
+
+    @Override
+    public void returnData(String data, String url) {
+        if (url.contains( Const.sendPhoneMsg )) {
+
+            if (authCodeDialog != null && authCodeDialog.isShowing()) {
+                authCodeDialog.dismiss();
+            }
+            countTimer.start();// 开启定时器
+            tv_code.setVisibility( View.VISIBLE );
+        } else if (url.contains( Const.register )) {
+            Tools.showToast( this, "注册成功" );
+            finish();
+        }
+
+    }
+
 }

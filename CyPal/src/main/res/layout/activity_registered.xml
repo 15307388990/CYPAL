@@ -83,7 +83,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:text="手机号找回"
+                android:text="手机号注册"
                 android:textColor="@color/coupon_color"
                 android:textSize="@dimen/text_14" />
 
@@ -94,7 +94,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:text="邮箱找回"
+                android:text="邮箱注册"
                 android:textColor="@color/coupon_color"
                 android:textSize="@dimen/text_14" />
         </RadioGroup>
@@ -159,7 +159,6 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入验证码"
-            android:inputType="textPassword"
             android:paddingLeft="10dp"
             android:textSize="@dimen/text_14" />
 
@@ -197,8 +196,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入6～18位英文数字组合密码"
-            android:inputType="textPassword"
+            android:hint="请输入邀请码（必填）"
             android:textSize="@dimen/text_14" />
 
     </LinearLayout>
@@ -220,10 +218,18 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="确认密码"
+            android:hint="请输入6～18位英文数字组合密码"
             android:inputType="textPassword"
             android:textSize="@dimen/text_14" />
-
+        <CheckBox
+            android:id="@+id/tv_change"
+            android:layout_width="16dp"
+            android:layout_height="11dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:checked="true"
+            android:background="@drawable/cb_change"
+            android:button="@null" />
     </LinearLayout>
 
     <Button

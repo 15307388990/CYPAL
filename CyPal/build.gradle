@@ -65,6 +65,7 @@ android {
         }
         debug {
             signingConfig signingConfigs.CCH
+            debuggable true
         }
     }
     productFlavors {

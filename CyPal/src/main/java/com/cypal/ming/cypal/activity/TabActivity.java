@@ -61,7 +61,7 @@ public class TabActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
-        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.separator_color));
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
         Tools.webacts.add(this);
         initView();
         initDate();

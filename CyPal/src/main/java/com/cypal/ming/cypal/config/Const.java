@@ -27,7 +27,7 @@ public class Const {
     /**
      * 主地址
      */
-    public static final String BASE_URL = "http://fmt.pengkeda.com";
+    public static final String BASE_URL = "http://111.230.242.115:8888";
     //public static final String BASE_URL = "http://api.pos.efengshe.com";
     /* ... */
     public static final String SHOP_URL = "http://shop.efengshe.com/";
@@ -38,13 +38,32 @@ public class Const {
 
 
     /* 登录 */
-    public static final String venderLogin = "/rider/mlogin";
+    public static final String venderLogin = "/public/login";
+    /* 修改密码 */
+    public static final String repassword = "/public/forgetPassword";
+    /* 注册 */
+    public static final String register = "/public/register";
+    /* 退出登录 */
+    public static final String mlogout = "/public/loginOut";
+    /**
+     * 发送验证码
+     **/
+    public static final String sendPhoneMsg = "/msm/register?";
+
+
+
+
+
+
+
+
+
+
+
+
     /* 获取订单列表*/
     public static final String orderlist = "/order/index";
-    /* 修改密码 */
-    public static final String repassword = "/rider/repassword";
-    /* 退出登录 */
-    public static final String mlogout = "/rider/mlogout";
+
     /* 订单详情 */
     public static final String ordershow = "/order/show";
     /* 更新订单*/
@@ -93,10 +112,7 @@ public class Const {
      * 添加提现账号
      **/
     public static final String addAccount = "/api/shop/agencyaccount/add";
-    /**
-     * 发送验证码
-     **/
-    public static final String sendPhoneMsg = "/api/pos/sendPhoneMsg.json";
+
     /**
      * 根据卡号前6位 获取所属银行
      **/

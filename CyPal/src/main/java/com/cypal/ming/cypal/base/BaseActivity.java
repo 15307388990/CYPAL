@@ -24,6 +24,9 @@ import com.cypal.ming.cypal.utils.SavePreferencesData;
 import com.cypal.ming.cypal.utils.Tools;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 
 /**
@@ -42,19 +45,20 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
     public StoreBean storeBean;
     protected DecimalFormat mDf;
     protected PartnerBean partnerBean;
+    private BaseView baseView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mQueue = Volley.newRequestQueue(this);
-        mDf = new DecimalFormat("0.00");
+        super.onCreate( savedInstanceState );
+        mQueue = Volley.newRequestQueue( this );
+        mDf = new DecimalFormat( "0.00" );
 
         /*
          * 设置设备常亮
          */
-        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-        mSavePreferencesData = new SavePreferencesData(this);
+        pm = (PowerManager) getSystemService( Context.POWER_SERVICE );
+        mWakeLock = pm.newWakeLock( PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag" );
+        mSavePreferencesData = new SavePreferencesData( this );
         initAdmin();
     }
 
@@ -63,7 +67,7 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
     protected void onResume() {
         super.onResume();
         mWakeLock.acquire();
-        MobclickAgent.onResume(this);
+        MobclickAgent.onResume( this );
         initAdmin();
     }
 
@@ -71,36 +75,36 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
     protected void onPause() {
         super.onPause();
         mWakeLock.release();
-        MobclickAgent.onPause(this);
+        MobclickAgent.onPause( this );
     }
 
     /**
      * 初始化标题栏
      */
     public void initTitle() {
-        rl_title_bar = findViewById(R.id.rl_title_bar);
+        rl_title_bar = findViewById( R.id.rl_title_bar );
 
-        ll_view_back = findViewById(R.id.ll_view_back);
-        title = (TextView) findViewById(R.id.top_view_text);
-        rightView = (ImageView) findViewById(R.id.right_view_text);
-        ll_view_back.setOnClickListener(new View.OnClickListener() {
+        ll_view_back = findViewById( R.id.ll_view_back );
+        title = (TextView) findViewById( R.id.top_view_text );
+        rightView = (ImageView) findViewById( R.id.right_view_text );
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mQueue.stop();
                 finish();
             }
-        });
+        } );
     }
 
     public void initAdmin() {
         storeBean = new StoreBean();
-        String mallSet = mSavePreferencesData.getStringData("json");
+        String mallSet = mSavePreferencesData.getStringData( "json" );
         if (mallSet != null) {
             synchronized (BaseActivity.this) {
                 try {
-                    storeBean = JSON.parseObject(mallSet,StoreBean.class);
+                    storeBean = JSON.parseObject( mallSet, StoreBean.class );
                 } catch (Exception e) {
-                    mSavePreferencesData.putStringData("json", "");
+                    mSavePreferencesData.putStringData( "json", "" );
                 }
             }
         }
@@ -126,8 +130,8 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
      */
     public void loading() {
         if (loading == null) {
-            loading = new LoadingDialog(this, "请稍候...");
-            loading.setCanceledOnTouchOutside(false);
+            loading = new LoadingDialog( this, "请稍候..." );
+            loading.setCanceledOnTouchOutside( false );
         }
         if (loading.isShowing()) {
             loading.dismiss();
@@ -147,7 +151,7 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult( requestCode, resultCode, data );
         /** 被挤下线 */
         if (requestCode == 10000) {
         }
@@ -156,9 +160,27 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
     @Override
     public void onErrorResponse(VolleyError error) {
         dismissLoading();
-        Tools.showToast(getApplicationContext(), "网络连接异常");
+        Tools.showToast( getApplicationContext(), "网络连接异常" );
     }
 
-    public abstract void onResponse(String response, String url);
+    @Override
+    public void onResponse(String response, String url) {
+        dismissLoading();
+        try {
+            JSONObject json = new JSONObject( response );
+            int stauts = json.optInt( "code" );
+            String msg = json.optString( "msg" );
+            String data = json.optString( "data" );
+            if (stauts == 0) {
+                baseView.returnData( data, url );
+            } else {
+                Tools.showToast( this, msg );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Tools.showToast( this, "数据格式不对" );
+        }
+    }
+
 
 }

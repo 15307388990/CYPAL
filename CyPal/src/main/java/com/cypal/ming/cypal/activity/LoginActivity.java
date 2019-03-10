@@ -4,40 +4,37 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.allenliu.versionchecklib.core.AllenChecker;
 import com.allenliu.versionchecklib.core.VersionParams;
 import com.allenliu.versionchecklib.core.http.HttpParams;
 import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
-import com.cypal.ming.cypal.bean.StoreBean;
+import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.CustomDialogActivity;
 import com.cypal.ming.cypal.service.VersionService;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
-import com.umeng.analytics.MobclickAgent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, BaseView {
 
 
     private String name, pwd;
@@ -51,6 +48,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView iv_prompt;
     private TextView tv_registered;
     private TextView tv_f_password;
+    private CheckBox tv_change;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,26 +77,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             startActivity( intent );
         }
         // jiebianAppVersion();
-//        etLoginPassword.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (etLoginPassword.getText().length() >= 1) {
-//                    login.setBackgroundResource(R.drawable.login_btn_n);
-//                    login.setTextColor(getResources().getColor(R.color.actionbar_title_color));
-//                }
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
     }
 
     private void loadVersion() {
@@ -124,23 +102,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    @OnClick(R.id.login)
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.login:
-                if (checkParams()) {
-                    toLogin( name, pwd );
-                }
-                break;
-        }
-    }
 
     /* 执行登录操作 */
     public void toLogin(String name, String pwd) {
         Map<String, String> map = new HashMap<>();
-        map.put( "mobile", name );
+        map.put( "account", name );
         map.put( "password", pwd );
-        map.put( "israpp", "1" );
         mQueue.add( ParamTools.packParam( Const.venderLogin, this, this, map ) );
         loading();
     }
@@ -173,36 +140,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    @Override
-    public void onResponse(String response, String url) {
-        dismissLoading();
-        try {
-            JSONObject json = new JSONObject( response );
-            int stauts = json.optInt( "status" );
-            String msg = json.optString( "msg" );
-            if (stauts == 200) {
-                String token = json.optString( "token" );
-                mSavePreferencesData.putStringData( "token", token );
-                mSavePreferencesData.putStringData( "name", name );
-                mSavePreferencesData.putStringData( "pwd", pwd );
-
-                String date = json.optString( "data" );
-                mSavePreferencesData.putStringData( "json", date );
-                storeBean = JSON.parseObject( date, StoreBean.class );
-                // 友盟统计
-                MobclickAgent.onProfileSignIn( Tools.getDeviceBrand(), name );
-                finish();
-                Tools.jump( this, TabActivity.class, false );
-
-            } else {
-                Tools.showToast( this, msg );
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Tools.showToast( this, "发生错误,请重试!" );
-        }
-    }
-
 
     private void initView() {
         et_login_account = (EditText) findViewById( R.id.et_login_account );
@@ -214,38 +151,37 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         login = (Button) findViewById( R.id.login );
         iv_prompt = (TextView) findViewById( R.id.iv_prompt );
 
-        login.setOnClickListener( this );
         tv_registered = (TextView) findViewById( R.id.tv_registered );
-        tv_registered.setOnClickListener( this );
         tv_f_password = (TextView) findViewById( R.id.tv_f_password );
-        tv_f_password.setOnClickListener( this );
+        tv_change = (CheckBox) findViewById( R.id.tv_change );
+        tv_change.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    et_login_password.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                } else {
+                    et_login_password.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+
+                }
+
+            }
+        } );
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-
+                if (checkParams()) {
+                    toLogin( name, pwd );
+                }
                 break;
         }
     }
 
-    private void submit() {
-        // validate
-        String account = et_login_account.getText().toString().trim();
-        if (TextUtils.isEmpty( account )) {
-            Toast.makeText( this, "手机号或邮箱", Toast.LENGTH_SHORT ).show();
-            return;
-        }
 
-        String password = et_login_password.getText().toString().trim();
-        if (TextUtils.isEmpty( password )) {
-            Toast.makeText( this, "请输入密码", Toast.LENGTH_SHORT ).show();
-            return;
-        }
-
-        // TODO validate success, do something
-
+    @Override
+    public void returnData(String data, String url) {
 
     }
 }
