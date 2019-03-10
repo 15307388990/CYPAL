@@ -187,7 +187,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         } else {
             map.put( "registerType", "EMAIL" );
         }
-        map.put( "password", et_new.getText().toString() );
+        map.put( "password", et_new2.getText().toString() );
         map.put( "verifyCode", et_code.getText().toString() );
         map.put( "inviteCode", et_new.getText().toString() );
         mQueue.add( ParamTools.packParam( Const.register, this, this, map ) );

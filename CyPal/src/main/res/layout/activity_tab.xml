@@ -15,7 +15,7 @@
     <RadioGroup
         android:id="@+id/tab_rg_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:gravity="center_vertical"
@@ -24,7 +24,7 @@
         <RadioButton
             android:id="@+id/tab_rb_home"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/tab_home_btn"
@@ -33,20 +33,20 @@
             android:paddingTop="10dp"
             android:text="首页"
             android:textColor="@color/tab_text_rab"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
         <RadioButton
             android:id="@+id/tab_rb_up"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/tab_top_btn"
+            android:drawableTop="@drawable/tab_up_btn"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="充值"
             android:textColor="@color/tab_text_rab"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
         <RadioButton
             android:id="@+id/tab_rb_mine"
@@ -60,7 +60,7 @@
             android:paddingTop="10dp"
             android:text="我的"
             android:textColor="@color/tab_text_rab"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
     </RadioGroup>
 
     <View

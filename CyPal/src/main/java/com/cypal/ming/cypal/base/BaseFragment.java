@@ -21,6 +21,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public abstract class BaseFragment extends Fragment implements Listener<String>, ErrorListener {
     public SavePreferencesData mSavePreferencesData;
     private LoadingDialog mloading;
@@ -31,24 +34,25 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
     public TextView title; // 标题
     public Activity mcontext;
     public StoreBean storeBean;
+    private BaseView baseView;
 
     public BaseFragment(Activity context) {
         this.mcontext = context;
-        mSavePreferencesData = new SavePreferencesData(context);
-        mQueue = Volley.newRequestQueue(context);
+        mSavePreferencesData = new SavePreferencesData( context );
+        mQueue = Volley.newRequestQueue( context );
         initAdmin();
     }
 
     public void initAdmin() {
         storeBean = new StoreBean();
-        String mallSet = mSavePreferencesData.getStringData("json");
+        String mallSet = mSavePreferencesData.getStringData( "json" );
         if (mallSet != null) {
-                try {
-                    storeBean = JSON.parseObject(mallSet,StoreBean.class);
-                } catch (Exception e) {
-                    mSavePreferencesData.putStringData("json", "");
-                }
+            try {
+                storeBean = JSON.parseObject( mallSet, StoreBean.class );
+            } catch (Exception e) {
+                mSavePreferencesData.putStringData( "json", "" );
             }
+        }
     }
 
 
@@ -57,8 +61,8 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
      */
     public void loading() {
         if (mloading == null) {
-            mloading = new LoadingDialog(mcontext, "请稍候...");
-            mloading.setCanceledOnTouchOutside(false);
+            mloading = new LoadingDialog( mcontext, "请稍候..." );
+            mloading.setCanceledOnTouchOutside( false );
         }
         if (mloading.isShowing()) {
             mloading.dismiss();
@@ -80,18 +84,36 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
      * 初始化标题栏
      */
     public void initTitle(View view) {
-        rl_title_bar = view.findViewById(R.id.rl_title_bar);
-        ll_view_back = view.findViewById(R.id.ll_view_back);
-        ll_view_back.setVisibility(View.GONE);
-        title = (TextView) view.findViewById(R.id.top_view_text);
-        rightView = (ImageView) view.findViewById(R.id.right_view_text);
+        rl_title_bar = view.findViewById( R.id.rl_title_bar );
+        ll_view_back = view.findViewById( R.id.ll_view_back );
+        ll_view_back.setVisibility( View.GONE );
+        title = (TextView) view.findViewById( R.id.top_view_text );
+        rightView = (ImageView) view.findViewById( R.id.right_view_text );
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         dismissLoading();
-        Tools.showToast(mcontext, "网络连接异常");
+        Tools.showToast( mcontext, "网络连接异常" );
     }
 
-    public abstract void onResponse(String response, String url);
+    @Override
+    public void onResponse(String response, String url) {
+        dismissLoading();
+        try {
+            JSONObject json = new JSONObject( response );
+            int stauts = json.optInt( "code" );
+            String msg = json.optString( "msg" );
+            String data = json.optString( "data" );
+            if (stauts == 1) {
+                baseView.returnData( data, url );
+            } else {
+                Tools.showToast( mcontext, msg );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Tools.showToast( mcontext, "数据格式不对" );
+        }
+    }
+
 }

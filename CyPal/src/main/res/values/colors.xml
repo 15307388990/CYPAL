@@ -56,7 +56,7 @@
     <color name="transparent">#0000</color>
     <color name="liuliu">#666</color>
     <!-- 薄荷色 -->
-    <color name="whitesmoke">#f5f5f5</color>
+    <color name="whitesmoke">#DFDFDF</color>
     <!-- 亮蓝色 -->
     <color name="separator_color">#3db9f2</color>
     <color name="darkgray">#1b99ed</color>
@@ -70,4 +70,10 @@
     <color name="CY_353535">#353535</color>
     <color name="CY_050505">#050505</color>
     <color name="CY_9B9B9B">#9B9B9B</color>
+    <color name="CY_479FFF">#479FFF</color>
+    <color name="CY_555555">#555555</color>
+    <color name="CY_666666">#666666</color>
+    <color name="CY_999999">#999999</color>
+    <color name="CY_F8F8F8">#F8F8F8</color>
+
 </resources>

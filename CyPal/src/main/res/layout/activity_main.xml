@@ -1,15 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitesmoke"
     android:orientation="vertical">
 
     <RelativeLayout
-        layout="@layout/top_view_white"
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height_48"
-        android:background="@drawable/home_nav_bg">
+        android:layout_height="44dp"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/ll_view_back"
@@ -59,99 +60,38 @@
             android:drawablePadding="@dimen/margin_5"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="订单列表"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_20" />
+            android:text="首页"
+            android:textColor="@color/base_000000"
+            android:textSize="19sp" />
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/autu_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_40">
+        android:layout_height="44dp"
+        android:layout_below="@+id/top_layout"
+        android:background="@color/CY_479FFF"
+        android:gravity="center_vertical">
 
-
-        <RadioGroup
+        <com.cypal.ming.cypal.view.AutoVerticalScrollTextView
+            android:id="@+id/auto_textview"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_40"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/rb_new"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/rab_top"
-                android:button="@null"
-                android:gravity="center"
-                android:text="新订单"
-                android:textColor="@color/tab_text_rab" />
-
-            <RadioButton
-                android:id="@+id/rb_distribution"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/rab_top"
-                android:button="@null"
-                android:gravity="center"
-                android:text="配送中"
-                android:textColor="@color/tab_text_rab" />
-
-            <RadioButton
-                android:id="@+id/rb_complete"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/rab_top"
-                android:button="@null"
-                android:gravity="center"
-                android:text="已完成"
-                android:textColor="@color/tab_text_rab" />
-        </RadioGroup>
-
-        <RelativeLayout
-            android:id="@+id/rl_layout"
-            android:layout_width="@dimen/margin_25"
-            android:layout_height="@dimen/margin_25"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="80dp"
-            android:visibility="gone"
-            android:layout_marginTop="5dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/home_sign_number"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:maxEms="1"
-                android:ellipsize="end"
-                android:textColor="@color/white" />
-        </RelativeLayout>
-    </RelativeLayout>
 
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/springView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginRight="@dimen/divider_height_10"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="@dimen/divider_height_10">
+        android:layout_below="@+id/autu_layout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/margin_10"
-            android:scrollbars="vertical" />
+            android:scrollbars="none" />
     </com.liaoinstan.springview.widget.SpringView>
 
-
-</LinearLayout>
+</RelativeLayout>

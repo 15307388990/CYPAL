@@ -34,7 +34,7 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, BaseView {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
 
     private String name, pwd;
@@ -58,18 +58,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
         Tools.webacts.add( this );
         ButterKnife.bind( this );
-        tv_f_password.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Tools.jump( LoginActivity.this, RetrievePasswordActivity.class, false );
-            }
-        } );
-        tv_registered.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Tools.jump( LoginActivity.this, RegisteredActivity.class, false );
-            }
-        } );
         Intent intent = new Intent();
         String auth_token = mSavePreferencesData.getStringData( "token" );
         if (auth_token != null && !auth_token.equals( "" )) {
@@ -150,9 +138,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         tv_password = (TextView) findViewById( R.id.tv_password );
         login = (Button) findViewById( R.id.login );
         iv_prompt = (TextView) findViewById( R.id.iv_prompt );
-
         tv_registered = (TextView) findViewById( R.id.tv_registered );
         tv_f_password = (TextView) findViewById( R.id.tv_f_password );
+
+
+        tv_f_password.setOnClickListener( this );
+        tv_registered.setOnClickListener( this );
+        login.setOnClickListener( this );
         tv_change = (CheckBox) findViewById( R.id.tv_change );
         tv_change.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -176,12 +168,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     toLogin( name, pwd );
                 }
                 break;
+            case R.id.tv_password:
+                Tools.jump( LoginActivity.this, RetrievePasswordActivity.class, false );
+                break;
+            case R.id.tv_f_password:
+                Tools.jump( LoginActivity.this, RegisteredActivity.class, false );
+                break;
+
         }
     }
 
 
     @Override
     public void returnData(String data, String url) {
-
+        Tools.jump( this, TabActivity.class, false );
     }
 }

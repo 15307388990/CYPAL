@@ -32,7 +32,7 @@ import java.text.DecimalFormat;
 /**
  * @author 罗富贵 Activity 基类
  */
-public abstract class BaseActivity extends Activity implements Listener<String>, ErrorListener {
+public abstract class BaseActivity<T> extends Activity implements Listener<String>, ErrorListener {
     public View rl_title_bar;
     public View ll_view_back; // 返回
     public TextView title; // 标题
@@ -45,7 +45,6 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
     public StoreBean storeBean;
     protected DecimalFormat mDf;
     protected PartnerBean partnerBean;
-    private BaseView baseView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,8 +170,8 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
             int stauts = json.optInt( "code" );
             String msg = json.optString( "msg" );
             String data = json.optString( "data" );
-            if (stauts == 0) {
-                baseView.returnData( data, url );
+            if (stauts == 1) {
+                this.returnData( data, url );
             } else {
                 Tools.showToast( this, msg );
             }
@@ -180,6 +179,9 @@ public abstract class BaseActivity extends Activity implements Listener<String>,
             e.printStackTrace();
             Tools.showToast( this, "数据格式不对" );
         }
+    }
+
+    protected void returnData(String data, String url) {
     }
 
 

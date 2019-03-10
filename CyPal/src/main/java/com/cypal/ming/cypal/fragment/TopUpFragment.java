@@ -79,12 +79,6 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, Sell
     private void initView(View view) {
 
         orderList();
-        rb_new = (RadioButton) view.findViewById( R.id.rb_new );
-        rb_new.setOnClickListener( this );
-        rb_distribution = (RadioButton) view.findViewById( R.id.rb_distribution );
-        rb_distribution.setOnClickListener( this );
-        rb_complete = (RadioButton) view.findViewById( R.id.rb_complete );
-        rb_complete.setOnClickListener( this );
         recycleView = (RecyclerView) view.findViewById( R.id.recycleView );
         springView = (SpringView) view.findViewById( R.id.springView );
         rl_layout = (RelativeLayout) view.findViewById( R.id.rl_layout );
@@ -225,65 +219,8 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, Sell
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.rb_new:
-                rstatus = 0;
-                pageNumber = 1;
-                orderList();
-                break;
-            case R.id.rb_distribution:
-                rstatus = 1;
-                pageNumber = 1;
-                orderList();
-                break;
-            case R.id.rb_complete:
-                rstatus = 2;
-                pageNumber = 1;
-                orderList();
-                break;
 
         }
-    }
-
-    // 拒单
-    @Override
-    public void Accept(String order_uuid) {
-        deleteOrderDialog( "拒单", order_uuid );
-    }
-
-    // 接单
-    @Override
-    public void Refuse(String order_uuid) {
-        deleteOrderDialog( "接单", order_uuid );
-    }
-
-    @Override
-    public void Details(String order_uuid) {
-        Intent intent = new Intent( mcontext, OrderDetailsActivity.class );
-        intent.putExtra( "order_uuid", order_uuid );
-        intent.putExtra( "ordertype", rstatus );
-        mcontext.startActivity( intent );
-    }
-
-    @Override
-    public void callPhone(String phoneNum) {
-        if (phoneNum.length() > 2) {
-            Intent intent = new Intent( Intent.ACTION_CALL );
-            Uri data = Uri.parse( "tel:" + phoneNum );
-            intent.setData( data );
-            startActivity( intent );
-        } else {
-            Tools.showToast( getActivity(), "改商家没有提供手机" );
-        }
-
-    }
-
-    @Override
-    public void takeandda(String order_uuid, String typestring) {
-        Intent intent = new Intent( getActivity(), TakeActivity.class );
-        intent.putExtra( "order_uuid", order_uuid );
-        intent.putExtra( "typestring", typestring );
-        startActivity( intent );
-
     }
 
     private void deleteOrderDialog(final String text, final String order_uuid) {
@@ -312,5 +249,15 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, Sell
             }
         } );
         builder.create().show();
+    }
+
+    @Override
+    public void ConfirmReceipt(String order_uuid) {
+
+    }
+
+    @Override
+    public void Complaint(String order_uuid) {
+
     }
 }
