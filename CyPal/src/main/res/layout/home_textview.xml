@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="44dp"
     android:layout_marginRight="45dp"
-    android:drawableLeft="@drawable/delete_photo"
+    android:drawableLeft="@drawable/notice"
     android:drawablePadding="10dp"
     android:ellipsize="end"
     android:gravity="center_vertical"

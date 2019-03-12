@@ -1,19 +1,13 @@
 package com.cypal.ming.cypal.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.activity.MapWebviewActivity;
 import com.cypal.ming.cypal.bean.OrderModel;
-import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 
 import java.util.ArrayList;
@@ -23,16 +17,17 @@ import java.util.List;
  * Created by wood121 on 2017/12/12.
  */
 
-public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAdapter.ViewHoler> {
+public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.ViewHoler> {
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
     private final Context mContext;
     private List<OrderModel> mList;
     private OnClickListener onClickListener;
     private SavePreferencesData mSavePreferencesData;
+    private int ordertype;//订单类型
     private View mHeaderView;
 
-    public SellDetailListAdapter(Context context, List<OrderModel> list, OnClickListener onClickListener) {
+    public TopUpListAdapter(Context context, List<OrderModel> list, OnClickListener onClickListener) {
         this.mContext = context;
         this.mList = list;
         this.onClickListener = onClickListener;
@@ -71,9 +66,9 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new SellDetailListAdapter.ViewHoler( mHeaderView );
+            return new TopUpListAdapter.ViewHoler( mHeaderView );
         View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_recyler_sell, parent, false );
-        return new SellDetailListAdapter.ViewHoler( itemView );
+        return new TopUpListAdapter.ViewHoler( itemView );
     }
 
     @Override
@@ -92,8 +87,9 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
         }
     }
 
-    public void updateAdapter(ArrayList<OrderModel> mList) {
+    public void updateAdapter(ArrayList<OrderModel> mList, int ordertype) {
         this.mList = mList;
+        this.ordertype = ordertype;
         notifyDataSetChanged();
     }
 

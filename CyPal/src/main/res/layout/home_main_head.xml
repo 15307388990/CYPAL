@@ -14,14 +14,31 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
-            android:text="账户余额"
-            android:textColor="@color/CY_555555"
-            android:textSize="14sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+
+                android:text="账户余额"
+                android:textColor="@color/CY_555555"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="(当前平台成功率60%，分佣比例0.9%)"
+                android:textColor="@color/CY_666666"
+                android:textSize="12sp" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"

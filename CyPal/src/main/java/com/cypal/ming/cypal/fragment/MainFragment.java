@@ -87,7 +87,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
         }
         sellDetailListAdapter = new SellDetailListAdapter( mcontext, orderModels, this );
-        View headView = LayoutInflater.from(mcontext).inflate(R.layout.home_main_head, null);
+        View headView = LayoutInflater.from( mcontext ).inflate( R.layout.home_main_head, null );
         sellDetailListAdapter.setHeaderView( headView );
         recycleView.setAdapter( sellDetailListAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( mcontext ) );
@@ -171,19 +171,19 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
     }
 
-//    private void showSellList(ArrayList<OrderModel> list) {
-//        if (orderModels.size() > 0 || list.size() > 0) {
-//            springView.setVisibility( View.VISIBLE );
-//            if (pageNumber != 1) {
-//                orderModels.addAll( list );
-//            } else {
-//                orderModels = list;
-//            }
-//            sellDetailListAdapter.updateAdapter( orderModels, rstatus );
-//        } else {
-//            springView.setVisibility( View.GONE );
-//        }
-//    }
+    private void showSellList(ArrayList<OrderModel> list) {
+        if (orderModels.size() > 0 || list.size() > 0) {
+            springView.setVisibility( View.VISIBLE );
+            if (pageNumber != 1) {
+                orderModels.addAll( list );
+            } else {
+                orderModels = list;
+            }
+            sellDetailListAdapter.updateAdapter( orderModels );
+        } else {
+            springView.setVisibility( View.GONE );
+        }
+    }
 
 
     @Override
