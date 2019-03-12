@@ -25,6 +25,7 @@ import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.CustomDialogActivity;
 import com.cypal.ming.cypal.service.VersionService;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
@@ -95,6 +96,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void toLogin(String name, String pwd) {
         Map<String, String> map = new HashMap<>();
         map.put( "account", name );
+        //pwd = MD5Util.getMD5String( pwd );
         map.put( "password", pwd );
         mQueue.add( ParamTools.packParam( Const.venderLogin, this, this, map ) );
         loading();
@@ -168,7 +170,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     toLogin( name, pwd );
                 }
                 break;
-            case R.id.tv_password:
+            case R.id.tv_registered:
                 Tools.jump( LoginActivity.this, RetrievePasswordActivity.class, false );
                 break;
             case R.id.tv_f_password:

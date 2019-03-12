@@ -23,6 +23,7 @@ import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.activity.OrderDetailsActivity;
 import com.cypal.ming.cypal.activity.TakeActivity;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
+import com.cypal.ming.cypal.adapter.TopUpListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.OrderModel;
 import com.cypal.ming.cypal.config.Const;
@@ -48,11 +49,11 @@ import static android.app.Activity.RESULT_OK;
  */
 
 @SuppressLint("ValidFragment")
-public class TopUpFragment extends BaseFragment implements OnClickListener, SellDetailListAdapter.OnClickListener {
+public class TopUpFragment extends BaseFragment implements OnClickListener, TopUpListAdapter.OnClickListener {
 
     private RecyclerView recycleView;
     private SpringView springView;
-    private SellDetailListAdapter sellDetailListAdapter;
+    private TopUpListAdapter topUpListAdapter;
 
     public TopUpFragment(Activity context) {
         super( context );
@@ -78,9 +79,14 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, Sell
         springView = (SpringView) view.findViewById( R.id.springView );
         rl_layout = (RelativeLayout) view.findViewById( R.id.rl_layout );
         orderModels = new ArrayList<OrderModel>();
-        sellDetailListAdapter = new SellDetailListAdapter( mcontext, orderModels, this );
+        for (int i = 0; i < 6; i++) {
+            OrderModel orderModel = new OrderModel();
+            orderModels.add( orderModel );
+
+        }
+        topUpListAdapter = new TopUpListAdapter( mcontext, orderModels, this );
         recycleView.setLayoutManager( new LinearLayoutManager( mcontext ) );
-        recycleView.setAdapter( sellDetailListAdapter );
+        recycleView.setAdapter( topUpListAdapter );
         springView.setHeader( new DefaultHeader( mcontext ) );
         springView.setFooter( new DefaultFooter( mcontext ) );
         springView.setListener( new SpringView.OnFreshListener() {
@@ -127,7 +133,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, Sell
             } else {
                 orderModels = list;
             }
-            sellDetailListAdapter.updateAdapter( orderModels );
+            topUpListAdapter.updateAdapter( orderModels );
         } else {
             springView.setVisibility( View.GONE );
         }

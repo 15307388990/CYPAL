@@ -24,6 +24,7 @@ import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.AuthCodeDialog;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.MyCountTimer;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -174,7 +175,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             map.put( "registerType", "EMAIL" );
         }
 
-        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map , Request.Method.GET) );
+        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map, Request.Method.GET ) );
         loading();
     }
 
@@ -187,7 +188,8 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         } else {
             map.put( "registerType", "EMAIL" );
         }
-        map.put( "password", et_new2.getText().toString() );
+        String pwd = MD5Util.getMD5String( et_new2.getText().toString().trim() );
+        map.put( "password", pwd );
         map.put( "verifyCode", et_code.getText().toString() );
         map.put( "inviteCode", et_new.getText().toString() );
         mQueue.add( ParamTools.packParam( Const.register, this, this, map ) );

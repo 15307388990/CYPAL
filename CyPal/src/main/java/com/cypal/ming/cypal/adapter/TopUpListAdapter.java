@@ -23,15 +23,12 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
     private final Context mContext;
     private List<OrderModel> mList;
     private OnClickListener onClickListener;
-    private SavePreferencesData mSavePreferencesData;
-    private int ordertype;//订单类型
     private View mHeaderView;
 
     public TopUpListAdapter(Context context, List<OrderModel> list, OnClickListener onClickListener) {
         this.mContext = context;
         this.mList = list;
         this.onClickListener = onClickListener;
-        mSavePreferencesData = new SavePreferencesData( context );
     }
 
     /**
@@ -67,7 +64,7 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
             return new TopUpListAdapter.ViewHoler( mHeaderView );
-        View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_recyler_sell, parent, false );
+        View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_top_up, parent, false );
         return new TopUpListAdapter.ViewHoler( itemView );
     }
 
@@ -87,9 +84,8 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
         }
     }
 
-    public void updateAdapter(ArrayList<OrderModel> mList, int ordertype) {
+    public void updateAdapter(ArrayList<OrderModel> mList) {
         this.mList = mList;
-        this.ordertype = ordertype;
         notifyDataSetChanged();
     }
 
