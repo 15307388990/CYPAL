@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.cypal.ming.cypal.activity.SetActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.UserBean;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.SignInDialog;
 import com.cypal.ming.cypal.utils.ImageLoaderUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -41,6 +43,8 @@ public class MineFragment extends BaseFragment {
 
     private CircleImageView myicon;//头像
     private TextView right_view_text;
+    private LinearLayout ll_view_back;//签到
+    private LinearLayout ll_view_back2;//已签到
 
     public MineFragment(Activity context) {
         super( context );
@@ -75,6 +79,18 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Tools.jump( mcontext, PersonalActivity.class, false );
+            }
+        } );
+        ll_view_back2 = (LinearLayout) view.findViewById( R.id.ll_view_back2 );
+        ll_view_back = (LinearLayout) view.findViewById( R.id.ll_view_back );
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignInDialog signInDialog = SignInDialog.newInstance( "" );
+                signInDialog.show( mcontext );
+                ll_view_back.setVisibility( View.GONE );
+                ll_view_back2.setVisibility( View.VISIBLE );
+
             }
         } );
     }

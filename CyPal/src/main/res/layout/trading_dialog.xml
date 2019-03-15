@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/trading_dialog_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="请输入交易的金额"
+            android:textColor="@color/actionbar_title_color"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/tv_edit"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="19dp"
+            android:background="@drawable/input_bg"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="19dp"
+            android:text="信用分只有高于70分才能与商家进行交易"
+            android:textColor="@color/CY_999999"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="26dp"
+            android:background="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/CY_007AFF"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/CY_007AFF"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -152,6 +152,7 @@
             android:background="@color/gray" />
 
         <TextView
+            android:id="@+id/tv_topup_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

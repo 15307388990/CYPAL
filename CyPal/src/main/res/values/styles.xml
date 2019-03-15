@@ -48,5 +48,25 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/background</item>
     </style>
+    <!-- Dialog样式 -->
+    <style name="DialogStyle" parent="@android:style/Theme.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 自己想要的背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 覆盖背景图片 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+        <item name="android:windowContentOverlay">@null</item>
+
+
+        <item name="android:backgroundDimAmount">0.65</item>
+    </style>
 
 </resources>

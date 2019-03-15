@@ -30,6 +30,8 @@ import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +58,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         initView();
-        StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
         Tools.webacts.add( this );
         ButterKnife.bind( this );
         Intent intent = new Intent();
@@ -183,6 +184,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void returnData(String data, String url) {
+        mSavePreferencesData.putStringData( "auth_token", data );
         Tools.jump( this, TabActivity.class, false );
     }
 }

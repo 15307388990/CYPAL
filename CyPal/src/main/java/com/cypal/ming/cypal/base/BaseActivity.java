@@ -22,6 +22,7 @@ import com.cypal.ming.cypal.bean.StoreBean;
 import com.cypal.ming.cypal.widgets.dialogs.LoadingDialog;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 import com.cypal.ming.cypal.utils.Tools;
+import com.githang.statusbar.StatusBarCompat;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -49,6 +50,7 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+        StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
         mQueue = Volley.newRequestQueue( this );
         mDf = new DecimalFormat( "0.00" );
 

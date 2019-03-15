@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.bean.OrderModel;
+import com.cypal.ming.cypal.dialogfrment.TradingDialog;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 
 import java.util.ArrayList;
@@ -65,12 +67,20 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
         if (mHeaderView != null && viewType == TYPE_HEADER)
             return new TopUpListAdapter.ViewHoler( mHeaderView );
         View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_top_up, parent, false );
+
         return new TopUpListAdapter.ViewHoler( itemView );
     }
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
         final OrderModel sellBean = mList.get( position );
+        holder.tv_topup_btn.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TradingDialog tradingDialog = TradingDialog.newInstance( "" );
+                tradingDialog.show( mContext );
+            }
+        } );
 
 
     }
@@ -96,10 +106,11 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
 //        public Button btn_accept, btn_refuse;
 //        public LinearLayout ll_layout, ll_layout2, ll_local;
 //        public TextView tv_complete_price, tv_complete_number;
+        private TextView tv_topup_btn;
 
         public ViewHoler(View itemView) {
             super( itemView );
-//            tv_uuid = (TextView) itemView.findViewById(R.id.tv_uuid);
+            tv_topup_btn = (TextView) itemView.findViewById( R.id.tv_topup_btn );
 //            tv_tprice = (TextView) itemView.findViewById(R.id.tv_tprice);
 //            tv_dtime = (TextView) itemView.findViewById(R.id.tv_dtime);
         }

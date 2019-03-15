@@ -114,6 +114,10 @@
             android:configChanges="orientation|screenSize" /><!-- 订单详情-->
         <activity
             android:name="com.cypal.ming.cypal.activity.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--  启动页-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.WelcomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

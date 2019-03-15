@@ -24,7 +24,6 @@ public class WelcomeActivity extends BaseActivity {
         anim.setAnimationListener(new WelcomeAnimation());
     }
 
-    private Boolean isFirstEnter = false;
 
     private class WelcomeAnimation implements AnimationListener {
 
@@ -34,7 +33,6 @@ public class WelcomeActivity extends BaseActivity {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            isFirstEnter = mSavePreferencesData.getBooleanData("isFirstEnter");
             Intent intent = new Intent();
             String auth_token = mSavePreferencesData.getStringData("auth_token");
             if (auth_token != null && !auth_token.equals("")) {
