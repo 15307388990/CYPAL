@@ -49,14 +49,10 @@ public class Const {
      * 发送验证码
      **/
     public static final String sendPhoneMsg = "/msm/register?";
-
-
-
-
-
-
-
-
+    /**
+     * 首页
+     */
+    public static final String mallSetInfo = "/private/index/";
 
 
 
@@ -153,11 +149,6 @@ public class Const {
      * 验证支付密码（修改支付密码时使用）
      */
     public static final String verificationPayPass = "/api/shop/agencypayinfo/validPayPass";
-    /**
-     * 店铺详情
-     * POST 开发完成 /api/shop/admin/info
-     */
-    public static final String mallSetInfo = "/api/shop/admin/info";
     //验证安全手机验证码
     public static final String sendSafeMsg = "/api/shop/agencypayinfo/sendSafeMsg";
     //安全手机验证

@@ -17,9 +17,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
+import com.cypal.ming.cypal.bean.IndexEntity;
 import com.cypal.ming.cypal.bean.OrderModel;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -32,6 +35,7 @@ import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,6 +47,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private SellDetailListAdapter sellDetailListAdapter;
     private RecyclerView recycleView;
     private AutoVerticalScrollTextView auto_textview;
+    private TextView tv_successratetext;
+    private TextView tv_balance;
 
     public MainFragment(Activity context) {
         super( context );
@@ -53,7 +59,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private int pageNumber = 1;
     private boolean isxia = true;
     private int number = 0;
-    private String[] strings;
+    private List<IndexEntity.DataBean.NoticeListBean> noticeListBeanList;
     private boolean isRunning = true;
 
     private Handler handler = new Handler() {
@@ -61,7 +67,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             if (msg.what == 199) {
                 auto_textview.next();
                 number++;
-                auto_textview.setText( strings[number % strings.length] );
+                auto_textview.setText( noticeListBeanList.get( number % noticeListBeanList.size() ).getTitle() );
             }
         }
     };
@@ -74,8 +80,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         return view;
     }
 
-    private void initView(View view) {
 
+    private void initView(View view) {
         recycleView = (RecyclerView) view.findViewById( R.id.recycleView );
         springView = (SpringView) view.findViewById( R.id.springView );
         tv_number = (TextView) view.findViewById( R.id.tv_number );
@@ -88,6 +94,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
         sellDetailListAdapter = new SellDetailListAdapter( mcontext, orderModels, this );
         View headView = LayoutInflater.from( mcontext ).inflate( R.layout.home_main_head, null );
+        tv_successratetext = (TextView) headView.findViewById( R.id.tv_successratetext );
+        tv_balance= (TextView) headView.findViewById( R.id.tv_balance );
         sellDetailListAdapter.setHeaderView( headView );
         recycleView.setAdapter( sellDetailListAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( mcontext ) );
@@ -112,32 +120,13 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
             }
         } );
-        strings = new String[]{"我的剑就是，你的剑", "温州石头人墨菲特", "杭州西湖，断桥许仙"};
-        auto_textview.setText( strings[0] );
-        new Thread() {
-            @Override
-            public void run() {
-                while (isRunning) {
-                    SystemClock.sleep( 3000 );
-                    handler.sendEmptyMessage( 199 );
-                }
-            }
-        }.start();
-        auto_textview.setOnClickListener( new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Tools.showToast( mcontext, strings[number % strings.length] );
-            }
-        } );
+
     }
 
 
     public void orderList() {
-//        Map<String, String> map = new HashMap<>();
-//        map.put( "token", mSavePreferencesData.getStringData( "token" ) );
-//        mQueue.add( ParamTools.packParam( Const.orderlist, this, this, map ) );
-//        loading();
-
+        Map<String, String> map = new HashMap<>();
+        mQueue.add( ParamTools.packParam( Const.mallSetInfo, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
     }
 
     @Override
@@ -232,4 +221,34 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
     }
 
+    /**
+     * 数据返回
+     */
+    @Override
+    public void returnData(String data, String url) {
+        IndexEntity indexEntity = JSON.parseObject( data, IndexEntity.class );
+        noticeListBeanList = indexEntity.getData().getNoticeList();
+        if (noticeListBeanList.size() > 0) {
+            auto_textview.setText( noticeListBeanList.get( 0 ).getTitle() );
+            new Thread() {
+                @Override
+                public void run() {
+                    while (isRunning) {
+                        SystemClock.sleep( 3000 );
+                        handler.sendEmptyMessage( 199 );
+                    }
+                }
+            }.start();
+
+        }
+        auto_textview.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        } );
+
+        tv_successratetext.setText( indexEntity.getData().getSuccessRateText() );
+        tv_balance.setText( "￥"+indexEntity.getData().getBalance() );
+    }
 }

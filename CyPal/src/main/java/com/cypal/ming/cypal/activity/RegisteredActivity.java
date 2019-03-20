@@ -175,7 +175,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             map.put( "registerType", "EMAIL" );
         }
 
-        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map, Request.Method.GET ) );
+        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map, Request.Method.GET,mSavePreferencesData.getStringData( "token" ) ) );
         loading();
     }
 

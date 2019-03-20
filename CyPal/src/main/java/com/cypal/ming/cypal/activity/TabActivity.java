@@ -22,9 +22,7 @@ import com.cypal.ming.cypal.dialog.CustomDialogActivity;
 import com.cypal.ming.cypal.fragment.MainFragment;
 import com.cypal.ming.cypal.fragment.MineFragment;
 import com.cypal.ming.cypal.fragment.TopUpFragment;
-import com.cypal.ming.cypal.service.LocationService;
 import com.cypal.ming.cypal.service.VersionService;
-import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
 
@@ -37,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 import me.weyye.hipermission.HiPermission;
 import me.weyye.hipermission.PermissionCallback;
 import me.weyye.hipermission.PermissionItem;
@@ -66,32 +63,8 @@ public class TabActivity extends BaseActivity {
         Tools.webacts.add( this );
         initView();
         initDate();
-        // mallSetInfo();
         //jiebianAppVersion();
         ButterKnife.bind( this );
-        Intent intent = new Intent( TabActivity.this, LocationService.class );
-        startService( intent );
-        //注册别名
-        JPushInterface.setAlias( this, 1, "fmt_" + storeBean.getId() );
-        setStyleCustom();
-    }
-
-
-    /**
-     * 设置通知栏样式 - 定义通知栏Layout
-     */
-    private void setStyleCustom() {
-//        CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(TabActivity.this, R.layout.customer_notitfication_layout, R.id.icon, R.id.title, R.id.tv_time);
-//        builder.layoutIconDrawable = R.drawable.ic_launcher;
-//        builder. = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.mm);
-//        JPushInterface.setPushNotificationBuilder(2, builder);
-    }
-
-    /* 获取店铺详情 */
-    private void mallSetInfo() {
-        Map<String, String> map = new HashMap<>();
-        map.put( "auth_token", mSavePreferencesData.getStringData( "auth_token" ) );
-        mQueue.add( ParamTools.packParam( Const.mallSetInfo, this, this, map ) );
     }
 
 

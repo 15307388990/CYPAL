@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void toLogin(String name, String pwd) {
         Map<String, String> map = new HashMap<>();
         map.put( "account", name );
-        //pwd = MD5Util.getMD5String( pwd );
+       // pwd = MD5Util.getMD5String( pwd );
         map.put( "password", pwd );
         mQueue.add( ParamTools.packParam( Const.venderLogin, this, this, map ) );
         loading();
@@ -184,7 +184,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void returnData(String data, String url) {
-        mSavePreferencesData.putStringData( "auth_token", data );
+        mSavePreferencesData.putStringData( "token", data );
         Tools.jump( this, TabActivity.class, false );
     }
 }

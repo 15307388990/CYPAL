@@ -34,7 +34,6 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
     public TextView title; // 标题
     public Activity mcontext;
     public StoreBean storeBean;
-    private BaseView baseView;
 
     public BaseFragment(Activity context) {
         this.mcontext = context;
@@ -106,7 +105,7 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
             String msg = json.optString( "msg" );
             String data = json.optString( "data" );
             if (stauts == 1) {
-                baseView.returnData( data, url );
+                returnData( response, url );
             } else {
                 Tools.showToast( mcontext, msg );
             }
@@ -115,5 +114,7 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
             Tools.showToast( mcontext, "数据格式不对" );
         }
     }
+
+    public void returnData(String data, String url){};
 
 }
