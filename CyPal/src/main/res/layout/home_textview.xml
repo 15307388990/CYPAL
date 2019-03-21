@@ -9,7 +9,6 @@
     android:gravity="center_vertical"
     android:maxLines="1"
     android:paddingLeft="18dp"
-    android:text="现在有新商户试单，请大家检查下收款账"
     android:textColor="@color/white"
     android:textSize="15sp">
 

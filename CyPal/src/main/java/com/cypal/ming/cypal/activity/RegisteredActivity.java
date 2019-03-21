@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 public class RegisteredActivity extends BaseActivity implements View.OnClickListener, BaseView {
 
 
-    private AuthCodeDialog authCodeDialog;
+  //  private AuthCodeDialog authCodeDialog;
     private CountDownTimer countTimer;
     private ImageView img_back;
     private LinearLayout ll_view_back;
@@ -190,8 +190,8 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         }
         String pwd = MD5Util.getMD5String( et_new2.getText().toString().trim() );
         map.put( "password", pwd );
-        map.put( "verifyCode", et_code.getText().toString() );
-        map.put( "inviteCode", et_new.getText().toString() );
+        map.put( "verifyCode", et_code.getText().toString().trim());
+        map.put( "inviteCode", et_new.getText().toString().trim() );
         mQueue.add( ParamTools.packParam( Const.register, this, this, map ) );
         loading();
     }
@@ -228,7 +228,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
 
         String new2 = et_new2.getText().toString().trim();
         if (TextUtils.isEmpty( new2 )) {
-            Toast.makeText( this, "确认密码", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( this, "请输入推荐码", Toast.LENGTH_SHORT ).show();
             return;
         }
 
@@ -241,9 +241,9 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
     public void returnData(String data, String url) {
         if (url.contains( Const.sendPhoneMsg )) {
 
-            if (authCodeDialog != null && authCodeDialog.isShowing()) {
-                authCodeDialog.dismiss();
-            }
+//            if (authCodeDialog != null && authCodeDialog.isShowing()) {
+//                authCodeDialog.dismiss();
+//            }
             countTimer.start();// 开启定时器
             tv_code.setVisibility( View.VISIBLE );
         } else if (url.contains( Const.register )) {

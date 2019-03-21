@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.bean.OrderModel;
+import com.cypal.ming.cypal.bean.TopUpEntity;
+import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.TradingDialog;
-import com.cypal.ming.cypal.utils.SavePreferencesData;
+import com.cypal.ming.cypal.utils.ImageLoaderUtil;
+import com.cypal.ming.cypal.view.CircleImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,11 +26,13 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
     private final Context mContext;
-    private List<OrderModel> mList;
+    List<TopUpEntity.DataBean.ContentBean> mList;
     private OnClickListener onClickListener;
     private View mHeaderView;
+    ImageLoader imageLoader = ImageLoader.getInstance();
+    DisplayImageOptions options = ImageLoaderUtil.getOptions();
 
-    public TopUpListAdapter(Context context, List<OrderModel> list, OnClickListener onClickListener) {
+    public TopUpListAdapter(Context context, List<TopUpEntity.DataBean.ContentBean> list, OnClickListener onClickListener) {
         this.mContext = context;
         this.mList = list;
         this.onClickListener = onClickListener;
@@ -65,15 +70,15 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new TopUpListAdapter.ViewHoler( mHeaderView );
+            return new ViewHoler( mHeaderView );
         View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_top_up, parent, false );
 
-        return new TopUpListAdapter.ViewHoler( itemView );
+        return new ViewHoler( itemView );
     }
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        final OrderModel sellBean = mList.get( position );
+        TopUpEntity.DataBean.ContentBean contentBean = mList.get( position );
         holder.tv_topup_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +86,17 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
                 tradingDialog.show( mContext );
             }
         } );
+        holder.tv_amount.setText( "￥" + contentBean.amount );
+        holder.tv_nickname.setText( contentBean.nickName );
+        holder.tv_successcount.setText( "成交 " + contentBean.successCount );
+        holder.tv_minlimit.setText( contentBean.successCount + "" );
+        if (contentBean.avatar == null) {
+            imageLoader.displayImage( Const.USER_DEFAULT_ICON, holder.myicon, options );
+        } else {
+            imageLoader.displayImage( contentBean.avatar, holder.myicon,
+                    options );
 
+        }
 
     }
 
@@ -94,7 +109,7 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
         }
     }
 
-    public void updateAdapter(ArrayList<OrderModel> mList) {
+    public void updateAdapter(List<TopUpEntity.DataBean.ContentBean> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
@@ -107,12 +122,20 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
 //        public LinearLayout ll_layout, ll_layout2, ll_local;
 //        public TextView tv_complete_price, tv_complete_number;
         private TextView tv_topup_btn;
+        private TextView tv_amount;
+        private CircleImageView myicon;
+        private TextView tv_nickname;
+        private TextView tv_successcount;
+        private TextView tv_minlimit;
 
         public ViewHoler(View itemView) {
             super( itemView );
             tv_topup_btn = (TextView) itemView.findViewById( R.id.tv_topup_btn );
-//            tv_tprice = (TextView) itemView.findViewById(R.id.tv_tprice);
-//            tv_dtime = (TextView) itemView.findViewById(R.id.tv_dtime);
+            tv_amount = (TextView) itemView.findViewById( R.id.tv_amount );
+            tv_nickname = (TextView) itemView.findViewById( R.id.tv_nickname );
+            tv_successcount = (TextView) itemView.findViewById( R.id.tv_successcount );
+            tv_minlimit = (TextView) itemView.findViewById( R.id.tv_minlimit );
+            myicon = (CircleImageView) itemView.findViewById( R.id.myicon );
         }
     }
 }

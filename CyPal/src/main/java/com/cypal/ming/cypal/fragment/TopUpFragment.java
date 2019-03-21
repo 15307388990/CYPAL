@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.activity.OrderDetailsActivity;
@@ -26,6 +27,7 @@ import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.adapter.TopUpListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.OrderModel;
+import com.cypal.ming.cypal.bean.TopUpEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -38,6 +40,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
@@ -54,16 +57,14 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     private RecyclerView recycleView;
     private SpringView springView;
     private TopUpListAdapter topUpListAdapter;
+    private RelativeLayout rl_layout;
+    private int pageNumber = 1;
+    private boolean isxia = true;
+    List<TopUpEntity.DataBean.ContentBean> list;
 
     public TopUpFragment(Activity context) {
         super( context );
     }
-
-    private RelativeLayout rl_layout;
-    private TextView tv_number;
-    private ArrayList<OrderModel> orderModels;
-    private int pageNumber = 1;
-    private boolean isxia = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,13 +79,8 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
         recycleView = (RecyclerView) view.findViewById( R.id.recycleView );
         springView = (SpringView) view.findViewById( R.id.springView );
         rl_layout = (RelativeLayout) view.findViewById( R.id.rl_layout );
-        orderModels = new ArrayList<OrderModel>();
-        for (int i = 0; i < 6; i++) {
-            OrderModel orderModel = new OrderModel();
-            orderModels.add( orderModel );
-
-        }
-        topUpListAdapter = new TopUpListAdapter( mcontext, orderModels, this );
+        list = new ArrayList<>();
+        topUpListAdapter = new TopUpListAdapter( mcontext, list, this );
         recycleView.setLayoutManager( new LinearLayoutManager( mcontext ) );
         recycleView.setAdapter( topUpListAdapter );
         springView.setHeader( new DefaultHeader( mcontext ) );
@@ -113,31 +109,31 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
     @Override
     public void onResume() {
+        orderList();
         super.onResume();
     }
 
     public void orderList() {
-//        Map<String, String> map = new HashMap<>();
-//        map.put( "token", mSavePreferencesData.getStringData( "token" ) );
-//        mQueue.add( ParamTools.packParam( Const.orderlist, this, this, map ) );
-//        loading();
+        Map<String, String> map = new HashMap<>();
+        mQueue.add( ParamTools.packParam( Const.rwlist, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        loading();
 
     }
 
 
-    private void showSellList(ArrayList<OrderModel> list) {
-        if (orderModels.size() > 0 || list.size() > 0) {
-            springView.setVisibility( View.VISIBLE );
-            if (pageNumber != 1) {
-                orderModels.addAll( list );
-            } else {
-                orderModels = list;
-            }
-            topUpListAdapter.updateAdapter( orderModels );
-        } else {
-            springView.setVisibility( View.GONE );
-        }
-    }
+//    private void showSellList(ArrayList<OrderModel> list) {
+//        if (orderModels.size() > 0 || list.size() > 0) {
+//            springView.setVisibility( View.VISIBLE );
+//            if (pageNumber != 1) {
+//                orderModels.addAll( list );
+//            } else {
+//                orderModels = list;
+//            }
+//            topUpListAdapter.updateAdapter( orderModels );
+//        } else {
+//            springView.setVisibility( View.GONE );
+//        }
+//    }
 
 
     @Override
@@ -156,5 +152,15 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     @Override
     public void Complaint(String order_uuid) {
 
+    }
+
+    @Override
+    public void returnData(String data, String url) {
+        super.returnData( data, url );
+        if (url.contains( Const.rwlist )) {
+            TopUpEntity topUpEntity = JSON.parseObject( data, TopUpEntity.class );
+            list = topUpEntity.data.content;
+            topUpListAdapter.updateAdapter( list );
+        }
     }
 }

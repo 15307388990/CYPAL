@@ -46,15 +46,21 @@ public class Const {
     /* 退出登录 */
     public static final String mlogout = "/public/loginOut";
     /**
-     * 发送验证码
+     * 发送注册验证码
      **/
     public static final String sendPhoneMsg = "/msm/register?";
+    /**
+     * 发送忘记密码验证码
+     **/
+    public static final String forgetPassword = "/msm/forgetPassword?";
     /**
      * 首页
      */
     public static final String mallSetInfo = "/private/index/";
-
-
+    /**
+     * 充值中心
+     */
+    public static final String rwlist = "/private/rw/list?";
 
 
     /* 获取订单列表*/

@@ -44,6 +44,7 @@
             android:layout_marginTop="9dp">
 
             <TextView
+                android:id="@+id/tv_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -101,6 +102,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tv_minlimit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -126,6 +128,7 @@
 
 
             <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -136,6 +139,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_successcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

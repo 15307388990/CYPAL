@@ -14,10 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.AuthCodeDialog;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.MyCountTimer;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -38,7 +40,7 @@ import okhttp3.internal.platform.Platform;
 public class RetrievePasswordActivity extends BaseActivity implements View.OnClickListener {
 
 
-    private AuthCodeDialog authCodeDialog;
+    // private AuthCodeDialog authCodeDialog;
     private CountDownTimer countTimer;
     private ImageView img_back;
     private LinearLayout ll_view_back;
@@ -86,7 +88,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
         btn_next = (Button) findViewById( R.id.btn_next );
         countTimer = new MyCountTimer( this, tv_code, "获取验证码", R.color.tab_text_color_select, R.color.darkgray );
         rd_phone.setChecked( true );
-        currentSelectTab=0;
+        currentSelectTab = 0;
     }
 
     public void initEvent() {
@@ -102,7 +104,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
                     cursor.setLayoutParams( params );
                 } else if (checkedId == R.id.rd_email) {
                     currentSelectTab = 1;
-                    params.leftMargin = (int) cursorWidth;
+                    params.leftMargin = cursorWidth;
                     cursor.setLayoutParams( params );
                 }
             }
@@ -126,11 +128,6 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 sendPhoneMsg();
-                if (authCodeDialog != null && authCodeDialog.isShowing()) {
-                    authCodeDialog.dismiss();
-                }
-                countTimer.start();// 开启定时器
-                tv_code.setVisibility( View.VISIBLE );
             }
         } );
     }
@@ -138,7 +135,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
     //手动输入的手机号
     private void sendPhoneMsg() {
         //防止重复点击操作
-        if (!tv_code.getText().toString().equals( "获取验证码" )) {
+        if (!tv_code.getText().toString().equals( "发送验证码" )) {
             return;
         }
         if (et_iphone.getText().toString().length() == 0) {
@@ -149,46 +146,46 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
             Toast.makeText( this, "手机号格式有误", Toast.LENGTH_SHORT ).show();
             return;
         }
-
         Map<String, String> map = new HashMap<>();
-        map.put( "phone", et_iphone.getText().toString() );
-        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map ) );
+        map.put( "account", et_iphone.getText().toString() );
+        if (currentSelectTab == 0) {
+            map.put( "registerType", "PHONE" );
+        } else {
+            map.put( "registerType", "EMAIL" );
+        }
+        mQueue.add( ParamTools.packParam( Const.forgetPassword, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
         loading();
     }
 
     /* 修改密码 */
     public void Repassword() {
         Map<String, String> map = new HashMap<>();
-        map.put( "token", mSavePreferencesData.getStringData( "token" ) );
-        map.put( "israpp", "1" );
-        map.put( "renewpassword", et_new.getText().toString() );
+        map.put( "account", et_iphone.getText().toString().trim() );
+        map.put( "verifyCode", et_code.getText().toString().trim() );
+        String password = MD5Util.getMD5String( et_new.getText().toString().trim() );
+        String password2 = MD5Util.getMD5String( et_new2.getText().toString().trim() );
+        map.put( "password", password );
+        map.put( "two_password", password2 );
         mQueue.add( ParamTools.packParam( Const.repassword, this, this, map ) );
         loading();
     }
 
-
     @Override
-    public void onResponse(String response, String url) {
-        dismissLoading();
-        try {
-            JSONObject json = new JSONObject( response );
-            int stauts = json.optInt( "status" );
-            String msg = json.optString( "msg" );
-            if (stauts == 0) {
-                Tools.showToast( this, msg );
-                finish();
-            } else if (stauts == 403) {
-                Tools.showToast( RetrievePasswordActivity.this, "登录过期请重新登录" );
-                Tools.jump( this, LoginActivity.class, true );
-            } else {
-                Tools.showToast( this, msg );
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Tools.showToast( this, "发生错误,请重试!" );
-        }
-    }
+    protected void returnData(String data, String url) {
+        super.returnData( data, url );
+        if (url.contains( Const.forgetPassword )) {
 
+//            if (authCodeDialog != null && authCodeDialog.isShowing()) {
+//                authCodeDialog.dismiss();
+//            }
+            countTimer.start();// 开启定时器
+            tv_code.setVisibility( View.VISIBLE );
+        } else if (url.contains( Const.repassword )) {
+            Tools.showToast( this, "密码修改成功" );
+            finish();
+        }
+
+    }
 
     @Override
     public void onClick(View v) {

@@ -34,7 +34,7 @@ public class WelcomeActivity extends BaseActivity {
         @Override
         public void onAnimationEnd(Animation animation) {
             Intent intent = new Intent();
-            String auth_token = mSavePreferencesData.getStringData("auth_token");
+            String auth_token = mSavePreferencesData.getStringData("token");
             if (auth_token != null && !auth_token.equals("")) {
                 intent.setClass(WelcomeActivity.this, TabActivity.class);
             } else {

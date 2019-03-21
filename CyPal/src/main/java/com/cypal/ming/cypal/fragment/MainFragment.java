@@ -28,7 +28,6 @@ import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
-import com.cypal.ming.cypal.widgets.view.FullyLinearLayoutManager;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -49,6 +48,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private AutoVerticalScrollTextView auto_textview;
     private TextView tv_successratetext;
     private TextView tv_balance;
+    private TextView tv_todaySuccess;
+    private TextView tv_todaySuccessMoney;
+    private TextView tv_todayCommision;
 
     public MainFragment(Activity context) {
         super( context );
@@ -95,7 +97,10 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         sellDetailListAdapter = new SellDetailListAdapter( mcontext, orderModels, this );
         View headView = LayoutInflater.from( mcontext ).inflate( R.layout.home_main_head, null );
         tv_successratetext = (TextView) headView.findViewById( R.id.tv_successratetext );
-        tv_balance= (TextView) headView.findViewById( R.id.tv_balance );
+        tv_balance = (TextView) headView.findViewById( R.id.tv_balance );
+        tv_todaySuccess = (TextView) headView.findViewById( R.id.tv_todaySuccess );
+        tv_todaySuccessMoney = (TextView) headView.findViewById( R.id.tv_todaySuccessMoney );
+        tv_todayCommision = (TextView) headView.findViewById( R.id.tv_todayCommision );
         sellDetailListAdapter.setHeaderView( headView );
         recycleView.setAdapter( sellDetailListAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( mcontext ) );
@@ -225,11 +230,11 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
      * 数据返回
      */
     @Override
-    public void returnData(String data, String url) {
+    public void returnData(final String data, String url) {
         IndexEntity indexEntity = JSON.parseObject( data, IndexEntity.class );
         noticeListBeanList = indexEntity.getData().getNoticeList();
         if (noticeListBeanList.size() > 0) {
-            auto_textview.setText( noticeListBeanList.get( 0 ).getTitle() );
+            //auto_textview.setText( noticeListBeanList.get( 0 ).getTitle() );
             new Thread() {
                 @Override
                 public void run() {
@@ -249,6 +254,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } );
 
         tv_successratetext.setText( indexEntity.getData().getSuccessRateText() );
-        tv_balance.setText( "￥"+indexEntity.getData().getBalance() );
+        tv_balance.setText( "￥" + indexEntity.getData().getBalance() );
+        tv_todayCommision.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodayCommision()+"" );
+        tv_todaySuccess.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodaySuccess()+"" );
+        tv_todaySuccessMoney.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodaySuccessMoney() +"");
     }
 }
