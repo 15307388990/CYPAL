@@ -60,12 +60,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initView();
         Tools.webacts.add( this );
         ButterKnife.bind( this );
-        Intent intent = new Intent();
-        String auth_token = mSavePreferencesData.getStringData( "token" );
-        if (auth_token != null && !auth_token.equals( "" )) {
-            intent.setClass( LoginActivity.this, TabActivity.class );
-            startActivity( intent );
-        }
         // jiebianAppVersion();
     }
 
@@ -99,7 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         map.put( "account", name );
         pwd = MD5Util.getMD5String( pwd );
         map.put( "password", pwd );
-        mQueue.add( ParamTools.packParam( Const.venderLogin, this, this, map ) );
+        mQueue.add( ParamTools.packParam( Const.venderLogin, LoginActivity.this, this, this, map ) );
         loading();
     }
 

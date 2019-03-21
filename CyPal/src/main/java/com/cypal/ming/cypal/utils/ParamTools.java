@@ -1,5 +1,7 @@
 package com.cypal.ming.cypal.utils;
 
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +20,39 @@ public class ParamTools {
     /**
      * 生成参数
      */
+    public static StringRequest packParam(String url, Context context,
+                                          Listener<String> listener, ErrorListener errorListener,
+                                          final Map<String, String> map) {
+        final SavePreferencesData savePreferencesData = new SavePreferencesData( context );
+        if (!url.contains( "http" )) {
+            url = Const.BASE_URL + url;
+        }
+
+        StringRequest stringRequest = new StringRequest( Method.POST, url,
+                listener, errorListener ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return map;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put( "os", "android" );
+                map.put( "version", "1001" );
+                map.put( "token", savePreferencesData.getStringData( "token" ) );
+                return map;
+            }
+        };
+        stringRequest.setCharset( "UTF-8" );
+        stringRequest
+                .setRetryPolicy( new DefaultRetryPolicy( 20 * 1000, 1, 1.0f ) );
+        return stringRequest;
+    }
+
+    /**
+     * 生成参数
+     */
     public static StringRequest packParam(String url,
                                           Listener<String> listener, ErrorListener errorListener,
                                           final Map<String, String> map) {
@@ -31,12 +66,13 @@ public class ParamTools {
             protected Map<String, String> getParams() throws AuthFailureError {
                 return map;
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map <String ,String> map=new HashMap<String, String>(  );
+                Map<String, String> map = new HashMap<String, String>();
                 map.put( "os", "android" );
                 map.put( "version", "1001" );
-                return super.getHeaders();
+                return map;
             }
         };
         stringRequest.setCharset( "UTF-8" );
@@ -69,7 +105,7 @@ public class ParamTools {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map <String ,String> map=new HashMap<String, String>(  );
+                Map<String, String> map = new HashMap<String, String>();
                 map.put( "os", "android" );
                 map.put( "version", "1001" );
                 map.put( "token", token );

@@ -24,6 +24,7 @@
             android:layout_height="44dp"
             android:layout_marginLeft="19dp"
             android:layout_marginTop="9dp"
+            android:paddingLeft="10dp"
             android:layout_marginRight="19dp"
             android:background="@drawable/input_bg"
             android:inputType="numberDecimal" />

@@ -17,6 +17,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.bean.PartnerBean;
 import com.cypal.ming.cypal.bean.StoreBean;
 import com.cypal.ming.cypal.widgets.dialogs.LoadingDialog;
@@ -174,6 +175,9 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
             String data = json.optString( "data" );
             if (stauts == 1) {
                 this.returnData( data, url );
+            } else if (stauts == -200) {
+                 mSavePreferencesData.putStringData( "token","" );
+                Tools.jump( this, LoginActivity.class, true );
             } else {
                 Tools.showToast( this, msg );
             }

@@ -1,13 +1,28 @@
 package com.cypal.ming.cypal.dialogfrment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.LoginActivity;
+import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.databinding.TradingDialogBinding;
+import com.cypal.ming.cypal.utils.MD5Util;
+import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,18 +31,24 @@ import com.cypal.ming.cypal.utils.Tools;
  * 交易
  */
 
-public class TradingDialog extends CenterDialog {
+public class TradingDialog extends CenterDialog implements Response.Listener<String>, Response.ErrorListener {
 
-    private static final String URL = "url";
+    private static final String MINLIMIT = "minLimit";
+    private static final String RWPID = "rwpId";
     private TradingDialogBinding binding;
+    private String rwpId;
+    private int minLimit = 0;
+    private Context mContext;
+    public RequestQueue mQueue; // 请求列队
 
     public TradingDialog() {
     }
 
-    public static TradingDialog newInstance(String url) {
+    public static TradingDialog newInstance(String rwpId, int minLimit) {
         TradingDialog dialog = new TradingDialog();
         Bundle bundle = new Bundle();
-        bundle.putString( URL, url );
+        bundle.putString( RWPID, rwpId );
+        bundle.putInt( MINLIMIT, minLimit );
         dialog.setArguments( bundle );
         return dialog;
     }
@@ -60,11 +81,73 @@ public class TradingDialog extends CenterDialog {
     @Override
     public void initView(ViewDataBinding dataBinding) {
         binding = (TradingDialogBinding) dataBinding;
+
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String buildUrl = bundle.getString( URL );
+            rwpId = bundle.getString( RWPID );
+            minLimit = bundle.getInt( MINLIMIT, 0 );
         }
+        binding.tvCancle.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        } );
+        binding.tvOk.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount = binding.tvEdit.getText().toString().trim();
+                if (Integer.valueOf( amount ) > minLimit) {
+                    reCharge( amount );
+                } else {
+                    Tools.showToast( mContext, "充值金额不能小于最低充值金额" );
+                }
+            }
+        } );
     }
 
+    @Override
+    public void show(Object object) {
+        mContext = (Context) object;
+        mQueue = Volley.newRequestQueue( mContext );
+        super.show( object );
+    }
 
+    /* 充值 */
+    public void reCharge(String amount) {
+        Map<String, String> map = new HashMap<>();
+        map.put( "rwpId", rwpId );
+        map.put( "amount", amount );
+        mQueue.add( ParamTools.packParam( Const.recharge, mContext, this, this, map ) );
+    }
+
+    @Override
+    public void onResponse(String response, String url) {
+        try {
+            JSONObject json = new JSONObject( response );
+            int stauts = json.optInt( "code" );
+            String msg = json.optString( "msg" );
+            String data = json.optString( "data" );
+            if (stauts == 1) {
+                dismiss();
+            } else if (stauts == -2) {
+                //跳转至认证会员
+            } else {
+
+
+                dismiss();
+                Tools.showToast( mContext, msg );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            dismiss();
+            Tools.showToast( mContext, "数据格式不对" );
+        }
+
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
 }

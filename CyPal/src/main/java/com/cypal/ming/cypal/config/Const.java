@@ -61,6 +61,11 @@ public class Const {
      * 充值中心
      */
     public static final String rwlist = "/private/rw/list?";
+    /**
+     * 发起充值
+     */
+    public static final String recharge = "/private/rw/recharge";
+
 
 
     /* 获取订单列表*/

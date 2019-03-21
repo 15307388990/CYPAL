@@ -78,18 +78,18 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        TopUpEntity.DataBean.ContentBean contentBean = mList.get( position );
+        final TopUpEntity.DataBean.ContentBean contentBean = mList.get( position );
         holder.tv_topup_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TradingDialog tradingDialog = TradingDialog.newInstance( "" );
+                TradingDialog tradingDialog = TradingDialog.newInstance( contentBean.rwpId+"",contentBean.minLimit);
                 tradingDialog.show( mContext );
             }
         } );
         holder.tv_amount.setText( "￥" + contentBean.amount );
         holder.tv_nickname.setText( contentBean.nickName );
         holder.tv_successcount.setText( "成交 " + contentBean.successCount );
-        holder.tv_minlimit.setText( contentBean.successCount + "" );
+        holder.tv_minlimit.setText( contentBean.minLimit + "" );
         if (contentBean.avatar == null) {
             imageLoader.displayImage( Const.USER_DEFAULT_ICON, holder.myicon, options );
         } else {

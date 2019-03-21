@@ -7,6 +7,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.bean.StoreBean;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 import com.cypal.ming.cypal.utils.Tools;
@@ -106,6 +107,9 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
             String data = json.optString( "data" );
             if (stauts == 1) {
                 returnData( response, url );
+            } else if (stauts == -200) {
+                mSavePreferencesData.putStringData( "token", "" );
+                Tools.jump( mcontext, LoginActivity.class, true );
             } else {
                 Tools.showToast( mcontext, msg );
             }
@@ -115,6 +119,9 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
         }
     }
 
-    public void returnData(String data, String url){};
+    public void returnData(String data, String url) {
+    }
+
+    ;
 
 }

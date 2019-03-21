@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 public class RegisteredActivity extends BaseActivity implements View.OnClickListener, BaseView {
 
 
-  //  private AuthCodeDialog authCodeDialog;
+    //  private AuthCodeDialog authCodeDialog;
     private CountDownTimer countTimer;
     private ImageView img_back;
     private LinearLayout ll_view_back;
@@ -175,7 +175,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             map.put( "registerType", "EMAIL" );
         }
 
-        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map, Request.Method.GET,mSavePreferencesData.getStringData( "token" ) ) );
+        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
         loading();
     }
 
@@ -190,9 +190,9 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         }
         String pwd = MD5Util.getMD5String( et_new2.getText().toString().trim() );
         map.put( "password", pwd );
-        map.put( "verifyCode", et_code.getText().toString().trim());
+        map.put( "verifyCode", et_code.getText().toString().trim() );
         map.put( "inviteCode", et_new.getText().toString().trim() );
-        mQueue.add( ParamTools.packParam( Const.register, this, this, map ) );
+        mQueue.add( ParamTools.packParam( Const.register, RegisteredActivity.this, this, this, map ) );
         loading();
     }
 
