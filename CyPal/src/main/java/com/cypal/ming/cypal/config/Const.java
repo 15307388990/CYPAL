@@ -65,7 +65,22 @@ public class Const {
      * 发起充值
      */
     public static final String recharge = "/private/rw/recharge";
-
+    /**
+     * 我的
+     */
+    public static final String setIn = "/private/user/setIn?";
+    /**
+     * 签到
+     */
+    public static final String signIn = "/private/user/signIn";
+    /**
+     * 图片上传
+     */
+    public static final String image = "/private/upload/image";
+    /**
+     * 保存认证资料
+     */
+    public static final String save = "/private/certification/save";
 
 
     /* 获取订单列表*/

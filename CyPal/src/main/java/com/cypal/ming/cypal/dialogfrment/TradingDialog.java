@@ -1,5 +1,6 @@
 package com.cypal.ming.cypal.dialogfrment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.ViewDataBinding;
@@ -11,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.CertificationActivity;
 import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.databinding.TradingDialogBinding;
@@ -131,10 +133,10 @@ public class TradingDialog extends CenterDialog implements Response.Listener<Str
             if (stauts == 1) {
                 dismiss();
             } else if (stauts == -2) {
+                dismiss();
                 //跳转至认证会员
+                Tools.jump( (Activity) mContext, CertificationActivity.class, false );
             } else {
-
-
                 dismiss();
                 Tools.showToast( mContext, msg );
             }

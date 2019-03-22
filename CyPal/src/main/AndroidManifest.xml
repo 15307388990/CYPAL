@@ -198,6 +198,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现 -->
         <activity
+            android:name="com.cypal.ming.cypal.activity.CertificationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 申请会员 -->
+        <activity
             android:name="com.cypal.ming.cypal.activity.CashAccountListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 账户列表 -->

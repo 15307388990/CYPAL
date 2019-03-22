@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
@@ -31,6 +32,7 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
     private View mHeaderView;
     ImageLoader imageLoader = ImageLoader.getInstance();
     DisplayImageOptions options = ImageLoaderUtil.getOptions();
+
 
     public TopUpListAdapter(Context context, List<TopUpEntity.DataBean.ContentBean> list, OnClickListener onClickListener) {
         this.mContext = context;
@@ -82,7 +84,7 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
         holder.tv_topup_btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TradingDialog tradingDialog = TradingDialog.newInstance( contentBean.rwpId+"",contentBean.minLimit);
+                TradingDialog tradingDialog = TradingDialog.newInstance( contentBean.rwpId + "", contentBean.minLimit );
                 tradingDialog.show( mContext );
             }
         } );
@@ -96,6 +98,26 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
             imageLoader.displayImage( contentBean.avatar, holder.myicon,
                     options );
 
+        }
+        if (contentBean.payAccountJson.contains( "ALIPAY" )) {
+            holder.iv_alipay.setVisibility( View.VISIBLE );
+        } else {
+            holder.iv_alipay.setVisibility( View.GONE );
+        }
+        if (contentBean.payAccountJson.contains( "WXPAY" )) {
+            holder.iv_wx.setVisibility( View.VISIBLE );
+        } else {
+            holder.iv_wx.setVisibility( View.GONE );
+        }
+        if (contentBean.payAccountJson.contains( "CLOUDPAY" )) {
+            holder.iv_yun.setVisibility( View.VISIBLE );
+        } else {
+            holder.iv_yun.setVisibility( View.GONE );
+        }
+        if (contentBean.payAccountJson.contains( "BANKCARD" )) {
+            holder.iv_banl.setVisibility( View.VISIBLE );
+        } else {
+            holder.iv_banl.setVisibility( View.GONE );
         }
 
     }
@@ -127,6 +149,10 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
         private TextView tv_nickname;
         private TextView tv_successcount;
         private TextView tv_minlimit;
+        private ImageView iv_wx;
+        private ImageView iv_alipay;
+        private ImageView iv_banl;
+        private ImageView iv_yun;
 
         public ViewHoler(View itemView) {
             super( itemView );
@@ -136,6 +162,11 @@ public class TopUpListAdapter extends RecyclerView.Adapter<TopUpListAdapter.View
             tv_successcount = (TextView) itemView.findViewById( R.id.tv_successcount );
             tv_minlimit = (TextView) itemView.findViewById( R.id.tv_minlimit );
             myicon = (CircleImageView) itemView.findViewById( R.id.myicon );
+            iv_wx = (ImageView) itemView.findViewById( R.id.iv_wx );
+            iv_alipay = (ImageView) itemView.findViewById( R.id.iv_alipay );
+            iv_banl = (ImageView) itemView.findViewById( R.id.iv_banl );
+            iv_yun = (ImageView) itemView.findViewById( R.id.iv_yun );
+
         }
     }
 }

@@ -62,24 +62,28 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/iv_wx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="23dp"
                     android:src="@drawable/icon_weixin" />
 
                 <ImageView
+                    android:id="@+id/iv_alipay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:src="@drawable/icon_zhifubao" />
 
                 <ImageView
+                    android:id="@+id/iv_banl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:src="@drawable/icon_banl" />
 
                 <ImageView
+                    android:id="@+id/iv_yun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
