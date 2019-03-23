@@ -67,7 +67,7 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
 
     private void Use(String account_id) {
         Map<String, String> map = new HashMap<>();
-        map.put( "account_id", account_id );
+        map.put( "ids", account_id );
         mQueue.add( ParamTools.packParam( Const.use, this, this, this, map ) );
         loading();
     }
@@ -120,6 +120,13 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
 
     @Override
     public void OnClick(AccountListEntity.DataBean dataBean) {
+        Intent intent = new Intent( BankList.this, SaveAccountAcitity.class );
+        intent.putExtra( "type", type );
+        intent.putExtra( "value", value );
+        Bundle bundle = new Bundle();
+        bundle.putSerializable( "date", dataBean );
+        intent.putExtras( bundle );
+        startActivity( intent );
 
     }
 }

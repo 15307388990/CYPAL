@@ -1,8 +1,9 @@
 package com.cypal.ming.cypal.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AccountListEntity {
+public class AccountListEntity implements Serializable {
 
     /**
      * code : 1
@@ -16,7 +17,7 @@ public class AccountListEntity {
     public long serverTime;
     public List<DataBean> data;
 
-    public class DataBean {
+    public class DataBean implements Serializable {
         /**
          * id : 8
          * createTime : 2019-03-23 20:22:40

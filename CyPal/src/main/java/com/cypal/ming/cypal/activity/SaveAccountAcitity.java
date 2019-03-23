@@ -1,5 +1,7 @@
 package com.cypal.ming.cypal.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,9 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.bean.AccountListEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -50,6 +52,10 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     private List<String> filePaths = null;
     private TextView tv_account;
     private String accountData;
+    private AccountListEntity.DataBean dataBean;
+    private TextView right_view_text;
+    private String accountId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,19 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         map.put( "realName", et_name.getText().toString().trim() );
         map.put( "accountType", type );
         map.put( "accountData", accountData );
+        if (!TextUtils.isEmpty( accountId )) {
+            map.put( "id", accountId );
+        }
         mQueue.add( ParamTools.packParam( Const.payAccountSave, this, this, this, map ) );
+        loading();
+    }
+
+    private void del() {
+        Map<String, String> map = new HashMap<>();
+        if (!TextUtils.isEmpty( accountId )) {
+            map.put( "account_id", accountId );
+        }
+        mQueue.add( ParamTools.packParam( Const.del, this, this, this, map ) );
         loading();
     }
 
@@ -88,6 +106,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         } );
         type = getIntent().getStringExtra( "type" );
         value = getIntent().getStringExtra( "value" );
+        dataBean = (AccountListEntity.DataBean) getIntent().getSerializableExtra( "date" );
         top_view_text.setText( "添加" + value + "二维码" );
         top_view_text = (TextView) findViewById( R.id.top_view_text );
         et_accout = (EditText) findViewById( R.id.et_accout );
@@ -99,6 +118,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         iv_shang.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                accountData = null;
                 Intent intent = new Intent( SaveAccountAcitity.this,
                         MultiImageSelectorActivity.class );
                 intent.putExtra( "isUploadIcon", true );
@@ -112,6 +132,46 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         tv_account = (TextView) findViewById( R.id.tv_account );
         tv_account.setText( value + "账号" );
         et_accout.setHint( "请输入" + value + "账号" );
+        right_view_text = (TextView) findViewById( R.id.right_view_text );
+        right_view_text.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder( SaveAccountAcitity.this );
+                builder.setMessage( "确定删除该账号?" );
+                builder.setPositiveButton( "取消", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                } );
+
+                builder.setNegativeButton( "确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        del();
+
+                    }
+                } );
+                builder.create().show();
+
+            }
+        } );
+        if (dataBean != null) {
+            InitDate( dataBean );
+        }
+
+    }
+
+    private void InitDate(AccountListEntity.DataBean dataBean) {
+        right_view_text.setVisibility( View.VISIBLE );
+        et_name.setText( dataBean.realName );
+        et_accout.setText( dataBean.accountName );
+        accountData = dataBean.accountData;
+        accountId = dataBean.id + "";
+        Bitmap bitmap = CodeUtils.createImage( dataBean.accountData, 166, 167, null );
+        iv_xia.setImageBitmap( bitmap );
     }
 
     @Override
@@ -212,7 +272,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void returnData(String data, String url) {
-        Toast.makeText( this, "添加成功", Toast.LENGTH_SHORT ).show();
+        Toast.makeText( this, "成功", Toast.LENGTH_SHORT ).show();
         finish();
     }
 }

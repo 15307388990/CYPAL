@@ -37,19 +37,18 @@
                 android:textSize="@dimen/text_18" />
         </LinearLayout>
 
-        <ImageView
+        <TextView
             android:id="@+id/right_view_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="27dp"
-            android:layout_marginRight="27dp"
+            android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:singleLine="true"
-            android:src="@drawable/desk_icon_user"
-            android:visibility="gone" />
+            android:text="删除"
+            android:visibility="gone"
+            android:textColor="@color/CY_999999"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/top_view_text"

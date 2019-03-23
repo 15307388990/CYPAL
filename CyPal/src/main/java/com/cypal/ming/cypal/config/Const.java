@@ -113,7 +113,10 @@ public class Const {
      * 使用账户
      */
     public static final String use= "/private/payAccount/use";
-
+    /**
+     * 删除账户
+     */
+    public static final String del= "/private/payAccount/del";
 
 
     /* 获取订单列表*/
