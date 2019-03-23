@@ -104,6 +104,9 @@
         <activity
             android:name="com.cypal.ming.cypal.activity.MapWebviewActivity"
             android:screenOrientation="portrait" /><!-- 地图网页 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SaveAccountAcitity"
+            android:screenOrientation="portrait" /><!-- 添加收款账号-->
 
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"

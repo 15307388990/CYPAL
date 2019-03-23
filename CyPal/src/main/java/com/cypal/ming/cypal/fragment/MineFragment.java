@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.activity.CertificationActivity;
+import com.cypal.ming.cypal.activity.AccountListActivity;
 import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
@@ -46,6 +46,7 @@ public class MineFragment extends BaseFragment {
     private View v_yaoqing;
     private TextView tv_text;
     private TextView tv_creditscore;
+    private LinearLayout ll_shou;
 
     public MineFragment(Activity context) {
         super( context );
@@ -160,6 +161,13 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Tools.jump( mcontext, MemberActivity.class, false );
+            }
+        } );
+        ll_shou = (LinearLayout) view.findViewById( R.id.ll_shou );
+        ll_shou.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, AccountListActivity.class, false );
             }
         } );
     }

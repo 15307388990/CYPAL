@@ -97,6 +97,22 @@ public class Const {
      * 修改昵称
      */
     public static final String modifyNickName = "/private/user/modifyNickName";
+    /**
+     * 收款账户类别
+     */
+    public static final String category = "/private/payAccount/category?";
+    /**
+     * 我的收款账户列表
+     */
+    public static final String payAccount = "/private/payAccount/list?";
+    /**
+     * 我的收款账户列表
+     */
+    public static final String payAccountSave= "/private/payAccount/save";
+    /**
+     * 使用账户
+     */
+    public static final String use= "/private/payAccount/use";
 
 
 

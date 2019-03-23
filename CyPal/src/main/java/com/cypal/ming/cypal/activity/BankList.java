@@ -1,179 +1,125 @@
 package com.cypal.ming.cypal.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
+import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.adapter.AccountListAdapter;
+import com.cypal.ming.cypal.adapter.CategoryAdapter;
+import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.bean.AccountListEntity;
+import com.cypal.ming.cypal.bean.CategoryEntity;
+import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.utils.ParamTools;
+import com.cypal.ming.cypal.utils.Tools;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.alibaba.fastjson.JSON;
-import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.adapter.BnakAdapter;
-import com.cypal.ming.cypal.base.BaseActivity;
-import com.cypal.ming.cypal.bean.BankBranchs;
-import com.cypal.ming.cypal.config.Const;
-import com.cypal.ming.cypal.utils.CharacterParser;
-import com.cypal.ming.cypal.utils.ParamTools;
-import com.cypal.ming.cypal.utils.Tools;
-import com.lidroid.xutils.ViewUtils;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
 /**
- * 
  * @author luoming 支行列表
- *
  */
-public class BankList extends BaseActivity implements OnItemClickListener {
-	private EditText searchView = null;
-	private ListView city_list = null;
-	private BnakAdapter adapter = null;
-	private List<BankBranchs> bankBranchs = null;
-	private CharacterParser characterParser = null;
-	public static BankList selectCity = null;
-	private TextView dialog;
-	private List<BankBranchs> bankBranchs2 = null;
-	// 传递过来 所属银行 城市code；
-	private String belongs_bank;
-	private String city_code;
+public class BankList extends BaseActivity implements AccountListAdapter.OnClickListener {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.banl_list);
-		ViewUtils.inject(this);
-		initTitle();
-		title.setText("支行选择");
-		belongs_bank = getIntent().getStringExtra("belongs_bank");
-		city_code = getIntent().getStringExtra("city_code");
-		city_list = (ListView) findViewById(R.id.city_list);
-		searchView = (EditText) findViewById(R.id.et_search);
-		searchView.addTextChangedListener(new TextWatcher() {
+    private LinearLayout ll_view_back;
+    private TextView top_view_text;
+    private RecyclerView recycleView;
+    private LinearLayout ll_add;
+    private String type;
+    private String value;
+    private AccountListAdapter accountListAdapter;
+    private List<AccountListEntity.DataBean> list;
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
-				// filterData(s.toString());
-			}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.banl_list );
+        initView();
+        getBankBranchsByCityCode();
+    }
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// TODO Auto-generated method stub
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        getBankBranchsByCityCode();
+    }
 
-			}
+    private void getBankBranchsByCityCode() {
+        Map<String, String> map = new HashMap<>();
+        map.put( "payAccountEnum", type );
+        mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        loading();
+    }
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				filterData(searchView.getText().toString());
+    private void Use(String account_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put( "account_id", account_id );
+        mQueue.add( ParamTools.packParam( Const.use, this, this, this, map ) );
+        loading();
+    }
 
-			}
-		});
-		dialog = (TextView) findViewById(R.id.dialog);
+    private void initView() {
+        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
+        top_view_text = (TextView) findViewById( R.id.top_view_text );
+        recycleView = (RecyclerView) findViewById( R.id.recycleView );
+        ll_add = (LinearLayout) findViewById( R.id.ll_add );
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        } );
+        type = getIntent().getStringExtra( "type" );
+        value = getIntent().getStringExtra( "value" );
+        top_view_text.setText( value );
+        ll_add.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( BankList.this, SaveAccountAcitity.class );
+                intent.putExtra( "type", type );
+                intent.putExtra( "value", value );
+                startActivity( intent );
+            }
+        } );
+        list = new ArrayList<>();
+        accountListAdapter = new AccountListAdapter( this, list, this );
+        recycleView.setAdapter( accountListAdapter );
+        recycleView.setLayoutManager( new LinearLayoutManager( this ) );
+    }
 
-		characterParser = CharacterParser.getInstance();
-		bankBranchs = new ArrayList<BankBranchs>();
-		getBankBranchsByCityCode();
-	}
+    @Override
+    protected void returnData(String data, String url) {
+        if (url.contains( Const.payAccount )) {
+            AccountListEntity accountListEntity = JSON.parseObject( data, AccountListEntity.class );
+            accountListAdapter.updateAdapter( accountListEntity.data );
 
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		Log.d("SelectCity", "onResume");
-	}
+        } else if (url.contains( Const.use )) {
+            getBankBranchsByCityCode();
+        }
+    }
 
-	private void getBankBranchsByCityCode() {
-		Map<String, String> map = new HashMap<>();
-		map.put("city_code", city_code);    //城市列表
-		map.put("bank_name", belongs_bank);    //银行的名字
-		map.put("branch_name", "");        //支行的名字
-		map.put("auth_token", partnerBean.getAuth_token());
-		mQueue.add(ParamTools.packParam(Const.getBankBranchsByCityCode, this, this, map));
-		loading();
-	}
+    @Override
+    public void UseQie(String id) {
+        Use( id );
 
-	/**
-	 * 根据输入框中的�?�来过滤数据并更新ListView
-	 * 
-	 * @param filterStr
-	 */
-	private void filterData(String filterStr) {
-		List<BankBranchs> filterDateList = new ArrayList<BankBranchs>();
+    }
 
-		if (TextUtils.isEmpty(filterStr)) {
-			filterDateList = bankBranchs;
-		} else {
-			filterDateList.clear();
-			for (BankBranchs bankBranch : bankBranchs) {
-				String name = bankBranch.getBranch_bank_name();
-				if (name.indexOf(filterStr.toString()) != -1
-						|| characterParser.getSelling(name).startsWith(filterStr.toString())) {
-					filterDateList.add(bankBranch);
-				}
-			}
-		}
+    @Override
+    public void OnClick(AccountListEntity.DataBean dataBean) {
 
-		// 根据a-z进行排序
-		// Collections.sort(filterDateList, pinyinComparator);
-		bankBranchs2 = filterDateList;
-		adapter.updateListView(filterDateList);
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
-		String cityname = bankBranchs2.get(position).getBranch_bank_name();
-		Intent intent = new Intent();
-		intent.putExtra("cname", cityname);
-		intent.putExtra("account_bank_branch_code", bankBranchs2.get(position).getBranch_bank_no());
-		intent.putExtra("account_bank_address", bankBranchs2.get(position).getBranch_bank_address());
-		setResult(RESULT_OK, intent);// 定义返回的参数parama
-		finish();
-	}
-
-	@Override
-	public void onResponse(String response, String url) {
-		dismissLoading();
-		try {
-			JSONObject json = new JSONObject(response);
-			int resultCode = json.getInt("status");
-
-			if (resultCode == 0) {
-				if (url.contains(Const.getBankBranchsByCityCode)) {
-					String jsonString = json.getString("result");
-					bankBranchs = JSON.parseArray(jsonString, BankBranchs.class);
-					adapter = new BnakAdapter(BankList.this, bankBranchs);
-					bankBranchs2 = bankBranchs;
-					city_list.setAdapter(adapter);
-					city_list.setOnItemClickListener(BankList.this);
-
-				}
-
-			} else if (resultCode == -4004) {
-				mSavePreferencesData.putStringData("json", "");
-				Tools.jump(this, LoginActivity.class, true);
-				Tools.showToast(this, "登录过期请重新登录?");
-			} else {
-				Tools.showToast(getApplicationContext(), "接口错误");
-			}
-		} catch (JSONException e) {
-			// TODO: handle exception
-			Tools.showToast(getApplicationContext(), "解析数据错误");
-		}
-
-	}
+    }
 }

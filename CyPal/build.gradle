@@ -106,5 +106,6 @@ dependencies {
     compile files('libs/Msc.jar')
     compile 'jp.wasabeef:recyclerview-animators:1.0.3@aar'
     compile 'com.neovisionaries:nv-websocket-client:2.2'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
     compile project(':volley')
 }

@@ -1,85 +1,82 @@
 package com.cypal.ming.cypal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.adapter.CategoryAdapter;
 import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.bean.CategoryEntity;
+import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ParamTools;
-import com.cypal.ming.cypal.utils.Tools;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import static com.cypal.ming.cypal.config.Const.accountList;
 
 /**
  * 账户列表
  */
-public class AccountListActivity extends BaseActivity {
+public class AccountListActivity extends BaseActivity implements CategoryAdapter.OnClickListener {
 
 
-    private ListView lv_list;
-    private TextView ll_list_none;
+    private LinearLayout ll_view_back;
+    private RecyclerView recycleView;
+    private CategoryAdapter categoryAdapter;
+    private List<CategoryEntity.DataBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_list);
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_account_list );
         initView();
-        initTitle();
-        title.setText("选择银行卡");
-        rightView.setImageDrawable(getResources().getDrawable(R.drawable.add_banl));
-        rightView.setVisibility(View.VISIBLE);
-        rightView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Tools.jump(AccountListActivity.this, AddAccount2Activity.class, false);
-            }
-        });
-        accountList();
+        getBankBranchsByCityCode();
     }
 
-
-    //获取提现账号列表
-    public void accountList() {
+    private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(accountList, this, this, map));
+        mQueue.add( ParamTools.packParam( Const.category, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
         loading();
     }
 
-    @Override
-    public void onResponse(String response, String url) {
-        dismissLoading();
-        try {
-            JSONObject json = new JSONObject(response);
-            int stauts = json.optInt("status");
-            String msg = json.optString("msg");
-            if (stauts == 0) {
-                if (url.contains(accountList)) {
-                    JSONArray jsonArray = json.getJSONArray("accountlist");
-//                    "account_name":"string,持卡人真实姓名",
-//                            "account_card":"string,持卡人卡号/支付宝账号",
-//                            "account_bank":"string,开户行名字 为银行卡时必填",
-//                            "account_bank_address":"string,开户行地址"
-                }
-            } else {
-                Tools.showToast(this, msg);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Tools.showToast(this, "发生错误,请重试!");
-        }
-    }
 
     private void initView() {
-        lv_list = (ListView) findViewById(R.id.lv_list);
-        ll_list_none = (TextView) findViewById(R.id.ll_list_none);
+        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
+        recycleView = (RecyclerView) findViewById( R.id.recycleView );
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        } );
+        list = new ArrayList<>();
+        categoryAdapter = new CategoryAdapter( this, list, this );
+        recycleView.setAdapter( categoryAdapter );
+        recycleView.setLayoutManager( new LinearLayoutManager( this ) );
+
+    }
+
+    @Override
+    protected void returnData(String data, String url) {
+        super.returnData( data, url );
+        CategoryEntity categoryEntity = JSON.parseObject( data, CategoryEntity.class );
+        categoryAdapter.updateAdapter( categoryEntity.data );
+
+    }
+
+    @Override
+    public void ConfirmReceipt(String value, String type) {
+        Intent intent = new Intent( AccountListActivity.this, BankList.class );
+        intent.putExtra( "value", value );
+        intent.putExtra( "type", type );
+        startActivity( intent );
+
     }
 }
