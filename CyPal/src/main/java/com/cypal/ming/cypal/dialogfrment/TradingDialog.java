@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.CertificationActivity;
 import com.cypal.ming.cypal.activity.LoginActivity;
+import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.databinding.TradingDialogBinding;
 import com.cypal.ming.cypal.utils.MD5Util;
@@ -135,7 +136,7 @@ public class TradingDialog extends CenterDialog implements Response.Listener<Str
             } else if (stauts == -2) {
                 dismiss();
                 //跳转至认证会员
-                Tools.jump( (Activity) mContext, CertificationActivity.class, false );
+                Tools.jump( (Activity) mContext, MemberActivity.class, false );
             } else {
                 dismiss();
                 Tools.showToast( mContext, msg );

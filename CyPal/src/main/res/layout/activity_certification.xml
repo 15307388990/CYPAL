@@ -166,6 +166,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/icon_shenfen1" />
 
                 <ImageView
@@ -174,6 +175,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="21dp"
                     android:layout_weight="1"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/icon_shenfen2" />
             </LinearLayout>
 
@@ -228,6 +230,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/icon_shenfen3" />
 
             <TextView

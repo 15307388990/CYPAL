@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.CertificationActivity;
+import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
@@ -158,7 +159,7 @@ public class MineFragment extends BaseFragment {
         tv_text.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, CertificationActivity.class, false );
+                Tools.jump( mcontext, MemberActivity.class, false );
             }
         } );
     }

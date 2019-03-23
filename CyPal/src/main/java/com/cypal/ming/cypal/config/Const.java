@@ -81,6 +81,15 @@ public class Const {
      * 保存认证资料
      */
     public static final String save = "/private/certification/save";
+    /**
+     * 会员管理
+     */
+    public static final String certification = "/private/certification/list?";
+    /**
+     * 缴纳保证金
+     */
+    public static final String submitBailMoney = "/private/certification/submitBailMoney?";
+
 
 
     /* 获取订单列表*/

@@ -174,7 +174,7 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
             String msg = json.optString( "msg" );
             String data = json.optString( "data" );
             if (stauts == 1) {
-                this.returnData( data, url );
+                this.returnData( response, url );
             } else if (stauts == -200) {
                  mSavePreferencesData.putStringData( "token","" );
                 Tools.jump( this, LoginActivity.class, true );
