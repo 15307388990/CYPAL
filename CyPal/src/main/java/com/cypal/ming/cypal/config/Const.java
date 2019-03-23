@@ -89,6 +89,14 @@ public class Const {
      * 缴纳保证金
      */
     public static final String submitBailMoney = "/private/certification/submitBailMoney?";
+    /**
+     * 修改头像
+     */
+    public static final String modifyAvatar = "/private/user/modifyAvatar";
+    /**
+     * 修改昵称
+     */
+    public static final String modifyNickName = "/private/user/modifyNickName";
 
 
 

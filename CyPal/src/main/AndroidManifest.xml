@@ -144,6 +144,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 获取支行列表 -->
         <activity
+            android:name="com.cypal.ming.cypal.activity.RefundActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 退还保证金 -->
+        <activity
             android:name="com.cypal.ming.cypal.activity.MoneyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /> <!--我的钱包-->
@@ -189,6 +193,10 @@
             android:name="com.cypal.ming.cypal.activity.SucceedWithdrawAccessActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现成功 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.NickNameActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 修改昵称 -->
         <activity
             android:name="com.cypal.ming.cypal.activity.AddAccount2Activity"
             android:screenOrientation="portrait"

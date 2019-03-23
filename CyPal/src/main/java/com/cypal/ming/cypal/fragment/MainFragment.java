@@ -234,12 +234,12 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         IndexEntity indexEntity = JSON.parseObject( data, IndexEntity.class );
         noticeListBeanList = indexEntity.getData().getNoticeList();
         if (noticeListBeanList.size() > 0) {
-            //auto_textview.setText( noticeListBeanList.get( 0 ).getTitle() );
+            auto_textview.setText( noticeListBeanList.get( 0 ).getTitle() );
             new Thread() {
                 @Override
                 public void run() {
                     while (isRunning) {
-                        SystemClock.sleep( 3000 );
+                        SystemClock.sleep( 5000 );
                         handler.sendEmptyMessage( 199 );
                     }
                 }

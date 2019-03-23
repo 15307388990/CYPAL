@@ -141,7 +141,6 @@
             android:layout_weight="1"
             android:gravity="right"
             android:singleLine="true"
-            android:text=" "
             android:textColor="@color/jiujiujiu" />
 
         <ImageView
