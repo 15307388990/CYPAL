@@ -120,6 +120,8 @@ public class MemberActivity extends BaseActivity {
             MarginDialog marginDialog;
             marginDialog = MarginDialog.newInstance( "余额中扣除" );
             marginDialog.show( MemberActivity.this );
+            //刷新请求
+            Certification();
         }
 
 

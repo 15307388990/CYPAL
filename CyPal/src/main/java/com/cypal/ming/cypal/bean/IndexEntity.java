@@ -66,7 +66,7 @@ public class IndexEntity {
         private IndexTodayOrderAnalysisRespBean indexTodayOrderAnalysisResp;
         private OtcBean otc;
         private List<NoticeListBean> noticeList;
-        private List<?> usedPayAccount;
+        private String usedPayAccount;
 
         public double getBalance() {
             return balance;
@@ -116,11 +116,11 @@ public class IndexEntity {
             this.noticeList = noticeList;
         }
 
-        public List<?> getUsedPayAccount() {
+        public String getUsedPayAccount() {
             return usedPayAccount;
         }
 
-        public void setUsedPayAccount(List<?> usedPayAccount) {
+        public void setUsedPayAccount(String usedPayAccount) {
             this.usedPayAccount = usedPayAccount;
         }
 
@@ -402,7 +402,7 @@ public class IndexEntity {
             private int userId;
             private Object otcType;
             private double commision;
-            private Object startTime;
+            private String startTime;
             private boolean start;
 
             public int getId() {
@@ -453,11 +453,11 @@ public class IndexEntity {
                 this.commision = commision;
             }
 
-            public Object getStartTime() {
+            public String getStartTime() {
                 return startTime;
             }
 
-            public void setStartTime(Object startTime) {
+            public void setStartTime(String startTime) {
                 this.startTime = startTime;
             }
 

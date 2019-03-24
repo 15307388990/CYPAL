@@ -15,11 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.AccountListActivity;
+import com.cypal.ming.cypal.activity.SetPayPasswordOneActivity;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.IndexEntity;
@@ -51,6 +55,18 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private TextView tv_todaySuccess;
     private TextView tv_todaySuccessMoney;
     private TextView tv_todayCommision;
+    private ImageView iv_wexin;
+    private ImageView iv_alipay;
+    private ImageView iv_banl;
+    private ImageView iv_yun;
+    private LinearLayout ll_auto;
+    private LinearLayout ll_hand;
+    private LinearLayout ll_layout;
+    private TextView tv_timer;
+    private TextView tv_quxiao;
+    private LinearLayout ll_timer;
+    private TextView tv_qiang;
+    private LinearLayout ll_account;
 
     public MainFragment(Activity context) {
         super( context );
@@ -63,7 +79,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private int number = 0;
     private List<IndexEntity.DataBean.NoticeListBean> noticeListBeanList;
     private boolean isRunning = true;
-
+    private Thread thread;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 199) {
@@ -73,6 +89,33 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             }
         }
     };
+    private String method;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isRunning = false;
+    }
+
+    /**
+     * 销毁线程方法
+     */
+    private void destroyThread() {
+        try {
+            if (null != thread && Thread.State.RUNNABLE == thread.getState()) {
+                try {
+                    Thread.sleep( 500 );
+                    thread.interrupt();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            thread = null;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,9 +139,21 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
         sellDetailListAdapter = new SellDetailListAdapter( mcontext, orderModels, this );
         View headView = LayoutInflater.from( mcontext ).inflate( R.layout.home_main_head, null );
+        iv_wexin = (ImageView) headView.findViewById( R.id.iv_wexin );
+        iv_alipay = (ImageView) headView.findViewById( R.id.iv_alipay );
+        iv_banl = (ImageView) headView.findViewById( R.id.iv_banl );
+        iv_yun = (ImageView) headView.findViewById( R.id.iv_yun );
+        ll_auto = (LinearLayout) headView.findViewById( R.id.ll_auto );
+        ll_hand = (LinearLayout) headView.findViewById( R.id.ll_hand );
+        ll_layout = (LinearLayout) headView.findViewById( R.id.ll_layout );
+        tv_timer = (TextView) headView.findViewById( R.id.tv_timer );
+        tv_quxiao = (TextView) headView.findViewById( R.id.tv_quxiao );
+        ll_timer = (LinearLayout) headView.findViewById( R.id.ll_timer );
         tv_successratetext = (TextView) headView.findViewById( R.id.tv_successratetext );
         tv_balance = (TextView) headView.findViewById( R.id.tv_balance );
         tv_todaySuccess = (TextView) headView.findViewById( R.id.tv_todaySuccess );
+        ll_account = (LinearLayout) headView.findViewById( R.id.ll_account );
+        tv_qiang = (TextView) headView.findViewById( R.id.tv_qiang );
         tv_todaySuccessMoney = (TextView) headView.findViewById( R.id.tv_todaySuccessMoney );
         tv_todayCommision = (TextView) headView.findViewById( R.id.tv_todayCommision );
         sellDetailListAdapter.setHeaderView( headView );
@@ -125,13 +180,77 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
             }
         } );
+        auto_textview.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        } );
+        ll_auto.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                method = "AUTO";
+                start();
+            }
+        } );
+        ll_hand.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                method = "HAND";
+                start();
+            }
+        } );
+        thread = new Thread() {
+            @Override
+            public void run() {
+                while (isRunning) {
+                    SystemClock.sleep( 5000 );
+                    handler.sendEmptyMessage( 199 );
+                }
+            }
+        };
+        thread.start();
+
+        tv_quxiao.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //取消接单
+                stop();
+            }
+        } );
+
+
+        ll_account.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, AccountListActivity.class, false );
+            }
+        } );
     }
 
 
     public void orderList() {
         Map<String, String> map = new HashMap<>();
         mQueue.add( ParamTools.packParam( Const.mallSetInfo, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+    }
+
+    /**
+     * 开始接单
+     */
+    public void start() {
+        Map<String, String> map = new HashMap<>();
+        map.put( "method", method );
+        mQueue.add( ParamTools.packParam( Const.start, mcontext, this, this, map ) );
+        loading();
+    }
+
+    /**
+     * 取消接单
+     */
+    public void stop() {
+        Map<String, String> map = new HashMap<>();
+        mQueue.add( ParamTools.packParam( Const.stop, mcontext, this, this, map ) );
+        loading();
     }
 
     @Override
@@ -231,32 +350,62 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
      */
     @Override
     public void returnData(final String data, String url) {
+        if (url.contains( Const.start )) {
+            //接单成功刷新首页
+            orderList();
+        } else if (url.contains( Const.stop )) {
+            orderList();
+        } else {
+            springView.onFinishFreshAndLoad();
+            initData( data );
+        }
+
+    }
+
+    private void initData(String data) {
         IndexEntity indexEntity = JSON.parseObject( data, IndexEntity.class );
         noticeListBeanList = indexEntity.getData().getNoticeList();
-        if (noticeListBeanList.size() > 0) {
-            auto_textview.setText( noticeListBeanList.get( 0 ).getTitle() );
-            new Thread() {
-                @Override
-                public void run() {
-                    while (isRunning) {
-                        SystemClock.sleep( 5000 );
-                        handler.sendEmptyMessage( 199 );
-                    }
-                }
-            }.start();
-
-        }
-        auto_textview.setOnClickListener( new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        } );
 
         tv_successratetext.setText( indexEntity.getData().getSuccessRateText() );
         tv_balance.setText( "￥" + indexEntity.getData().getBalance() );
-        tv_todayCommision.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodayCommision()+"" );
-        tv_todaySuccess.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodaySuccess()+"" );
-        tv_todaySuccessMoney.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodaySuccessMoney() +"");
+        tv_todayCommision.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodayCommision() + "" );
+        tv_todaySuccess.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodaySuccess() + "" );
+        tv_todaySuccessMoney.setText( indexEntity.getData().getIndexTodayOrderAnalysisResp().getTodaySuccessMoney() + "" );
+        String pay = indexEntity.getData().getUsedPayAccount();
+        if (pay.contains( "WXPAY" )) {
+            iv_wexin.setVisibility( View.VISIBLE );
+        }
+        if (pay.contains( "ALIPAY" )) {
+            iv_alipay.setVisibility( View.VISIBLE );
+        }
+        if (pay.contains( "CLOUDPAY" )) {
+            iv_yun.setVisibility( View.VISIBLE );
+        }
+        if (pay.contains( "BANKCARD" )) {
+            iv_banl.setVisibility( View.VISIBLE );
+        }
+        IndexEntity.DataBean.OtcBean otcBean = indexEntity.getData().getOtc();
+        if (otcBean.isStart()) {
+            //开始接单
+            if (otcBean.getOtcType().equals( "AUTO" )) {
+                //自动接单
+                ll_layout.setVisibility( View.GONE );
+                ll_timer.setVisibility( View.VISIBLE );
+                long time = indexEntity.getServerTime() - Tools.getLongformat( otcBean.getStartTime() );
+                String timer = Tools.getDateString( time );
+                tv_timer.setText( "已接单 " + timer );
+            } else {
+                //手动接单
+                ll_layout.setVisibility( View.VISIBLE );
+                ll_timer.setVisibility( View.GONE );
+                tv_qiang.setText( "继续抢单" );
+            }
+
+        } else {
+            //未开始接单
+            ll_layout.setVisibility( View.VISIBLE );
+            ll_timer.setVisibility( View.GONE );
+            tv_qiang.setText( "手动抢单" );
+        }
     }
 }

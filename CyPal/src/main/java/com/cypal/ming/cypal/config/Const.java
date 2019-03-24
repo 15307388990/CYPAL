@@ -125,6 +125,18 @@ public class Const {
      * 提取佣金
      */
     public static final String withdraw= "/private/commision/withdraw?";
+    /**
+     * 退出登录
+     */
+    public static final String loginOut= "/public/loginOut?";
+    /**
+     * 开始接单
+     */
+    public static final String start= "/private/index/start";
+    /**
+     *  取消接单
+     */
+    public static final String stop= "/private/index/stop";
 
 
     /* 获取订单列表*/

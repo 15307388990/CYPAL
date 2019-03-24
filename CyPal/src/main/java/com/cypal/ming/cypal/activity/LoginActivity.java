@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,7 +15,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.allenliu.versionchecklib.core.AllenChecker;
 import com.allenliu.versionchecklib.core.VersionParams;
 import com.allenliu.versionchecklib.core.http.HttpParams;
@@ -22,6 +25,7 @@ import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
+import com.cypal.ming.cypal.bean.LoginEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.CustomDialogActivity;
 import com.cypal.ming.cypal.service.VersionService;
@@ -52,6 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView tv_registered;
     private TextView tv_f_password;
     private CheckBox tv_change;
+    private long mExitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +183,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void returnData(String data, String url) {
-        mSavePreferencesData.putStringData( "token", data );
+        LoginEntity loginEntity = JSON.parseObject( data, LoginEntity.class );
+        mSavePreferencesData.putStringData( "token", loginEntity.data.loginToken );
+        mSavePreferencesData.putStringData( "webSocketToken", loginEntity.data.webSocketToken );
         Tools.jump( this, TabActivity.class, true );
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // if ((System.currentTimeMillis() - mExitTime) > 2000)
+            // {Toast.makeText(this,
+            // getResources().getString(R.string.exit).toString(),
+            // Toast.LENGTH_SHORT).show();
+            // mExitTime = System.currentTimeMillis();}
+
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Toast.makeText( this, "再按一次退出程序", Toast.LENGTH_SHORT ).show();
+                mExitTime = System.currentTimeMillis();
+
+            } else {
+                Intent intent = new Intent( Intent.ACTION_MAIN );
+                intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );// 注意
+                intent.addCategory( Intent.CATEGORY_HOME );
+                this.startActivity( intent );
+                finish();
+            }
+            return true;
+        }
+
+        return super.onKeyDown( keyCode, event );
+    }
+
 }

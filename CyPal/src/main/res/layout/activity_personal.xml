@@ -75,8 +75,8 @@
         android:id="@+id/ll_myicon"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/white"
         android:layout_marginTop="10dp"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingLeft="16dp">
 
@@ -146,8 +146,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_more"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_more" />
     </LinearLayout>
 
     <View
@@ -212,6 +212,7 @@
             android:text="会员管理"
             android:textColor="@color/actionbar_title_color"
             android:textSize="16sp" />
+
         <TextView
             android:id="@+id/my_accounts"
             android:layout_width="0dp"
@@ -225,12 +226,26 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_more"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_more" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray" />
+
+
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>

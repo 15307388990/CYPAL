@@ -122,6 +122,5 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
     public void returnData(String data, String url) {
     }
 
-    ;
 
 }

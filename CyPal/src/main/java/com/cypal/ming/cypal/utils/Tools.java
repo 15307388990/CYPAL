@@ -40,7 +40,7 @@ public class Tools {
     public static List<Activity> acts = new ArrayList<Activity>();// 界面栈
     public static List<Activity> webacts = new ArrayList<Activity>();// 网页界面栈
     public static StoreBean mStoreBean;
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    private static DecimalFormat df = new DecimalFormat( "0.00" );
     public static boolean isaccout = false;//是否需要去添加新账户 false 为不需要
 
 
@@ -60,8 +60,8 @@ public class Tools {
      */
     public static void showDateDialog(Context context, DatePickerDialog.OnDateSetListener listener,
                                       Calendar mycalendar) {
-        DatePickerDialog dialog = new DatePickerDialog(context, listener, mycalendar.get(Calendar.YEAR),
-                mycalendar.get(Calendar.MONTH), mycalendar.get(Calendar.DAY_OF_MONTH));
+        DatePickerDialog dialog = new DatePickerDialog( context, listener, mycalendar.get( Calendar.YEAR ),
+                mycalendar.get( Calendar.MONTH ), mycalendar.get( Calendar.DAY_OF_MONTH ) );
         dialog.show();
     }
 
@@ -84,16 +84,18 @@ public class Tools {
     public static boolean isIDCard(String IDCard) {
         if (IDCard != null) {
             String IDCardRegex = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)";
-            return IDCard.matches(IDCardRegex);
+            return IDCard.matches( IDCardRegex );
         }
         return false;
     }
+
     //获取屏幕宽度
     public static int getScreenWidth(Context context) {
         DisplayMetrics dm = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics( dm );
         return dm.widthPixels;
     }
+
     /**
      * 价格 分转元
      */
@@ -101,7 +103,7 @@ public class Tools {
         if (prcie == 0) {
             return 0.00 + "";
         }
-        return df.format((double) prcie / 100);
+        return df.format( (double) prcie / 100 );
     }
 
     /**
@@ -118,7 +120,7 @@ public class Tools {
      * 价格 元转分
      */
     public static int getYuanFen(String prcieString) {
-        double prcie = Double.valueOf(prcieString.replace(" ", ""));
+        double prcie = Double.valueOf( prcieString.replace( " ", "" ) );
         return (int) (prcie * 100);
 
     }
@@ -158,8 +160,8 @@ public class Tools {
     public static void webexit(int page) {
         try {
             for (int i = 1; i <= page; i++) {
-                webacts.get(webacts.size() - 1).finish();
-                webacts.remove(webacts.size() - 1);
+                webacts.get( webacts.size() - 1 ).finish();
+                webacts.remove( webacts.size() - 1 );
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -171,14 +173,14 @@ public class Tools {
      * @return
      */
     public static String pNumber(String pNumber) {
-        if (!TextUtils.isEmpty(pNumber) && pNumber.length() > 6) {
+        if (!TextUtils.isEmpty( pNumber ) && pNumber.length() > 6) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < pNumber.length(); i++) {
-                char c = pNumber.charAt(i);
+                char c = pNumber.charAt( i );
                 if (i >= 3 && i <= 6) {
-                    sb.append('*');
+                    sb.append( '*' );
                 } else {
-                    sb.append(c);
+                    sb.append( c );
                 }
             }
 
@@ -192,14 +194,14 @@ public class Tools {
      * @return
      */
     public static String pCardNumber(String pNumber) {
-        if (!TextUtils.isEmpty(pNumber) && pNumber.length() > 10) {
+        if (!TextUtils.isEmpty( pNumber ) && pNumber.length() > 10) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < pNumber.length(); i++) {
-                char c = pNumber.charAt(i);
+                char c = pNumber.charAt( i );
                 if (i >= 4 && i <= 11) {
-                    sb.append('*');
+                    sb.append( '*' );
                 } else {
-                    sb.append(c);
+                    sb.append( c );
                 }
             }
 
@@ -218,8 +220,8 @@ public class Tools {
         boolean flag = false;
         try {
             String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-            Pattern regex = Pattern.compile(check);
-            Matcher matcher = regex.matcher(email);
+            Pattern regex = Pattern.compile( check );
+            Matcher matcher = regex.matcher( email );
             flag = matcher.matches();
         } catch (Exception e) {
             flag = false;
@@ -234,41 +236,41 @@ public class Tools {
      */
     public static boolean isAppInstalled(Context context, String packageName) {
         final PackageManager packageManager = context.getPackageManager();
-        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages( 0 );
         List<String> pName = new ArrayList<String>();
         if (pinfo != null) {
             for (int i = 0; i < pinfo.size(); i++) {
-                String pn = pinfo.get(i).packageName;
-                pName.add(pn);
+                String pn = pinfo.get( i ).packageName;
+                pName.add( pn );
             }
         }
-        return pName.contains(packageName);
+        return pName.contains( packageName );
     }
 
     /**
      * 手机正则表达式
      */
     public static boolean isMobileNum(String mobiles) {
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,1-9])|(17[0,1-9])|(14[0,1-9]))\\d{8}$");
-        Matcher m = p.matcher(mobiles);
-        System.out.println(m.matches() + "---");
+        Pattern p = Pattern.compile( "^((13[0-9])|(15[^4,\\D])|(18[0,1-9])|(17[0,1-9])|(14[0,1-9]))\\d{8}$" );
+        Matcher m = p.matcher( mobiles );
+        System.out.println( m.matches() + "---" );
         return m.matches();
     }
 
     public static String readTextFile(InputStream inputStream) {
         InputStreamReader inputStreamReader = null;
         try {
-            inputStreamReader = new InputStreamReader(inputStream, "gbk");
+            inputStreamReader = new InputStreamReader( inputStream, "gbk" );
         } catch (UnsupportedEncodingException e1) {
             e1.printStackTrace();
         }
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-        StringBuffer sb = new StringBuffer("");
+        BufferedReader reader = new BufferedReader( inputStreamReader );
+        StringBuffer sb = new StringBuffer( "" );
         String line;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
-                sb.append("\n");
+                sb.append( line );
+                sb.append( "\n" );
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -283,9 +285,9 @@ public class Tools {
      */
     public static void showToast(Context context, Object object) {
         if (toast == null) {
-            toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+            toast = Toast.makeText( context, "", Toast.LENGTH_SHORT );
         }
-        toast.setText(object.toString());
+        toast.setText( object.toString() );
 
         toast.show();
     }
@@ -330,11 +332,11 @@ public class Tools {
 
         SimpleDateFormat simpleDateFormat;
 
-        simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        simpleDateFormat = new SimpleDateFormat( "yyyyMMdd" );
 
         Date date = new Date();
 
-        String str = simpleDateFormat.format(date);
+        String str = simpleDateFormat.format( date );
 
         Random random = new Random();
 
@@ -349,9 +351,9 @@ public class Tools {
             for (int i = 0; i < list.size(); i++) {
                 if (i < 8) {
                     if (i < list.size() - 1) {
-                        sb.append(list.get(i) + ",");
+                        sb.append( list.get( i ) + "," );
                     } else {
-                        sb.append(list.get(i));
+                        sb.append( list.get( i ) );
                     }
                 }
             }
@@ -367,8 +369,8 @@ public class Tools {
      */
     public static boolean emailFormat(String email) {
         Pattern pattern = Pattern.compile(
-                "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
-        Matcher matcher = pattern.matcher(email);
+                "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$" );
+        Matcher matcher = pattern.matcher( email );
         return matcher.matches();
     }
 
@@ -377,9 +379,9 @@ public class Tools {
      */
     public static Date getDateByStr(String str) {
         Date date = null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
         try {
-            date = formatter.parse(str);
+            date = formatter.parse( str );
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -419,9 +421,9 @@ public class Tools {
     public static String obtainDateNow() {
         String dataString = null;
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
         try {
-            dataString = formatter.format(date);
+            dataString = formatter.format( date );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -433,9 +435,9 @@ public class Tools {
      */
     public static String getDateStr(Date date, String formateStr) {
         String dateStr = null;
-        SimpleDateFormat formatter = new SimpleDateFormat(/* "yyyy-MM-dd HH:mm:ss" */formateStr);
+        SimpleDateFormat formatter = new SimpleDateFormat(/* "yyyy-MM-dd HH:mm:ss" */formateStr );
         try {
-            dateStr = formatter.format(date);
+            dateStr = formatter.format( date );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -446,7 +448,7 @@ public class Tools {
      * 将int转为16进制,如果数字在byte或short范围内通过补0方式使其成为双字节16进制
      */
     public static String int2Short16Str(int i) {
-        String str16 = Integer.toHexString(i);
+        String str16 = Integer.toHexString( i );
         if (str16.length() == 1) {
             str16 = "000" + str16;
         } else if (str16.length() == 2) {
@@ -461,10 +463,28 @@ public class Tools {
      * 跳转
      */
     public static void jump(Activity context, Class<?> cls, boolean afterFinish) {
-        Intent intent = new Intent(context, cls);
-        context.startActivity(intent);
+        Intent intent = new Intent( context, cls );
+        context.startActivity( intent );
         if (afterFinish)
             context.finish();
+    }
+
+    /**
+     * string转时间
+     */
+    public static long getLongformat(String time) {
+
+        if (TextUtils.isEmpty( time )) {
+            return 0;
+        }
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        Date date = null;
+        try {
+            date = format.parse( time );
+        } catch (Exception e) {
+        }
+        return date.getTime();
+
     }
 
     /**
@@ -474,8 +494,8 @@ public class Tools {
         if (time == 0) {
             return "";
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.format(time);
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+        return format.format( time );
 
     }
 
@@ -486,8 +506,8 @@ public class Tools {
         if (time == 0) {
             return "";
         }
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        return format.format(time);
+        SimpleDateFormat format = new SimpleDateFormat( "HH:mm:ss" );
+        return format.format( time );
 
     }
 
@@ -498,8 +518,23 @@ public class Tools {
         if (time == 0) {
             return "";
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(time);
+        SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+        return format.format( time );
+
+    }
+
+    /**
+     * 时间戳转字符
+     */
+    public static String getDateString(long time) {
+        if (time == 0) {
+            return "";
+        }
+        //小时差
+        int hours = (int) time / 1000 / 60 / 60;
+        // 分钟差
+        int minutes = (int) (time - (hours * 1000 * 60 * 60)) / 1000 / 60;
+        return hours + "小时" + minutes + "分钟";
 
     }
 
@@ -508,12 +543,12 @@ public class Tools {
      */
     public static String getDateformat(String create_date) {
         String text = "";
-        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
         Date now = new Date();
         // 开始时间
         long from = 0;
         try {
-            from = simpleFormat.parse(create_date).getTime();
+            from = simpleFormat.parse( create_date ).getTime();
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -538,7 +573,7 @@ public class Tools {
     }
 
     public static ArrayList<String> StringArrayToList(String[] covers) {
-        ArrayList<String> wordList = new ArrayList<String>(Arrays.asList(covers));
+        ArrayList<String> wordList = new ArrayList<String>( Arrays.asList( covers ) );
         // wordList.add("1");
         return wordList;
     }

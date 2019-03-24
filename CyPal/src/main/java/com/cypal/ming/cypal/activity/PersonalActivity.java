@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -69,6 +70,8 @@ public class PersonalActivity extends BaseActivity {
     private TextView my_name;
     @ViewInject(R.id.my_phone)
     private TextView my_phone;
+
+    private Button btn_exit;
     ImageLoader imageLoader = ImageLoader.getInstance();
     DisplayImageOptions options = ImageLoaderUtil.getOptions();
     private String upload_token;
@@ -91,6 +94,7 @@ public class PersonalActivity extends BaseActivity {
     }
 
     private void initView() {
+        btn_exit = (Button) findViewById( R.id.btn_exit );
         iv_back.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +126,12 @@ public class PersonalActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put( "contactType", "mySetting" );
         mQueue.add( ParamTools.packParam( Const.setIn, this, this, map, com.android.volley.Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        loading();
+    }
+
+    private void loginOut() {
+        Map<String, String> map = new HashMap<>();
+        mQueue.add( ParamTools.packParam( Const.loginOut, this, this, map, com.android.volley.Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
         loading();
     }
 
@@ -164,6 +174,12 @@ public class PersonalActivity extends BaseActivity {
                 Intent intent = new Intent( PersonalActivity.this, NickNameActivity.class );
                 intent.putExtra( "nickname", my_name.getText().toString().trim() );
                 startActivityForResult( intent, 1 );
+            }
+        } );
+        btn_exit.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginOut();
             }
         } );
 
@@ -287,6 +303,10 @@ public class PersonalActivity extends BaseActivity {
             } else {
                 my_accounts.setText( "未认证" );
             }
+        } else if (url.contains( Const.loginOut )) {
+            mSavePreferencesData.putStringData( "token", "" );
+            Tools.jump( PersonalActivity.this, LoginActivity.class, true );
         }
     }
+
 }
