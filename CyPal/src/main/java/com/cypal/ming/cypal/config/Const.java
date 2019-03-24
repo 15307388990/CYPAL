@@ -117,6 +117,14 @@ public class Const {
      * 删除账户
      */
     public static final String del= "/private/payAccount/del";
+    /**
+     * 我的佣金
+     */
+    public static final String commision= "/private/commision/list?";
+    /**
+     * 提取佣金
+     */
+    public static final String withdraw= "/private/commision/withdraw?";
 
 
     /* 获取订单列表*/

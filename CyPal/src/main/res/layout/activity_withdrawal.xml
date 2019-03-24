@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        layout="@layout/top_view_white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height_48"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/ll_view_back"
+            android:layout_width="@dimen/margin_75"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/margin_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/all_icon_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/right_view_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="27dp"
+            android:layout_marginRight="27dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:src="@drawable/desk_icon_user"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/top_view_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:drawablePadding="@dimen/margin_5"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="提现到余额"
+            android:textColor="@color/CY_101010"
+            android:textSize="@dimen/text_20" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="18dp"
+        android:text="提现金额"
+        android:textColor="@color/actionbar_title_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/withdrawal_bg"
+        android:gravity="center_vertical"
+        android:hint="0.00"
+        android:inputType="phone"
+        android:paddingLeft="10dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="可提取金额：8000.00 CNY"
+        android:textColor="@color/CY_999999"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.AccountListActivity;
+import com.cypal.ming.cypal.activity.CommissionAcitity;
 import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
@@ -47,6 +48,7 @@ public class MineFragment extends BaseFragment {
     private TextView tv_text;
     private TextView tv_creditscore;
     private LinearLayout ll_shou;
+    private LinearLayout ll_commission;
 
     public MineFragment(Activity context) {
         super( context );
@@ -168,6 +170,13 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Tools.jump( mcontext, AccountListActivity.class, false );
+            }
+        } );
+        ll_commission = (LinearLayout) view.findViewById( R.id.ll_commission );
+        ll_commission.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, CommissionAcitity.class, false );
             }
         } );
     }

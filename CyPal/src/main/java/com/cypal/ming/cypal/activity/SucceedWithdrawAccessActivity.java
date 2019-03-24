@@ -28,7 +28,7 @@ public class SucceedWithdrawAccessActivity extends BaseActivity {
 		setContentView(R.layout.activity_succeed_withdraw);
 		ViewUtils.inject(this);
 		initTitle();
-		title.setText("我要提现");
+		title.setText("提现到余额");
 	}
 
 	/** 单击事件 */
@@ -37,7 +37,4 @@ public class SucceedWithdrawAccessActivity extends BaseActivity {
 		this.finish();
 	}
 
-	@Override
-	public void onResponse(String response, String url) {
-	}
 }

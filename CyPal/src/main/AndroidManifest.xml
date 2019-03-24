@@ -205,6 +205,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 添加账户 -->
         <activity
+            android:name="com.cypal.ming.cypal.activity.CommissionAcitity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 我的佣金 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.WithdrawalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提取佣金 -->
+        <activity
             android:name="com.cypal.ming.cypal.activity.ApplyWithdrawActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现 -->
