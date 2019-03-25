@@ -8,228 +8,60 @@ public class IndexEntity {
     /**
      * code : 1
      * msg : success
-     * data : {"noticeList":[{"id":2,"createTime":"2019-03-10 15:07:07","deleted":false,"title":"第二天公告","summary":"aaa","content":null,"publish_userId":1,"publish_user":null},{"id":1,"createTime":"2019-03-10 03:50:47","deleted":false,"title":"公告功能测试","summary":"测试公告","content":null,"publish_userId":1,"publish_user":null}],"usedPayAccount":[],"balance":1200,"undoOrder":{"content":[],"pageable":{"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"number":1,"totalElements":0,"totalPages":0,"first":false,"numberOfElements":0,"last":true,"sort":{"sorted":false,"unsorted":true},"size":10},"successRateText":"","indexTodayOrderAnalysisResp":{"todaySuccess":0,"todaySuccessMoney":0,"todayCommision":0},"otc":{"id":4,"createTime":"2019-03-18 20:15:23","deleted":false,"userId":3,"otcType":null,"commision":0,"startTime":null,"start":false}}
-     * serverTime : 1553001212040
+     * data : {"noticeList":[{"id":2,"createTime":"2019-03-10 15:07:07","deleted":false,"title":"第二天公告","summary":"aaa","content":null,"publish_userId":1,"publish_user":null},{"id":1,"createTime":"2019-03-10 03:50:47","deleted":false,"title":"公告功能测试","summary":"测试公告","content":null,"publish_userId":1,"publish_user":null}],"usedPayAccount":["WXPAY","CLOUDPAY"],"balance":998500,"undoOrder":{"content":[{"id":212,"createTime":"2019-03-25 20:01:36","deleted":false,"orderNo":"OTC201903252001360304629","outOrderNo":"12345678910","status":"A_PROCESS","statusDesc":"新订单生成,等待支付","amount":100,"userId":15,"merchantUserId":2,"takeTime":"2019-03-25 20:03:04","closeTime":null,"completeTime":null,"successTime":null,"payType":"WXPAY","payAccountJson":"{\"accountData\":\"wxp://f2f0iILS_3Cn5d_AfCCdl5VtsbqIZ-w5ph6J\",\"accountName\":\"1334\",\"accountType\":\"WXPAY\",\"createTime\":1553349811000,\"deleted\":false,\"id\":12,\"realName\":\"孔明灯\",\"used\":true,\"userId\":15}","userUnqueNo":"9naMFH","orderDesc":"演示支付","remark":null,"attach":"","notifyCount":0,"returnUrl":"http://111.230.242.115:8888/","notifyUrl":"http://111.230.242.115:8888/notify"}],"pageable":{"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"number":1,"totalElements":1,"totalPages":1,"first":false,"numberOfElements":1,"last":true,"sort":{"sorted":false,"unsorted":true},"size":10},"successRateText":"","indexTodayOrderAnalysisResp":{"todaySuccess":0,"todaySuccessMoney":0,"todayCommision":0},"otc":{"id":9,"createTime":"2019-03-21 10:32:49","deleted":false,"userId":15,"otcType":"HAND","commision":98500,"startTime":"2019-03-24 21:04:24","start":true}}
+     * serverTime : 1553522256470
      */
 
-    private int code;
-    private String msg;
-    private DataBean data;
-    private long serverTime;
+    public int code;
+    public String msg;
+    public DataBean data;
+    public long serverTime;
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
-
-    public long getServerTime() {
-        return serverTime;
-    }
-
-    public void setServerTime(long serverTime) {
-        this.serverTime = serverTime;
-    }
-
-    public class DataBean {
+    public  class DataBean {
         /**
          * noticeList : [{"id":2,"createTime":"2019-03-10 15:07:07","deleted":false,"title":"第二天公告","summary":"aaa","content":null,"publish_userId":1,"publish_user":null},{"id":1,"createTime":"2019-03-10 03:50:47","deleted":false,"title":"公告功能测试","summary":"测试公告","content":null,"publish_userId":1,"publish_user":null}]
-         * usedPayAccount : []
-         * balance : 1200.0
-         * undoOrder : {"content":[],"pageable":{"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"number":1,"totalElements":0,"totalPages":0,"first":false,"numberOfElements":0,"last":true,"sort":{"sorted":false,"unsorted":true},"size":10}
+         * usedPayAccount : ["WXPAY","CLOUDPAY"]
+         * balance : 998500
+         * undoOrder : {"content":[{"id":212,"createTime":"2019-03-25 20:01:36","deleted":false,"orderNo":"OTC201903252001360304629","outOrderNo":"12345678910","status":"A_PROCESS","statusDesc":"新订单生成,等待支付","amount":100,"userId":15,"merchantUserId":2,"takeTime":"2019-03-25 20:03:04","closeTime":null,"completeTime":null,"successTime":null,"payType":"WXPAY","payAccountJson":"{\"accountData\":\"wxp://f2f0iILS_3Cn5d_AfCCdl5VtsbqIZ-w5ph6J\",\"accountName\":\"1334\",\"accountType\":\"WXPAY\",\"createTime\":1553349811000,\"deleted\":false,\"id\":12,\"realName\":\"孔明灯\",\"used\":true,\"userId\":15}","userUnqueNo":"9naMFH","orderDesc":"演示支付","remark":null,"attach":"","notifyCount":0,"returnUrl":"http://111.230.242.115:8888/","notifyUrl":"http://111.230.242.115:8888/notify"}],"pageable":{"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"number":1,"totalElements":1,"totalPages":1,"first":false,"numberOfElements":1,"last":true,"sort":{"sorted":false,"unsorted":true},"size":10}
          * successRateText :
          * indexTodayOrderAnalysisResp : {"todaySuccess":0,"todaySuccessMoney":0,"todayCommision":0}
-         * otc : {"id":4,"createTime":"2019-03-18 20:15:23","deleted":false,"userId":3,"otcType":null,"commision":0,"startTime":null,"start":false}
+         * otc : {"id":9,"createTime":"2019-03-21 10:32:49","deleted":false,"userId":15,"otcType":"HAND","commision":98500,"startTime":"2019-03-24 21:04:24","start":true}
          */
 
-        private double balance;
-        private UndoOrderBean undoOrder;
-        private String successRateText;
-        private IndexTodayOrderAnalysisRespBean indexTodayOrderAnalysisResp;
-        private OtcBean otc;
-        private List<NoticeListBean> noticeList;
-        private String usedPayAccount;
+        public int balance;
+        public UndoOrderBean undoOrder;
+        public String successRateText;
+        public IndexTodayOrderAnalysisRespBean indexTodayOrderAnalysisResp;
+        public OtcBean otc;
+        public List<NoticeListBean> noticeList;
+        public String usedPayAccount;
 
-        public double getBalance() {
-            return balance;
-        }
-
-        public void setBalance(double balance) {
-            this.balance = balance;
-        }
-
-        public UndoOrderBean getUndoOrder() {
-            return undoOrder;
-        }
-
-        public void setUndoOrder(UndoOrderBean undoOrder) {
-            this.undoOrder = undoOrder;
-        }
-
-        public String getSuccessRateText() {
-            return successRateText;
-        }
-
-        public void setSuccessRateText(String successRateText) {
-            this.successRateText = successRateText;
-        }
-
-        public IndexTodayOrderAnalysisRespBean getIndexTodayOrderAnalysisResp() {
-            return indexTodayOrderAnalysisResp;
-        }
-
-        public void setIndexTodayOrderAnalysisResp(IndexTodayOrderAnalysisRespBean indexTodayOrderAnalysisResp) {
-            this.indexTodayOrderAnalysisResp = indexTodayOrderAnalysisResp;
-        }
-
-        public OtcBean getOtc() {
-            return otc;
-        }
-
-        public void setOtc(OtcBean otc) {
-            this.otc = otc;
-        }
-
-        public List<NoticeListBean> getNoticeList() {
-            return noticeList;
-        }
-
-        public void setNoticeList(List<NoticeListBean> noticeList) {
-            this.noticeList = noticeList;
-        }
-
-        public String getUsedPayAccount() {
-            return usedPayAccount;
-        }
-
-        public void setUsedPayAccount(String usedPayAccount) {
-            this.usedPayAccount = usedPayAccount;
-        }
-
-        public class UndoOrderBean {
+        public  class UndoOrderBean {
             /**
-             * content : []
+             * content : [{"id":212,"createTime":"2019-03-25 20:01:36","deleted":false,"orderNo":"OTC201903252001360304629","outOrderNo":"12345678910","status":"A_PROCESS","statusDesc":"新订单生成,等待支付","amount":100,"userId":15,"merchantUserId":2,"takeTime":"2019-03-25 20:03:04","closeTime":null,"completeTime":null,"successTime":null,"payType":"WXPAY","payAccountJson":"{\"accountData\":\"wxp://f2f0iILS_3Cn5d_AfCCdl5VtsbqIZ-w5ph6J\",\"accountName\":\"1334\",\"accountType\":\"WXPAY\",\"createTime\":1553349811000,\"deleted\":false,\"id\":12,\"realName\":\"孔明灯\",\"used\":true,\"userId\":15}","userUnqueNo":"9naMFH","orderDesc":"演示支付","remark":null,"attach":"","notifyCount":0,"returnUrl":"http://111.230.242.115:8888/","notifyUrl":"http://111.230.242.115:8888/notify"}]
              * pageable : {"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false}
              * number : 1
-             * totalElements : 0
-             * totalPages : 0
+             * totalElements : 1
+             * totalPages : 1
              * first : false
-             * numberOfElements : 0
+             * numberOfElements : 1
              * last : true
              * sort : {"sorted":false,"unsorted":true}
              * size : 10
              */
 
-            private PageableBean pageable;
-            private int number;
-            private int totalElements;
-            private int totalPages;
-            private boolean first;
-            private int numberOfElements;
-            private boolean last;
-            private SortBeanX sort;
-            private int size;
-            private List<?> content;
+            public PageableBean pageable;
+            public int number;
+            public int totalElements;
+            public int totalPages;
+            public boolean first;
+            public int numberOfElements;
+            public boolean last;
+            public SortBeanX sort;
+            public int size;
+            public List<ContentBean> content;
 
-            public PageableBean getPageable() {
-                return pageable;
-            }
-
-            public void setPageable(PageableBean pageable) {
-                this.pageable = pageable;
-            }
-
-            public int getNumber() {
-                return number;
-            }
-
-            public void setNumber(int number) {
-                this.number = number;
-            }
-
-            public int getTotalElements() {
-                return totalElements;
-            }
-
-            public void setTotalElements(int totalElements) {
-                this.totalElements = totalElements;
-            }
-
-            public int getTotalPages() {
-                return totalPages;
-            }
-
-            public void setTotalPages(int totalPages) {
-                this.totalPages = totalPages;
-            }
-
-            public boolean isFirst() {
-                return first;
-            }
-
-            public void setFirst(boolean first) {
-                this.first = first;
-            }
-
-            public int getNumberOfElements() {
-                return numberOfElements;
-            }
-
-            public void setNumberOfElements(int numberOfElements) {
-                this.numberOfElements = numberOfElements;
-            }
-
-            public boolean isLast() {
-                return last;
-            }
-
-            public void setLast(boolean last) {
-                this.last = last;
-            }
-
-            public SortBeanX getSort() {
-                return sort;
-            }
-
-            public void setSort(SortBeanX sort) {
-                this.sort = sort;
-            }
-
-            public int getSize() {
-                return size;
-            }
-
-            public void setSize(int size) {
-                this.size = size;
-            }
-
-            public List<?> getContent() {
-                return content;
-            }
-
-            public void setContent(List<?> content) {
-                this.content = content;
-            }
-
-            public class PageableBean {
+            public  class PageableBean {
                 /**
                  * sort : {"sorted":false,"unsorted":true}
                  * pageSize : 10
@@ -239,238 +71,122 @@ public class IndexEntity {
                  * unpaged : false
                  */
 
-                private SortBean sort;
-                private int pageSize;
-                private int pageNumber;
-                private int offset;
-                private boolean paged;
-                private boolean unpaged;
+                public SortBean sort;
+                public int pageSize;
+                public int pageNumber;
+                public int offset;
+                public boolean paged;
+                public boolean unpaged;
 
-                public SortBean getSort() {
-                    return sort;
-                }
-
-                public void setSort(SortBean sort) {
-                    this.sort = sort;
-                }
-
-                public int getPageSize() {
-                    return pageSize;
-                }
-
-                public void setPageSize(int pageSize) {
-                    this.pageSize = pageSize;
-                }
-
-                public int getPageNumber() {
-                    return pageNumber;
-                }
-
-                public void setPageNumber(int pageNumber) {
-                    this.pageNumber = pageNumber;
-                }
-
-                public int getOffset() {
-                    return offset;
-                }
-
-                public void setOffset(int offset) {
-                    this.offset = offset;
-                }
-
-                public boolean isPaged() {
-                    return paged;
-                }
-
-                public void setPaged(boolean paged) {
-                    this.paged = paged;
-                }
-
-                public boolean isUnpaged() {
-                    return unpaged;
-                }
-
-                public void setUnpaged(boolean unpaged) {
-                    this.unpaged = unpaged;
-                }
-
-                public class SortBean {
+                public  class SortBean {
                     /**
                      * sorted : false
                      * unsorted : true
                      */
 
-                    private boolean sorted;
-                    private boolean unsorted;
-
-                    public boolean isSorted() {
-                        return sorted;
-                    }
-
-                    public void setSorted(boolean sorted) {
-                        this.sorted = sorted;
-                    }
-
-                    public boolean isUnsorted() {
-                        return unsorted;
-                    }
-
-                    public void setUnsorted(boolean unsorted) {
-                        this.unsorted = unsorted;
-                    }
+                    public boolean sorted;
+                    public boolean unsorted;
                 }
             }
 
-            public class SortBeanX {
+            public  class SortBeanX {
                 /**
                  * sorted : false
                  * unsorted : true
                  */
 
-                private boolean sorted;
-                private boolean unsorted;
+                public boolean sorted;
+                public boolean unsorted;
+            }
 
-                public boolean isSorted() {
-                    return sorted;
-                }
+            public  class ContentBean {
+                /**
+                 * id : 212
+                 * createTime : 2019-03-25 20:01:36
+                 * deleted : false
+                 * orderNo : OTC201903252001360304629
+                 * outOrderNo : 12345678910
+                 * status : A_PROCESS
+                 * statusDesc : 新订单生成,等待支付
+                 * amount : 100
+                 * userId : 15
+                 * merchantUserId : 2
+                 * takeTime : 2019-03-25 20:03:04
+                 * closeTime : null
+                 * completeTime : null
+                 * successTime : null
+                 * payType : WXPAY
+                 * payAccountJson : {"accountData":"wxp://f2f0iILS_3Cn5d_AfCCdl5VtsbqIZ-w5ph6J","accountName":"1334","accountType":"WXPAY","createTime":1553349811000,"deleted":false,"id":12,"realName":"孔明灯","used":true,"userId":15}
+                 * userUnqueNo : 9naMFH
+                 * orderDesc : 演示支付
+                 * remark : null
+                 * attach :
+                 * notifyCount : 0
+                 * returnUrl : http://111.230.242.115:8888/
+                 * notifyUrl : http://111.230.242.115:8888/notify
+                 */
 
-                public void setSorted(boolean sorted) {
-                    this.sorted = sorted;
-                }
-
-                public boolean isUnsorted() {
-                    return unsorted;
-                }
-
-                public void setUnsorted(boolean unsorted) {
-                    this.unsorted = unsorted;
-                }
+                public int id;
+                public String createTime;
+                public boolean deleted;
+                public String orderNo;
+                public String outOrderNo;
+                public String status;
+                public String statusDesc;
+                public int amount;
+                public int userId;
+                public int merchantUserId;
+                public String takeTime;
+                public Object closeTime;
+                public Object completeTime;
+                public Object successTime;
+                public String payType;
+                public String payAccountJson;
+                public String userUnqueNo;
+                public String orderDesc;
+                public Object remark;
+                public String attach;
+                public int notifyCount;
+                public String returnUrl;
+                public String notifyUrl;
             }
         }
 
-        public class IndexTodayOrderAnalysisRespBean {
+        public  class IndexTodayOrderAnalysisRespBean {
             /**
              * todaySuccess : 0
              * todaySuccessMoney : 0
              * todayCommision : 0
              */
 
-            private int todaySuccess;
-            private int todaySuccessMoney;
-            private int todayCommision;
-
-            public int getTodaySuccess() {
-                return todaySuccess;
-            }
-
-            public void setTodaySuccess(int todaySuccess) {
-                this.todaySuccess = todaySuccess;
-            }
-
-            public int getTodaySuccessMoney() {
-                return todaySuccessMoney;
-            }
-
-            public void setTodaySuccessMoney(int todaySuccessMoney) {
-                this.todaySuccessMoney = todaySuccessMoney;
-            }
-
-            public int getTodayCommision() {
-                return todayCommision;
-            }
-
-            public void setTodayCommision(int todayCommision) {
-                this.todayCommision = todayCommision;
-            }
+            public int todaySuccess;
+            public int todaySuccessMoney;
+            public int todayCommision;
         }
 
-        public class OtcBean {
+        public  class OtcBean {
             /**
-             * id : 4
-             * createTime : 2019-03-18 20:15:23
+             * id : 9
+             * createTime : 2019-03-21 10:32:49
              * deleted : false
-             * userId : 3
-             * otcType : null
-             * commision : 0.0
-             * startTime : null
-             * start : false
+             * userId : 15
+             * otcType : HAND
+             * commision : 98500
+             * startTime : 2019-03-24 21:04:24
+             * start : true
              */
 
-            private int id;
-            private String createTime;
-            private boolean deleted;
-            private int userId;
-            private Object otcType;
-            private double commision;
-            private String startTime;
-            private boolean start;
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getCreateTime() {
-                return createTime;
-            }
-
-            public void setCreateTime(String createTime) {
-                this.createTime = createTime;
-            }
-
-            public boolean isDeleted() {
-                return deleted;
-            }
-
-            public void setDeleted(boolean deleted) {
-                this.deleted = deleted;
-            }
-
-            public int getUserId() {
-                return userId;
-            }
-
-            public void setUserId(int userId) {
-                this.userId = userId;
-            }
-
-            public Object getOtcType() {
-                return otcType;
-            }
-
-            public void setOtcType(Object otcType) {
-                this.otcType = otcType;
-            }
-
-            public double getCommision() {
-                return commision;
-            }
-
-            public void setCommision(double commision) {
-                this.commision = commision;
-            }
-
-            public String getStartTime() {
-                return startTime;
-            }
-
-            public void setStartTime(String startTime) {
-                this.startTime = startTime;
-            }
-
-            public boolean isStart() {
-                return start;
-            }
-
-            public void setStart(boolean start) {
-                this.start = start;
-            }
+            public int id;
+            public String createTime;
+            public boolean deleted;
+            public int userId;
+            public String otcType;
+            public int commision;
+            public String startTime;
+            public boolean start;
         }
 
-        public class NoticeListBean {
+        public  class NoticeListBean {
             /**
              * id : 2
              * createTime : 2019-03-10 15:07:07
@@ -482,78 +198,14 @@ public class IndexEntity {
              * publish_user : null
              */
 
-            private int id;
-            private String createTime;
-            private boolean deleted;
-            private String title;
-            private String summary;
-            private Object content;
-            private int publish_userId;
-            private Object publish_user;
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getCreateTime() {
-                return createTime;
-            }
-
-            public void setCreateTime(String createTime) {
-                this.createTime = createTime;
-            }
-
-            public boolean isDeleted() {
-                return deleted;
-            }
-
-            public void setDeleted(boolean deleted) {
-                this.deleted = deleted;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getSummary() {
-                return summary;
-            }
-
-            public void setSummary(String summary) {
-                this.summary = summary;
-            }
-
-            public Object getContent() {
-                return content;
-            }
-
-            public void setContent(Object content) {
-                this.content = content;
-            }
-
-            public int getPublish_userId() {
-                return publish_userId;
-            }
-
-            public void setPublish_userId(int publish_userId) {
-                this.publish_userId = publish_userId;
-            }
-
-            public Object getPublish_user() {
-                return publish_user;
-            }
-
-            public void setPublish_user(Object publish_user) {
-                this.publish_user = publish_user;
-            }
+            public int id;
+            public String createTime;
+            public boolean deleted;
+            public String title;
+            public String summary;
+            public Object content;
+            public int publish_userId;
+            public Object publish_user;
         }
     }
 }

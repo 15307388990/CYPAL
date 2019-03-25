@@ -185,7 +185,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void returnData(String data, String url) {
         LoginEntity loginEntity = JSON.parseObject( data, LoginEntity.class );
         mSavePreferencesData.putStringData( "token", loginEntity.data.loginToken );
-        mSavePreferencesData.putStringData( "webSocketToken", loginEntity.data.webSocketToken );
         Tools.jump( this, TabActivity.class, true );
     }
 

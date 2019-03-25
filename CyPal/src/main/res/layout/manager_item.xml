@@ -7,8 +7,9 @@
 
     <LinearLayout
         android:id="@+id/ll_yun"
-        android:layout_width="115dp"
+        android:layout_width="110dp"
         android:layout_height="102dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/manager_bg"
         android:gravity="center"
         android:orientation="vertical">
@@ -28,6 +29,14 @@
             android:layout_marginTop="29dp"
             android:text="点击抢单"
             android:textColor="#ff3776fb"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tv_qian2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="29dp"
+            android:text="抢光了"
+            android:textColor="@color/CY_999999"
             android:textSize="12sp" />
     </LinearLayout>
 

@@ -7,19 +7,7 @@ public class ManagerEntity {
      * messageEnum : OTC
      */
 
-    public ContentBean content;
+    public String content;
     public String messageEnum;
 
-    public  class ContentBean {
-        /**
-         * amount : 200
-         * payType : ALIPAY
-         * orderId : 200
-         */
-
-        public int amount;
-        public String payType;
-        public int orderId;
-        public boolean isQian=false;
-    }
 }

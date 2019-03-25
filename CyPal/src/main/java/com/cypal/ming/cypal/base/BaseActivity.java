@@ -176,10 +176,11 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
             if (stauts == 1) {
                 this.returnData( response, url );
             } else if (stauts == -200) {
-                 mSavePreferencesData.putStringData( "token","" );
+                mSavePreferencesData.putStringData( "token", "" );
                 Tools.jump( this, LoginActivity.class, true );
             } else {
                 Tools.showToast( this, msg );
+                this.returnMsg( response, url );
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -190,5 +191,7 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
     protected void returnData(String data, String url) {
     }
 
+    protected void returnMsg(String data, String url) {
+    }
 
 }

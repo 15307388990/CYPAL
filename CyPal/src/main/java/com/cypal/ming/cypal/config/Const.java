@@ -141,6 +141,14 @@ public class Const {
      *  抢单
      */
     public static final String take= "/private/index/take";
+    /**
+     *  确认收款
+     */
+    public static final String confirm= "/private/otcOrder/confirm";
+    /**
+     *  申诉订单
+     */
+    public static final String service= "/private/rw/service";
 
 
     /* 获取订单列表*/

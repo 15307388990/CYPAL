@@ -22,6 +22,5 @@ public class LoginEntity {
          */
 
         public String loginToken;
-        public String webSocketToken;
     }
 }

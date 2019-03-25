@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.bean.CategoryEntity;
+import com.cypal.ming.cypal.bean.ContentEntity;
 import com.cypal.ming.cypal.bean.ManagerEntity;
 
 import java.util.List;
@@ -24,12 +25,12 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ViewHole
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
     private final Context mContext;
-    List<ManagerEntity> mList;
+    List<ContentEntity> mList;
     private OnClickListener onClickListener;
     private View mHeaderView;
 
 
-    public ManagerAdapter(Context context, List<ManagerEntity> list, OnClickListener onClickListener) {
+    public ManagerAdapter(Context context, List<ContentEntity> list, OnClickListener onClickListener) {
         this.mContext = context;
         this.mList = list;
         this.onClickListener = onClickListener;
@@ -39,11 +40,10 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ViewHole
      * 定义结果回调接口
      */
     public interface OnClickListener {
-        void Qiang(String orderId);
+        void Qiang(String orderId, String amount);
 
 
     }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -58,26 +58,25 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ViewHole
         if (mHeaderView != null && viewType == TYPE_HEADER)
             return new ViewHoler( mHeaderView );
         View itemView = LayoutInflater.from( mContext ).inflate( R.layout.manager_item, parent, false );
-
         return new ViewHoler( itemView );
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        final ManagerEntity contentBean = mList.get( position );
-        holder.tv_amount.setText( "￥" + contentBean.content.amount );
-        if (contentBean.content.isQian) {
-            holder.tv_qiang.setText( "已抢光" );
-            holder.tv_qiang.setTextColor( R.color.CY_999999 );
+        final ContentEntity contentBean = mList.get( position );
+        holder.tv_amount.setText( "￥" + contentBean.amount );
+        if (contentBean.isQian) {
+            holder.tv_qiang.setVisibility( View.GONE );
+            holder.tv_qian2.setVisibility( View.VISIBLE );
         } else {
-            holder.tv_qiang.setText( "点击抢单" );
-            holder.tv_qiang.setTextColor( R.color.CY_3776FB );
+            holder.tv_qiang.setVisibility( View.VISIBLE );
+            holder.tv_qian2.setVisibility( View.GONE );
         }
         holder.ll_yun.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.Qiang( contentBean.content.orderId + "" );
+                onClickListener.Qiang( contentBean.orderId + "", contentBean.amount + "" );
             }
         } );
 
@@ -92,20 +91,22 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ViewHole
         }
     }
 
-    public void updateAdapter(List<ManagerEntity> mList) {
+    public void updateAdapter(List<ContentEntity> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
 
     class ViewHoler extends RecyclerView.ViewHolder {
         private TextView tv_amount;
-        private TextView tv_qiang;
+        private TextView tv_qiang, tv_qian2;
+
         private LinearLayout ll_yun;
 
         public ViewHoler(View itemView) {
             super( itemView );
             tv_amount = (TextView) itemView.findViewById( R.id.tv_amount );
             tv_qiang = (TextView) itemView.findViewById( R.id.tv_qiang );
+            tv_qian2 = (TextView) itemView.findViewById( R.id.tv_qian2 );
             ll_yun = (LinearLayout) itemView.findViewById( R.id.ll_yun );
         }
     }

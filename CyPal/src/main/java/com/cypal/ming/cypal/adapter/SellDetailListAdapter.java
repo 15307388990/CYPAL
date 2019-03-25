@@ -1,22 +1,17 @@
 package com.cypal.ming.cypal.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.activity.MapWebviewActivity;
-import com.cypal.ming.cypal.bean.OrderModel;
-import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.bean.ContentEntity;
+import com.cypal.ming.cypal.bean.IndexEntity;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,12 +22,13 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
     private final Context mContext;
-    private List<OrderModel> mList;
+    private List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList;
     private OnClickListener onClickListener;
     private SavePreferencesData mSavePreferencesData;
     private View mHeaderView;
 
-    public SellDetailListAdapter(Context context, List<OrderModel> list, OnClickListener onClickListener) {
+
+    public SellDetailListAdapter(Context context, List<IndexEntity.DataBean.UndoOrderBean.ContentBean> list, OnClickListener onClickListener) {
         this.mContext = context;
         this.mList = list;
         this.onClickListener = onClickListener;
@@ -71,45 +67,76 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new SellDetailListAdapter.ViewHoler( mHeaderView );
+            return new ViewHoler( mHeaderView );
         View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_recyler_sell, parent, false );
-        return new SellDetailListAdapter.ViewHoler( itemView );
+        return new ViewHoler( itemView );
     }
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        final OrderModel sellBean = mList.get( position );
+        if (getItemViewType( position ) == TYPE_HEADER) return;
+        int pos = getRealPosition( holder );
+        final IndexEntity.DataBean.UndoOrderBean.ContentBean sellBean = mList.get( pos );
+        holder.tv_amount.setText( "￥" + sellBean.amount );
+        holder.tv_timer.setText( sellBean.takeTime );
+        holder.tv_staus.setText( sellBean.statusDesc );
+        if (sellBean.payType.equals( "WXPAY" )) {
+            holder.tv_paytype.setText( "微信" );
+        } else if (sellBean.payType.equals( "ALIPAY" )) {
+            holder.tv_paytype.setText( "支付宝" );
+        } else {
+            holder.tv_paytype.setText( "云闪付" );
+        }
+        holder.tv_number.setText( sellBean.orderNo );
+        holder.btn_ok.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.ConfirmReceipt( sellBean.id + "" );
+            }
+        } );
+        holder.btn_shen.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.Complaint( sellBean.id + "" );
+            }
+        } );
 
+    }
 
+    public int getRealPosition(RecyclerView.ViewHolder holder) {
+        int position = holder.getLayoutPosition();
+        return mHeaderView == null ? position : position - 1;
     }
 
     @Override
     public int getItemCount() {
-        if (mList == null) {
-            return 0;
-        } else {
-            return mList.size();
-        }
+        return mHeaderView == null ? mList.size() : mList.size() + 1;
     }
 
-    public void updateAdapter(ArrayList<OrderModel> mList) {
+
+    public void updateAdapter(List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
 
     class ViewHoler extends RecyclerView.ViewHolder {
-        //订单编号 金额  送达时间  配送信息 商家地址 距离 买家地址 备注
-//        public TextView tv_uuid, tv_tprice, tv_dtime, tv_seller_addr, tv_distance, tv_user_addr, tv_remark, tv_created_at, tv_information, tv_type;
-//        //拒单 接单
-//        public Button btn_accept, btn_refuse;
-//        public LinearLayout ll_layout, ll_layout2, ll_local;
-//        public TextView tv_complete_price, tv_complete_number;
+        private TextView tv_amount;
+        private TextView tv_staus;
+        private TextView tv_paytype;
+        private TextView tv_number;
+        private TextView tv_timer;
+        private TextView btn_ok;
+        private TextView btn_shen;
 
         public ViewHoler(View itemView) {
             super( itemView );
-//            tv_uuid = (TextView) itemView.findViewById(R.id.tv_uuid);
-//            tv_tprice = (TextView) itemView.findViewById(R.id.tv_tprice);
-//            tv_dtime = (TextView) itemView.findViewById(R.id.tv_dtime);
+            tv_amount = (TextView) itemView.findViewById( R.id.tv_amount );
+            tv_staus = (TextView) itemView.findViewById( R.id.tv_staus );
+            tv_paytype = (TextView) itemView.findViewById( R.id.tv_paytype );
+            tv_number = (TextView) itemView.findViewById( R.id.tv_number );
+            tv_timer = (TextView) itemView.findViewById( R.id.tv_timer );
+            btn_ok = (TextView) itemView.findViewById( R.id.btn_ok );
+            btn_shen = (TextView) itemView.findViewById( R.id.btn_shen );
         }
     }
 }
