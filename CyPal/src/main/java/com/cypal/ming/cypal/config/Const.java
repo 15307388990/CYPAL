@@ -137,6 +137,10 @@ public class Const {
      *  取消接单
      */
     public static final String stop= "/private/index/stop";
+    /**
+     *  抢单
+     */
+    public static final String take= "/private/index/take";
 
 
     /* 获取订单列表*/

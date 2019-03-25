@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_yun"
+        android:layout_width="115dp"
+        android:layout_height="102dp"
+        android:background="@drawable/manager_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 100.00"
+            android:textColor="#ff333333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_qiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="29dp"
+            android:text="点击抢单"
+            android:textColor="#ff3776fb"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>

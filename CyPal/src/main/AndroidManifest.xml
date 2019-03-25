@@ -225,6 +225,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 会员管理 -->
         <activity
+            android:name="com.cypal.ming.cypal.activity.GrabSingleActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 手动抢单-->
+        <activity
             android:name="com.cypal.ming.cypal.activity.CashAccountListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 账户列表 -->

@@ -107,6 +107,12 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
 
             }
         } );
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        } );
     }
 
     public void initEvent() {

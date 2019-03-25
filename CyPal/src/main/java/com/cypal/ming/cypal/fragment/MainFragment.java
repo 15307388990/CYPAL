@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.AccountListActivity;
+import com.cypal.ming.cypal.activity.GrabSingleActivity;
 import com.cypal.ming.cypal.activity.SetPayPasswordOneActivity;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
@@ -90,6 +91,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
     };
     private String method;
+    private boolean isStar;
 
     @Override
     public void onStop() {
@@ -197,7 +199,12 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void onClick(View v) {
                 method = "HAND";
-                start();
+                if (isStar) {
+                    Tools.jump( mcontext, GrabSingleActivity.class, false );
+                } else {
+                    start();
+                }
+
             }
         } );
         thread = new Thread() {
@@ -209,7 +216,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 }
             }
         };
-        thread.start();
+
 
         tv_quxiao.setOnClickListener( new OnClickListener() {
             @Override
@@ -351,6 +358,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     @Override
     public void returnData(final String data, String url) {
         if (url.contains( Const.start )) {
+            if (method.equals( "HAND" ) && !isStar) {
+                Tools.jump( mcontext, GrabSingleActivity.class, false );
+            }
             //接单成功刷新首页
             orderList();
         } else if (url.contains( Const.stop )) {
@@ -365,6 +375,12 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private void initData(String data) {
         IndexEntity indexEntity = JSON.parseObject( data, IndexEntity.class );
         noticeListBeanList = indexEntity.getData().getNoticeList();
+        if (!noticeListBeanList.isEmpty()) {
+            if (!thread.isAlive()) {
+                thread.start();
+            }
+
+        }
 
         tv_successratetext.setText( indexEntity.getData().getSuccessRateText() );
         tv_balance.setText( "￥" + indexEntity.getData().getBalance() );
@@ -385,6 +401,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             iv_banl.setVisibility( View.VISIBLE );
         }
         IndexEntity.DataBean.OtcBean otcBean = indexEntity.getData().getOtc();
+        isStar = otcBean.isStart();
         if (otcBean.isStart()) {
             //开始接单
             if (otcBean.getOtcType().equals( "AUTO" )) {
