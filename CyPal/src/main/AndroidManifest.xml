@@ -107,7 +107,9 @@
         <activity
             android:name="com.cypal.ming.cypal.activity.SaveAccountAcitity"
             android:screenOrientation="portrait" /><!-- 添加收款账号-->
-
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TopUpDetailsActivity"
+            android:screenOrientation="portrait" /><!-- 充值详情-->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"
@@ -115,6 +117,9 @@
         <activity
             android:name="com.cypal.ming.cypal.activity.OrderDetailsActivity"
             android:configChanges="orientation|screenSize" /><!-- 订单详情-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TopUpListActivity"
+            android:configChanges="orientation|screenSize" /><!-- 订单记录-->
         <activity
             android:name="com.cypal.ming.cypal.activity.LoginActivity"
             android:screenOrientation="portrait"></activity>

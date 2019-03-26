@@ -3,6 +3,7 @@ package com.cypal.ming.cypal.dialogfrment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.CertificationActivity;
 import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.activity.MemberActivity;
+import com.cypal.ming.cypal.activity.TopUpDetailsActivity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.databinding.TradingDialogBinding;
 import com.cypal.ming.cypal.utils.MD5Util;
@@ -133,6 +135,11 @@ public class TradingDialog extends CenterDialog implements Response.Listener<Str
             String data = json.optString( "data" );
             if (stauts == 1) {
                 dismiss();
+                String orderId = json.getJSONObject( "data" ).getString( "orderId" );
+                Intent intent = new Intent( mContext, TopUpDetailsActivity.class );
+                intent.putExtra( "orderId", orderId );
+                startActivity( intent );
+
             } else if (stauts == -2) {
                 dismiss();
                 //跳转至认证会员

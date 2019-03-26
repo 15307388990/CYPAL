@@ -149,10 +149,16 @@ public class Const {
      *  申诉订单
      */
     public static final String service= "/private/rw/service";
+    /**
+     *  充值详情
+     */
+    public static final String order= "/private/rw/order?";
+    /**
+     *  充值记录
+     */
+    public static final String orderlist= "/private/rw/my?";
 
 
-    /* 获取订单列表*/
-    public static final String orderlist = "/order/index";
 
     /* 订单详情 */
     public static final String ordershow = "/order/show";

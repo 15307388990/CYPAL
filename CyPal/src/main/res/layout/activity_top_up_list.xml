@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        layout="@layout/top_view_white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height_48"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/ll_view_back"
+            android:layout_width="@dimen/margin_75"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/margin_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/all_icon_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_18" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/right_view_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="27dp"
+            android:layout_marginRight="27dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:src="@drawable/desk_icon_user"
+            android:visibility="gone" />
+
+
+        <RadioGroup
+            android:id="@+id/rg_top"
+            android:layout_width="152dp"
+            android:layout_height="26dp"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_top_jin"
+                android:layout_width="76dp"
+                android:layout_height="26dp"
+                android:background="@drawable/rab_top_up_btn"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="进行中"
+                android:textColor="@color/tab_top_up_rab"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_top_wancheng"
+                android:layout_width="76dp"
+                android:layout_height="26dp"
+                android:background="@drawable/rab_top_up_2btn"
+                android:button="@null"
+                android:gravity="center"
+                android:text="已完成"
+                android:textColor="@color/tab_top_up_rab"
+                android:textSize="12sp" />
+        </RadioGroup>
+    </RelativeLayout>
+
+
+    <RadioGroup
+        android:id="@+id/rd_group"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rd_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="全部"
+            android:checked="true"
+            android:textColor="@color/coupon_color"
+            android:textSize="@dimen/text_14" />
+
+        <RadioButton
+            android:id="@+id/rd_wei"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="未付款"
+            android:textColor="@color/coupon_color"
+            android:textSize="@dimen/text_14" />
+
+        <RadioButton
+            android:id="@+id/rd_yi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="已付款"
+            android:textColor="@color/coupon_color"
+            android:textSize="@dimen/text_14" />
+
+        <RadioButton
+            android:id="@+id/rd_shen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="申诉中"
+            android:textColor="@color/coupon_color"
+            android:textSize="@dimen/text_14" />
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/rg_top_2"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rd_wancheng"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="交易完成"
+            android:checked="true"
+            android:textColor="@color/coupon_color"
+            android:textSize="@dimen/text_14" />
+
+        <RadioButton
+            android:id="@+id/rd_quxiao"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="交易取消"
+            android:textColor="@color/coupon_color"
+            android:textSize="@dimen/text_14" />
+    </RadioGroup>
+    <LinearLayout
+        android:id="@+id/cursor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="85dp"
+            android:layout_height="3dp"
+            android:background="@color/CY_007AFF" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:scrollbars="none" />
+
+</LinearLayout>

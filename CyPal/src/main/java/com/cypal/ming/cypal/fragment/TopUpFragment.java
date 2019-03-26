@@ -2,10 +2,6 @@ package com.cypal.ming.cypal.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,20 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.activity.LoginActivity;
-import com.cypal.ming.cypal.activity.OrderDetailsActivity;
-import com.cypal.ming.cypal.activity.TakeActivity;
-import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
+import com.cypal.ming.cypal.activity.TopUpListActivity;
 import com.cypal.ming.cypal.adapter.TopUpListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
-import com.cypal.ming.cypal.bean.OrderModel;
 import com.cypal.ming.cypal.bean.TopUpEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -36,15 +27,10 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * @Author luoming
@@ -62,6 +48,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     private int pageNumber = 1;
     private boolean isxia = true;
     List<TopUpEntity.DataBean.ContentBean> list;
+    private TextView right_view_text;
 
     public TopUpFragment(Activity context) {
         super( context );
@@ -110,6 +97,13 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
             initData( mSavePreferencesData.getStringData( "topjson" ) );
         }
+        right_view_text = (TextView) view.findViewById( R.id.right_view_text );
+        right_view_text.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, TopUpListActivity.class, false );
+            }
+        } );
     }
 
 

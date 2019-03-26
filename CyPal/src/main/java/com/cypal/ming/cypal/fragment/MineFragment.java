@@ -2,7 +2,6 @@ package com.cypal.ming.cypal.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import com.cypal.ming.cypal.activity.AccountListActivity;
 import com.cypal.ming.cypal.activity.CommissionAcitity;
 import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
+import com.cypal.ming.cypal.activity.TopUpListActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
 import com.cypal.ming.cypal.config.Const;
@@ -51,6 +51,7 @@ public class MineFragment extends BaseFragment {
     private TextView tv_creditscore;
     private LinearLayout ll_shou;
     private LinearLayout ll_commission;
+    private LinearLayout ll_jiedan;
 
     public MineFragment(Activity context) {
         super( context );
@@ -150,6 +151,13 @@ public class MineFragment extends BaseFragment {
         if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "infojson" ) )) {
             initData( mSavePreferencesData.getStringData( "infojson" ) );
         }
+        ll_jiedan = (LinearLayout) view.findViewById( R.id.ll_jiedan );
+        ll_jiedan.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, TopUpListActivity.class, false );
+            }
+        } );
     }
 
     private void initData(String data) {
