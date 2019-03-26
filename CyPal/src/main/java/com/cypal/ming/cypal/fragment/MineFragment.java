@@ -2,7 +2,9 @@ package com.cypal.ming.cypal.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,43 +93,8 @@ public class MineFragment extends BaseFragment {
     @Override
     public void returnData(String data, String url) {
         if (url.contains( Const.setIn )) {
-            InfoEntity infoEntity = JSON.parseObject( data, InfoEntity.class );
-            InfoEntity.DataBean.MyInformationBeanBean myInformationBeanBean = infoEntity.data.myInformationBean;
-            if (myInformationBeanBean.avatar == null) {
-                imageLoader.displayImage( Const.USER_DEFAULT_ICON, myicon, options );
-            } else {
-                imageLoader.displayImage( myInformationBeanBean.avatar, myicon,
-                        options );
-
-            }
-            tv_nickname.setText( myInformationBeanBean.nickName );
-            //是否认证
-            if (myInformationBeanBean.certification) {
-                iv_renzhen.setImageResource( R.drawable.label_members );
-                tv_creditscore.setVisibility( View.VISIBLE );
-                tv_text.setVisibility( View.GONE );
-            } else {
-                iv_renzhen.setImageResource( R.drawable.label_no );
-                tv_creditscore.setVisibility( View.GONE );
-                tv_text.setVisibility( View.VISIBLE );
-            }
-            //是否签到
-            if (("SIGNIN").equals( myInformationBeanBean.signStatus )) {
-                ll_view_back.setVisibility( View.GONE );
-                ll_view_back2.setVisibility( View.VISIBLE );
-            } else {
-                ll_view_back.setVisibility( View.VISIBLE );
-                ll_view_back2.setVisibility( View.GONE );
-            }
-            //是否显示邀请好友
-            if (myInformationBeanBean.showInviteFriends) {
-                ll_yaoqing.setVisibility( View.VISIBLE );
-                v_yaoqing.setVisibility( View.VISIBLE );
-            } else {
-                ll_yaoqing.setVisibility( View.GONE );
-                v_yaoqing.setVisibility( View.GONE );
-            }
-            tv_creditscore.setText( "信用分：" + myInformationBeanBean.creditScore );
+            mSavePreferencesData.putStringData( "infojson", data );
+            initData( data );
         } else if (url.contains( Const.signIn )) {
             SignInDialog signInDialog = SignInDialog.newInstance( "" );
             signInDialog.show( mcontext );
@@ -179,5 +146,51 @@ public class MineFragment extends BaseFragment {
                 Tools.jump( mcontext, CommissionAcitity.class, false );
             }
         } );
+        //缓存数据
+        if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "infojson" ) )) {
+            initData( mSavePreferencesData.getStringData( "infojson" ) );
+        }
     }
+
+    private void initData(String data) {
+
+        InfoEntity infoEntity = JSON.parseObject( data, InfoEntity.class );
+        InfoEntity.DataBean.MyInformationBeanBean myInformationBeanBean = infoEntity.data.myInformationBean;
+        if (myInformationBeanBean.avatar == null) {
+            imageLoader.displayImage( Const.USER_DEFAULT_ICON, myicon, options );
+        } else {
+            imageLoader.displayImage( myInformationBeanBean.avatar, myicon,
+                    options );
+
+        }
+        tv_nickname.setText( myInformationBeanBean.nickName );
+        //是否认证
+        if (myInformationBeanBean.certification) {
+            iv_renzhen.setImageResource( R.drawable.label_members );
+            tv_creditscore.setVisibility( View.VISIBLE );
+            tv_text.setVisibility( View.GONE );
+        } else {
+            iv_renzhen.setImageResource( R.drawable.label_no );
+            tv_creditscore.setVisibility( View.GONE );
+            tv_text.setVisibility( View.VISIBLE );
+        }
+        //是否签到
+        if (("SIGNIN").equals( myInformationBeanBean.signStatus )) {
+            ll_view_back.setVisibility( View.GONE );
+            ll_view_back2.setVisibility( View.VISIBLE );
+        } else {
+            ll_view_back.setVisibility( View.VISIBLE );
+            ll_view_back2.setVisibility( View.GONE );
+        }
+        //是否显示邀请好友
+        if (myInformationBeanBean.showInviteFriends) {
+            ll_yaoqing.setVisibility( View.VISIBLE );
+            v_yaoqing.setVisibility( View.VISIBLE );
+        } else {
+            ll_yaoqing.setVisibility( View.GONE );
+            v_yaoqing.setVisibility( View.GONE );
+        }
+        tv_creditscore.setText( "信用分：" + myInformationBeanBean.creditScore );
+    }
+
 }

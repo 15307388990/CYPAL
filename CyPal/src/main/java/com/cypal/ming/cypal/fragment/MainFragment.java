@@ -11,6 +11,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -98,7 +99,6 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     @Override
     public void onStop() {
         super.onStop();
-        isRunning = false;
     }
 
     /**
@@ -232,6 +232,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 Tools.jump( mcontext, AccountListActivity.class, false );
             }
         } );
+        if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "indexjson" ) )) {
+            initData( mSavePreferencesData.getStringData( "indexjson" ) );
+        }
     }
 
 
@@ -358,6 +361,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             orderList();
         } else if (url.contains( Const.mallSetInfo )) {
             springView.onFinishFreshAndLoad();
+            mSavePreferencesData.putStringData( "indexjson", data );
             initData( data );
         } else if (url.contains( Const.confirm )) {
             orderList();

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -94,16 +95,21 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
             @Override
             public void onLoadmore() {
-                pageNumber++;
-                if (isxia) {
-                    orderList();
-                } else {
-                    Tools.showToast( getActivity(), "没有更多数据了" );
-                    springView.onFinishFreshAndLoad();
-                }
+                springView.onFinishFreshAndLoad();
+//                pageNumber++;
+//                if (isxia) {
+//                    orderList();
+//                } else {
+//                    Tools.showToast( getActivity(), "没有更多数据了" );
+//                    springView.onFinishFreshAndLoad();
+//                }
 
             }
         } );
+        if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "topjson" ) )) {
+
+            initData( mSavePreferencesData.getStringData( "topjson" ) );
+        }
     }
 
 
@@ -156,11 +162,17 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
     @Override
     public void returnData(String data, String url) {
-        super.returnData( data, url );
+        springView.onFinishFreshAndLoad();
         if (url.contains( Const.rwlist )) {
-            TopUpEntity topUpEntity = JSON.parseObject( data, TopUpEntity.class );
-            list = topUpEntity.data.content;
-            topUpListAdapter.updateAdapter( list );
+            mSavePreferencesData.putStringData( "topjson", data );
+            initData( data );
+
         }
+    }
+
+    public void initData(String data) {
+        TopUpEntity topUpEntity = JSON.parseObject( data, TopUpEntity.class );
+        list = topUpEntity.data.content;
+        topUpListAdapter.updateAdapter( list );
     }
 }
