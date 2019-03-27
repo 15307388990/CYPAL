@@ -157,6 +157,10 @@ public class Const {
      *  充值记录
      */
     public static final String orderlist= "/private/rw/my?";
+    /**
+     *  接单记录
+     */
+    public static final String otcOrderlist= "/private/otcOrder/list?";
 
 
 

@@ -17,6 +17,7 @@ import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.AccountListActivity;
 import com.cypal.ming.cypal.activity.CommissionAcitity;
 import com.cypal.ming.cypal.activity.MemberActivity;
+import com.cypal.ming.cypal.activity.OrderListActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.activity.TopUpListActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
@@ -52,6 +53,7 @@ public class MineFragment extends BaseFragment {
     private LinearLayout ll_shou;
     private LinearLayout ll_commission;
     private LinearLayout ll_jiedan;
+    private LinearLayout ll_top_up;
 
     public MineFragment(Activity context) {
         super( context );
@@ -153,6 +155,13 @@ public class MineFragment extends BaseFragment {
         }
         ll_jiedan = (LinearLayout) view.findViewById( R.id.ll_jiedan );
         ll_jiedan.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, OrderListActivity.class, false );
+            }
+        } );
+        ll_top_up = (LinearLayout) view.findViewById( R.id.ll_top_up );
+        ll_top_up.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Tools.jump( mcontext, TopUpListActivity.class, false );

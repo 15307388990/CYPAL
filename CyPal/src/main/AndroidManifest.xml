@@ -121,6 +121,9 @@
             android:name="com.cypal.ming.cypal.activity.TopUpListActivity"
             android:configChanges="orientation|screenSize" /><!-- 订单记录-->
         <activity
+            android:name="com.cypal.ming.cypal.activity.OrderListActivity"
+            android:configChanges="orientation|screenSize" /><!-- 接单记录-->
+        <activity
             android:name="com.cypal.ming.cypal.activity.LoginActivity"
             android:screenOrientation="portrait"></activity>
         <!--  启动页-->

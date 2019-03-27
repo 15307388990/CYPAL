@@ -202,6 +202,7 @@
         android:background="@color/gray" />
 
     <LinearLayout
+        android:id="@+id/ll_top_up"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical">
