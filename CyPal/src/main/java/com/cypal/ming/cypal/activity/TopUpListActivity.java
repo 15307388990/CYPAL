@@ -44,7 +44,7 @@ public class TopUpListActivity extends BaseActivity  {
     private RadioGroup rg_top;
     private RadioGroup rd_group;
     private LinearLayout cursor;
-    private boolean isFinish = true;
+    private boolean isFinish = false;
     private TopUpState topUpState;
     private RadioButton rd_wancheng;
     private RadioButton rd_quxiao;
@@ -94,9 +94,9 @@ public class TopUpListActivity extends BaseActivity  {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_top_jin) {
-                    isFinish = true;
-                } else if (checkedId == R.id.rb_top_wancheng) {
                     isFinish = false;
+                } else if (checkedId == R.id.rb_top_wancheng) {
+                    isFinish = true;
 
                 }
                 initEvent();
@@ -146,7 +146,7 @@ public class TopUpListActivity extends BaseActivity  {
 
     public void initEvent() {
         params = (LinearLayout.LayoutParams) cursor.getLayoutParams();
-        if (isFinish) {
+        if (!isFinish) {
             cursorWidth = params.width = Tools.getScreenWidth( TopUpListActivity.this ) / 4;
             cursor.setLayoutParams( params );
             rd_group.setVisibility( View.VISIBLE );

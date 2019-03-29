@@ -35,10 +35,11 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     private List<CategoryEntity.DataBean> list;
     private String orderId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_account_list );
+        setContentView( R.layout.activity_top_details );
         initView();
         order();
     }
@@ -47,6 +48,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
         orderId = getIntent().getStringExtra( "orderId" );
         if (!TextUtils.isEmpty( orderId )) {
             Map<String, String> map = new HashMap<>();
+            map.put( "orderId", orderId );
             mQueue.add( ParamTools.packParam( Const.order, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
             loading();
         }
@@ -72,7 +74,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     @Override
     protected void returnData(String data, String url) {
         super.returnData( data, url );
-        CategoryEntity categoryEntity = JSON.parseObject( data, CategoryEntity.class );
+      //  CategoryEntity categoryEntity = JSON.parseObject( data, CategoryEntity.class );
         //categoryAdapter.updateAdapter( categoryEntity.data );
 
     }

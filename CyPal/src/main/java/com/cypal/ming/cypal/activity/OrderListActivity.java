@@ -49,7 +49,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
     private RadioGroup rg_top;
     private RadioGroup rd_group;
     private LinearLayout cursor;
-    private boolean isFinish = true;
+    private boolean isFinish = false;
     private OrderListState orderListState;
     private RadioButton rd_wancheng;
     private RadioButton rd_quxiao;
@@ -99,9 +99,9 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_top_jin) {
-                    isFinish = true;
-                } else if (checkedId == R.id.rb_top_wancheng) {
                     isFinish = false;
+                } else if (checkedId == R.id.rb_top_wancheng) {
+                    isFinish = true;
 
                 }
                 initEvent();
@@ -151,7 +151,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
 
     public void initEvent() {
         params = (LinearLayout.LayoutParams) cursor.getLayoutParams();
-        if (isFinish) {
+        if (!isFinish) {
             cursorWidth = params.width = Tools.getScreenWidth( OrderListActivity.this ) / 4;
             cursor.setLayoutParams( params );
             rd_group.setVisibility( View.VISIBLE );

@@ -1,17 +1,22 @@
 package com.cypal.ming.cypal.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.TopUpDetailsActivity;
 import com.cypal.ming.cypal.bean.TopUpListEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ImageLoaderUtil;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
+import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.utils.TopUpState;
 import com.cypal.ming.cypal.view.CircleImageView;
 import com.lidroid.xutils.db.table.Id;
@@ -88,7 +93,7 @@ public class TopUpRecordListAdapter extends RecyclerView.Adapter<TopUpRecordList
             holder.tv_staus.setText( "交易中" );
         } else if (contentBean.statusEnum.equals( TopUpState.SUCCESS.toString() )) {
             holder.tv_staus.setText( "交易完成" );
-        } else if (contentBean.statusEnum.equals( TopUpState.SERVICE.toString())) {
+        } else if (contentBean.statusEnum.equals( TopUpState.SERVICE.toString() )) {
             holder.tv_staus.setText( "申诉客服处理" );
         } else if (contentBean.statusEnum.equals( TopUpState.CONFIRM.toString() )) {
             holder.tv_staus.setText( "待确认" );
@@ -103,6 +108,14 @@ public class TopUpRecordListAdapter extends RecyclerView.Adapter<TopUpRecordList
 
         }
         holder.tv_nickname.setText( contentBean.nickName );
+        holder.ll_layout.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( mContext, TopUpDetailsActivity.class );
+                intent.putExtra( "orderId", contentBean.id +"");
+                mContext.startActivity( intent );
+            }
+        } );
     }
 
     public int getRealPosition(RecyclerView.ViewHolder holder) {
@@ -127,6 +140,7 @@ public class TopUpRecordListAdapter extends RecyclerView.Adapter<TopUpRecordList
         private TextView tv_timer;
         private TextView tv_staus;
         private TextView tv_amount;
+        private LinearLayout ll_layout;
 
         public ViewHoler(View itemView) {
             super( itemView );
@@ -135,6 +149,7 @@ public class TopUpRecordListAdapter extends RecyclerView.Adapter<TopUpRecordList
             tv_nickname = (TextView) itemView.findViewById( R.id.tv_nickname );
             tv_timer = (TextView) itemView.findViewById( R.id.tv_timer );
             myicon = (CircleImageView) itemView.findViewById( R.id.myicon );
+            ll_layout = (LinearLayout) itemView.findViewById( R.id.ll_layout );
         }
     }
 }
