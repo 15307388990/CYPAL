@@ -39,5 +39,7 @@ public class AccountListEntity implements Serializable {
         public String accountType;
         public String accountData;
         public boolean used;
+        public boolean isx;
+
     }
 }

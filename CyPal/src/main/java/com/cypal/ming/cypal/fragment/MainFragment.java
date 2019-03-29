@@ -25,12 +25,13 @@ import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.AccountListActivity;
 import com.cypal.ming.cypal.activity.GrabSingleActivity;
-import com.cypal.ming.cypal.activity.SetPayPasswordOneActivity;
+import com.cypal.ming.cypal.activity.OrderListActivity;
+import com.cypal.ming.cypal.activity.WebviewActivity;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.IndexEntity;
-import com.cypal.ming.cypal.bean.OrderModel;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.AccountDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
@@ -70,6 +71,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private TextView tv_qiang;
     private LinearLayout ll_account;
     private LinearLayout ll_wu;
+    private LinearLayout ll_order;
 
     public MainFragment(Activity context) {
         super( context );
@@ -145,6 +147,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         ll_auto = (LinearLayout) headView.findViewById( R.id.ll_auto );
         ll_hand = (LinearLayout) headView.findViewById( R.id.ll_hand );
         ll_layout = (LinearLayout) headView.findViewById( R.id.ll_layout );
+        ll_order = (LinearLayout) headView.findViewById( R.id.ll_order );
         tv_timer = (TextView) headView.findViewById( R.id.tv_timer );
         tv_quxiao = (TextView) headView.findViewById( R.id.tv_quxiao );
         ll_timer = (LinearLayout) headView.findViewById( R.id.ll_timer );
@@ -184,6 +187,14 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         auto_textview.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Tools.showToast( mcontext, strings[number % strings.length] );
+                if (noticeListBeanList.size() > 0) {
+                    String url = Const.BASE_URL + "/h5/notice?noticeId=" + noticeListBeanList.get( number % noticeListBeanList.size() ).id;
+                    Intent intent = new Intent( mcontext, WebviewActivity.class );
+                    intent.putExtra( "link_url", url );
+                    intent.putExtra( "link_name", "消息详情" );
+                    startActivity( intent );
+                }
 
             }
         } );
@@ -229,12 +240,22 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         ll_account.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, AccountListActivity.class, false );
+                AccountDialog accountDialog = AccountDialog.newInstance();
+                accountDialog.show( mcontext );
             }
         } );
         if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "indexjson" ) )) {
             initData( mSavePreferencesData.getStringData( "indexjson" ) );
         }
+/**
+ * 跳转至接单记录
+ */
+        ll_order.setOnClickListener( new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump( mcontext, OrderListActivity.class, false );
+            }
+        } );
     }
 
 

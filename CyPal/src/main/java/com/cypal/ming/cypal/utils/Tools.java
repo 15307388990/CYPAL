@@ -95,6 +95,13 @@ public class Tools {
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics( dm );
         return dm.widthPixels;
     }
+    //获取屏幕高度
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics( dm );
+        return dm.heightPixels;
+    }
+
 
     /**
      * 价格 分转元

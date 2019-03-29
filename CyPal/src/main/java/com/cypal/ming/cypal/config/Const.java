@@ -106,7 +106,7 @@ public class Const {
      */
     public static final String payAccount = "/private/payAccount/list?";
     /**
-     * 我的收款账户列表
+     * 添加收款账户
      */
     public static final String payAccountSave= "/private/payAccount/save";
     /**
