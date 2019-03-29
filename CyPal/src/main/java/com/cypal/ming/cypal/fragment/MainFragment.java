@@ -241,6 +241,13 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void onClick(View v) {
                 AccountDialog accountDialog = AccountDialog.newInstance();
+                accountDialog.setOnClickListener( new AccountDialog.OnClickListener() {
+                    @Override
+                    public void successful() {
+                        //设置成功刷新数据
+                        orderList();
+                    }
+                } );
                 accountDialog.show( mcontext );
             }
         } );
@@ -408,6 +415,10 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         tv_todaySuccess.setText( indexEntity.data.indexTodayOrderAnalysisResp.todaySuccess + "" );
         tv_todaySuccessMoney.setText( indexEntity.data.indexTodayOrderAnalysisResp.todaySuccessMoney + "" );
         String pay = indexEntity.data.usedPayAccount;
+        iv_wexin.setVisibility( View.GONE );
+        iv_alipay.setVisibility( View.GONE );
+        iv_yun.setVisibility( View.GONE );
+        iv_banl.setVisibility( View.GONE );
         if (pay.contains( "WXPAY" )) {
             iv_wexin.setVisibility( View.VISIBLE );
         }

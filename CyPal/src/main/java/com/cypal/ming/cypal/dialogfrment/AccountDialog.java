@@ -2,6 +2,7 @@ package com.cypal.ming.cypal.dialogfrment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
@@ -61,6 +63,8 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
     private DialogAccountListAdapter accountListAdapter;
     private List<AccountListEntity.DataBean> list;
     private RecyclerView recycleView;
+    private List<String> ids = new ArrayList<>();
+    private OnClickListener onClickListener;
 
     public AccountDialog() {
     }
@@ -74,6 +78,17 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
         return dialog;
     }
 
+    /**
+     * 定义结果回调接口
+     */
+    public interface OnClickListener {
+        void successful();
+
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     @Override
     public void dismiss() {
@@ -117,9 +132,18 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
         accountListAdapter = new DialogAccountListAdapter( mContext, list, AccountDialog.this );
         recycleView.setAdapter( accountListAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( mContext ) );
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-        }
+        binding.btnNext.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Use( Tools.convertListToString( ids ) );
+            }
+        } );
+        binding.ivColse.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        } );
 
     }
 
@@ -132,9 +156,16 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
         super.show( object );
     }
 
+
     private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
         mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+    }
+
+    private void Use(String account_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put( "ids", account_id );
+        mQueue.add( ParamTools.packParam( Const.use, mContext, this, this, map ) );
     }
 
     @Override
@@ -145,8 +176,13 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
             String msg = json.optString( "msg" );
             String data = json.optString( "data" );
             if (stauts == 1) {
-                AccountListEntity accountListEntity = JSON.parseObject( response, AccountListEntity.class );
-                accountListAdapter.updateAdapter( Finishing( accountListEntity.data ) );
+                if (url.contains( Const.payAccount )) {
+                    AccountListEntity accountListEntity = JSON.parseObject( response, AccountListEntity.class );
+                    accountListAdapter.updateAdapter( Finishing( accountListEntity.data ) );
+                } else if (url.contains( Const.use )) {
+                    dismiss();
+                    onClickListener.successful();
+                }
 
             } else if (stauts == -2) {
                 dismiss();
@@ -169,15 +205,6 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
 
     }
 
-    @Override
-    public void UseQie(String id) {
-
-    }
-
-    @Override
-    public void OnClick(AccountListEntity.DataBean dataBean) {
-
-    }
 
     /**
      * 整理数据
@@ -193,6 +220,9 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
                     dataBean.isx = isx;
                     isx = false;
                 }
+                if (dataBean.used) {
+                    ids.add( dataBean.id + "" );
+                }
                 wxlist.add( dataBean );
 
             }
@@ -206,6 +236,9 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
                     dataBean.isx = isx;
                     isx = false;
                 }
+                if (dataBean.used) {
+                    ids.add( dataBean.id + "" );
+                }
                 wxlist.add( dataBean );
             }
         }
@@ -216,9 +249,23 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
                     dataBean.isx = isx;
                     isx = false;
                 }
+                if (dataBean.used) {
+                    ids.add( dataBean.id + "" );
+                }
                 wxlist.add( dataBean );
             }
         }
         return wxlist;
+    }
+
+    @Override
+    public void add(String id) {
+        ids.add( id );
+    }
+
+    @Override
+    public void delete(String id) {
+        ids.remove( id );
+
     }
 }

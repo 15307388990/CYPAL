@@ -57,13 +57,13 @@
 
         </LinearLayout>
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_cb"
-            android:layout_width="15dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="34dp"
-            android:src="@drawable/login_icon_select" />
+            android:gravity="center"
+            android:button="@drawable/cb_account" />
     </LinearLayout>
 
     <View

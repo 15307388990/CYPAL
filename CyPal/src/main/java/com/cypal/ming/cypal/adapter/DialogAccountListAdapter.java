@@ -5,12 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.bean.AccountListEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,9 +39,10 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
      * 定义结果回调接口
      */
     public interface OnClickListener {
-        void UseQie(String id);
+        void add(String id);
 
-        void OnClick(AccountListEntity.DataBean dataBean);
+        void delete(String id);
+
 
 
     }
@@ -57,7 +61,7 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
     }
 
     @Override
-    public void onBindViewHolder(ViewHoler holder, int position) {
+    public void onBindViewHolder(final ViewHoler holder, int position) {
         final AccountListEntity.DataBean contentBean = mList.get( position );
         //支付类型
         if (contentBean.accountType.equals( "WXPAY" )) {
@@ -82,6 +86,18 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
         } else {
             holder.tv_type_pay.setVisibility( View.GONE );
         }
+        holder.iv_cb.setChecked( contentBean.used );
+
+        holder.iv_cb.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    onClickListener.add( contentBean.id + "" );
+                } else {
+                    onClickListener.delete( contentBean.id + "" );
+                }
+            }
+        } );
 
     }
 
@@ -101,7 +117,7 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
 
     class ViewHoler extends RecyclerView.ViewHolder {
         private ImageView iv_img;
-        private ImageView iv_cb;
+        private CheckBox iv_cb;
         private TextView tv_account;
         private TextView tv_type;
         private TextView tv_type_pay;
@@ -112,7 +128,7 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
             tv_type = (TextView) itemView.findViewById( R.id.tv_type );
             tv_type_pay = (TextView) itemView.findViewById( R.id.tv_type_pay );
             iv_img = (ImageView) itemView.findViewById( R.id.iv_img );
-            iv_cb = (ImageView) itemView.findViewById( R.id.iv_cb );
+            iv_cb = (CheckBox) itemView.findViewById( R.id.iv_cb );
 
         }
     }

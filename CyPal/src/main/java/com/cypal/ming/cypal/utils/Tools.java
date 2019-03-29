@@ -95,6 +95,7 @@ public class Tools {
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics( dm );
         return dm.widthPixels;
     }
+
     //获取屏幕高度
     public static int getScreenHeight(Context context) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -102,6 +103,23 @@ public class Tools {
         return dm.heightPixels;
     }
 
+    /**
+     * 将List<String>集合 转化为String
+     * 如{"aaa","bbb"} To 'aaa','bbb'
+     */
+    public static String convertListToString(List<String> strlist) {
+        StringBuffer sb = new StringBuffer();
+        if (!TextUtils.isEmpty( strlist.toString() )) {
+            for (int i = 0; i < strlist.size(); i++) {
+                if (i == 0) {
+                    sb.append( strlist.get( i ) );
+                } else {
+                    sb.append( "," ).append( strlist.get( i ) );
+                }
+            }
+        }
+        return sb.toString();
+    }
 
     /**
      * 价格 分转元
