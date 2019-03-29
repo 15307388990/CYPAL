@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.android.volley.RequestQueue;
@@ -102,10 +103,12 @@ public class TradingDialog extends CenterDialog implements Response.Listener<Str
             @Override
             public void onClick(View v) {
                 String amount = binding.tvEdit.getText().toString().trim();
-                if (Integer.valueOf( amount ) > minLimit) {
-                    reCharge( amount );
-                } else {
-                    Tools.showToast( mContext, "充值金额不能小于最低充值金额" );
+                if (!TextUtils.isEmpty( amount )) {
+                    if (Integer.valueOf( amount ) > minLimit) {
+                        reCharge( amount );
+                    } else {
+                        Tools.showToast( mContext, "充值金额不能小于最低充值金额" );
+                    }
                 }
             }
         } );

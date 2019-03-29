@@ -138,7 +138,7 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
         if (loading.isShowing()) {
             loading.dismiss();
         }
-        loading.show();// 由于客户不喜欢弹框样式,顾先隐藏
+       // loading.show();// 由于客户不喜欢弹框样式,顾先隐藏
     }
 
     /**

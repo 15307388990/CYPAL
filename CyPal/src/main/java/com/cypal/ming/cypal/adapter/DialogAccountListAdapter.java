@@ -39,10 +39,9 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
      * 定义结果回调接口
      */
     public interface OnClickListener {
-        void add(String id);
+        void add(AccountListEntity.DataBean contentBean);
 
-        void delete(String id);
-
+        void delete(AccountListEntity.DataBean contentBean);
 
 
     }
@@ -61,7 +60,7 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
     }
 
     @Override
-    public void onBindViewHolder(final ViewHoler holder, int position) {
+    public void onBindViewHolder(final ViewHoler holder, final int position) {
         final AccountListEntity.DataBean contentBean = mList.get( position );
         //支付类型
         if (contentBean.accountType.equals( "WXPAY" )) {
@@ -92,9 +91,9 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    onClickListener.add( contentBean.id + "" );
+                    onClickListener.add( contentBean );
                 } else {
-                    onClickListener.delete( contentBean.id + "" );
+                    onClickListener.delete( contentBean );
                 }
             }
         } );

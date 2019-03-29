@@ -93,7 +93,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cypal.ming.cypal.activity.TabActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.cypal.ming.cypal.service.NotificationUpdateActivity"

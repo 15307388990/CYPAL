@@ -61,7 +61,7 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
     public RequestQueue mQueue; // 请求列队
     public SavePreferencesData mSavePreferencesData;
     private DialogAccountListAdapter accountListAdapter;
-    private List<AccountListEntity.DataBean> list;
+    private List<AccountListEntity.DataBean> wxlist;
     private RecyclerView recycleView;
     private List<String> ids = new ArrayList<>();
     private OnClickListener onClickListener;
@@ -129,7 +129,7 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
     public void initView(ViewDataBinding dataBinding) {
         binding = (AccountDialogBinding) dataBinding;
         recycleView = binding.ryList;
-        accountListAdapter = new DialogAccountListAdapter( mContext, list, AccountDialog.this );
+        accountListAdapter = new DialogAccountListAdapter( mContext, wxlist, AccountDialog.this );
         recycleView.setAdapter( accountListAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( mContext ) );
         binding.btnNext.setOnClickListener( new View.OnClickListener() {
@@ -212,7 +212,7 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
      * @return
      */
     public List<AccountListEntity.DataBean> Finishing(List<AccountListEntity.DataBean> dataBeanList) {
-        List<AccountListEntity.DataBean> wxlist = new ArrayList<>();
+        wxlist = new ArrayList<>();
         boolean isx = true;
         for (AccountListEntity.DataBean dataBean : dataBeanList) {
             if (dataBean.accountType.equals( "WXPAY" )) {
@@ -259,13 +259,27 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
     }
 
     @Override
-    public void add(String id) {
-        ids.add( id );
+    public void add(AccountListEntity.DataBean contentBean) {
+        for (int i = 0; i < wxlist.size(); i++) {
+            AccountListEntity.DataBean dataBean = wxlist.get( i );
+            if (dataBean.accountType.equals( contentBean.accountType )) {
+                if (dataBean.id == contentBean.id) {
+                    wxlist.get( i ).used = true;
+                    ids.add( contentBean.id + "" );
+                } else {
+                    wxlist.get( i ).used = false;
+                }
+            }
+
+
+        }
+        accountListAdapter.updateAdapter( wxlist );
+
     }
 
     @Override
-    public void delete(String id) {
-        ids.remove( id );
+    public void delete(AccountListEntity.DataBean contentBean) {
+        ids.remove( contentBean.id + "" );
 
     }
 }

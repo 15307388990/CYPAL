@@ -67,7 +67,7 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
         if (mloading.isShowing()) {
             mloading.dismiss();
         }
-        mloading.show();// 由于客户不喜欢弹框样式,顾先隐藏
+       // mloading.show();// 由于客户不喜欢弹框样式,顾先隐藏
     }
 
     /**
