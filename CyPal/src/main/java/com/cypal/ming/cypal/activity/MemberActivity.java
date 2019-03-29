@@ -142,14 +142,17 @@ public class MemberActivity extends BaseActivity {
             //完成
             iv_renzhen.setImageResource( R.drawable.icon_yirenzhen );
             rl_layout.setVisibility( View.VISIBLE );
+            rl_wei.setVisibility( View.GONE );
         } else if (memberEntity.data.certification_status.equals( "PROCESS" )) {
             //待审核
             iv_renzhen.setImageResource( R.drawable.iocn_shenhezhong );
             rl_layout.setVisibility( View.VISIBLE );
+            rl_wei.setVisibility( View.GONE );
         } else {
             //没有完成
             iv_renzhen.setImageResource( R.drawable.iocn_shenhezhong );
             rl_wei.setVisibility( View.VISIBLE );
+            rl_layout.setVisibility( View.GONE );
         }
         //保证金状态
         if (memberEntity.data.bailMoneyRecord_status.equals( "SUCCESS" )) {
