@@ -11,18 +11,23 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.allenliu.versionchecklib.core.AllenChecker;
 import com.allenliu.versionchecklib.core.VersionParams;
 import com.allenliu.versionchecklib.core.http.HttpParams;
 import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.bean.VersionEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.CustomDialogActivity;
+import com.cypal.ming.cypal.dialogfrment.ConfirmPaymentDialog;
+import com.cypal.ming.cypal.dialogfrment.VersionUpgradeDialog;
 import com.cypal.ming.cypal.fragment.MainFragment;
 import com.cypal.ming.cypal.fragment.MineFragment;
 import com.cypal.ming.cypal.fragment.TopUpFragment;
 import com.cypal.ming.cypal.service.VersionService;
+import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
 
@@ -63,7 +68,7 @@ public class TabActivity extends BaseActivity {
         Tools.webacts.add( this );
         initView();
         initDate();
-        //jiebianAppVersion();
+        AppVersion();
         ButterKnife.bind( this );
     }
 
@@ -128,26 +133,6 @@ public class TabActivity extends BaseActivity {
     }
 
 
-    @Override
-    public void onResponse(String response, String url) {
-        dismissLoading();
-        try {
-            JSONObject json = new JSONObject( response );
-            int stauts = json.optInt( "status" );
-            String msg = json.optString( "msg" );
-            if (stauts == 0) {
-                if (url.contains( Const.mallSetInfo )) {
-                    mSavePreferencesData.putStringData( "json", json.optString( "result" ) );
-                    initAdmin();
-                }
-            } else {
-                Tools.showToast( this, msg );
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Tools.showToast( this, "发生错误,请重试!" );
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -156,23 +141,21 @@ public class TabActivity extends BaseActivity {
 
 
     //检测版本
-    private void jiebianAppVersion() {
+    private void AppVersion() {
         Map<String, String> map = new HashMap<>();
-        map.put( "device_type", "0" );//设备类型 0为Android 1为ios
-        map.put( "auth_token", partnerBean.getAuth_token() );
-        map.put( "app_type", "2" );//1商户版2街边go3俊鹏
-//        mQueue.add(ParamTools.packParam(Const.jiebianAppVersion, this, this, map));
-//        loading();
-        HttpParams httpParams = new HttpParams();
-        httpParams.put( "device_type", "0" );//设备类型 0为Android 1为ios
-        httpParams.put( "auth_token", partnerBean.getAuth_token() );
-        httpParams.put( "app_type", "2" );//1商户版2街边go3俊鹏
-        VersionParams.Builder builder = new VersionParams.Builder().setRequestMethod( HttpRequestMethod.POST ).setRequestParams( httpParams )
-                .setRequestUrl( Const.BASE_URL + Const.jiebianAppVersion )
-                .setCustomDownloadActivityClass( CustomDialogActivity.class )
-                .setService( VersionService.class );
-        AllenChecker.startVersionCheck( this, builder.build() );
+        map.put( "osEnum", "android" );
+        map.put( "versionId", Tools.packageCode( this ) + "" );
+        mQueue.add( ParamTools.packParam( Const.check, this, this, this, map ) );
 
+    }
+
+    @Override
+    protected void returnData(String data, String url) {
+        if (url.contains( Const.check )) {
+            VersionEntity versionEntity = JSON.parseObject( data, VersionEntity.class );
+            VersionUpgradeDialog.newInstance( versionEntity.data ).show( TabActivity.this );
+
+        }
     }
 
     private void initView() {

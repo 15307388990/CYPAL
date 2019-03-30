@@ -17,6 +17,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.File;
 
@@ -39,8 +41,11 @@ public class MianApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context=getApplicationContext();
+        context = getApplicationContext();
         initImageLoader( getApplicationContext() );
+        //bugly
+       // CrashReport.initCrashReport( getApplicationContext(), "a22c426082", false );
+        Bugly.init(getApplicationContext(), "a22c426082", false);
         initAppStatusListener();
     }
 

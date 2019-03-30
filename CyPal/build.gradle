@@ -70,13 +70,14 @@ android {
     }
     productFlavors {
     }
-    dataBinding{
+    dataBinding {
         enabled true
     }
 }
 
 
 repositories {
+    maven { url "http://jcenter.bintray.com" }
     maven { url "https://jitpack.io" }
 }
 
@@ -84,13 +85,13 @@ dependencies {
     compile files('libs/fastjson-1.2.2.jar')
     compile files('libs/umeng-analytics-v6.1.1.jar')
     compile files('libs/xUtils-2.6.14.jar')
+    compile project(':volley')
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.liaoinstan.springview:library:1.3.0'
-    // compile files('libs/universal-image-loader-1.9.3-with-sources.jar')
     compile 'com.android.support:support-annotations:27.0.2'
     compile files('libs/libammsdk.jar')
     compile 'com.allenliu.versionchecklib:library:1.8.1'
@@ -101,11 +102,10 @@ dependencies {
     compile 'me.weyye.hipermission:library:1.0.7'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile files('libs/TencentMapSDK_Raster_v1.1.2.16281.jar')
-    compile files('libs/TencentLocationSdk_v6.2.5.3_r15b3b3cc_20171103_115903.jar')
     compile files('libs/Msc.jar')
     compile 'jp.wasabeef:recyclerview-animators:1.0.3@aar'
     compile 'com.neovisionaries:nv-websocket-client:2.2'
     compile 'cn.yipianfengye.android:zxing-library:2.2'
-    compile project(':volley')
+    compile 'com.tencent.bugly:crashreport:latest.release'
+
 }

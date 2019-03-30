@@ -169,6 +169,9 @@ public class Const {
      *  确认付款
      */
     public static final String rwconfirm= "/private/rw/confirm";
+    /**
+     * 版本 */
+    public static final String check = "/public/version/check";
 
 
     /* 订单详情 */

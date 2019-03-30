@@ -19,11 +19,14 @@ import com.cypal.ming.cypal.activity.CommissionAcitity;
 import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.OrderListActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
+import com.cypal.ming.cypal.activity.TabActivity;
 import com.cypal.ming.cypal.activity.TopUpListActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
+import com.cypal.ming.cypal.bean.VersionEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.SignInDialog;
+import com.cypal.ming.cypal.dialogfrment.VersionUpgradeDialog;
 import com.cypal.ming.cypal.utils.ImageLoaderUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -54,6 +57,8 @@ public class MineFragment extends BaseFragment {
     private LinearLayout ll_commission;
     private LinearLayout ll_jiedan;
     private LinearLayout ll_top_up;
+    private TextView tv_version;
+    private LinearLayout ll_version;
 
     public MineFragment(Activity context) {
         super( context );
@@ -103,7 +108,19 @@ public class MineFragment extends BaseFragment {
             signInDialog.show( mcontext );
             ll_view_back.setVisibility( View.GONE );
             ll_view_back2.setVisibility( View.VISIBLE );
+        } else if (url.contains( Const.check )) {
+            VersionEntity versionEntity = JSON.parseObject( data, VersionEntity.class );
+            VersionUpgradeDialog.newInstance( versionEntity.data ).show( mcontext );
         }
+    }
+
+    //检测版本
+    private void AppVersion() {
+        Map<String, String> map = new HashMap<>();
+        map.put( "osEnum", "android" );
+        map.put( "versionId", Tools.packageCode( mcontext ) + "" );
+        mQueue.add( ParamTools.packParam( Const.check, mcontext, this, this, map ) );
+
     }
 
     private void initView(View view) {
@@ -128,6 +145,8 @@ public class MineFragment extends BaseFragment {
         ll_yaoqing = (LinearLayout) view.findViewById( R.id.ll_yaoqing );
         v_yaoqing = (View) view.findViewById( R.id.v_yaoqing );
         tv_text = (TextView) view.findViewById( R.id.tv_text );
+        ll_version = (LinearLayout) view.findViewById( R.id.ll_version );
+        tv_version = (TextView) view.findViewById( R.id.tv_version );
         tv_creditscore = (TextView) view.findViewById( R.id.tv_creditscore );
         tv_text.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -167,6 +186,15 @@ public class MineFragment extends BaseFragment {
                 Tools.jump( mcontext, TopUpListActivity.class, false );
             }
         } );
+        tv_version.setText( "v" + Tools.getVersionName( mcontext ) );
+
+        ll_version.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppVersion();
+            }
+        } );
+
     }
 
     private void initData(String data) {

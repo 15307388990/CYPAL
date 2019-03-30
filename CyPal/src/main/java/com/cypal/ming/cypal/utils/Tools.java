@@ -448,6 +448,42 @@ public class Tools {
     }
 
     /**
+     * 获取版本号
+     *
+     * @param context
+     * @return
+     */
+    public static int packageCode(Context context) {
+        PackageManager manager = context.getPackageManager();
+        int code = 0;
+        try {
+            PackageInfo info = manager.getPackageInfo( context.getPackageName(), 0 );
+            code = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return code;
+    }
+
+    /**
+     * 获取版本名称
+     *
+     * @param context
+     * @return
+     */
+    public static String getVersionName(Context context) {
+        PackageManager manager = context.getPackageManager();
+        String versionNam = null;
+        try {
+            PackageInfo info = manager.getPackageInfo( context.getPackageName(), 0 );
+            versionNam = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionNam;
+    }
+
+    /**
      * 通过字符串获取date对象
      */
     public static String obtainDateNow() {
@@ -609,21 +645,22 @@ public class Tools {
         // wordList.add("1");
         return wordList;
     }
+
     public static void onSaveBitmap(final Bitmap mBitmap, final Context context) {
         // 第一步：首先保存图片
         //将Bitmap保存图片到指定的路径/sdcard/Boohee/下，文件名以当前系统时间命名,但是这种方法保存的图片没有加入到系统图库中
-        File appDir = new File( Environment.getExternalStorageDirectory(), "Boohee");
+        File appDir = new File( Environment.getExternalStorageDirectory(), "Boohee" );
 
         if (!appDir.exists()) {
             appDir.mkdir();
         }
 
         String fileName = System.currentTimeMillis() + ".jpg";
-        File file = new File(appDir, fileName);
+        File file = new File( appDir, fileName );
 
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            FileOutputStream fos = new FileOutputStream( file );
+            mBitmap.compress( Bitmap.CompressFormat.JPEG, 100, fos );
             fos.flush();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -634,13 +671,13 @@ public class Tools {
 
         // 第二步：其次把文件插入到系统图库
         try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+            MediaStore.Images.Media.insertImage( context.getContentResolver(), file.getAbsolutePath(), fileName, null );
 //   /storage/emulated/0/Boohee/1493711988333.jpg
         } catch (Exception e) {
             e.printStackTrace();
         }
         // 第三步：最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file)));
+        context.sendBroadcast( new Intent( Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse( "file://" + file ) ) );
     }
 
 }
