@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke"
+    android:background="@color/CY_F8F8F8"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -69,9 +69,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rl_layout"
         android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="65dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/top_up_record_itme_bg"
         android:scrollbars="none" />
 
     <LinearLayout

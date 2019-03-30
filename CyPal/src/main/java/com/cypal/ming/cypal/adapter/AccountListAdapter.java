@@ -73,15 +73,15 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             holder.tv_qie.setVisibility( View.GONE );
             holder.tv_staus.setVisibility( View.VISIBLE );
         } else {
-            holder.tv_qie.setVisibility( View.VISIBLE );
+            holder.tv_qie.setVisibility( View.GONE );
             holder.tv_staus.setVisibility( View.GONE );
         }
-        holder.tv_qie.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickListener.UseQie( contentBean.id + "" );
-            }
-        } );
+//        holder.tv_qie.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onClickListener.UseQie( contentBean.id + "" );
+//            }
+//        } );
         holder.tv_account.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {

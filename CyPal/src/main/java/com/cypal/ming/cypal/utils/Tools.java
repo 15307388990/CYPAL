@@ -9,6 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
@@ -16,6 +20,9 @@ import android.widget.Toast;
 import com.cypal.ming.cypal.bean.StoreBean;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -601,6 +608,39 @@ public class Tools {
         ArrayList<String> wordList = new ArrayList<String>( Arrays.asList( covers ) );
         // wordList.add("1");
         return wordList;
+    }
+    public static void onSaveBitmap(final Bitmap mBitmap, final Context context) {
+        // 第一步：首先保存图片
+        //将Bitmap保存图片到指定的路径/sdcard/Boohee/下，文件名以当前系统时间命名,但是这种方法保存的图片没有加入到系统图库中
+        File appDir = new File( Environment.getExternalStorageDirectory(), "Boohee");
+
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 第二步：其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+//   /storage/emulated/0/Boohee/1493711988333.jpg
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 第三步：最后通知图库更新
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file)));
     }
 
 }

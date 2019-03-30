@@ -161,7 +161,14 @@ public class Const {
      *  接单记录
      */
     public static final String otcOrderlist= "/private/otcOrder/list?";
-
+    /**
+     *  取消订单
+     */
+    public static final String cancel= "/private/rw/cancel";
+    /**
+     *  确认付款
+     */
+    public static final String rwconfirm= "/private/rw/confirm";
 
 
     /* 订单详情 */
