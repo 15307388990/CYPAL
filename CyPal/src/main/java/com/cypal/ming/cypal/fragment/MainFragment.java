@@ -456,7 +456,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             tv_qiang.setText( "手动抢单" );
         }
         orderModels = indexEntity.data.undoOrder.content;
-        sellDetailListAdapter.updateAdapter( orderModels );
+        sellDetailListAdapter.updateAdapter( orderModels, indexEntity.serverTime );
         if (orderModels.size() > 0) {
             ll_wu.setVisibility( View.GONE );
         } else {

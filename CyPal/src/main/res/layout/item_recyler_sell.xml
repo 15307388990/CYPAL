@@ -35,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="超时等待中"
-                android:textColor="@color/CY_F76260"
-                android:textSize="12sp" />
+                android:textColor="#FF9A00"
+                android:textSize="17sp" />
         </LinearLayout>
 
         <LinearLayout

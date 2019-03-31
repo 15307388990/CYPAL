@@ -90,6 +90,14 @@ public class Const {
      */
     public static final String submitBailMoney = "/private/certification/submitBailMoney?";
     /**
+     * 申请退还保证金页面
+     */
+    public static final String refoundBailMoney = "/private/certification/refoundBailMoney?";
+    /**
+     * 申请退还保证金
+     */
+    public static final String sureRefoundBailMoney = "/private/certification/sureRefoundBailMoney?";
+    /**
      * 修改头像
      */
     public static final String modifyAvatar = "/private/user/modifyAvatar";

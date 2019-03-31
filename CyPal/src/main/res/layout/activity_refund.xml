@@ -68,11 +68,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:paddingLeft="15dp"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:background="@color/white"
         android:paddingRight="15dp"
+        android:paddingBottom="20dp"
         android:text="尊敬的用户你好：\n 当你提出申请退还保证金时，意味着你会失去赚取佣金的资格。 \n\n1.申请后将无法进行自动接单、手动抢单； \n\n2.保证金退还到您的收款帐号。"
         android:textColor="#ff666666"
         android:textSize="15sp" />
@@ -81,8 +81,8 @@
         android:id="@+id/ll_choose"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:background="@color/white"
         android:layout_marginTop="30dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -103,6 +103,49 @@
             android:text="请选择"
             android:textColor="@color/CY_999999"
             android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_wexin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:src="@drawable/icon_weixin"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_alipay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:src="@drawable/icon_zhifubao"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_banl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:src="@drawable/icon_banl"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_yun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:src="@drawable/icon_yun"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="wrap_content"

@@ -57,7 +57,6 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
         setContentView( R.layout.activity_top_details );
         orderId = getIntent().getStringExtra( "orderId" );
         initView();
-        order();
     }
 
     private void order() {
@@ -68,6 +67,12 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
             mQueue.add( ParamTools.packParam( Const.order, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
             loading();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        order();
     }
 
     private void cancel() {

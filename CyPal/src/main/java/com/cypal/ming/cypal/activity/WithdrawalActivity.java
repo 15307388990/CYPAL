@@ -1,5 +1,6 @@
 package com.cypal.ming.cypal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -76,7 +77,11 @@ public class WithdrawalActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void returnData(String data, String url) {
-        Tools.jump( WithdrawalActivity.this,SucceedWithdrawAccessActivity.class ,true);
+        Intent intent = new Intent( WithdrawalActivity.this, SucceedWithdrawAccessActivity.class );
+        intent.putExtra( "title", "提现到余额" );
+        intent.putExtra( "context", "提现成功" );
+        startActivity( intent );
+        finish();
     }
 
     @Override

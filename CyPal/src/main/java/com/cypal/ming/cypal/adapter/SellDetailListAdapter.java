@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.bean.ContentEntity;
 import com.cypal.ming.cypal.bean.IndexEntity;
+import com.cypal.ming.cypal.utils.OrderListState;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
+import com.cypal.ming.cypal.utils.Tools;
+import com.lidroid.xutils.db.table.Id;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     private OnClickListener onClickListener;
     private SavePreferencesData mSavePreferencesData;
     private View mHeaderView;
-
+    private long serverTime;
 
     public SellDetailListAdapter(Context context, List<IndexEntity.DataBean.UndoOrderBean.ContentBean> list, OnClickListener onClickListener) {
         this.mContext = context;
@@ -100,6 +103,38 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
                 onClickListener.Complaint( sellBean.id + "" );
             }
         } );
+//                A_PROCESS,//处理中，
+//                B_BEAPPEAL,//被申诉
+//                C_APPEAL,//主动申诉
+//                D_SUCCESS,//支付成功
+//                E_FAIL //失败取消
+        holder.btn_ok.setVisibility( View.GONE );
+        holder.btn_shen.setVisibility( View.GONE );
+        if (sellBean.status.equals( OrderListState.A_PROCESS.toString() )) {
+            holder.btn_ok.setVisibility( View.VISIBLE );
+            holder.btn_shen.setVisibility( View.VISIBLE );
+            holder.tv_staus.setText( "待确认" );
+            holder.btn_shen.setTextColor( mContext.getResources( ).getColor(  R.color.CY_888888 ) );
+            holder.btn_shen.setEnabled( false );
+            // 判断订单是否超时
+            if (serverTime - Tools.getLongformat( sellBean.createTime ) > 600000) {
+                holder.tv_staus.setText( "超时等待中" );
+                holder.btn_ok.setVisibility( View.VISIBLE );
+                holder.btn_shen.setVisibility( View.VISIBLE );
+                holder.btn_shen.setTextColor( mContext.getResources( ).getColor(  R.color.CY_3776FB ) );
+                holder.btn_shen.setEnabled( true );
+            }
+        } else if (sellBean.status.equals( OrderListState.B_BEAPPEAL.toString() )) {
+            holder.btn_ok.setVisibility( View.VISIBLE );
+            holder.tv_staus.setText( "被申诉" );
+        } else if (sellBean.status.equals( OrderListState.C_APPEAL.toString() )) {
+            holder.btn_ok.setVisibility( View.VISIBLE );
+            holder.tv_staus.setText( "申诉中" );
+        } else if (sellBean.status.equals( OrderListState.D_SUCCESS.toString() )) {
+            holder.tv_staus.setText( "支付成功" );
+        } else if (sellBean.status.equals( OrderListState.E_FAIL.toString() )) {
+            holder.tv_staus.setText( "失败取消" );
+        }
 
     }
 
@@ -114,8 +149,9 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     }
 
 
-    public void updateAdapter(List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList) {
+    public void updateAdapter(List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList,long serverTime) {
         this.mList = mList;
+        this.serverTime = serverTime;
         notifyDataSetChanged();
     }
 

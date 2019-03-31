@@ -62,6 +62,13 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        orderlist();
+
+    }
+
     private void orderlist() {
         Map<String, String> map = new HashMap<>();
         map.put( "isFinish", isFinish + "" );
@@ -198,7 +205,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
         if (url.contains( Const.otcOrderlist )) {
             OtcOrderListEntity otcOrderListEntity = JSON.parseObject( data, OtcOrderListEntity.class );
             list = otcOrderListEntity.data.content;
-            otcOrderListAdapter.updateAdapter( list );
+            otcOrderListAdapter.updateAdapter( list, otcOrderListEntity.serverTime );
         } else if (url.contains( Const.confirm )) {
             orderlist();
         } else if (url.contains( Const.service )) {

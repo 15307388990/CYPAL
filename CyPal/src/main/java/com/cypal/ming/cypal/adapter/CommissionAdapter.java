@@ -2,6 +2,7 @@ package com.cypal.ming.cypal.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,16 +64,23 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
         final CommissionEntity.DataBean.ListBean.ContentBean contentBean = mList.get( position );
-        if (contentBean.equals( "WXPAY" )) {
-            holder.tv_type.setText( "交易方式：微信" );
-        } else if (contentBean.equals( "ALIPAY" )) {
-            holder.tv_type.setText( "交易方式：支付宝" );
+        if (!TextUtils.isEmpty( contentBean.payType )) {
+            if (contentBean.payType.equals( "WXPAY" )) {
+                holder.tv_type.setText( "交易方式：微信" );
+            } else if (contentBean.payType.equals( "ALIPAY" )) {
+                holder.tv_type.setText( "交易方式：支付宝" );
+            } else {
+                holder.tv_type.setText( "交易方式：云闪付" );
+            }
+            holder.tv_amount.setText( "交易金额：" + contentBean.amount );
+            holder.tv_income.setText( "+" + contentBean.incomeMoney );
         } else {
-            holder.tv_type.setText( "交易方式：云闪付" );
+            holder.tv_amount.setText( "佣金提现转出" );
+            holder.tv_income.setText( "-" + contentBean.amount );
+            holder.tv_type.setText( "" );
         }
         holder.tv_timer.setText( contentBean.createTime );
-        holder.tv_amount.setText( "交易金额：" + contentBean.amount );
-        holder.tv_income.setText( "+" + contentBean.incomeMoney );
+
 
     }
 
