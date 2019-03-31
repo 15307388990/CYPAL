@@ -1,24 +1,22 @@
-package com.cypal.ming.cypal.dialogfrment;
+package com.cypal.ming.cypal.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.activity.CertificationActivity;
-import com.cypal.ming.cypal.activity.SaveAccountAcitity;
+import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.config.Const;
-import com.cypal.ming.cypal.databinding.CancelTheDealDialogBinding;
-import com.cypal.ming.cypal.databinding.ConfirmPaymentDialogBinding;
 import com.cypal.ming.cypal.utils.ImageUtil;
-import com.cypal.ming.cypal.utils.SavePreferencesData;
+import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 
 import org.json.JSONException;
@@ -42,80 +40,90 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.cypal.ming.cypal.config.Const.save;
 import static java.lang.String.valueOf;
 
-
 /**
- * @Author luoming
- * @Date 2019/3/14 10:32 AM
- * 确认付款
+ * 申诉订单
  */
-public class ConfirmPaymentDialog extends CenterDialog {
+public class ComplaintOrderActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final String URL = "url";
-    private ConfirmPaymentDialogBinding binding;
-    private OnClickListener onClickListener;
+
+    private LinearLayout ll_view_back;
+    private EditText et_text;
+    private ImageView iv_img;
+    private Button btn_next;
     private List<Bitmap> bitmapInfos = null;
     private List<String> resultList = null;
     private List<String> icon_ids = null;
     private List<String> filePaths = null;
-    private ImageView imageView;
     private ProgressDialog mDialog;
-    private String paymentVoucher;
-    public SavePreferencesData mSavePreferencesData;
+    private String orderId;
+    private String shenfen1 = null;
 
-    /**
-     * 定义结果回调接口
-     */
-    public interface OnClickListener {
-        void successful(String paymentVoucher);
-
-    }
-
-    public ConfirmPaymentDialog setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-        return this;
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_complaint_order );
+        orderId = getIntent().getStringExtra( "orderId" );
+        initView();
     }
 
 
-    public static ConfirmPaymentDialog newInstance(String url) {
-        ConfirmPaymentDialog dialog = new ConfirmPaymentDialog();
-        Bundle bundle = new Bundle();
-        bundle.putString( URL, url );
-        dialog.setArguments( bundle );
-        return dialog;
+    public void save() {
+        Map<String, String> map = new HashMap<>();
+        map.put( "paymentVoucher", shenfen1 );
+        map.put( "orderId", orderId );
+        map.put( "remark", et_text.getText().toString().trim() );
+        mQueue.add( ParamTools.packParam( Const.service, this, this, this, map ) );
+        loading();
+    }
+
+
+    private void initView() {
+        mDialog = new ProgressDialog( this );
+        mDialog.setCancelable( false );
+        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
+        ll_view_back.setOnClickListener( this );
+        et_text = (EditText) findViewById( R.id.et_text );
+        iv_img = (ImageView) findViewById( R.id.iv_img );
+        iv_img.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( ComplaintOrderActivity.this,
+                        MultiImageSelectorActivity.class );
+                intent.putExtra( "isUploadIcon", true );
+                intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
+                        false );
+                intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
+                        1 );
+                startActivityForResult( intent, 0 );
+            }
+        } );
+        btn_next = (Button) findViewById( R.id.btn_next );
+        btn_next.setOnClickListener( this );
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        } );
     }
 
     @Override
-    public void dismiss() {
-        super.dismiss();
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_next:
+                submit();
+                break;
+        }
     }
 
     @Override
-    public void dismissAllowingStateLoss() {
-        super.dismissAllowingStateLoss();
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss( dialog );
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.confirm_payment_dialog;
-    }
-
-    @Override
-    public int getWindowWidth() {
-        return (int) (Tools.getScreenWidth( getActivity() ) * 0.75);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
         super.onActivityResult( requestCode, resultCode, data );
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (data != null) {
                 resultList = data.getExtras().getStringArrayList( "select_result" );
                 bitmapInfos = new ArrayList<Bitmap>();
@@ -130,54 +138,14 @@ public class ConfirmPaymentDialog extends CenterDialog {
                 Map<String, String> map = new HashMap<>();
                 map.put( "uploadEnum", "pay" );
                 File file = new File( filePaths.get( 0 ) );
-                imageView.setImageBitmap( bitmapInfos.get( 0 ) );
-                post_file( map, file );
+                iv_img.setImageBitmap( bitmapInfos.get( 0 ) );
 
-
+                post_file( map, file, requestCode );
             }
         }
     }
 
-    @Override
-    public void initView(ViewDataBinding dataBinding) {
-        binding = (ConfirmPaymentDialogBinding) dataBinding;
-        imageView = binding.ivImg;
-        mDialog = new ProgressDialog( ConfirmPaymentDialog.this.getActivity() );
-        mSavePreferencesData = new SavePreferencesData( ConfirmPaymentDialog.this.getActivity() );
-        mDialog.setCancelable( false );
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String buildUrl = bundle.getString( URL );
-        }
-        binding.ivImg.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent( ConfirmPaymentDialog.this.getActivity(),
-                        MultiImageSelectorActivity.class );
-                intent.putExtra( "isUploadIcon", true );
-                intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                        false );
-                intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                        1 );
-                startActivityForResult( intent, 1 );
-            }
-        } );
-        binding.tvOk.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickListener.successful( paymentVoucher );
-                dismiss();
-            }
-        } );
-        binding.tvCancle.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        } );
-    }
-
-    protected void post_file(final Map<String, String> map, File file) {
+    protected void post_file(final Map<String, String> map, File file, final int requestCode) {
         mDialog.setMessage( "图片上传中..." );
         mDialog.show();
         OkHttpClient client = new OkHttpClient();
@@ -196,7 +164,7 @@ public class ConfirmPaymentDialog extends CenterDialog {
                 requestBody.addFormDataPart( valueOf( entry.getKey() ), valueOf( entry.getValue() ) );
             }
         }
-        Request request = new Request.Builder().url( Const.BASE_URL + Const.image ).post( requestBody.build() ).tag( this ).
+        Request request = new Request.Builder().url( Const.BASE_URL + Const.image ).post( requestBody.build() ).tag( ComplaintOrderActivity.this ).
                 build().newBuilder().addHeader( "token", mSavePreferencesData.getStringData( "token" ) ).
                 addHeader( "os", "android" ).addHeader( "version", "1001" ).build();
         // readTimeout("请求超时时间" , 时间单位);
@@ -212,7 +180,6 @@ public class ConfirmPaymentDialog extends CenterDialog {
                 if (response.isSuccessful()) {
                     String str = response.body().string();
                     changejson( str );
-
                     mDialog.dismiss();
                     // Log.i("lfq", response.message() + " , body " + str);
 
@@ -233,17 +200,37 @@ public class ConfirmPaymentDialog extends CenterDialog {
             if (stauts == 1) {
                 String data = json.optString( "data" );
                 List<String> list = JSON.parseArray( data, String.class );
-                paymentVoucher = list.get( 0 );
-
+                shenfen1 = list.get( 0 );
             } else {
-                Tools.showToast( getActivity(), msg );
+                Tools.showToast( this, msg );
             }
-        } catch (
-                JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-            Tools.showToast( getActivity(), "数据格式不对" );
+            Tools.showToast( this, "数据格式不对" );
         }
 
     }
 
+    private void submit() {
+        // validate
+        String code = et_text.getText().toString().trim();
+        if (TextUtils.isEmpty( code )) {
+            Tools.showToast( this, "请输入备注" );
+            return;
+        }
+
+        if (TextUtils.isEmpty( shenfen1 )) {
+            Tools.showToast( this, "请上传付款凭证" );
+            return;
+        }
+        save();
+
+
+    }
+
+    @Override
+    protected void returnData(String data, String url) {
+        Tools.showToast( this, "提交成功等待审核" );
+        finish();
+    }
 }

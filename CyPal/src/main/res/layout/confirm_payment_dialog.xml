@@ -24,6 +24,7 @@
             android:layout_marginLeft="18dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="18dp"
+            android:background="@drawable/f8f8f8_5dp_bg"
             android:gravity="center">
 
             <ImageView

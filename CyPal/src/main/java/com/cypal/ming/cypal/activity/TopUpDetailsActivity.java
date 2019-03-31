@@ -55,12 +55,13 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_top_details );
+        orderId = getIntent().getStringExtra( "orderId" );
         initView();
         order();
     }
 
     private void order() {
-        orderId = getIntent().getStringExtra( "orderId" );
+
         if (!TextUtils.isEmpty( orderId )) {
             Map<String, String> map = new HashMap<>();
             map.put( "orderId", orderId );
@@ -70,7 +71,6 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     }
 
     private void cancel() {
-        orderId = getIntent().getStringExtra( "orderId" );
         if (!TextUtils.isEmpty( orderId )) {
             Map<String, String> map = new HashMap<>();
             map.put( "orderId", orderId );
@@ -83,11 +83,11 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
      * 确认付款
      */
     private void rwconfirm(String paymentVoucher) {
-        orderId = getIntent().getStringExtra( "orderId" );
         if (!TextUtils.isEmpty( orderId )) {
             Map<String, String> map = new HashMap<>();
             map.put( "orderId", orderId );
             map.put( "paymentVoucher", paymentVoucher );
+            map.put( "remark", "dasd" );
             mQueue.add( ParamTools.packParam( Const.rwconfirm, this, this, this, map ) );
             loading();
         }
@@ -140,13 +140,18 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
             @Override
             public void onClick(View v) {
                 if (tv_ok.getText().toString().equals( "申诉详情" )) {
-                } else {
+                } else if (tv_ok.getText().toString().equals( "确认付款" )) {
                     ConfirmPaymentDialog.newInstance( "" ).setOnClickListener( new ConfirmPaymentDialog.OnClickListener() {
                         @Override
                         public void successful(String paymentVoucher) {
                             rwconfirm( paymentVoucher );
                         }
                     } ).show( TopUpDetailsActivity.this );
+
+                } else if (tv_ok.getText().toString().equals( "申诉" )) {
+                    Intent intent = new Intent( TopUpDetailsActivity.this, ComplaintOrderActivity.class );
+                    intent.putExtra( "orderId", orderId );
+                    startActivity( intent );
 
                 }
             }
@@ -157,6 +162,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     protected void returnData(String data, String url) {
         if (url.contains( Const.order )) {
             try {
+                list.clear();
                 JSONObject json = new JSONObject( data );
                 String datebean = json.optString( "data" );
                 OderDetailsVM oderDetailsVM = JSON.parseObject( datebean, OderDetailsVM.class );
@@ -210,22 +216,22 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
         ll_huihua.setVisibility( View.GONE );
         tv_ok.setVisibility( View.GONE );
         tv_quxiao.setVisibility( View.GONE );
-        if (state.equals( TopUpState.TRADING )) {
+        if (state.equals( TopUpState.TRADING.toString() )) {
             ll_huihua.setVisibility( View.VISIBLE );
             tv_ok.setVisibility( View.VISIBLE );
             tv_quxiao.setVisibility( View.VISIBLE );
-        } else if (state.equals( TopUpState.CANCEL )) {
+        } else if (state.equals( TopUpState.CANCEL.toString() )) {
             ll_huihua.setVisibility( View.VISIBLE );
-        } else if (state.equals( TopUpState.SERVICE )) {
+        } else if (state.equals( TopUpState.SERVICE.toString() )) {
             ll_huihua.setVisibility( View.VISIBLE );
             tv_ok.setVisibility( View.VISIBLE );
             tv_ok.setText( "申诉详情" );
-        } else if (state.equals( TopUpState.SUCCESS )) {
+        } else if (state.equals( TopUpState.SUCCESS.toString() )) {
             ll_huihua.setVisibility( View.VISIBLE );
         } else {
             ll_huihua.setVisibility( View.VISIBLE );
             tv_ok.setVisibility( View.VISIBLE );
-            tv_quxiao.setVisibility( View.VISIBLE );
+            tv_ok.setText( "申诉" );
         }
     }
 }

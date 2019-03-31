@@ -186,16 +186,16 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     @BindingAdapter(value = {"state"})
     public static void setStateTextView(TextView textView, String state) {
-        if (state.equals( TopUpState.TRADING )) {
+        if (state.equals( TopUpState.TRADING.toString())) {
             textView.setText( "未付款" );
             textView.setBackgroundResource( R.drawable.toup_ff9901_bg );
-        } else if (state.equals( TopUpState.CANCEL )) {
+        } else if (state.equals( TopUpState.CANCEL.toString() )) {
             textView.setText( "已取消" );
             textView.setBackgroundResource( R.drawable.toup_bbbbbb_bg );
-        } else if (state.equals( TopUpState.SERVICE )) {
+        } else if (state.equals( TopUpState.SERVICE.toString() )) {
             textView.setText( "申诉中" );
             textView.setBackgroundResource( R.drawable.toup_3776fb_bg );
-        } else if (state.equals( TopUpState.SUCCESS )) {
+        } else if (state.equals( TopUpState.SUCCESS.toString() )) {
             textView.setText( "已完成" );
             textView.setBackgroundResource( R.drawable.toup_00bd00_bg );
         } else {
