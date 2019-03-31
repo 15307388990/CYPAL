@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/CY_F8F8F8"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -68,10 +68,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="15dp"
-        android:text="尊敬的用户你好：\n 当你提出申请退还保证金时，意味着你会失去赚取佣金的资格。 \n1.申请后将无法进行自动接单、手动抢单； \n2.保证金退还到您的收款帐号。"
+        android:paddingLeft="15dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@color/white"
+        android:paddingRight="15dp"
+        android:text="尊敬的用户你好：\n 当你提出申请退还保证金时，意味着你会失去赚取佣金的资格。 \n\n1.申请后将无法进行自动接单、手动抢单； \n\n2.保证金退还到您的收款帐号。"
         android:textColor="#ff666666"
         android:textSize="15sp" />
 

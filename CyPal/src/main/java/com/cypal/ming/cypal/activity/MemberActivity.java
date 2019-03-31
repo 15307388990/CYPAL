@@ -104,6 +104,7 @@ public class MemberActivity extends BaseActivity {
                 if (TextUtils.equals( "缴纳保证金", tv_text.getText().toString() )) {
                     submitBailMoney();
                 } else {
+                    Tools.jump( MemberActivity.this, RefundActivity.class, false );
                 }
 
             }

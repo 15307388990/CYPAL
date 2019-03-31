@@ -1,5 +1,6 @@
 package com.cypal.ming.cypal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -64,6 +65,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
     private int cursorWidth;
     private int currentSelectTab;
     private CheckBox tv_change;
+    private LinearLayout ll_agreement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         et_new = (EditText) findViewById( R.id.et_new );
         et_new2 = (EditText) findViewById( R.id.et_new2 );
         btn_next = (Button) findViewById( R.id.btn_next );
+        ll_agreement = (LinearLayout) findViewById( R.id.ll_agreement );
         countTimer = new MyCountTimer( this, tv_code, "发送验证码", R.color.darkgray, R.color.CY_9B9B9B );
         rd_phone.setChecked( true );
         currentSelectTab = 0;
@@ -111,6 +114,16 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        } );
+        ll_agreement.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent( RegisteredActivity.this,WebviewActivity.class );
+                String url= Const.BASE_URL + "/h5/agreement";
+                intent.putExtra( "link_url", url );
+                intent.putExtra( "link_name", "用户协议" );
+                startActivity( intent );
             }
         } );
     }

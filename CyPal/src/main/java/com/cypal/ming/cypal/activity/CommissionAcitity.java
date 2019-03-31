@@ -21,6 +21,7 @@ import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.AccountListEntity;
 import com.cypal.ming.cypal.bean.CommissionEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.RewardDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 
@@ -104,6 +105,12 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
         commissionAdapter = new CommissionAdapter( this, list );
         recycleView.setAdapter( commissionAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( this ) );
+        right_view_text.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RewardDialog.newInstance( "" ).show( CommissionAcitity.this );
+            }
+        } );
 
 
     }
