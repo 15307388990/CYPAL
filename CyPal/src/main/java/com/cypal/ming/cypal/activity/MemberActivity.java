@@ -1,5 +1,7 @@
 package com.cypal.ming.cypal.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -102,13 +104,34 @@ public class MemberActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (TextUtils.equals( "缴纳保证金", tv_text.getText().toString() )) {
-                    submitBailMoney();
+                    deleteOrderDialog();
                 } else {
                     Tools.jump( MemberActivity.this, RefundActivity.class, false );
                 }
 
             }
         } );
+    }
+    private void deleteOrderDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("确定要缴纳3000元人民币保证金吗？");
+        builder.setTitle("温馨提示");
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                submitBailMoney();
+            }
+        });
+        builder.create().show();
     }
 
 
@@ -151,7 +174,7 @@ public class MemberActivity extends BaseActivity {
             rl_wei.setVisibility( View.GONE );
         } else {
             //没有完成
-            iv_renzhen.setImageResource( R.drawable.iocn_shenhezhong );
+            iv_renzhen.setImageResource( R.drawable.iocn_weitongguo );
             rl_wei.setVisibility( View.VISIBLE );
             rl_layout.setVisibility( View.GONE );
         }

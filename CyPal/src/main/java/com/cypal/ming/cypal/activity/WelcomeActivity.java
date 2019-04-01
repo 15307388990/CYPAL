@@ -19,7 +19,7 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome);
         view = (LinearLayout) findViewById(R.id.welcome_layout);
         AlphaAnimation anim = new AlphaAnimation(0.1f, 1.0f);// 动画透明度
-        anim.setDuration(2000);
+        anim.setDuration(500);
         view.startAnimation(anim);
         anim.setAnimationListener(new WelcomeAnimation());
     }

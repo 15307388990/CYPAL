@@ -73,10 +73,10 @@
         android:paddingTop="20dp"
         android:paddingRight="15dp"
         android:paddingBottom="20dp"
-        android:text="尊敬的用户你好：\n 当你提出申请退还保证金时，意味着你会失去赚取佣金的资格。 \n\n1.申请后将无法进行自动接单、手动抢单； \n\n2.保证金退还到您的收款帐号。"
+        android:text="尊敬的用户你好：\n 当你提出申请退还保证金时，意味着你会失去赚取佣金的资格。 \n\n1.申请后将无法进行自动接单、手动抢单； \n\n2.保证金退还到您的收款帐号。\n\n3. 客服会在3个工作日内打款到您的收款账户，请确保账户状态正常。"
         android:textColor="#ff666666"
         android:textSize="15sp" />
-
+  
     <LinearLayout
         android:id="@+id/ll_choose"
         android:layout_width="match_parent"

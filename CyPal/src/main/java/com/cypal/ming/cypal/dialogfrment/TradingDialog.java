@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.android.volley.RequestQueue;
@@ -34,7 +35,7 @@ import java.util.Map;
 /**
  * @Author luoming
  * @Date 2019/3/14 10:32 AM
- * 交易
+ * 请输入交易的金额
  */
 
 public class TradingDialog extends CenterDialog implements Response.Listener<String>, Response.ErrorListener {
@@ -104,10 +105,16 @@ public class TradingDialog extends CenterDialog implements Response.Listener<Str
             public void onClick(View v) {
                 String amount = binding.tvEdit.getText().toString().trim();
                 if (!TextUtils.isEmpty( amount )) {
-                    if (Integer.valueOf( amount ) > minLimit) {
-                        reCharge( amount );
-                    } else {
-                        Tools.showToast( mContext, "充值金额不能小于最低充值金额" );
+
+                    try {
+                        if (Integer.valueOf( amount ) >= minLimit) {
+                            reCharge( amount );
+                        } else {
+                            Tools.showToast( mContext, "充值金额不能小于最低充值金额" );
+                        }
+                    } catch (NumberFormatException e) {
+                        Tools.showToast( mContext, "充值金额只能为整数" );
+                        e.printStackTrace();
                     }
                 }
             }

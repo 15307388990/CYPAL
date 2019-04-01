@@ -1,5 +1,7 @@
 package com.cypal.ming.cypal.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -53,18 +55,18 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_top_details );
-        orderId = getIntent().getStringExtra( "orderId" );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_top_details);
+        orderId = getIntent().getStringExtra("orderId");
         initView();
     }
 
     private void order() {
 
-        if (!TextUtils.isEmpty( orderId )) {
+        if (!TextUtils.isEmpty(orderId)) {
             Map<String, String> map = new HashMap<>();
-            map.put( "orderId", orderId );
-            mQueue.add( ParamTools.packParam( Const.order, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+            map.put("orderId", orderId);
+            mQueue.add(ParamTools.packParam(Const.order, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
             loading();
         }
     }
@@ -76,10 +78,10 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     }
 
     private void cancel() {
-        if (!TextUtils.isEmpty( orderId )) {
+        if (!TextUtils.isEmpty(orderId)) {
             Map<String, String> map = new HashMap<>();
-            map.put( "orderId", orderId );
-            mQueue.add( ParamTools.packParam( Const.cancel, this, this, this, map ) );
+            map.put("orderId", orderId);
+            mQueue.add(ParamTools.packParam(Const.cancel, this, this, this, map));
             loading();
         }
     }
@@ -88,99 +90,109 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
      * 确认付款
      */
     private void rwconfirm(String paymentVoucher) {
-        if (!TextUtils.isEmpty( orderId )) {
+        if (!TextUtils.isEmpty(orderId)) {
             Map<String, String> map = new HashMap<>();
-            map.put( "orderId", orderId );
-            map.put( "paymentVoucher", paymentVoucher );
-            map.put( "remark", "dasd" );
-            mQueue.add( ParamTools.packParam( Const.rwconfirm, this, this, this, map ) );
+            map.put("orderId", orderId);
+            map.put("paymentVoucher", paymentVoucher);
+            map.put("remark", "dasd");
+            mQueue.add(ParamTools.packParam(Const.rwconfirm, this, this, this, map));
             loading();
         }
     }
 
+    /**
+     * 申诉订单
+     */
+    public void save() {
+        Map<String, String> map = new HashMap<>();
+        map.put( "orderId", orderId );
+        mQueue.add(ParamTools.packParam(Const.service, this, this, this, map));
+        loading();
+    }
 
     private void initView() {
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        recycleView = (RecyclerView) findViewById( R.id.recycleView );
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        recycleView = (RecyclerView) findViewById(R.id.recycleView);
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
+        });
         list = new ArrayList<>();
-        bindingMoreTypeAdapter = new BindingMoreTypeAdapter( list, this );
-        recycleView.setLayoutManager( new WrapperLinearLayoutManager( this ) );
-        recycleView.setAdapter( bindingMoreTypeAdapter );
+        bindingMoreTypeAdapter = new BindingMoreTypeAdapter(list, this);
+        recycleView.setLayoutManager(new WrapperLinearLayoutManager(this));
+        recycleView.setAdapter(bindingMoreTypeAdapter);
 
 
-        ll_huihua = (LinearLayout) findViewById( R.id.ll_huihua );
-        tv_quxiao = (TextView) findViewById( R.id.tv_quxiao );
-        tv_ok = (TextView) findViewById( R.id.tv_ok );
-        ll_huihua.setOnClickListener( new View.OnClickListener() {
+        ll_huihua = (LinearLayout) findViewById(R.id.ll_huihua);
+        tv_quxiao = (TextView) findViewById(R.id.tv_quxiao);
+        tv_ok = (TextView) findViewById(R.id.tv_ok);
+        ll_huihua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                orderId = getIntent().getStringExtra( "orderId" );
-                String url = Const.BASE_URL + "/h5/chat?rwOrderId=" + orderId + "webSocketToken=" + mSavePreferencesData.getStringData( "token" );
-                Intent intent = new Intent( TopUpDetailsActivity.this, WebviewActivity.class );
-                intent.putExtra( "link_url", url );
-                intent.putExtra( "link_name", "会话" );
-                startActivity( intent );
+                orderId = getIntent().getStringExtra("orderId");
+                String url = Const.BASE_URL + "/h5/chat?rwOrderId=" + orderId + "&token=" + mSavePreferencesData.getStringData("token");
+                Intent intent = new Intent(TopUpDetailsActivity.this, WebviewActivity.class);
+                intent.putExtra("link_url", url);
+                intent.putExtra("link_name", "会话");
+                startActivity(intent);
             }
-        } );
+        });
 
-        tv_quxiao.setOnClickListener( new View.OnClickListener() {
+        tv_quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CancelTheDealDialog.newInstance( "" ).setOnClickListener( new CancelTheDealDialog.OnClickListener() {
+                CancelTheDealDialog.newInstance("").setOnClickListener(new CancelTheDealDialog.OnClickListener() {
                     @Override
                     public void successful() {
                         cancel();
                     }
-                } ).show( TopUpDetailsActivity.this );
+                }).show(TopUpDetailsActivity.this);
             }
-        } );
+        });
 
-        tv_ok.setOnClickListener( new View.OnClickListener() {
+        tv_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tv_ok.getText().toString().equals( "申诉详情" )) {
-                } else if (tv_ok.getText().toString().equals( "确认付款" )) {
-                    ConfirmPaymentDialog.newInstance( "" ).setOnClickListener( new ConfirmPaymentDialog.OnClickListener() {
+                if (tv_ok.getText().toString().equals("申诉详情")) {
+                } else if (tv_ok.getText().toString().equals("确认付款")) {
+                    ConfirmPaymentDialog.newInstance("").setOnClickListener(new ConfirmPaymentDialog.OnClickListener() {
                         @Override
                         public void successful(String paymentVoucher) {
-                            rwconfirm( paymentVoucher );
+                            rwconfirm(paymentVoucher);
                         }
-                    } ).show( TopUpDetailsActivity.this );
+                    }).show(TopUpDetailsActivity.this);
 
-                } else if (tv_ok.getText().toString().equals( "申诉" )) {
-                    Intent intent = new Intent( TopUpDetailsActivity.this, ComplaintOrderActivity.class );
-                    intent.putExtra( "orderId", orderId );
-                    startActivity( intent );
+                } else if (tv_ok.getText().toString().equals("申诉")) {
+//                    Intent intent = new Intent( TopUpDetailsActivity.this, ComplaintOrderActivity.class );
+//                    intent.putExtra( "orderId", orderId );
+//                    startActivity( intent );
+                    deleteOrderDialog();
 
                 }
             }
-        } );
+        });
     }
 
     @Override
     protected void returnData(String data, String url) {
-        if (url.contains( Const.order )) {
+        if (url.contains(Const.order)) {
             try {
                 list.clear();
-                JSONObject json = new JSONObject( data );
-                String datebean = json.optString( "data" );
-                OderDetailsVM oderDetailsVM = JSON.parseObject( datebean, OderDetailsVM.class );
-                initBootm( oderDetailsVM );
-                list.add( oderDetailsVM );
-                List<OderDetailsItemVM> itemVMS = JSON.parseArray( oderDetailsVM.getPayAccountJson(), OderDetailsItemVM.class );
+                JSONObject json = new JSONObject(data);
+                String datebean = json.optString("data");
+                OderDetailsVM oderDetailsVM = JSON.parseObject(datebean, OderDetailsVM.class);
+                initBootm(oderDetailsVM);
+                list.add(oderDetailsVM);
+                List<OderDetailsItemVM> itemVMS = JSON.parseArray(oderDetailsVM.getPayAccountJson(), OderDetailsItemVM.class);
                 for (OderDetailsItemVM oderDetailsItemVM : itemVMS) {
-                    if (oderDetailsItemVM.getAccountType().equals( "BANKCARD" )) {
-                        oderDetailsItemVM.setViewType( R.layout.layout_details_banl );
+                    if (oderDetailsItemVM.getAccountType().equals("BANKCARD")) {
+                        oderDetailsItemVM.setViewType(R.layout.layout_details_banl);
                     } else {
-                        oderDetailsItemVM.setViewType( R.layout.layout_details_pay );
+                        oderDetailsItemVM.setViewType(R.layout.layout_details_pay);
                     }
-                    list.add( oderDetailsItemVM );
+                    list.add(oderDetailsItemVM);
                 }
 
 
@@ -188,11 +200,13 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Tools.showToast( this, "数据格式不对" );
+                Tools.showToast(this, "数据格式不对");
             }
-        } else if (url.contains( Const.cancel )) {
+        } else if (url.contains(Const.cancel)) {
             order();
-        } else if (url.contains( Const.rwconfirm )) {
+        } else if (url.contains(Const.rwconfirm)) {
+            order();
+        } else if (url.contains(Const.service)) {
             order();
         }
 
@@ -201,16 +215,16 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
 
     @Override
     public void ConfirmReceipt(String value, String type) {
-        Intent intent = new Intent( TopUpDetailsActivity.this, BankList.class );
-        intent.putExtra( "value", value );
-        intent.putExtra( "type", type );
-        startActivity( intent );
+        Intent intent = new Intent(TopUpDetailsActivity.this, BankList.class);
+        intent.putExtra("value", value);
+        intent.putExtra("type", type);
+        startActivity(intent);
 
     }
 
     public void onSaveBitmap(String qrcodeSrc) {
-        Tools.onSaveBitmap( CodeUtils.createImage( qrcodeSrc, 150, 150, null ), TopUpDetailsActivity.this );
-        Tools.showToast( this, "二维码已保存到系统图库" );
+        Tools.onSaveBitmap(CodeUtils.createImage(qrcodeSrc, 150, 150, null), TopUpDetailsActivity.this);
+        Tools.showToast(this, "二维码已保存到系统图库");
     }
 
     /**
@@ -218,25 +232,48 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
      */
     private void initBootm(OderDetailsVM oderDetailsVM) {
         String state = oderDetailsVM.getStatusEnum();
-        ll_huihua.setVisibility( View.GONE );
-        tv_ok.setVisibility( View.GONE );
-        tv_quxiao.setVisibility( View.GONE );
-        if (state.equals( TopUpState.TRADING.toString() )) {
-            ll_huihua.setVisibility( View.VISIBLE );
-            tv_ok.setVisibility( View.VISIBLE );
-            tv_quxiao.setVisibility( View.VISIBLE );
-        } else if (state.equals( TopUpState.CANCEL.toString() )) {
-            ll_huihua.setVisibility( View.VISIBLE );
-        } else if (state.equals( TopUpState.SERVICE.toString() )) {
-            ll_huihua.setVisibility( View.VISIBLE );
+        ll_huihua.setVisibility(View.GONE);
+        tv_ok.setVisibility(View.GONE);
+        tv_quxiao.setVisibility(View.GONE);
+        if (state.equals(TopUpState.TRADING.toString())) {
+            ll_huihua.setVisibility(View.VISIBLE);
+            tv_ok.setVisibility(View.VISIBLE);
+            tv_quxiao.setVisibility(View.VISIBLE);
+        } else if (state.equals(TopUpState.CANCEL.toString())) {
+            ll_huihua.setVisibility(View.VISIBLE);
+        } else if (state.equals(TopUpState.SERVICE.toString())) {
+            ll_huihua.setVisibility(View.VISIBLE);
 //            tv_ok.setVisibility( View.VISIBLE );
 //            tv_ok.setText( "申诉详情" );
-        } else if (state.equals( TopUpState.SUCCESS.toString() )) {
-            ll_huihua.setVisibility( View.VISIBLE );
+        } else if (state.equals(TopUpState.SUCCESS.toString())) {
+            ll_huihua.setVisibility(View.VISIBLE);
         } else {
-            ll_huihua.setVisibility( View.VISIBLE );
-            tv_ok.setVisibility( View.VISIBLE );
-            tv_ok.setText( "申诉" );
+            ll_huihua.setVisibility(View.VISIBLE);
+            tv_ok.setVisibility(View.VISIBLE);
+            tv_ok.setText("申诉");
         }
     }
+
+    private void deleteOrderDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("确定要申请客服介入");
+        builder.setTitle("温馨提示");
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                save();
+            }
+        });
+        builder.create().show();
+    }
+
 }

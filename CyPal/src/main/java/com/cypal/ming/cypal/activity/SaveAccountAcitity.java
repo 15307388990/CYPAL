@@ -206,26 +206,26 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
             CodeUtils.analyzeBitmap( path, new CodeUtils.AnalyzeCallback() {
                 @Override
                 public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-                    String key = "";
-                    String text = "";
-                    if (type.equals( "ALIPAY" )) {
-                        // 支付宝
-                        key = "HTTPS://QR.ALIPAY.COM";
-                        text = "支付宝";
-                    } else if (type.equals( "WXPAY" )) {
-                        //微信
-                        key = "wxp://";
-                        text = "微信";
-                    } else {
-                        //云闪付
-                        key = "https://qr.95516.com/";
-                        text = "云闪付";
-                    }
-                    if (result.contains( key )) {
+//                    String key = "";
+//                    String text = "";
+//                    if (type.equals( "ALIPAY" )) {
+//                        // 支付宝
+//                        key = "HTTPS://QR.ALIPAY.COM";
+//                        text = "支付宝";
+//                    } else if (type.equals( "WXPAY" )) {
+//                        //微信
+//                        key = "wxp://";
+//                        text = "微信";
+//                    } else {
+//                        //云闪付
+//                        key = "https://qr.95516.com/";
+//                        text = "云闪付";
+//                    }
+//                    if (result.contains( key )) {
                         accountData = result;
-                    } else {
-                        Tools.showToast( SaveAccountAcitity.this, "该收款二维码不是" + text + "支付二维码，请重新选择" );
-                    }
+//                    } else {
+//                        Tools.showToast( SaveAccountAcitity.this, "该收款二维码不是" + text + "支付二维码，请重新选择" );
+//                    }
                 }
 
                 @Override

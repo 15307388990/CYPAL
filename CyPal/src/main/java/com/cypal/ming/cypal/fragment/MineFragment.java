@@ -23,6 +23,7 @@ import com.cypal.ming.cypal.activity.TabActivity;
 import com.cypal.ming.cypal.activity.TopUpListActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
+import com.cypal.ming.cypal.bean.SignInEntity;
 import com.cypal.ming.cypal.bean.VersionEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.SignInDialog;
@@ -61,7 +62,7 @@ public class MineFragment extends BaseFragment {
     private LinearLayout ll_version;
 
     public MineFragment(Activity context) {
-        super( context );
+        super(context);
     }
 
     ImageLoader imageLoader = ImageLoader.getInstance();
@@ -70,8 +71,8 @@ public class MineFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate( R.layout.activity_mine, container, false );
-        initView( view );
+        View view = inflater.inflate(R.layout.activity_mine, container, false);
+        initView(view);
         return view;
     }
 
@@ -85,157 +86,158 @@ public class MineFragment extends BaseFragment {
 
     public void setIn() {
         Map<String, String> map = new HashMap<>();
-        map.put( "contactType", "myInfo" );
-        mQueue.add( ParamTools.packParam( Const.setIn, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        map.put("contactType", "myInfo");
+        mQueue.add(ParamTools.packParam(Const.setIn, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
         loading();
 
     }
 
     public void signIn() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add( ParamTools.packParam( Const.signIn, mcontext, this, this, map ) );
+        mQueue.add(ParamTools.packParam(Const.signIn, mcontext, this, this, map));
         loading();
 
     }
 
     @Override
     public void returnData(String data, String url) {
-        if (url.contains( Const.setIn )) {
-            mSavePreferencesData.putStringData( "infojson", data );
-            initData( data );
-        } else if (url.contains( Const.signIn )) {
-            SignInDialog signInDialog = SignInDialog.newInstance( "" );
-            signInDialog.show( mcontext );
-            ll_view_back.setVisibility( View.GONE );
-            ll_view_back2.setVisibility( View.VISIBLE );
-        } else if (url.contains( Const.check )) {
-            VersionEntity versionEntity = JSON.parseObject( data, VersionEntity.class );
-            VersionUpgradeDialog.newInstance( versionEntity.data ).show( mcontext );
+        if (url.contains(Const.setIn)) {
+            mSavePreferencesData.putStringData("infojson", data);
+            initData(data);
+        } else if (url.contains(Const.signIn)) {
+            SignInEntity signInEntity = JSON.parseObject(data, SignInEntity.class);
+            SignInDialog signInDialog = SignInDialog.newInstance(signInEntity.data.signReward);
+            signInDialog.show(mcontext);
+            ll_view_back.setVisibility(View.GONE);
+            ll_view_back2.setVisibility(View.GONE);
+        } else if (url.contains(Const.check)) {
+            VersionEntity versionEntity = JSON.parseObject(data, VersionEntity.class);
+            VersionUpgradeDialog.newInstance(versionEntity.data).show(mcontext);
         }
     }
 
     //检测版本
     private void AppVersion() {
         Map<String, String> map = new HashMap<>();
-        map.put( "osEnum", "android" );
-        map.put( "versionId", Tools.packageCode( mcontext ) + "" );
-        mQueue.add( ParamTools.packParam( Const.check, mcontext, this, this, map ) );
+        map.put("osEnum", "android");
+        map.put("versionId", Tools.packageCode(mcontext) + "");
+        mQueue.add(ParamTools.packParam(Const.check, mcontext, this, this, map));
 
     }
 
     private void initView(View view) {
-        right_view_text = (TextView) view.findViewById( R.id.right_view_text );
-        right_view_text.setOnClickListener( new View.OnClickListener() {
+        right_view_text = (TextView) view.findViewById(R.id.right_view_text);
+        right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, PersonalActivity.class, false );
+                Tools.jump(mcontext, PersonalActivity.class, false);
             }
-        } );
-        ll_view_back2 = (LinearLayout) view.findViewById( R.id.ll_view_back2 );
-        ll_view_back = (LinearLayout) view.findViewById( R.id.ll_view_back );
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        });
+        ll_view_back2 = (LinearLayout) view.findViewById(R.id.ll_view_back2);
+        ll_view_back = (LinearLayout) view.findViewById(R.id.ll_view_back);
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
             }
-        } );
-        iv_renzhen = (ImageView) view.findViewById( R.id.iv_renzhen );
-        tv_nickname = (TextView) view.findViewById( R.id.tv_nickname );
-        myicon = (CircleImageView) view.findViewById( R.id.myicon );
-        ll_yaoqing = (LinearLayout) view.findViewById( R.id.ll_yaoqing );
-        v_yaoqing = (View) view.findViewById( R.id.v_yaoqing );
-        tv_text = (TextView) view.findViewById( R.id.tv_text );
-        ll_version = (LinearLayout) view.findViewById( R.id.ll_version );
-        tv_version = (TextView) view.findViewById( R.id.tv_version );
-        tv_creditscore = (TextView) view.findViewById( R.id.tv_creditscore );
-        tv_text.setOnClickListener( new View.OnClickListener() {
+        });
+        iv_renzhen = (ImageView) view.findViewById(R.id.iv_renzhen);
+        tv_nickname = (TextView) view.findViewById(R.id.tv_nickname);
+        myicon = (CircleImageView) view.findViewById(R.id.myicon);
+        ll_yaoqing = (LinearLayout) view.findViewById(R.id.ll_yaoqing);
+        v_yaoqing = (View) view.findViewById(R.id.v_yaoqing);
+        tv_text = (TextView) view.findViewById(R.id.tv_text);
+        ll_version = (LinearLayout) view.findViewById(R.id.ll_version);
+        tv_version = (TextView) view.findViewById(R.id.tv_version);
+        tv_creditscore = (TextView) view.findViewById(R.id.tv_creditscore);
+        tv_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, MemberActivity.class, false );
+                Tools.jump(mcontext, MemberActivity.class, false);
             }
-        } );
-        ll_shou = (LinearLayout) view.findViewById( R.id.ll_shou );
-        ll_shou.setOnClickListener( new View.OnClickListener() {
+        });
+        ll_shou = (LinearLayout) view.findViewById(R.id.ll_shou);
+        ll_shou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, AccountListActivity.class, false );
+                Tools.jump(mcontext, AccountListActivity.class, false);
             }
-        } );
-        ll_commission = (LinearLayout) view.findViewById( R.id.ll_commission );
-        ll_commission.setOnClickListener( new View.OnClickListener() {
+        });
+        ll_commission = (LinearLayout) view.findViewById(R.id.ll_commission);
+        ll_commission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, CommissionAcitity.class, false );
+                Tools.jump(mcontext, CommissionAcitity.class, false);
             }
-        } );
+        });
         //缓存数据
-        if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "infojson" ) )) {
-            initData( mSavePreferencesData.getStringData( "infojson" ) );
+        if (!TextUtils.isEmpty(mSavePreferencesData.getStringData("infojson"))) {
+            initData(mSavePreferencesData.getStringData("infojson"));
         }
-        ll_jiedan = (LinearLayout) view.findViewById( R.id.ll_jiedan );
-        ll_jiedan.setOnClickListener( new View.OnClickListener() {
+        ll_jiedan = (LinearLayout) view.findViewById(R.id.ll_jiedan);
+        ll_jiedan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, OrderListActivity.class, false );
+                Tools.jump(mcontext, OrderListActivity.class, false);
             }
-        } );
-        ll_top_up = (LinearLayout) view.findViewById( R.id.ll_top_up );
-        ll_top_up.setOnClickListener( new View.OnClickListener() {
+        });
+        ll_top_up = (LinearLayout) view.findViewById(R.id.ll_top_up);
+        ll_top_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, TopUpListActivity.class, false );
+                Tools.jump(mcontext, TopUpListActivity.class, false);
             }
-        } );
-        tv_version.setText( "v" + Tools.getVersionName( mcontext ) );
+        });
+        tv_version.setText("v" + Tools.getVersionName(mcontext));
 
-        ll_version.setOnClickListener( new View.OnClickListener() {
+        ll_version.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppVersion();
             }
-        } );
+        });
 
     }
 
     private void initData(String data) {
 
-        InfoEntity infoEntity = JSON.parseObject( data, InfoEntity.class );
+        InfoEntity infoEntity = JSON.parseObject(data, InfoEntity.class);
         InfoEntity.DataBean.MyInformationBeanBean myInformationBeanBean = infoEntity.data.myInformationBean;
         if (myInformationBeanBean.avatar == null) {
-            imageLoader.displayImage( Const.USER_DEFAULT_ICON, myicon, options );
+            imageLoader.displayImage(Const.USER_DEFAULT_ICON, myicon, options);
         } else {
-            imageLoader.displayImage( myInformationBeanBean.avatar, myicon,
-                    options );
+            imageLoader.displayImage(myInformationBeanBean.avatar, myicon,
+                    options);
 
         }
-        tv_nickname.setText( myInformationBeanBean.nickName );
+        tv_nickname.setText(myInformationBeanBean.nickName);
         //是否认证
         if (myInformationBeanBean.certification) {
-            iv_renzhen.setImageResource( R.drawable.label_members );
-            tv_creditscore.setVisibility( View.VISIBLE );
-            tv_text.setVisibility( View.GONE );
+            iv_renzhen.setImageResource(R.drawable.label_members);
+            tv_creditscore.setVisibility(View.VISIBLE);
+            tv_text.setVisibility(View.GONE);
         } else {
-            iv_renzhen.setImageResource( R.drawable.label_no );
-            tv_creditscore.setVisibility( View.GONE );
-            tv_text.setVisibility( View.VISIBLE );
+            iv_renzhen.setImageResource(R.drawable.label_no);
+            tv_creditscore.setVisibility(View.GONE);
+            tv_text.setVisibility(View.VISIBLE);
         }
         //是否签到
-        if (("SIGNIN").equals( myInformationBeanBean.signStatus )) {
-            ll_view_back.setVisibility( View.GONE );
-            ll_view_back2.setVisibility( View.VISIBLE );
+        if (("SIGNIN").equals(myInformationBeanBean.signStatus)) {
+            ll_view_back.setVisibility(View.GONE);
+            ll_view_back2.setVisibility(View.GONE);
         } else {
-            ll_view_back.setVisibility( View.VISIBLE );
-            ll_view_back2.setVisibility( View.GONE );
+            ll_view_back.setVisibility(View.VISIBLE);
+            ll_view_back2.setVisibility(View.GONE);
         }
         //是否显示邀请好友
         if (myInformationBeanBean.showInviteFriends) {
-            ll_yaoqing.setVisibility( View.VISIBLE );
-            v_yaoqing.setVisibility( View.VISIBLE );
+            ll_yaoqing.setVisibility(View.VISIBLE);
+            v_yaoqing.setVisibility(View.VISIBLE);
         } else {
-            ll_yaoqing.setVisibility( View.GONE );
-            v_yaoqing.setVisibility( View.GONE );
+            ll_yaoqing.setVisibility(View.GONE);
+            v_yaoqing.setVisibility(View.GONE);
         }
-        tv_creditscore.setText( "信用分：" + myInformationBeanBean.creditScore );
+        tv_creditscore.setText("信用分：" + myInformationBeanBean.creditScore);
     }
 
 }

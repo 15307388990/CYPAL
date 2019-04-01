@@ -1,5 +1,7 @@
 package com.cypal.ming.cypal.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -145,12 +147,33 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
 
 
     }
+    private void deleteOrderDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("确定退还保证金吗？");
+        builder.setTitle("温馨提示");
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
 
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sureRefoundBailMoney();
+            }
+        });
+        builder.create().show();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                sureRefoundBailMoney();
+                deleteOrderDialog();
+
                 break;
         }
     }

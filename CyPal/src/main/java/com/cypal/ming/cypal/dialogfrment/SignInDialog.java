@@ -27,8 +27,8 @@ public class SignInDialog extends CenterDialog {
     public static SignInDialog newInstance(String url) {
         SignInDialog dialog = new SignInDialog();
         Bundle bundle = new Bundle();
-        bundle.putString( URL, url );
-        dialog.setArguments( bundle );
+        bundle.putString(URL, url);
+        dialog.setArguments(bundle);
         return dialog;
     }
 
@@ -44,7 +44,7 @@ public class SignInDialog extends CenterDialog {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss( dialog );
+        super.onDismiss(dialog);
     }
 
     @Override
@@ -54,22 +54,24 @@ public class SignInDialog extends CenterDialog {
 
     @Override
     public int getWindowWidth() {
-        return (int) (Tools.getScreenWidth( getActivity() ) * 0.75);
+        return (int) (Tools.getScreenWidth(getActivity()) * 0.75);
     }
 
     @Override
     public void initView(ViewDataBinding dataBinding) {
         binding = (SignInDialogBinding) dataBinding;
         Bundle bundle = getArguments();
+        String buildUrl = "";
         if (bundle != null) {
-            String buildUrl = bundle.getString( URL );
+            buildUrl = bundle.getString(URL);
         }
-        binding.tvOk.setOnClickListener( new View.OnClickListener() {
+        binding.tvText.setText(buildUrl);
+        binding.tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
-        } );
+        });
     }
 
 

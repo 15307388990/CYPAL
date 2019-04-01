@@ -31,8 +31,8 @@ public class NickNameActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_nickname );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_nickname);
         initView();
     }
 
@@ -45,33 +45,37 @@ public class NickNameActivity extends BaseActivity implements View.OnClickListen
 
     public void modifyNickName() {
         Map<String, String> map = new HashMap<>();
-        map.put( "nickName", et_nick.getText().toString().trim() );
-        mQueue.add( ParamTools.packParam( Const.modifyNickName, this, this, this, map ) );
+        map.put("nickName", et_nick.getText().toString().trim());
+        mQueue.add(ParamTools.packParam(Const.modifyNickName, this, this, this, map));
         loading();
     }
 
 
     private void initView() {
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        String nickname = getIntent().getStringExtra("nickname");
+        if (TextUtils.isEmpty(nickname)) {
+            et_nick.setText(nickname);
+        }
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        et_nick = (EditText) findViewById( R.id.et_nick );
-        btn_next = (Button) findViewById( R.id.btn_next );
-        btn_next.setOnClickListener( this );
+        });
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        et_nick = (EditText) findViewById(R.id.et_nick);
+        btn_next = (Button) findViewById(R.id.btn_next);
+        btn_next.setOnClickListener(this);
     }
 
 
     @Override
     protected void returnData(String data, String url) {
-        Tools.showToast( NickNameActivity.this, "修改成功" );
+        Tools.showToast(NickNameActivity.this, "修改成功");
         Intent intent = new Intent();
-        intent.putExtra( "nickname", et_nick.getText().toString().trim() );
-        setResult( RESULT_OK, intent );
+        intent.putExtra("nickname", et_nick.getText().toString().trim());
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -87,8 +91,8 @@ public class NickNameActivity extends BaseActivity implements View.OnClickListen
     private void submit() {
         // validate
         String nick = et_nick.getText().toString().trim();
-        if (TextUtils.isEmpty( nick )) {
-            Tools.showToast( this, "请输入您的昵称" );
+        if (TextUtils.isEmpty(nick)) {
+            Tools.showToast(this, "请输入您的昵称");
             return;
         }
         modifyNickName();

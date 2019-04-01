@@ -158,7 +158,7 @@ public class PersonalActivity extends BaseActivity {
                         MultiImageSelectorActivity.class );
                 intent.putExtra( "isUploadIcon", true );
                 intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                        false );
+                        true );
                 intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
                         1 );
                 startActivityForResult( intent, 0 );

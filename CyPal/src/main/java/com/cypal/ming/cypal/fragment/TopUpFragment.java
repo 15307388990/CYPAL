@@ -51,29 +51,29 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     private TextView right_view_text;
 
     public TopUpFragment(Activity context) {
-        super( context );
+        super(context);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate( R.layout.activity_top_up, container, false );
-        initView( view );
+        View view = inflater.inflate(R.layout.activity_top_up, container, false);
+        initView(view);
         return view;
     }
 
     private void initView(View view) {
 
-        recycleView = (RecyclerView) view.findViewById( R.id.recycleView );
-        springView = (SpringView) view.findViewById( R.id.springView );
-        rl_layout = (RelativeLayout) view.findViewById( R.id.rl_layout );
+        recycleView = (RecyclerView) view.findViewById(R.id.recycleView);
+        springView = (SpringView) view.findViewById(R.id.springView);
+        rl_layout = (RelativeLayout) view.findViewById(R.id.rl_layout);
         list = new ArrayList<>();
-        topUpListAdapter = new TopUpListAdapter( mcontext, list, this );
-        recycleView.setLayoutManager( new LinearLayoutManager( mcontext ) );
-        recycleView.setAdapter( topUpListAdapter );
-        springView.setHeader( new DefaultHeader( mcontext ) );
-        springView.setFooter( new DefaultFooter( mcontext ) );
-        springView.setListener( new SpringView.OnFreshListener() {
+        topUpListAdapter = new TopUpListAdapter(mcontext, list, this);
+        recycleView.setLayoutManager(new LinearLayoutManager(mcontext));
+        recycleView.setAdapter(topUpListAdapter);
+        springView.setHeader(new DefaultHeader(mcontext));
+        springView.setFooter(new DefaultFooter(mcontext));
+        springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
                 pageNumber = 1;
@@ -83,27 +83,27 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
             @Override
             public void onLoadmore() {
                 springView.onFinishFreshAndLoad();
-//                pageNumber++;
-//                if (isxia) {
-//                    orderList();
-//                } else {
-//                    Tools.showToast( getActivity(), "没有更多数据了" );
-//                    springView.onFinishFreshAndLoad();
-//                }
+                pageNumber++;
+                if (isxia) {
+                    orderList();
+                } else {
+                    Tools.showToast(getActivity(), "没有更多数据了");
+                    springView.onFinishFreshAndLoad();
+                }
 
             }
-        } );
-        if (!TextUtils.isEmpty( mSavePreferencesData.getStringData( "topjson" ) )) {
+        });
+        if (!TextUtils.isEmpty(mSavePreferencesData.getStringData("topjson"))) {
 
-            initData( mSavePreferencesData.getStringData( "topjson" ) );
+            initData(mSavePreferencesData.getStringData("topjson"));
         }
-        right_view_text = (TextView) view.findViewById( R.id.right_view_text );
-        right_view_text.setOnClickListener( new OnClickListener() {
+        right_view_text = (TextView) view.findViewById(R.id.right_view_text);
+        right_view_text.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump( mcontext, TopUpListActivity.class, false );
+                Tools.jump(mcontext, TopUpListActivity.class, false);
             }
-        } );
+        });
     }
 
 
@@ -115,7 +115,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
     public void orderList() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add( ParamTools.packParam( Const.rwlist, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        mQueue.add(ParamTools.packParam(Const.rwlist, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
         loading();
 
     }
@@ -157,16 +157,21 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     @Override
     public void returnData(String data, String url) {
         springView.onFinishFreshAndLoad();
-        if (url.contains( Const.rwlist )) {
-            mSavePreferencesData.putStringData( "topjson", data );
-            initData( data );
+        if (url.contains(Const.rwlist)) {
+            mSavePreferencesData.putStringData("topjson", data);
+            initData(data);
 
         }
     }
 
     public void initData(String data) {
-        TopUpEntity topUpEntity = JSON.parseObject( data, TopUpEntity.class );
+        TopUpEntity topUpEntity = JSON.parseObject(data, TopUpEntity.class);
         list = topUpEntity.data.content;
-        topUpListAdapter.updateAdapter( list );
+        if (list.size() > 10) {
+            isxia = true;
+        } else {
+            isxia = false;
+        }
+        topUpListAdapter.updateAdapter(list);
     }
 }

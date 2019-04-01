@@ -26,8 +26,9 @@
             android:layout_marginTop="9dp"
             android:paddingLeft="10dp"
             android:layout_marginRight="19dp"
+            android:numeric="integer"
             android:background="@drawable/input_bg"
-            android:inputType="numberDecimal" />
+            android:inputType="phone" />
 
         <TextView
             android:layout_width="match_parent"
