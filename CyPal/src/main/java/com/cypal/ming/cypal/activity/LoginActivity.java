@@ -33,6 +33,7 @@ import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.json.JSONObject;
 
@@ -185,6 +186,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void returnData(String data, String url) {
         LoginEntity loginEntity = JSON.parseObject( data, LoginEntity.class );
         mSavePreferencesData.putStringData( "token", loginEntity.data.loginToken );
+        //bug ly记录用户ID
+        CrashReport.setUserId( et_login_account.getText().toString().trim() );
         Tools.jump( this, TabActivity.class, true );
     }
 

@@ -26,7 +26,9 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -179,12 +181,34 @@ public class PersonalActivity extends BaseActivity {
         btn_exit.setOnClickListener( new OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginOut();
+                deleteOrderDialog();
             }
         } );
 
     }
 
+    private void deleteOrderDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        builder.setMessage( "您确定要退出登录?" );
+        builder.setTitle( "提示" );
+        builder.setPositiveButton( "取消", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        } );
+
+        builder.setNegativeButton( "确定", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loginOut();
+
+            }
+        } );
+        builder.create().show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

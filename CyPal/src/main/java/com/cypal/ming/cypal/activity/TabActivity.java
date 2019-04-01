@@ -48,15 +48,11 @@ import me.weyye.hipermission.PermissionItem;
  * 首页
  */
 public class TabActivity extends BaseActivity {
-    public Fragment mMianFragment, topUpFragment, mMinFragment;
+    private Fragment mMianFragment, topUpFragment, mMinFragment;
     private RadioButton tab_rb_home;
     private RadioButton tab_rb_mine;
     private FrameLayout fragment_container;
     private RadioGroup tab_rg_menu;
-    private int serviceVersion; //服务器版本
-    private int localVersion;//本地版本
-    private String mall_name;//版本名称
-    Runnable runnable;
     private long mExitTime;
 
 

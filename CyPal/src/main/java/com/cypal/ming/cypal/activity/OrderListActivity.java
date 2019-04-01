@@ -196,7 +196,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
     public void appeal(String orderId) {
         Map<String, String> map = new HashMap<>();
         map.put( "orderId", orderId );
-        mQueue.add( ParamTools.packParam( Const.service, this, this, this, map ) );
+        mQueue.add( ParamTools.packParam( Const.appeal, this, this, this, map ) );
         loading();
     }
 
@@ -208,7 +208,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
             otcOrderListAdapter.updateAdapter( list, otcOrderListEntity.serverTime );
         } else if (url.contains( Const.confirm )) {
             orderlist();
-        } else if (url.contains( Const.service )) {
+        } else if (url.contains( Const.appeal )) {
             orderlist();
         }
 

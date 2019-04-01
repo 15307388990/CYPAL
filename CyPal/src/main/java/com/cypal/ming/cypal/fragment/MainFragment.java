@@ -306,7 +306,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     public void appeal(String orderId) {
         Map<String, String> map = new HashMap<>();
         map.put( "orderId", orderId );
-        mQueue.add( ParamTools.packParam( Const.service, mcontext, this, this, map ) );
+        mQueue.add( ParamTools.packParam( Const.appeal, mcontext, this, this, map ) );
         loading();
     }
 
@@ -393,7 +393,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             initData( data );
         } else if (url.contains( Const.confirm )) {
             orderList();
-        } else if (url.contains( Const.service )) {
+        } else if (url.contains( Const.appeal )) {
             orderList();
         }
 

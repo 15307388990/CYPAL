@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.ImageView;
@@ -87,6 +88,7 @@ public class VersionUpgradeDialog extends CenterDialog {
     private Handler mViewUpdateHandler;
     // 下载存储的文件名
     private static final String DOWNLOAD_NAME = "cypay";
+    private Context mContext;
 
     /**
      * 定义结果回调接口
@@ -114,14 +116,17 @@ public class VersionUpgradeDialog extends CenterDialog {
     }
 
 
-
-
     public VersionUpgradeDialog setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         return this;
 
     }
 
+    @Override
+    public void show(Object object) {
+        this.mContext = (Context) object;
+        super.show( object );
+    }
 
     public static VersionUpgradeDialog newInstance(VersionEntity.DataBean versionBean) {
         VersionUpgradeDialog dialog = new VersionUpgradeDialog();
@@ -174,12 +179,16 @@ public class VersionUpgradeDialog extends CenterDialog {
         binding.tvOk.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tvContext.setVisibility( View.GONE );
-                binding.llProgres.setVisibility( View.VISIBLE );
-                binding.tvOk.setVisibility( View.GONE );
-                DownloadTask downloadTask = new DownloadTask(
-                        getActivity() );
-                downloadTask.execute( "http://openbox.mobilem.360.cn/index/d/sid/3429345" );
+                if (!TextUtils.isEmpty( versionBean.updateUrl )) {
+                    binding.tvContext.setVisibility( View.GONE );
+                    binding.llProgres.setVisibility( View.VISIBLE );
+                    binding.tvOk.setVisibility( View.GONE );
+                    DownloadTask downloadTask = new DownloadTask(
+                            getActivity() );
+                    downloadTask.execute( versionBean.updateUrl );
+                } else {
+                    Tools.showToast( getActivity(), "APK下载地址为空" );
+                }
             }
         } );
         binding.tvCancle.setOnClickListener( new View.OnClickListener() {
@@ -260,7 +269,7 @@ public class VersionUpgradeDialog extends CenterDialog {
 
                 }
             } catch (Exception e) {
-                System.out.println( e.toString() );
+                System.out.println( "错误—+" + e.toString() );
                 return e.toString();
 
             } finally {
@@ -270,6 +279,7 @@ public class VersionUpgradeDialog extends CenterDialog {
                     if (input != null)
                         input.close();
                 } catch (IOException ignored) {
+                    System.out.print( "错误信息" + ignored.toString() );
                 }
                 if (connection != null)
                     connection.disconnect();
@@ -296,7 +306,7 @@ public class VersionUpgradeDialog extends CenterDialog {
             pBar.setIndeterminate( false );
             pBar.setMax( 100 );
             pBar.setProgress( progress[0] );
-            tv_progress.setText( pBar.getProgress()+ "%" );
+            tv_progress.setText( pBar.getProgress() + "%" );
 
         }
 
@@ -304,7 +314,6 @@ public class VersionUpgradeDialog extends CenterDialog {
         protected void onPostExecute(String result) {
             mWakeLock.release();
             dismiss();
-            System.out.print( "r日你" + result);
             if (result != null) {
 
 //                // 申请多个权限。大神的界面
@@ -344,7 +353,7 @@ public class VersionUpgradeDialog extends CenterDialog {
 
 
     private void update() {
-        File apkfile = new File( DOWNLOAD_NAME );
+        File apkfile = new File( Environment.getExternalStorageDirectory(), DOWNLOAD_NAME );
         if (!apkfile.exists()) {
             return;
         }
@@ -353,7 +362,7 @@ public class VersionUpgradeDialog extends CenterDialog {
         //判断是否是AndroidN以及更高的版本
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags( Intent.FLAG_GRANT_READ_URI_PERMISSION );
-            Uri contentUri = FileProvider.getUriForFile( getActivity(), BuildConfig.APPLICATION_ID + ".fileProvider", apkfile );
+            Uri contentUri = FileProvider.getUriForFile( mContext, BuildConfig.APPLICATION_ID + ".fileProvider", apkfile );
             intent.setDataAndType( contentUri, "application/vnd.android.package-archive" );
         } else {
             intent.setDataAndType( Uri.fromFile( new File( Environment

@@ -116,70 +116,75 @@ public class Const {
     /**
      * 添加收款账户
      */
-    public static final String payAccountSave= "/private/payAccount/save";
+    public static final String payAccountSave = "/private/payAccount/save";
     /**
      * 使用账户
      */
-    public static final String use= "/private/payAccount/use";
+    public static final String use = "/private/payAccount/use";
     /**
      * 删除账户
      */
-    public static final String del= "/private/payAccount/del";
+    public static final String del = "/private/payAccount/del";
     /**
      * 我的佣金
      */
-    public static final String commision= "/private/commision/list?";
+    public static final String commision = "/private/commision/list?";
     /**
      * 提取佣金
      */
-    public static final String withdraw= "/private/commision/withdraw?";
+    public static final String withdraw = "/private/commision/withdraw?";
     /**
      * 退出登录
      */
-    public static final String loginOut= "/public/loginOut?";
+    public static final String loginOut = "/public/loginOut?";
     /**
      * 开始接单
      */
-    public static final String start= "/private/index/start";
+    public static final String start = "/private/index/start";
     /**
-     *  取消接单
+     * 取消接单
      */
-    public static final String stop= "/private/index/stop";
+    public static final String stop = "/private/index/stop";
     /**
-     *  抢单
+     * 抢单
      */
-    public static final String take= "/private/index/take";
+    public static final String take = "/private/index/take";
     /**
-     *  确认收款
+     * 确认收款
      */
-    public static final String confirm= "/private/otcOrder/confirm";
+    public static final String confirm = "/private/otcOrder/confirm";
     /**
-     *  申诉订单
+     * 申诉订单
      */
-    public static final String service= "/private/rw/service";
+    public static final String service = "/private/rw/service";
     /**
-     *  充值详情
+     * 充值详情
      */
-    public static final String order= "/private/rw/order?";
+    public static final String order = "/private/rw/order?";
     /**
-     *  充值记录
+     * 充值记录
      */
-    public static final String orderlist= "/private/rw/my?";
+    public static final String orderlist = "/private/rw/my?";
     /**
-     *  接单记录
+     * 接单记录
      */
-    public static final String otcOrderlist= "/private/otcOrder/list?";
+    public static final String otcOrderlist = "/private/otcOrder/list?";
     /**
-     *  取消订单
+     * 取消订单
      */
-    public static final String cancel= "/private/rw/cancel";
+    public static final String cancel = "/private/rw/cancel";
     /**
-     *  确认付款
+     * 确认付款
      */
-    public static final String rwconfirm= "/private/rw/confirm";
+    public static final String rwconfirm = "/private/rw/confirm";
     /**
-     * 版本 */
+     * 版本
+     */
     public static final String check = "/public/version/check";
+    /**
+     * 反申诉订单
+     */
+    public static final String appeal = "/private/otcOrder/appeal";
 
 
     /* 订单详情 */

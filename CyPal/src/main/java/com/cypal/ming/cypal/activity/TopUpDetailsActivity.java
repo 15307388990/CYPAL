@@ -229,8 +229,8 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
             ll_huihua.setVisibility( View.VISIBLE );
         } else if (state.equals( TopUpState.SERVICE.toString() )) {
             ll_huihua.setVisibility( View.VISIBLE );
-            tv_ok.setVisibility( View.VISIBLE );
-            tv_ok.setText( "申诉详情" );
+//            tv_ok.setVisibility( View.VISIBLE );
+//            tv_ok.setText( "申诉详情" );
         } else if (state.equals( TopUpState.SUCCESS.toString() )) {
             ll_huihua.setVisibility( View.VISIBLE );
         } else {
