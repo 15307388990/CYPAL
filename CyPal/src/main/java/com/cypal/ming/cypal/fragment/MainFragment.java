@@ -36,6 +36,7 @@ import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;

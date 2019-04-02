@@ -24,6 +24,9 @@ import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.RewardDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,11 +58,15 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
     private List<CommissionEntity.DataBean.ListBean.ContentBean> list;
     private CommissionAdapter commissionAdapter;
 
+    private SpringView springView;
+    private int pageNumber = 1;
+    boolean isPage = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.acitity_commission );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.acitity_commission);
         initView();
     }
 
@@ -67,51 +74,73 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+        pageNumber = 1;
         Commision();
     }
 
     private void Commision() {
         Map<String, String> map = new HashMap<>();
-        map.put( "type", currentSelectTab );
-        mQueue.add( ParamTools.packParam( Const.commision, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        map.put("type", currentSelectTab);
+        map.put("page", pageNumber + "");
+        map.put("size", "10");
+        mQueue.add(ParamTools.packParam(Const.commision, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
         loading();
     }
 
 
     private void initView() {
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
-
-        right_view_text = (ImageView) findViewById( R.id.right_view_text );
-        btn_next = (TextView) findViewById( R.id.btn_next );
-        btn_next.setOnClickListener( this );
-        rd_phone = (RadioButton) findViewById( R.id.rd_phone );
-        rd_email = (RadioButton) findViewById( R.id.rd_email );
-        rd_group = (RadioGroup) findViewById( R.id.rd_group );
-        cursor = (LinearLayout) findViewById( R.id.cursor );
-        recycleView = (RecyclerView) findViewById( R.id.recycleView );
-        tv_myCommisionBalance = (TextView) findViewById( R.id.tv_myCommisionBalance );
-        tv_totalCommision = (TextView) findViewById( R.id.tv_totalCommision );
-        tv_todayCommision = (TextView) findViewById( R.id.tv_todayCommision );
-        tv_todayTeamCommision = (TextView) findViewById( R.id.tv_todayTeamCommision );
-        rd_phone.setChecked( true );
+        });
+        springView = (SpringView) findViewById(R.id.springView);
+        right_view_text = (ImageView) findViewById(R.id.right_view_text);
+        btn_next = (TextView) findViewById(R.id.btn_next);
+        btn_next.setOnClickListener(this);
+        rd_phone = (RadioButton) findViewById(R.id.rd_phone);
+        rd_email = (RadioButton) findViewById(R.id.rd_email);
+        rd_group = (RadioGroup) findViewById(R.id.rd_group);
+        cursor = (LinearLayout) findViewById(R.id.cursor);
+        recycleView = (RecyclerView) findViewById(R.id.recycleView);
+        tv_myCommisionBalance = (TextView) findViewById(R.id.tv_myCommisionBalance);
+        tv_totalCommision = (TextView) findViewById(R.id.tv_totalCommision);
+        tv_todayCommision = (TextView) findViewById(R.id.tv_todayCommision);
+        tv_todayTeamCommision = (TextView) findViewById(R.id.tv_todayTeamCommision);
+        rd_phone.setChecked(true);
         initEvent();
         list = new ArrayList<>();
-        commissionAdapter = new CommissionAdapter( this, list );
-        recycleView.setAdapter( commissionAdapter );
-        recycleView.setLayoutManager( new LinearLayoutManager( this ) );
-        right_view_text.setOnClickListener( new View.OnClickListener() {
+        commissionAdapter = new CommissionAdapter(this, list);
+        recycleView.setAdapter(commissionAdapter);
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RewardDialog.newInstance( "" ).show( CommissionAcitity.this );
+                RewardDialog.newInstance("").show(CommissionAcitity.this);
             }
-        } );
+        });
+        springView.setFooter(new DefaultFooter(this));
+        springView.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                pageNumber = 1;
+                Commision();
+            }
 
+            @Override
+            public void onLoadmore() {
+                pageNumber++;
+                if (isPage) {
+                    Commision();
+                } else {
+                    Tools.showToast(CommissionAcitity.this, "没有更多数据了");
+                    springView.onFinishFreshAndLoad();
+                }
+
+            }
+        });
 
     }
 
@@ -120,9 +149,9 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                Intent intent = new Intent( CommissionAcitity.this, WithdrawalActivity.class );
-                intent.putExtra( "amount", commissionEntity.data.myCommisionBalance + "" );
-                startActivity( intent );
+                Intent intent = new Intent(CommissionAcitity.this, WithdrawalActivity.class);
+                intent.putExtra("amount", commissionEntity.data.myCommisionBalance + "");
+                startActivity(intent);
                 break;
         }
     }
@@ -130,35 +159,41 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void returnData(String data, String url) {
-        commissionEntity = JSON.parseObject( data, CommissionEntity.class );
-        tv_myCommisionBalance.setText( commissionEntity.data.myCommisionBalance + "" );
-        tv_totalCommision.setText( commissionEntity.data.totalCommision + "" );
-        tv_todayTeamCommision.setText( commissionEntity.data.todayTeamCommision + "" );
-        tv_todayCommision.setText( commissionEntity.data.todayCommision + "" );
+        commissionEntity = JSON.parseObject(data, CommissionEntity.class);
+        tv_myCommisionBalance.setText(commissionEntity.data.myCommisionBalance + "");
+        tv_totalCommision.setText(commissionEntity.data.totalCommision + "");
+        tv_todayTeamCommision.setText(commissionEntity.data.todayTeamCommision + "");
+        tv_todayCommision.setText(commissionEntity.data.todayCommision + "");
         list = commissionEntity.data.list.content;
-        commissionAdapter.updateAdapter( list );
+        commissionAdapter.updateAdapter(list);
+        if (pageNumber < commissionEntity.data.list.totalPages) {
+            isPage = true;
+        } else {
+            isPage = false;
+        }
 
     }
 
     public void initEvent() {
         params = (RelativeLayout.LayoutParams) cursor.getLayoutParams();
-        cursorWidth = params.width = Tools.getScreenWidth( CommissionAcitity.this ) / 2;
-        cursor.setLayoutParams( params );
-        rd_group.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
+        cursorWidth = params.width = Tools.getScreenWidth(CommissionAcitity.this) / 2;
+        cursor.setLayoutParams(params);
+        rd_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 if (checkedId == R.id.rd_phone) {
                     currentSelectTab = "INCOME";
                     params.leftMargin = 0;
-                    cursor.setLayoutParams( params );
-                    Commision();
+                    cursor.setLayoutParams(params);
                 } else if (checkedId == R.id.rd_email) {
                     currentSelectTab = "WITHDRAW";
                     params.leftMargin = cursorWidth;
-                    cursor.setLayoutParams( params );
-                    Commision();
+                    cursor.setLayoutParams(params);
+
                 }
+                pageNumber = 1;
+                Commision();
             }
-        } );
+        });
     }
 }

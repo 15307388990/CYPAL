@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.bean.CommissionEntity;
+import com.cypal.ming.cypal.utils.Tools;
 
 import java.util.List;
 
@@ -55,31 +56,34 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new ViewHoler( mHeaderView );
-        View itemView = LayoutInflater.from( mContext ).inflate( R.layout.commission_item, parent, false );
+            return new ViewHoler(mHeaderView);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.commission_item, parent, false);
 
-        return new ViewHoler( itemView );
+        return new ViewHoler(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        final CommissionEntity.DataBean.ListBean.ContentBean contentBean = mList.get( position );
-        if (!TextUtils.isEmpty( contentBean.payType )) {
-            if (contentBean.payType.equals( "WXPAY" )) {
-                holder.tv_type.setText( "交易方式：微信" );
-            } else if (contentBean.payType.equals( "ALIPAY" )) {
-                holder.tv_type.setText( "交易方式：支付宝" );
+        final CommissionEntity.DataBean.ListBean.ContentBean contentBean = mList.get(position);
+        if (!TextUtils.isEmpty(contentBean.payType)) {
+            if (contentBean.payType.equals("WXPAY")) {
+                holder.tv_type.setText("交易方式：微信");
+            } else if (contentBean.payType.equals("ALIPAY")) {
+                holder.tv_type.setText("交易方式：支付宝");
             } else {
-                holder.tv_type.setText( "交易方式：云闪付" );
+                holder.tv_type.setText("交易方式：云闪付");
             }
-            holder.tv_amount.setText( "交易金额：" + contentBean.amount );
-            holder.tv_income.setText( "+" + contentBean.incomeMoney );
+            holder.tv_amount.setText("交易金额：" + contentBean.amount);
+            holder.tv_income.setText("+" + contentBean.incomeMoney);
+            holder.tv_ratio.setVisibility(View.VISIBLE);
+            holder.tv_ratio.setText(Tools.getDoubleformat(contentBean.rate * 100) + "%");
         } else {
-            holder.tv_amount.setText( "佣金提现转出" );
-            holder.tv_income.setText( "-" + contentBean.amount );
-            holder.tv_type.setText( "" );
+            holder.tv_amount.setText("佣金提现转出");
+            holder.tv_income.setText("-" + contentBean.amount);
+            holder.tv_type.setText("");
+            holder.tv_ratio.setVisibility(View.GONE);
         }
-        holder.tv_timer.setText( contentBean.createTime );
+        holder.tv_timer.setText(contentBean.createTime);
 
 
     }
@@ -103,13 +107,15 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
         private TextView tv_amount;
         private TextView tv_timer;
         private TextView tv_income;
+        private TextView tv_ratio;
 
         public ViewHoler(View itemView) {
-            super( itemView );
-            tv_type = (TextView) itemView.findViewById( R.id.tv_type );
-            tv_amount = (TextView) itemView.findViewById( R.id.tv_amount );
-            tv_timer = (TextView) itemView.findViewById( R.id.tv_timer );
-            tv_income = (TextView) itemView.findViewById( R.id.tv_income );
+            super(itemView);
+            tv_type = (TextView) itemView.findViewById(R.id.tv_type);
+            tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
+            tv_timer = (TextView) itemView.findViewById(R.id.tv_timer);
+            tv_income = (TextView) itemView.findViewById(R.id.tv_income);
+            tv_ratio = (TextView) itemView.findViewById(R.id.tv_ratio);
 
         }
     }

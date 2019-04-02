@@ -11,4 +11,5 @@ public class ContentEntity {
     public String payType;
     public int orderId;
     public boolean isQian = false;
+    public String Text = "已抢光";
 }

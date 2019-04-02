@@ -82,7 +82,6 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
             @Override
             public void onLoadmore() {
-                springView.onFinishFreshAndLoad();
                 pageNumber++;
                 if (isxia) {
                     orderList();
@@ -109,12 +108,15 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
 
     @Override
     public void onResume() {
+        pageNumber = 1;
         orderList();
         super.onResume();
     }
 
     public void orderList() {
         Map<String, String> map = new HashMap<>();
+        map.put("page", pageNumber + "");
+        map.put("size", "10");
         mQueue.add(ParamTools.packParam(Const.rwlist, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
         loading();
 
@@ -167,7 +169,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     public void initData(String data) {
         TopUpEntity topUpEntity = JSON.parseObject(data, TopUpEntity.class);
         list = topUpEntity.data.content;
-        if (list.size() > 10) {
+        if (pageNumber < topUpEntity.data.totalPages) {
             isxia = true;
         } else {
             isxia = false;

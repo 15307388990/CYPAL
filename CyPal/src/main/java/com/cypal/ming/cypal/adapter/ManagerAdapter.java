@@ -56,29 +56,31 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ViewHole
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new ViewHoler( mHeaderView );
-        View itemView = LayoutInflater.from( mContext ).inflate( R.layout.manager_item, parent, false );
-        return new ViewHoler( itemView );
+            return new ViewHoler(mHeaderView);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.manager_item, parent, false);
+        return new ViewHoler(itemView);
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        final ContentEntity contentBean = mList.get( position );
-        holder.tv_amount.setText( "￥" + contentBean.amount );
+        final ContentEntity contentBean = mList.get(position);
+        holder.tv_amount.setText("￥" + contentBean.amount);
         if (contentBean.isQian) {
-            holder.tv_qiang.setVisibility( View.GONE );
-            holder.tv_qian2.setVisibility( View.VISIBLE );
+            holder.tv_qiang.setVisibility(View.GONE);
+            holder.tv_qian2.setVisibility(View.VISIBLE);
         } else {
-            holder.tv_qiang.setVisibility( View.VISIBLE );
-            holder.tv_qian2.setVisibility( View.GONE );
+            holder.tv_qiang.setVisibility(View.VISIBLE);
+            holder.tv_qian2.setVisibility(View.GONE);
         }
-        holder.ll_yun.setOnClickListener( new View.OnClickListener() {
+        holder.tv_qian2.setText(contentBean.Text);
+        holder.ll_yun.setEnabled(!contentBean.isQian);
+        holder.ll_yun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.Qiang( contentBean.orderId + "", contentBean.amount + "" );
+                onClickListener.Qiang(contentBean.orderId + "", contentBean.amount + "");
             }
-        } );
+        });
 
     }
 
@@ -103,11 +105,11 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ViewHole
         private LinearLayout ll_yun;
 
         public ViewHoler(View itemView) {
-            super( itemView );
-            tv_amount = (TextView) itemView.findViewById( R.id.tv_amount );
-            tv_qiang = (TextView) itemView.findViewById( R.id.tv_qiang );
-            tv_qian2 = (TextView) itemView.findViewById( R.id.tv_qian2 );
-            ll_yun = (LinearLayout) itemView.findViewById( R.id.ll_yun );
+            super(itemView);
+            tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
+            tv_qiang = (TextView) itemView.findViewById(R.id.tv_qiang);
+            tv_qian2 = (TextView) itemView.findViewById(R.id.tv_qian2);
+            ll_yun = (LinearLayout) itemView.findViewById(R.id.ll_yun);
         }
     }
 }

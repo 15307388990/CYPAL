@@ -43,6 +43,9 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
         initAdmin();
     }
 
+    public BaseFragment() {
+    }
+
     public void initAdmin() {
         storeBean = new StoreBean();
         String mallSet = mSavePreferencesData.getStringData("json");

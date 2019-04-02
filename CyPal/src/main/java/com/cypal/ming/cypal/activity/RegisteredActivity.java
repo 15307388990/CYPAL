@@ -69,149 +69,144 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_registered );
-        StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
-        ButterKnife.bind( this );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registered);
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
+        ButterKnife.bind(this);
         initView();
         initOnclik();
         initEvent();
     }
 
     private void initView() {
-        img_back = (ImageView) findViewById( R.id.img_back );
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        right_view_text = (ImageView) findViewById( R.id.right_view_text );
-        top_view_text = (TextView) findViewById( R.id.top_view_text );
-        rd_phone = (RadioButton) findViewById( R.id.rd_phone );
-        rd_email = (RadioButton) findViewById( R.id.rd_email );
-        rd_group = (RadioGroup) findViewById( R.id.rd_group );
-        cursor = (LinearLayout) findViewById( R.id.cursor );
-        et_iphone = (EditText) findViewById( R.id.et_iphone );
-        et_code = (EditText) findViewById( R.id.et_code );
-        tv_code = (TextView) findViewById( R.id.tv_code );
-        et_new = (EditText) findViewById( R.id.et_new );
-        et_new2 = (EditText) findViewById( R.id.et_new2 );
-        btn_next = (Button) findViewById( R.id.btn_next );
-        ll_agreement = (LinearLayout) findViewById( R.id.ll_agreement );
-        countTimer = new MyCountTimer( this, tv_code, "发送验证码", R.color.darkgray, R.color.CY_9B9B9B );
-        rd_phone.setChecked( true );
+        img_back = (ImageView) findViewById(R.id.img_back);
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        right_view_text = (ImageView) findViewById(R.id.right_view_text);
+        top_view_text = (TextView) findViewById(R.id.top_view_text);
+        rd_phone = (RadioButton) findViewById(R.id.rd_phone);
+        rd_email = (RadioButton) findViewById(R.id.rd_email);
+        rd_group = (RadioGroup) findViewById(R.id.rd_group);
+        cursor = (LinearLayout) findViewById(R.id.cursor);
+        et_iphone = (EditText) findViewById(R.id.et_iphone);
+        et_code = (EditText) findViewById(R.id.et_code);
+        tv_code = (TextView) findViewById(R.id.tv_code);
+        et_new = (EditText) findViewById(R.id.et_new);
+        et_new2 = (EditText) findViewById(R.id.et_new2);
+        btn_next = (Button) findViewById(R.id.btn_next);
+        ll_agreement = (LinearLayout) findViewById(R.id.ll_agreement);
+        countTimer = new MyCountTimer(this, tv_code, "发送验证码", R.color.darkgray, R.color.CY_9B9B9B);
+        rd_phone.setChecked(true);
         currentSelectTab = 0;
-        tv_change = (CheckBox) findViewById( R.id.tv_change );
-        tv_change.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+        tv_change = (CheckBox) findViewById(R.id.tv_change);
+        tv_change.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    et_new2.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    et_new2.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
-                    et_new2.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    et_new2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
                 }
 
             }
-        } );
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        });
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
-        ll_agreement.setOnClickListener( new View.OnClickListener() {
+        });
+        ll_agreement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent( RegisteredActivity.this,WebviewActivity.class );
-                String url= Const.BASE_URL + "/h5/agreement";
-                intent.putExtra( "link_url", url );
-                intent.putExtra( "link_name", "用户协议" );
-                startActivity( intent );
+                Intent intent = new Intent(RegisteredActivity.this, WebviewActivity.class);
+                String url = Const.BASE_URL + "/h5/agreement";
+                intent.putExtra("link_url", url);
+                intent.putExtra("link_name", "用户协议");
+                startActivity(intent);
             }
-        } );
+        });
     }
 
     public void initEvent() {
         params = (RelativeLayout.LayoutParams) cursor.getLayoutParams();
-        cursorWidth = params.width = Tools.getScreenWidth( RegisteredActivity.this ) / 2;
-        cursor.setLayoutParams( params );
-        rd_group.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
+        cursorWidth = params.width = Tools.getScreenWidth(RegisteredActivity.this) / 2;
+        cursor.setLayoutParams(params);
+        rd_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 if (checkedId == R.id.rd_phone) {
                     currentSelectTab = 0;
                     params.leftMargin = 0;
-                    cursor.setLayoutParams( params );
-                    et_iphone.setHint( "请输入手机号" );
+                    cursor.setLayoutParams(params);
+                    et_iphone.setHint("请输入手机号");
                 } else if (checkedId == R.id.rd_email) {
                     currentSelectTab = 1;
                     params.leftMargin = (int) cursorWidth;
-                    cursor.setLayoutParams( params );
-                    et_iphone.setHint( "请输入邮箱" );
+                    cursor.setLayoutParams(params);
+                    et_iphone.setHint("请输入邮箱");
                 }
             }
-        } );
+        });
     }
 
     private void initOnclik() {
-        img_back.setOnClickListener( new View.OnClickListener() {
+        img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
-        btn_next.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Register();
-            }
-        } );
-        tv_code.setOnClickListener( new View.OnClickListener() {
+        });
+        btn_next.setOnClickListener(this);
+        tv_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendPhoneMsg();
             }
-        } );
+        });
     }
 
     //手动输入的手机号
     private void sendPhoneMsg() {
         //防止重复点击操作
-        if (!tv_code.getText().toString().equals( "发送验证码" )) {
+        if (!tv_code.getText().toString().equals("发送验证码")) {
             return;
         }
         if (et_iphone.getText().toString().length() == 0) {
-            Toast.makeText( this, "手机号不能为空", Toast.LENGTH_SHORT ).show();
+            Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!Tools.isMobileNum( et_iphone.getText().toString() )) {
-            Toast.makeText( this, "手机号格式有误", Toast.LENGTH_SHORT ).show();
+        if (!Tools.isMobileNum(et_iphone.getText().toString())) {
+            Toast.makeText(this, "手机号格式有误", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put( "account", et_iphone.getText().toString() );
+        map.put("account", et_iphone.getText().toString());
         if (currentSelectTab == 0) {
-            map.put( "registerType", "PHONE" );
+            map.put("registerType", "PHONE");
         } else {
-            map.put( "registerType", "EMAIL" );
+            map.put("registerType", "EMAIL");
         }
 
-        mQueue.add( ParamTools.packParam( Const.sendPhoneMsg, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        mQueue.add(ParamTools.packParam(Const.sendPhoneMsg, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
         loading();
     }
 
     /* 注册 */
     public void Register() {
         Map<String, String> map = new HashMap<>();
-        map.put( "account", et_iphone.getText().toString() );
+        map.put("account", et_iphone.getText().toString());
         if (currentSelectTab == 0) {
-            map.put( "registerType", "PHONE" );
+            map.put("registerType", "PHONE");
         } else {
-            map.put( "registerType", "EMAIL" );
+            map.put("registerType", "EMAIL");
         }
-        String pwd = MD5Util.getMD5String( et_new2.getText().toString().trim() );
-        map.put( "password", pwd );
-        map.put( "verifyCode", et_code.getText().toString().trim() );
-        map.put( "inviteCode", et_new.getText().toString().trim() );
-        mQueue.add( ParamTools.packParam( Const.register, RegisteredActivity.this, this, this, map ) );
+        String pwd = MD5Util.getMD5String(et_new2.getText().toString().trim());
+        map.put("password", pwd);
+        map.put("verifyCode", et_code.getText().toString().trim());
+        map.put("inviteCode", et_new.getText().toString().trim());
+        mQueue.add(ParamTools.packParam(Const.register, RegisteredActivity.this, this, this, map));
         loading();
     }
 
@@ -228,29 +223,29 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
     private void submit() {
         // validate
         String iphone = et_iphone.getText().toString().trim();
-        if (TextUtils.isEmpty( iphone )) {
-            Toast.makeText( this, "请输入手机号", Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(iphone)) {
+            Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String code = et_code.getText().toString().trim();
-        if (TextUtils.isEmpty( code )) {
-            Toast.makeText( this, "请输入验证码", Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(code)) {
+            Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String new1 = et_new.getText().toString().trim();
-        if (TextUtils.isEmpty( new1 )) {
-            Toast.makeText( this, "请输入6～18位英文数字组合密码", Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(new1)) {
+            Toast.makeText(this, "请输入6～18位英文数字组合密码", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String new2 = et_new2.getText().toString().trim();
-        if (TextUtils.isEmpty( new2 )) {
-            Toast.makeText( this, "请输入推荐码", Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(new2)) {
+            Toast.makeText(this, "请输入推荐码", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        Register();
         // TODO validate success, do something
 
 
@@ -258,15 +253,15 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void returnData(String data, String url) {
-        if (url.contains( Const.sendPhoneMsg )) {
+        if (url.contains(Const.sendPhoneMsg)) {
 
 //            if (authCodeDialog != null && authCodeDialog.isShowing()) {
 //                authCodeDialog.dismiss();
 //            }
             countTimer.start();// 开启定时器
-            tv_code.setVisibility( View.VISIBLE );
-        } else if (url.contains( Const.register )) {
-            Tools.showToast( this, "注册成功" );
+            tv_code.setVisibility(View.VISIBLE);
+        } else if (url.contains(Const.register)) {
+            Tools.showToast(this, "注册成功");
             finish();
         }
 

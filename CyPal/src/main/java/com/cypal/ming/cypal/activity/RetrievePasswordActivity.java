@@ -118,12 +118,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
                 finish();
             }
         } );
-        btn_next.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Repassword();
-            }
-        } );
+        btn_next.setOnClickListener( this);
         tv_code.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,7 +216,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
             Toast.makeText( this, "确认密码", Toast.LENGTH_SHORT ).show();
             return;
         }
-
+        Repassword();
         // TODO validate success, do something
 
 

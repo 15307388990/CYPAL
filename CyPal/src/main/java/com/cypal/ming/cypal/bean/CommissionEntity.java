@@ -16,7 +16,7 @@ public class CommissionEntity {
     public DataBean data;
     public long serverTime;
 
-    public  class DataBean {
+    public class DataBean {
         /**
          * myCommisionBalance : 98500.0
          * totalCommision : 1200.0
@@ -31,7 +31,7 @@ public class CommissionEntity {
         public double todayTeamCommision;
         public ListBean list;
 
-        public  class ListBean {
+        public class ListBean {
             /**
              * content : [{"incomeUserId":15,"incomeMoney":1200,"commisionEnum":"OTC","amount":100,"payType":"WXPAY","createTime":"2019-03-22 00:08:09"}]
              * pageable : {"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false}
@@ -56,7 +56,7 @@ public class CommissionEntity {
             public int size;
             public List<ContentBean> content;
 
-            public  class PageableBean {
+            public class PageableBean {
                 /**
                  * sort : {"sorted":false,"unsorted":true}
                  * pageSize : 10
@@ -73,7 +73,7 @@ public class CommissionEntity {
                 public boolean paged;
                 public boolean unpaged;
 
-                public  class SortBean {
+                public class SortBean {
                     /**
                      * sorted : false
                      * unsorted : true
@@ -84,7 +84,7 @@ public class CommissionEntity {
                 }
             }
 
-            public  class SortBeanX {
+            public class SortBeanX {
                 /**
                  * sorted : false
                  * unsorted : true
@@ -94,7 +94,7 @@ public class CommissionEntity {
                 public boolean unsorted;
             }
 
-            public  class ContentBean {
+            public class ContentBean {
                 /**
                  * incomeUserId : 15
                  * incomeMoney : 1200.0
@@ -110,6 +110,7 @@ public class CommissionEntity {
                 public int amount;
                 public String payType;
                 public String createTime;
+                public double rate;
             }
         }
     }

@@ -35,9 +35,15 @@ public class WsManager {
     private WebSocket ws;
     private WsListener mListener;
     private IWsManagerActivityView iWsManagerActivityView;
+    private boolean isConnection = true;
 
     public interface IWsManagerActivityView {
         void onTextMessage(String text);
+
+        void onDisconnected();
+
+        void onConnected();
+
     }
 
     private WsManager() {
@@ -65,13 +71,13 @@ public class WsManager {
              */
             String configUrl = DEF_RELEASE_URL;
             url = configUrl + token;
-            ws = new WebSocketFactory().createSocket( url, CONNECT_TIMEOUT )
-                    .setFrameQueueSize( FRAME_QUEUE_SIZE )//设置帧队列最大值为5
-                    .setMissingCloseFrameAllowed( false )//设置不允许服务端关闭连接却未发送关闭帧
-                    .addListener( mListener = new WsListener() )//添加回调监听
+            ws = new WebSocketFactory().createSocket(url, CONNECT_TIMEOUT)
+                    .setFrameQueueSize(FRAME_QUEUE_SIZE)//设置帧队列最大值为5
+                    .setMissingCloseFrameAllowed(false)//设置不允许服务端关闭连接却未发送关闭帧
+                    .addListener(mListener = new WsListener())//添加回调监听
                     .connectAsynchronously();//异步连接
-            setStatus( WsStatus.CONNECTING );
-            Log.d( TAG, "第一次连接" );
+            setStatus(WsStatus.CONNECTING);
+            Log.d(TAG, "第一次连接");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,37 +93,41 @@ public class WsManager {
     class WsListener extends WebSocketAdapter {
         @Override
         public void onTextMessage(WebSocket websocket, String text) throws Exception {
-            super.onTextMessage( websocket, text );
-            String decodedString = new String( Base64.decode( text, Base64.DEFAULT ) );
-            iWsManagerActivityView.onTextMessage( decodedString );
-            Log.d( TAG, "返回的东西" + decodedString );
+            super.onTextMessage(websocket, text);
+            String decodedString = new String(Base64.decode(text, Base64.DEFAULT));
+            iWsManagerActivityView.onTextMessage(decodedString);
+            Log.d(TAG, "返回的东西" + decodedString);
         }
 
 
         @Override
         public void onConnected(WebSocket websocket, Map<String, List<String>> headers)
                 throws Exception {
-            super.onConnected( websocket, headers );
-            Log.d( TAG, "连接成功" );
-            setStatus( WsStatus.CONNECT_SUCCESS );
+            super.onConnected(websocket, headers);
+            Log.d(TAG, "连接成功");
+            iWsManagerActivityView.onConnected();
+            setStatus(WsStatus.CONNECT_SUCCESS);
         }
 
 
         @Override
         public void onConnectError(WebSocket websocket, WebSocketException exception)
                 throws Exception {
-            super.onConnectError( websocket, exception );
-            Log.d( TAG, "连接错误" );
-            setStatus( WsStatus.CONNECT_FAIL );
+            super.onConnectError(websocket, exception);
+            Log.d(TAG, "连接错误");
+            setStatus(WsStatus.CONNECT_FAIL);
+            reconnect();
         }
 
 
         @Override
         public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer)
                 throws Exception {
-            super.onDisconnected( websocket, serverCloseFrame, clientCloseFrame, closedByServer );
-            Log.d( TAG, "断开连接" );
-            setStatus( WsStatus.CONNECT_FAIL );
+            super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);
+            iWsManagerActivityView.onDisconnected();
+            Log.d(TAG, "断开连接");
+            setStatus(WsStatus.CONNECT_FAIL);
+            reconnect();
         }
     }
 
@@ -130,8 +140,10 @@ public class WsManager {
     }
 
     public void disconnect() {
-        if (ws != null)
+        if (ws != null) {
+            isConnection = false;
             ws.disconnect();
+        }
     }
 
     private Handler mHandler = new Handler();
@@ -142,9 +154,9 @@ public class WsManager {
 
 
     public void reconnect() {
-        if (!isNetConnect()) {
-            reconnectCount = 0;
-            Log.d( TAG, "重连失败网络不可用" );
+        reconnectCount = 0;
+        if (!isConnection) {
+            Log.d(TAG, "退出页面不重连了");
             return;
         }
 
@@ -155,7 +167,7 @@ public class WsManager {
                 getStatus() != WsStatus.CONNECTING) {//不是正在重连状态
 
             reconnectCount++;
-            setStatus( WsStatus.CONNECTING );
+            setStatus(WsStatus.CONNECTING);
 
             long reconnectTime = minInterval;
             if (reconnectCount > 3) {
@@ -163,8 +175,8 @@ public class WsManager {
                 long temp = minInterval * (reconnectCount - 2);
                 reconnectTime = temp > maxInterval ? maxInterval : temp;
             }
-            Log.d( TAG, "准备开始第%d次重连,重连间隔%d -- url:%s" );
-            mHandler.postDelayed( mReconnectTask, reconnectTime );
+            Log.d(TAG, "准备开始第%d次重连,重连间隔%d -- url:%s");
+            mHandler.postDelayed(mReconnectTask, reconnectTime);
         }
     }
 
@@ -174,10 +186,10 @@ public class WsManager {
         @Override
         public void run() {
             try {
-                ws = new WebSocketFactory().createSocket( url, CONNECT_TIMEOUT )
-                        .setFrameQueueSize( FRAME_QUEUE_SIZE )//设置帧队列最大值为5
-                        .setMissingCloseFrameAllowed( false )//设置不允许服务端关闭连接却未发送关闭帧
-                        .addListener( mListener = new WsListener() )//添加回调监听
+                ws = new WebSocketFactory().createSocket(url, CONNECT_TIMEOUT)
+                        .setFrameQueueSize(FRAME_QUEUE_SIZE)//设置帧队列最大值为5
+                        .setMissingCloseFrameAllowed(false)//设置不允许服务端关闭连接却未发送关闭帧
+                        .addListener(mListener = new WsListener())//添加回调监听
                         .connectAsynchronously();//异步连接
             } catch (IOException e) {
                 e.printStackTrace();
@@ -188,13 +200,13 @@ public class WsManager {
 
     private void cancelReconnect() {
         reconnectCount = 0;
-        mHandler.removeCallbacks( mReconnectTask );
+        mHandler.removeCallbacks(mReconnectTask);
     }
 
 
     private boolean isNetConnect() {
         ConnectivityManager connectivity = (ConnectivityManager) MianApplication.getContext()
-                .getSystemService( Context.CONNECTIVITY_SERVICE );
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
             NetworkInfo info = connectivity.getActiveNetworkInfo();
             if (info != null && info.isConnected()) {
