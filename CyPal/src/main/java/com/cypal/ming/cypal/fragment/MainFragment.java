@@ -30,6 +30,7 @@ import com.cypal.ming.cypal.bean.BaseEntity;
 import com.cypal.ming.cypal.bean.IndexEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.AccountDialog;
+import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
@@ -241,7 +242,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         ll_account.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(pay)) {
+                if (!TextUtils.isEmpty(pay) && !"[]".equals(pay)) {
                     AccountDialog accountDialog = AccountDialog.newInstance();
                     accountDialog.setOnClickListener(new AccountDialog.OnClickListener() {
                         @Override
@@ -352,31 +353,18 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     }
 
     private void deleteOrderDialog(final String text, final String order_uuid) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mcontext);
-        builder.setMessage("您确定要" + text + "?");
-        builder.setTitle("温馨提示");
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+        CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext("您确定要" + text + "?").setQtext("取消").setOktext("确定")
+                .setOnClickListener(new CancelTheDealDialog.OnClickListener() {
+                    @Override
+                    public void successful() {
+                        if (text.equals("收款")) {
+                            confirm(order_uuid);
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (text.equals("收款")) {
-                    confirm(order_uuid);
-
-                } else if (text.equals("申诉订单")) {
-                    appeal(order_uuid);
-                }
-
-            }
-        });
-        builder.create().show();
+                        } else if (text.equals("申诉订单")) {
+                            appeal(order_uuid);
+                        }
+                    }
+                }).show(this);
     }
 
     /**

@@ -52,10 +52,6 @@ public class NickNameActivity extends BaseActivity implements View.OnClickListen
 
 
     private void initView() {
-        String nickname = getIntent().getStringExtra("nickname");
-        if (TextUtils.isEmpty(nickname)) {
-            et_nick.setText(nickname);
-        }
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
         ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +63,10 @@ public class NickNameActivity extends BaseActivity implements View.OnClickListen
         et_nick = (EditText) findViewById(R.id.et_nick);
         btn_next = (Button) findViewById(R.id.btn_next);
         btn_next.setOnClickListener(this);
+        String nickname = getIntent().getStringExtra("nickname");
+        if (!TextUtils.isEmpty(nickname)) {
+            et_nick.setText(nickname);
+        }
     }
 
 

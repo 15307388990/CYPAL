@@ -331,11 +331,11 @@ public class VersionUpgradeDialog extends CenterDialog {
 //                        )
 //                        .send();
                 // 申请多个权限。
-                List<PermissionItem> permissonItems = new ArrayList<PermissionItem>();
-                permissonItems.add( new PermissionItem( Manifest.permission.WRITE_EXTERNAL_STORAGE, "文件下载", R.drawable.permission_ic_storage ) );
-                permissonItems.add( new PermissionItem( Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location ) );
-                permissonItems.add( new PermissionItem( Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS, "文件安装", R.drawable.permission_ic_location ) );
-                HiPermission.create( getActivity() ).permissions( permissonItems );
+//                List<PermissionItem> permissonItems = new ArrayList<PermissionItem>();
+//                permissonItems.add( new PermissionItem( Manifest.permission.WRITE_EXTERNAL_STORAGE, "文件下载", R.drawable.permission_ic_storage ) );
+//                permissonItems.add( new PermissionItem( Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location ) );
+//                permissonItems.add( new PermissionItem( Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS, "文件安装", R.drawable.permission_ic_location ) );
+//                HiPermission.create( getActivity() ).permissions( permissonItems );
 
                 Toast.makeText( context, "您未打开SD卡权限" + result, Toast.LENGTH_LONG ).show();
             } else {

@@ -185,7 +185,10 @@ public class Const {
      * 反申诉订单
      */
     public static final String appeal = "/private/otcOrder/appeal";
-
+    /**
+     * 我的佣金相关接口
+     */
+    public static final String description = "/private/commision/description";
 
     /* 订单详情 */
     public static final String ordershow = "/order/show";

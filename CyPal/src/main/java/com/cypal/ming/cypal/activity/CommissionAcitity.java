@@ -159,6 +159,7 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void returnData(String data, String url) {
+        springView.onFinishFreshAndLoad();
         commissionEntity = JSON.parseObject(data, CommissionEntity.class);
         tv_myCommisionBalance.setText(commissionEntity.data.myCommisionBalance + "");
         tv_totalCommision.setText(commissionEntity.data.totalCommision + "");

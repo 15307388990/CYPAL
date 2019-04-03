@@ -115,7 +115,7 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
                 Tools.jump(mcontext, LoginActivity.class, true);
             } else {
                 Tools.showToast(mcontext, msg);
-                returnMsg(data, url);
+                returnMsg(response, url);
             }
         } catch (JSONException e) {
             e.printStackTrace();

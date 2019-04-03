@@ -80,12 +80,11 @@ public class TabActivity extends BaseActivity {
                 hideAllFragment( transaction );
                 switch (checkedId) {
                     case R.id.tab_rb_home:
-                        if (mMianFragment == null) {
-                            mMianFragment = new MainFragment( TabActivity.this );
-                            transaction.add( R.id.fragment_container, mMianFragment );
-                        } else {
-                            transaction.show( mMianFragment );
+                        if (mMianFragment != null) {
+                            transaction.remove( mMianFragment );
                         }
+                        mMianFragment = new MainFragment( TabActivity.this );
+                        transaction.add( R.id.fragment_container, mMianFragment );
                         break;
                     case R.id.tab_rb_up:
                         if (topUpFragment != null) {

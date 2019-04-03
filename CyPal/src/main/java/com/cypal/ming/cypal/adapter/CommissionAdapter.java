@@ -73,6 +73,7 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
             } else {
                 holder.tv_type.setText("交易方式：云闪付");
             }
+            holder.tv_type.setVisibility(View.VISIBLE);
             holder.tv_amount.setText("交易金额：" + contentBean.amount);
             holder.tv_income.setText("+" + contentBean.incomeMoney);
             holder.tv_ratio.setVisibility(View.VISIBLE);
@@ -81,6 +82,7 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
             holder.tv_amount.setText("佣金提现转出");
             holder.tv_income.setText("-" + contentBean.amount);
             holder.tv_type.setText("");
+            holder.tv_type.setVisibility(View.GONE);
             holder.tv_ratio.setVisibility(View.GONE);
         }
         holder.tv_timer.setText(contentBean.createTime);

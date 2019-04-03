@@ -105,7 +105,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
      */
     public void save() {
         Map<String, String> map = new HashMap<>();
-        map.put( "orderId", orderId );
+        map.put("orderId", orderId);
         mQueue.add(ParamTools.packParam(Const.service, this, this, this, map));
         loading();
     }
@@ -143,7 +143,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
         tv_quxiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CancelTheDealDialog.newInstance("").setOnClickListener(new CancelTheDealDialog.OnClickListener() {
+                CancelTheDealDialog.newInstance().setOnClickListener(new CancelTheDealDialog.OnClickListener() {
                     @Override
                     public void successful() {
                         cancel();
@@ -255,25 +255,13 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     }
 
     private void deleteOrderDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("确定要申请客服介入");
-        builder.setTitle("温馨提示");
-        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                save();
-            }
-        });
-        builder.create().show();
+        CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext("确定要申请客服介入").setQtext("取消").setOktext("确定")
+                .setOnClickListener(new CancelTheDealDialog.OnClickListener() {
+                    @Override
+                    public void successful() {
+                        save();
+                    }
+                }).show(this);
     }
 
 }

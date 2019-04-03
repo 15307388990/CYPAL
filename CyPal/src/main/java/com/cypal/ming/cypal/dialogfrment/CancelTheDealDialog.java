@@ -3,12 +3,15 @@ package com.cypal.ming.cypal.dialogfrment;
 import android.content.DialogInterface;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.databinding.CancelTheDealDialogBinding;
 import com.cypal.ming.cypal.databinding.SignInDialogBinding;
 import com.cypal.ming.cypal.utils.Tools;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -21,6 +24,8 @@ public class CancelTheDealDialog extends CenterDialog {
     private static final String URL = "url";
     private CancelTheDealDialogBinding binding;
     private OnClickListener onClickListener;
+    private String title, context, qtext, oktext;
+
 
     /**
      * 定义结果回调接口
@@ -36,12 +41,55 @@ public class CancelTheDealDialog extends CenterDialog {
 
     }
 
+    /**
+     * 设置标题
+     *
+     * @param title
+     * @return
+     */
+    public CancelTheDealDialog setTitle(String title) {
+        this.title = title;
+        return this;
+    }
 
-    public static CancelTheDealDialog newInstance(String url) {
+    /**
+     * 设置内容
+     *
+     * @param context
+     * @return
+     */
+    public CancelTheDealDialog setContext(String context) {
+        this.context = context;
+        return this;
+    }
+
+    /**
+     * 设置取消按钮文本
+     *
+     * @param qtext
+     * @return
+     */
+    public CancelTheDealDialog setQtext(String qtext) {
+        this.qtext = qtext;
+        return this;
+    }
+
+    /**
+     * 设置确定按钮文本
+     *
+     * @param oktext
+     * @return
+     */
+    public CancelTheDealDialog setOktext(String oktext) {
+        this.oktext = oktext;
+        return this;
+    }
+
+
+    public static CancelTheDealDialog newInstance() {
         CancelTheDealDialog dialog = new CancelTheDealDialog();
         Bundle bundle = new Bundle();
-        bundle.putString( URL, url );
-        dialog.setArguments( bundle );
+        dialog.setArguments(bundle);
         return dialog;
     }
 
@@ -57,7 +105,7 @@ public class CancelTheDealDialog extends CenterDialog {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss( dialog );
+        super.onDismiss(dialog);
     }
 
     @Override
@@ -67,29 +115,33 @@ public class CancelTheDealDialog extends CenterDialog {
 
     @Override
     public int getWindowWidth() {
-        return (int) (Tools.getScreenWidth( getActivity() ) * 0.75);
+        return (int) (Tools.getScreenWidth(getActivity()) * 0.75);
     }
 
     @Override
     public void initView(ViewDataBinding dataBinding) {
         binding = (CancelTheDealDialogBinding) dataBinding;
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String buildUrl = bundle.getString( URL );
-        }
-        binding.tvOk.setOnClickListener( new View.OnClickListener() {
+        binding.tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
                 onClickListener.successful();
             }
-        } );
-        binding.tvCancle.setOnClickListener( new View.OnClickListener() {
+        });
+        binding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
-        } );
+        });
+        if (!TextUtils.isEmpty(title))
+            binding.tvTitle.setText(title);
+        if (!TextUtils.isEmpty(context))
+            binding.tvContext.setText(context);
+        if (!TextUtils.isEmpty(qtext))
+            binding.tvCancle.setText(qtext);
+        if (!TextUtils.isEmpty(oktext))
+            binding.tvOk.setText(oktext);
     }
 
 

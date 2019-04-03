@@ -17,7 +17,7 @@ public class IndexEntity {
     public DataBean data;
     public long serverTime;
 
-    public  class DataBean {
+    public class DataBean {
         /**
          * noticeList : [{"id":2,"createTime":"2019-03-10 15:07:07","deleted":false,"title":"第二天公告","summary":"aaa","content":null,"publish_userId":1,"publish_user":null},{"id":1,"createTime":"2019-03-10 03:50:47","deleted":false,"title":"公告功能测试","summary":"测试公告","content":null,"publish_userId":1,"publish_user":null}]
          * usedPayAccount : ["WXPAY","CLOUDPAY"]
@@ -36,7 +36,7 @@ public class IndexEntity {
         public List<NoticeListBean> noticeList;
         public String usedPayAccount;
 
-        public  class UndoOrderBean {
+        public class UndoOrderBean {
             /**
              * content : [{"id":212,"createTime":"2019-03-25 20:01:36","deleted":false,"orderNo":"OTC201903252001360304629","outOrderNo":"12345678910","status":"A_PROCESS","statusDesc":"新订单生成,等待支付","amount":100,"userId":15,"merchantUserId":2,"takeTime":"2019-03-25 20:03:04","closeTime":null,"completeTime":null,"successTime":null,"payType":"WXPAY","payAccountJson":"{\"accountData\":\"wxp://f2f0iILS_3Cn5d_AfCCdl5VtsbqIZ-w5ph6J\",\"accountName\":\"1334\",\"accountType\":\"WXPAY\",\"createTime\":1553349811000,\"deleted\":false,\"id\":12,\"realName\":\"孔明灯\",\"used\":true,\"userId\":15}","userUnqueNo":"9naMFH","orderDesc":"演示支付","remark":null,"attach":"","notifyCount":0,"returnUrl":"http://111.230.242.115:8888/","notifyUrl":"http://111.230.242.115:8888/notify"}]
              * pageable : {"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false}
@@ -61,7 +61,7 @@ public class IndexEntity {
             public int size;
             public List<ContentBean> content;
 
-            public  class PageableBean {
+            public class PageableBean {
                 /**
                  * sort : {"sorted":false,"unsorted":true}
                  * pageSize : 10
@@ -78,7 +78,7 @@ public class IndexEntity {
                 public boolean paged;
                 public boolean unpaged;
 
-                public  class SortBean {
+                public class SortBean {
                     /**
                      * sorted : false
                      * unsorted : true
@@ -89,7 +89,7 @@ public class IndexEntity {
                 }
             }
 
-            public  class SortBeanX {
+            public class SortBeanX {
                 /**
                  * sorted : false
                  * unsorted : true
@@ -99,7 +99,7 @@ public class IndexEntity {
                 public boolean unsorted;
             }
 
-            public  class ContentBean {
+            public class ContentBean {
                 /**
                  * id : 212
                  * createTime : 2019-03-25 20:01:36
@@ -152,7 +152,7 @@ public class IndexEntity {
             }
         }
 
-        public  class IndexTodayOrderAnalysisRespBean {
+        public class IndexTodayOrderAnalysisRespBean {
             /**
              * todaySuccess : 0
              * todaySuccessMoney : 0
@@ -160,11 +160,11 @@ public class IndexEntity {
              */
 
             public int todaySuccess;
-            public int todaySuccessMoney;
-            public int todayCommision;
+            public float todaySuccessMoney;
+            public float todayCommision;
         }
 
-        public  class OtcBean {
+        public class OtcBean {
             /**
              * id : 9
              * createTime : 2019-03-21 10:32:49
@@ -186,7 +186,7 @@ public class IndexEntity {
             public boolean start;
         }
 
-        public  class NoticeListBean {
+        public class NoticeListBean {
             /**
              * id : 2
              * createTime : 2019-03-10 15:07:07

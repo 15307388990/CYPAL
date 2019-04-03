@@ -100,8 +100,18 @@ public class WithdrawalActivity extends BaseActivity implements View.OnClickList
             Toast.makeText( this, "请输入金额", Toast.LENGTH_SHORT ).show();
             return;
         }
+        try {
+            if (Integer.valueOf( amount ) >= 1) {
+                withdraw();
+            } else {
+                Tools.showToast( WithdrawalActivity.this, "充值金额只能为大于0的整数" );
+            }
+        } catch (NumberFormatException e) {
+            Tools.showToast( WithdrawalActivity.this, "充值金额只能为整数" );
+            e.printStackTrace();
+            return;
+        }
 
-        withdraw();
 
 
     }

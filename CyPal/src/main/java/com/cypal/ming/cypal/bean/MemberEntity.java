@@ -2,11 +2,12 @@ package com.cypal.ming.cypal.bean;
 
 public class MemberEntity {
 
+
     /**
      * code : 1
      * msg : success
-     * data : {"certificationInfo":{"identitycardFront":"http://111.230.242.115:8888//certification/20190321/IMG1553183224189.jpg","realName":"珑铸","identitycardNumber":"432524198907100496"},"bailMoneyRecord_status":"FAIL","bailMoneyRecord_description":"没有缴纳保证金","certification_status":"PROCESS","certification_description":"待审核身份认证"}
-     * serverTime : 1553268826747
+     * data : {"bailMoneyRecord_status":"SUCCESS","bailMoneyRecord_description":"已成功缴纳保证金","host":"http://111.230.242.115:8888/static/","certification_status":"SUCCESS","certification_description":"已完成身份认证","certification":{"id":3,"createTime":"2019-03-30 00:30:32","deleted":false,"userId":18,"status":"SUCCESS","identitycard_front":"certification/20190330/IMG1553876999925.png","identitycard_number":"158695869589658586","identitycard_reverse":"certification/20190330/IMG1553877004884.png","identitycard_hand":"certification/20190330/IMG1553877009404.png","real_name":"萝莉控","remark":null}}
+     * serverTime : 1554299280122
      */
 
     public int code;
@@ -14,31 +15,49 @@ public class MemberEntity {
     public DataBean data;
     public long serverTime;
 
-    public  class DataBean {
+    public class DataBean {
         /**
-         * certificationInfo : {"identitycardFront":"http://111.230.242.115:8888//certification/20190321/IMG1553183224189.jpg","realName":"珑铸","identitycardNumber":"432524198907100496"}
-         * bailMoneyRecord_status : FAIL
-         * bailMoneyRecord_description : 没有缴纳保证金
-         * certification_status : PROCESS
-         * certification_description : 待审核身份认证
+         * bailMoneyRecord_status : SUCCESS
+         * bailMoneyRecord_description : 已成功缴纳保证金
+         * host : http://111.230.242.115:8888/static/
+         * certification_status : SUCCESS
+         * certification_description : 已完成身份认证
+         * certification : {"id":3,"createTime":"2019-03-30 00:30:32","deleted":false,"userId":18,"status":"SUCCESS","identitycard_front":"certification/20190330/IMG1553876999925.png","identitycard_number":"158695869589658586","identitycard_reverse":"certification/20190330/IMG1553877004884.png","identitycard_hand":"certification/20190330/IMG1553877009404.png","real_name":"萝莉控","remark":null}
          */
 
-        public CertificationInfoBean certificationInfo;
         public String bailMoneyRecord_status;
         public String bailMoneyRecord_description;
+        public String host;
         public String certification_status;
         public String certification_description;
+        public CertificationBean certification;
 
-        public  class CertificationInfoBean {
+        public class CertificationBean {
             /**
-             * identitycardFront : http://111.230.242.115:8888//certification/20190321/IMG1553183224189.jpg
-             * realName : 珑铸
-             * identitycardNumber : 432524198907100496
+             * id : 3
+             * createTime : 2019-03-30 00:30:32
+             * deleted : false
+             * userId : 18
+             * status : SUCCESS
+             * identitycard_front : certification/20190330/IMG1553876999925.png
+             * identitycard_number : 158695869589658586
+             * identitycard_reverse : certification/20190330/IMG1553877004884.png
+             * identitycard_hand : certification/20190330/IMG1553877009404.png
+             * real_name : 萝莉控
+             * remark : null
              */
 
-            public String identitycardFront;
-            public String realName;
-            public String identitycardNumber;
+            public int id;
+            public String createTime;
+            public boolean deleted;
+            public int userId;
+            public String status;
+            public String identitycard_front;
+            public String identitycard_number;
+            public String identitycard_reverse;
+            public String identitycard_hand;
+            public String real_name;
+            public Object remark;
         }
     }
 }
