@@ -3,6 +3,7 @@ package com.cypal.ming.cypal.activity;
 import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -58,48 +59,48 @@ public class TabActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_tab );
-        StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.top_background ) );
-        Tools.webacts.add( this );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tab);
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
+        Tools.webacts.add(this);
         initView();
         initDate();
         AppVersion();
-        ButterKnife.bind( this );
+        ButterKnife.bind(this);
     }
 
 
     public void initDate() {
-        tab_rg_menu.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
+        tab_rg_menu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // TOD
                 FragmentTransaction transaction = getFragmentManager()
                         .beginTransaction();
-                hideAllFragment( transaction );
+                hideAllFragment(transaction);
                 switch (checkedId) {
                     case R.id.tab_rb_home:
                         if (mMianFragment != null) {
-                            transaction.remove( mMianFragment );
+                            transaction.remove(mMianFragment);
                         }
-                        mMianFragment = new MainFragment( TabActivity.this );
-                        transaction.add( R.id.fragment_container, mMianFragment );
+                        mMianFragment = new MainFragment(TabActivity.this);
+                        transaction.add(R.id.fragment_container, mMianFragment);
                         break;
                     case R.id.tab_rb_up:
                         if (topUpFragment != null) {
-                            transaction.remove( topUpFragment );
+                            transaction.remove(topUpFragment);
                         }
-                        topUpFragment = new TopUpFragment( TabActivity.this );
-                        transaction.add( R.id.fragment_container, topUpFragment );
+                        topUpFragment = new TopUpFragment(TabActivity.this);
+                        transaction.add(R.id.fragment_container, topUpFragment);
 
                         break;
                     case R.id.tab_rb_mine:
                         if (mMinFragment != null) {
-                            transaction.remove( mMinFragment );
+                            transaction.remove(mMinFragment);
                         }
-                        mMinFragment = new MineFragment( TabActivity.this );
-                        transaction.add( R.id.fragment_container, mMinFragment );
+                        mMinFragment = new MineFragment(TabActivity.this);
+                        transaction.add(R.id.fragment_container, mMinFragment);
 
                         break;
 
@@ -110,23 +111,22 @@ public class TabActivity extends BaseActivity {
                 transaction.commit();
 
             }
-        } );
-        tab_rg_menu.check( R.id.tab_rb_home );
+        });
+        tab_rg_menu.check(R.id.tab_rb_home);
     }
 
     // 隐藏所有Fragment
     public void hideAllFragment(FragmentTransaction transaction) {
         if (mMianFragment != null) {
-            transaction.hide( mMianFragment );
+            transaction.hide(mMianFragment);
         }
         if (mMinFragment != null) {
-            transaction.hide( mMinFragment );
+            transaction.hide(mMinFragment);
         }
         if (topUpFragment != null) {
-            transaction.hide( topUpFragment );
+            transaction.hide(topUpFragment);
         }
     }
-
 
 
     @Override
@@ -138,38 +138,44 @@ public class TabActivity extends BaseActivity {
     //检测版本
     private void AppVersion() {
         Map<String, String> map = new HashMap<>();
-        map.put( "osEnum", "android" );
-        map.put( "versionId", Tools.packageCode( this ) + "" );
-        mQueue.add( ParamTools.packParam( Const.check, this, this, this, map ) );
+        map.put("osEnum", "android");
+        map.put("versionId", Tools.packageCode(this) + "");
+        mQueue.add(ParamTools.packParam(Const.check, this, this, this, map));
 
     }
 
     @Override
     protected void returnData(String data, String url) {
-        if (url.contains( Const.check )) {
-            VersionEntity versionEntity = JSON.parseObject( data, VersionEntity.class );
-            VersionUpgradeDialog.newInstance( versionEntity.data ).show( TabActivity.this );
+        if (url.contains(Const.check)) {
+            VersionEntity versionEntity = JSON.parseObject(data, VersionEntity.class);
+            if (versionEntity.data.updateType != -1) {
+                VersionUpgradeDialog versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionEntity.data);
+
+                versionUpgradeDialog.show(TabActivity.this);
+            }
 
         }
     }
 
     private void initView() {
-        tab_rb_home = (RadioButton) findViewById( R.id.tab_rb_home );
-        tab_rb_mine = (RadioButton) findViewById( R.id.tab_rb_mine );
-        fragment_container = (FrameLayout) findViewById( R.id.fragment_container );
-        tab_rg_menu = (RadioGroup) findViewById( R.id.tab_rg_menu );
+        tab_rb_home = (RadioButton) findViewById(R.id.tab_rb_home);
+        tab_rb_mine = (RadioButton) findViewById(R.id.tab_rb_mine);
+        fragment_container = (FrameLayout) findViewById(R.id.fragment_container);
+        tab_rg_menu = (RadioGroup) findViewById(R.id.tab_rg_menu);
 
         List<PermissionItem> permissonItems = new ArrayList<PermissionItem>();
-        permissonItems.add( new PermissionItem( Manifest.permission.CALL_PHONE, "打电话", R.drawable.permission_ic_phone ) );
-        permissonItems.add( new PermissionItem( Manifest.permission.WRITE_EXTERNAL_STORAGE, "拍照", R.drawable.permission_ic_camera ) );
-        permissonItems.add( new PermissionItem( Manifest.permission.CAMERA, "相册", R.drawable.permission_ic_storage ) );
-        permissonItems.add( new PermissionItem( Manifest.permission.ACCESS_COARSE_LOCATION, "定位", R.drawable.permission_ic_location ) );
-        HiPermission.create( TabActivity.this ).permissions( permissonItems )
-                .checkMutiPermission( new PermissionCallback() {
+        permissonItems.add(new PermissionItem(Manifest.permission.CALL_PHONE, "打电话", R.drawable.permission_ic_phone));
+        permissonItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "拍照", R.drawable.permission_ic_camera));
+        permissonItems.add(new PermissionItem(Manifest.permission.CAMERA, "相册", R.drawable.permission_ic_storage));
+        permissonItems.add(new PermissionItem(Manifest.permission.ACCESS_COARSE_LOCATION, "定位", R.drawable.permission_ic_location));
+        permissonItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "文件下载", R.drawable.permission_ic_storage));
+        permissonItems.add( new PermissionItem( Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location ) );
+        HiPermission.create(TabActivity.this).permissions(permissonItems)
+                .checkMutiPermission(new PermissionCallback() {
                     @Override
                     public void onClose() {
                         // showToast("用户关闭权限申请");
-                        Tools.showToast( TabActivity.this, "可能导致有些功能不能正常使用" );
+                        Tools.showToast(TabActivity.this, "可能导致有些功能不能正常使用");
                     }
 
                     @Override
@@ -186,7 +192,7 @@ public class TabActivity extends BaseActivity {
                     public void onGuarantee(String permisson, int position) {
                         //Log.i(TAG, "onGuarantee");
                     }
-                } );
+                });
     }
 
     @Override
@@ -199,26 +205,26 @@ public class TabActivity extends BaseActivity {
             // mExitTime = System.currentTimeMillis();}
 
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
-                Toast.makeText( this, "再按一次退出程序", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
 
             } else {
-                Intent intent = new Intent( Intent.ACTION_MAIN );
-                intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );// 注意
-                intent.addCategory( Intent.CATEGORY_HOME );
-                this.startActivity( intent );
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// 注意
+                intent.addCategory(Intent.CATEGORY_HOME);
+                this.startActivity(intent);
                 finish();
             }
             return true;
         }
 
-        return super.onKeyDown( keyCode, event );
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult( requestCode, resultCode, data );
-        mMinFragment.onActivityResult( requestCode, resultCode, data );
+        super.onActivityResult(requestCode, resultCode, data);
+        mMinFragment.onActivityResult(requestCode, resultCode, data);
     }
 
 }

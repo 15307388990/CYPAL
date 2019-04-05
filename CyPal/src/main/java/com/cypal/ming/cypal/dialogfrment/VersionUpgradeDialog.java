@@ -2,6 +2,8 @@ package com.cypal.ming.cypal.dialogfrment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +24,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -98,14 +101,40 @@ public class VersionUpgradeDialog extends CenterDialog {
 
     }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog( getActivity(), R.style.DialogStyle );
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setDimAmount( 0.65f );
+        }
+        ViewDataBinding binding = getLayoutBind();
+        View view = binding.getRoot();
+        dialog.setContentView( view );
+        initView( binding );
+        initWindowParams( dialog );
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        return dialog;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
         mViewUpdateHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 // TODO Auto-generated method stub
-                super.handleMessage( msg );
+                super.handleMessage(msg);
                 int progress = pBar.getProgress();
                 int max = pBar.getMax();
                 double dProgress = (double) progress / (double) (1024 * 1024);
@@ -116,29 +145,30 @@ public class VersionUpgradeDialog extends CenterDialog {
     }
 
 
-    public VersionUpgradeDialog setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-        return this;
-
-    }
-
     @Override
     public void show(Object object) {
         this.mContext = (Context) object;
-        super.show( object );
+
+        try {
+            super.show(object);
+        } catch (IllegalStateException var5) {
+        }
+
     }
 
     public static VersionUpgradeDialog newInstance(VersionEntity.DataBean versionBean) {
         VersionUpgradeDialog dialog = new VersionUpgradeDialog();
         Bundle bundle = new Bundle();
-        bundle.putSerializable( VERSION, versionBean );
-        dialog.setArguments( bundle );
+        bundle.putSerializable(VERSION, versionBean);
+        dialog.setArguments(bundle);
         return dialog;
     }
 
     @Override
     public void dismiss() {
-        super.dismiss();
+        if (this.getActivity() != null && !this.getActivity().isFinishing()) {
+            super.dismissAllowingStateLoss();
+        }
     }
 
     @Override
@@ -148,7 +178,7 @@ public class VersionUpgradeDialog extends CenterDialog {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss( dialog );
+        super.onDismiss(dialog);
     }
 
     @Override
@@ -158,7 +188,7 @@ public class VersionUpgradeDialog extends CenterDialog {
 
     @Override
     public int getWindowWidth() {
-        return (int) (Tools.getScreenWidth( getActivity() ) * 0.75);
+        return (int) (Tools.getScreenWidth(getActivity()) * 0.75);
     }
 
 
@@ -167,36 +197,41 @@ public class VersionUpgradeDialog extends CenterDialog {
         binding = (UpgradeDialogBinding) dataBinding;
         pBar = binding.pbProgressbar;
         tv_progress = binding.tvProgress;
-        mDialog = new ProgressDialog( VersionUpgradeDialog.this.getActivity() );
-        mSavePreferencesData = new SavePreferencesData( VersionUpgradeDialog.this.getActivity() );
-        mDialog.setCancelable( false );
+        mDialog = new ProgressDialog(VersionUpgradeDialog.this.getActivity());
+        mSavePreferencesData = new SavePreferencesData(VersionUpgradeDialog.this.getActivity());
+        mDialog.setCancelable(false);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            versionBean = (VersionEntity.DataBean) bundle.getSerializable( VERSION );
+            versionBean = (VersionEntity.DataBean) bundle.getSerializable(VERSION);
         }
-        binding.tvTitle.setText( "发现新版本" + versionBean.versionName );
-        binding.tvContext.setText( versionBean.updateContext );
-        binding.tvOk.setOnClickListener( new View.OnClickListener() {
+        binding.tvTitle.setText("发现新版本" + versionBean.versionName);
+        binding.tvContext.setText(versionBean.updateContext);
+        binding.tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty( versionBean.updateUrl )) {
-                    binding.tvContext.setVisibility( View.GONE );
-                    binding.llProgres.setVisibility( View.VISIBLE );
-                    binding.tvOk.setVisibility( View.GONE );
+                if (!TextUtils.isEmpty(versionBean.updateUrl)) {
+                    binding.tvContext.setVisibility(View.GONE);
+                    binding.llProgres.setVisibility(View.VISIBLE);
+                    binding.tvOk.setVisibility(View.GONE);
                     DownloadTask downloadTask = new DownloadTask(
-                            getActivity() );
-                    downloadTask.execute( versionBean.updateUrl );
+                            getActivity());
+                    downloadTask.execute(versionBean.updateUrl);
                 } else {
-                    Tools.showToast( getActivity(), "APK下载地址为空" );
+                    Tools.showToast(getActivity(), "APK下载地址为空");
                 }
             }
-        } );
-        binding.tvCancle.setOnClickListener( new View.OnClickListener() {
+        });
+        if (versionBean.updateType == 1) {
+            binding.tvCancle.setVisibility(View.GONE);
+        }
+        binding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
-        } );
+        });
+
+
     }
 
     /**
@@ -220,7 +255,7 @@ public class VersionUpgradeDialog extends CenterDialog {
             HttpURLConnection connection = null;
             File file = null;
             try {
-                URL url = new URL( sUrl[0] );
+                URL url = new URL(sUrl[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 // expect HTTP 200 OK, so we don't mistakenly save error
@@ -235,9 +270,9 @@ public class VersionUpgradeDialog extends CenterDialog {
                 // might be -1: server did not report the length
                 int fileLength = connection.getContentLength();
                 if (Environment.getExternalStorageState().equals(
-                        Environment.MEDIA_MOUNTED )) {
-                    file = new File( Environment.getExternalStorageDirectory(),
-                            DOWNLOAD_NAME );
+                        Environment.MEDIA_MOUNTED)) {
+                    file = new File(Environment.getExternalStorageDirectory(),
+                            DOWNLOAD_NAME);
 
                     if (!file.exists()) {
                         // 判断父文件夹是否存在
@@ -247,15 +282,15 @@ public class VersionUpgradeDialog extends CenterDialog {
                     }
 
                 } else {
-                    Toast.makeText( getActivity(), "sd卡未挂载",
-                            Toast.LENGTH_LONG ).show();
+                    Toast.makeText(getActivity(), "sd卡未挂载",
+                            Toast.LENGTH_LONG).show();
                 }
                 input = connection.getInputStream();
-                output = new FileOutputStream( file );
+                output = new FileOutputStream(file);
                 byte data[] = new byte[4096];
                 long total = 0;
                 int count;
-                while ((count = input.read( data )) != -1) {
+                while ((count = input.read(data)) != -1) {
                     // allow canceling with back button
                     if (isCancelled()) {
                         input.close();
@@ -264,12 +299,12 @@ public class VersionUpgradeDialog extends CenterDialog {
                     total += count;
                     // publishing the progress....
                     if (fileLength > 0) // only if total length is known
-                        publishProgress( (int) (total * 100 / fileLength) );
-                    output.write( data, 0, count );
+                        publishProgress((int) (total * 100 / fileLength));
+                    output.write(data, 0, count);
 
                 }
             } catch (Exception e) {
-                System.out.println( "错误—+" + e.toString() );
+                System.out.println("错误—+" + e.toString());
                 return e.toString();
 
             } finally {
@@ -279,7 +314,7 @@ public class VersionUpgradeDialog extends CenterDialog {
                     if (input != null)
                         input.close();
                 } catch (IOException ignored) {
-                    System.out.print( "错误信息" + ignored.toString() );
+                    System.out.print("错误信息" + ignored.toString());
                 }
                 if (connection != null)
                     connection.disconnect();
@@ -293,20 +328,20 @@ public class VersionUpgradeDialog extends CenterDialog {
             // take CPU lock to prevent CPU from going off if the user
             // presses the power button during download
             PowerManager pm = (PowerManager) context
-                    .getSystemService( Context.POWER_SERVICE );
-            mWakeLock = pm.newWakeLock( PowerManager.PARTIAL_WAKE_LOCK,
-                    getClass().getName() );
+                    .getSystemService(Context.POWER_SERVICE);
+            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    getClass().getName());
             mWakeLock.acquire();
         }
 
         @Override
         protected void onProgressUpdate(Integer... progress) {
-            super.onProgressUpdate( progress );
+            super.onProgressUpdate(progress);
             // if we get here, length is known, now set indeterminate to false
-            pBar.setIndeterminate( false );
-            pBar.setMax( 100 );
-            pBar.setProgress( progress[0] );
-            tv_progress.setText( pBar.getProgress() + "%" );
+            pBar.setIndeterminate(false);
+            pBar.setMax(100);
+            pBar.setProgress(progress[0]);
+            tv_progress.setText(pBar.getProgress() + "%");
 
         }
 
@@ -330,14 +365,9 @@ public class VersionUpgradeDialog extends CenterDialog {
 //                                   }
 //                        )
 //                        .send();
-                // 申请多个权限。
-//                List<PermissionItem> permissonItems = new ArrayList<PermissionItem>();
-//                permissonItems.add( new PermissionItem( Manifest.permission.WRITE_EXTERNAL_STORAGE, "文件下载", R.drawable.permission_ic_storage ) );
-//                permissonItems.add( new PermissionItem( Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location ) );
-//                permissonItems.add( new PermissionItem( Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS, "文件安装", R.drawable.permission_ic_location ) );
-//                HiPermission.create( getActivity() ).permissions( permissonItems );
+               //  申请多个权限。
 
-                Toast.makeText( context, "您未打开SD卡权限" + result, Toast.LENGTH_LONG ).show();
+                Toast.makeText(context, "您未打开SD卡权限" + result, Toast.LENGTH_LONG).show();
             } else {
                 // Toast.makeText(context, "File downloaded",
                 // Toast.LENGTH_SHORT)
@@ -353,24 +383,30 @@ public class VersionUpgradeDialog extends CenterDialog {
 
 
     private void update() {
-        File apkfile = new File( Environment.getExternalStorageDirectory(), DOWNLOAD_NAME );
+        File apkfile = new File(Environment.getExternalStorageDirectory(), DOWNLOAD_NAME);
         if (!apkfile.exists()) {
             return;
         }
         //安装应用
-        Intent intent = new Intent( Intent.ACTION_VIEW );
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         //判断是否是AndroidN以及更高的版本
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags( Intent.FLAG_GRANT_READ_URI_PERMISSION );
-            Uri contentUri = FileProvider.getUriForFile( mContext, BuildConfig.APPLICATION_ID + ".fileProvider", apkfile );
-            intent.setDataAndType( contentUri, "application/vnd.android.package-archive" );
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileProvider", apkfile);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {
-            intent.setDataAndType( Uri.fromFile( new File( Environment
-                    .getExternalStorageDirectory(), DOWNLOAD_NAME ) ), "application/vnd.android.package-archive" );
-            intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+            intent.setDataAndType(Uri.fromFile(new File(Environment
+                    .getExternalStorageDirectory(), DOWNLOAD_NAME)), "application/vnd.android.package-archive");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-        startActivity( intent );
+
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
+
 }

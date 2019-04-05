@@ -57,10 +57,15 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
             if (msg.what == 1) {
                 String text = (String) msg.obj;
                 if (!TextUtils.isEmpty(text)) {
-                    ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
-                    ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
-                    list.add(contentEntity);
-                    UpdateAdapter();
+                    try {
+                        ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
+                        ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
+                        list.add(contentEntity);
+                        UpdateAdapter();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Tools.showToast(GrabSingleActivity.this,"出现异常，请重新登录");
+                    }
                 }
             } else if (msg.what == 2) {
                 top_view_text.setText("手动抢单（离线）");

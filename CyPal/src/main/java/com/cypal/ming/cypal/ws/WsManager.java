@@ -155,10 +155,10 @@ public class WsManager {
 
     public void reconnect() {
         reconnectCount = 0;
-        if (!isConnection) {
-            Log.d(TAG, "退出页面不重连了");
-            return;
-        }
+//        if (!isConnection) {
+//            Log.d(TAG, "退出页面不重连了");
+//            return;
+//        }
 
         //这里其实应该还有个用户是否登录了的判断 因为当连接成功后我们需要发送用户信息到服务端进行校验
         //由于我们这里是个demo所以省略了

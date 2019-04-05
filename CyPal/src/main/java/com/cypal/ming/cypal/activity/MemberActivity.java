@@ -146,11 +146,15 @@ public class MemberActivity extends BaseActivity {
             Tools.showToast(MemberActivity.this, "数据解析错误");
             return;
         }
-        //身份信息
-        tv_name.setText(memberEntity.data.certification.real_name);
-        tv_code.setText(memberEntity.data.certification.identitycard_number);
-        imageLoader.displayImage(memberEntity.data.host + memberEntity.data.certification.identitycard_front, iv_img,
-                options);
+        try {
+            //身份信息
+            tv_name.setText(memberEntity.data.certification.real_name);
+            tv_code.setText(memberEntity.data.certification.identitycard_number);
+            imageLoader.displayImage(memberEntity.data.host + memberEntity.data.certification.identitycard_front, iv_img,
+                    options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //审核状态
         if (memberEntity.data.certification_status.equals("SUCCESS")) {
             //完成

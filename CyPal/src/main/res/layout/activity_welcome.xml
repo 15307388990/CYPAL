@@ -3,13 +3,12 @@
     android:id="@+id/welcome_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#3574FA"
     android:orientation="vertical" >
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/defoult" />
+        android:src="@drawable/welcome_android" />
 
 </LinearLayout>

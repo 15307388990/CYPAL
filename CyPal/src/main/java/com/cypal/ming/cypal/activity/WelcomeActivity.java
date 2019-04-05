@@ -22,6 +22,15 @@ public class WelcomeActivity extends BaseActivity {
         anim.setDuration(500);
         view.startAnimation(anim);
         anim.setAnimationListener(new WelcomeAnimation());
+//        Intent intent = new Intent();
+//        String auth_token = mSavePreferencesData.getStringData("token");
+//        if (auth_token != null && !auth_token.equals("")) {
+//            intent.setClass(WelcomeActivity.this, TabActivity.class);
+//        } else {
+//            intent.setClass(WelcomeActivity.this, LoginActivity.class);
+//        }
+//        startActivity(intent);
+//        WelcomeActivity.this.finish();
     }
 
 
