@@ -234,17 +234,17 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             return;
         }
 
-        String new1 = et_new.getText().toString().trim();
+        String new1 = et_new2.getText().toString().trim();
         if (TextUtils.isEmpty(new1)) {
             Toast.makeText(this, "请输入6～18位英文数字组合密码", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String new2 = et_new2.getText().toString().trim();
-        if (TextUtils.isEmpty(new2)) {
-            Toast.makeText(this, "请输入推荐码", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        String new2 = et_new.getText().toString().trim();
+//        if (TextUtils.isEmpty(new2)) {
+//            Toast.makeText(this, "请输入推荐码", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         Register();
         // TODO validate success, do something
 
