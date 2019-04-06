@@ -28,7 +28,7 @@ public class IndexEntity {
          * otc : {"id":9,"createTime":"2019-03-21 10:32:49","deleted":false,"userId":15,"otcType":"HAND","commision":98500,"startTime":"2019-03-24 21:04:24","start":true}
          */
 
-        public int balance;
+        public float balance;
         public UndoOrderBean undoOrder;
         public String successRateText;
         public IndexTodayOrderAnalysisRespBean indexTodayOrderAnalysisResp;

@@ -107,7 +107,7 @@ public class WithdrawalActivity extends BaseActivity implements View.OnClickList
                 Tools.showToast( WithdrawalActivity.this, "充值金额只能为大于0的整数" );
             }
         } catch (NumberFormatException e) {
-            Tools.showToast( WithdrawalActivity.this, "充值金额只能为整数" );
+            Tools.showToast( WithdrawalActivity.this, "提现金额只能为整数" );
             e.printStackTrace();
             return;
         }

@@ -194,7 +194,8 @@ public class TopUpListActivity extends BaseActivity {
         }
         params.leftMargin = 0;
         cursor.setLayoutParams(params);
-        springView.computeScroll();
+        pageNumber = 1;
+        orderlist();
 
     }
 

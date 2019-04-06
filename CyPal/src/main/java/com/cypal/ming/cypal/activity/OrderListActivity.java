@@ -210,7 +210,8 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
         }
         params.leftMargin = 0;
         cursor.setLayoutParams(params);
-        springView.computeScroll();
+        pageNumber = 1;
+        orderlist();
 
     }
 

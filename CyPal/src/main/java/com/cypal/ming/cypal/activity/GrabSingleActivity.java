@@ -60,8 +60,14 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
                     try {
                         ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
                         ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
-                        list.add(contentEntity);
-                        UpdateAdapter();
+                        if (managerEntity.messageEnum.equals("LOGINOUT"))
+                        {
+                            Tools.showToast(GrabSingleActivity.this,"同一账号在别处登录,请退出页面重新登录");
+                        }else {
+                            list.add(contentEntity);
+                            UpdateAdapter();
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Tools.showToast(GrabSingleActivity.this,"出现异常，请重新登录");

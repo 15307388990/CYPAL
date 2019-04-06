@@ -19,10 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
+import com.cypal.ming.cypal.bean.LoginEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.AuthCodeDialog;
 import com.cypal.ming.cypal.utils.MD5Util;
@@ -30,6 +32,7 @@ import com.cypal.ming.cypal.utils.MyCountTimer;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -261,8 +264,11 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             countTimer.start();// 开启定时器
             tv_code.setVisibility(View.VISIBLE);
         } else if (url.contains(Const.register)) {
-            Tools.showToast(this, "注册成功");
-            finish();
+            LoginEntity loginEntity = JSON.parseObject(data, LoginEntity.class);
+            mSavePreferencesData.putStringData("token", loginEntity.data.loginToken);
+            //bug ly记录用户ID
+            CrashReport.setUserId(et_iphone.getText().toString().trim());
+            Tools.jump(this, TabActivity.class, true);
         }
 
     }
