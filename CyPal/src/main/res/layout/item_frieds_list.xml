@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:attrs="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="70dp"
+	android:gravity="center_vertical"
+	android:background="@color/white"
+	android:orientation="vertical">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+		
+		<com.cypal.ming.cypal.view.CircleImageView
+			android:id="@+id/myicon"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:src="@drawable/head"
+			attrs:border_color="@color/white"
+			attrs:border_width="1dp" />
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="23dp"
+			android:orientation="vertical">
+			
+			<TextView
+				android:id="@+id/tv_nickname"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="julien.bergnaum@gmail.com"
+				android:textColor="#ff333333"
+				android:textSize="16sp" />
+			
+			<TextView
+				android:id="@+id/tv_timer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="20dp"
+				android:text="06-23-2019"
+				android:textColor="#ff979797"
+				android:textSize="12sp" />
+		</LinearLayout>
+	</LinearLayout>
+
+</LinearLayout>

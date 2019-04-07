@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -61,6 +62,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     private ImageView iv_shenfen1;
     private ImageView iv_shenfen2;
     private ImageView iv_shenfen3;
+    private TextView tv_text;
     private Button btn_next;
     private List<Bitmap> bitmapInfos = null;
     private List<String> resultList = null;
@@ -84,7 +86,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
         memberEntity = (MemberEntity) getIntent().getSerializableExtra("memberEntity");
         if (memberEntity != null) {
             try {
-                et_code.setText(memberEntity.data.certification.identitycard_number+"");
+                et_code.setText(memberEntity.data.certification.identitycard_number + "");
                 et_name.setText(memberEntity.data.certification.real_name);
                 shenfen1 = memberEntity.data.certification.identitycard_front;
                 shenfen2 = memberEntity.data.certification.identitycard_reverse;
@@ -120,11 +122,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
         mDialog = new ProgressDialog(this);
         mDialog.setCancelable(false);
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
-        ll_view_back.setOnClickListener(this);
         et_code = (EditText) findViewById(R.id.et_code);
-        et_code.setOnClickListener(this);
         et_name = (EditText) findViewById(R.id.et_name);
-        et_name.setOnClickListener(this);
         iv_shenfen1 = (ImageView) findViewById(R.id.iv_shenfen1);
         iv_shenfen1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +174,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                 finish();
             }
         });
+        tv_text = (TextView) findViewById(R.id.tv_text);
+        tv_text.setText("1、手持白纸和身份证，并写明仅" + getString(R.string.app_name) + "上面使用 \\n2、拍摄时确保身份证边框完整、脸部清晰，字体清晰，证件全部信息清晰无遮挡");
     }
 
     @Override

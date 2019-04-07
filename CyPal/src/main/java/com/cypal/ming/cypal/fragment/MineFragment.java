@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.AccountListActivity;
 import com.cypal.ming.cypal.activity.CommissionAcitity;
+import com.cypal.ming.cypal.activity.InvitationFriendsActivity;
 import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.OrderListActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
@@ -196,6 +197,12 @@ public class MineFragment extends BaseFragment {
                 AppVersion();
             }
         });
+        ll_yaoqing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump(mcontext, InvitationFriendsActivity.class, false);
+            }
+        });
 
     }
 
@@ -203,8 +210,8 @@ public class MineFragment extends BaseFragment {
 
         InfoEntity infoEntity = JSON.parseObject(data, InfoEntity.class);
         InfoEntity.DataBean.MyInformationBeanBean myInformationBeanBean = infoEntity.data.myInformationBean;
-        if (myInformationBeanBean.avatar == null) {
-            imageLoader.displayImage(Const.USER_DEFAULT_ICON, myicon, options);
+        if (TextUtils.isEmpty(myInformationBeanBean.avatar)) {
+            myicon.setImageResource(R.drawable.head);
         } else {
             imageLoader.displayImage(myInformationBeanBean.avatar, myicon,
                     options);

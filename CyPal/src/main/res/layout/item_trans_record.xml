@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:attrs="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white"
+	android:orientation="vertical">
+	
+	<LinearLayout
+		android:id="@+id/ll_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:orientation="horizontal">
+		
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="20dp"
+			android:text="转账"
+			android:textColor="#ff101010"
+			android:textSize="13sp" />
+		
+		<TextView
+			android:id="@+id/tv_timer"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="13dp"
+			android:text="2018-12-30 15:20"
+			android:textColor="#ff999999"
+			android:textSize="12sp" />
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="15dp"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+		
+		<com.cypal.ming.cypal.view.CircleImageView
+			android:id="@+id/myicon"
+			android:layout_width="45dp"
+			android:layout_height="45dp"
+			android:src="@drawable/head"
+			attrs:border_color="@color/white"
+			attrs:border_width="1dp" />
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="23dp"
+			android:orientation="vertical">
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+				
+				<TextView
+					android:id="@+id/tv_nickname"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="Garrett Vega"
+					android:textColor="#ff333333"
+					android:textSize="15sp" />
+				
+				<TextView
+					android:id="@+id/tv_money"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="20dp"
+					android:text="39880"
+					android:textColor="#ff333333"
+					android:textSize="20sp" />
+			</LinearLayout>
+			
+			
+			<TextView
+				android:id="@+id/tv_account"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="20dp"
+				android:text="135****2397"
+				android:textColor="#ff999999"
+				android:textSize="12sp" />
+		</LinearLayout>
+	
+	</LinearLayout>
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1px"
+		android:layout_marginTop="12dp"
+		android:background="@color/gray" />
+</LinearLayout>

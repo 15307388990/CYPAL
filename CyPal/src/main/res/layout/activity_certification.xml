@@ -261,6 +261,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="26dp"

@@ -245,6 +245,9 @@
 			android:screenOrientation="portrait"
 			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 申诉订单 -->
 		<activity
+			android:name="com.cypal.ming.cypal.activity.TransferActivity"
+			android:screenOrientation="portrait" /><!-- 好友转账 -->
+		<activity
 			android:name="com.cypal.ming.cypal.activity.TakeActivity"
 			android:screenOrientation="portrait"
 			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 取件AND送达界面-->
@@ -253,8 +256,20 @@
 			android:screenOrientation="portrait"
 			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置界面-->
 		<activity
+			android:name="com.cypal.ming.cypal.activity.InvitationFriendsActivity"
+			android:screenOrientation="portrait" /><!-- 邀请好友-->
+		<activity
+			android:name="com.cypal.ming.cypal.activity.FriendsListActivity"
+			android:screenOrientation="portrait" /><!-- 好友列表-->
+		<activity
 			android:name="com.cypal.ming.cypal.activity.WebviewActivity"
 			android:screenOrientation="portrait" /><!-- 网页 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activity.TransfercConfirmActivity"
+			android:screenOrientation="portrait" /><!-- 确认转账页 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activity.TransferRecordListActivity"
+			android:screenOrientation="portrait" /><!-- 转账记录 -->
 		<activity
 			android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
 			android:screenOrientation="portrait" /><!-- 冻结金额记录 -->

@@ -189,6 +189,27 @@ public class Const {
      * 我的佣金相关接口
      */
     public static final String description = "/private/commision/description";
+    /**
+     * 邀请好友
+     */
+    public static final String invite = "/private/user/invite?";
+    /**
+     * 我的团队
+     */
+    public static final String myTeam = "/private/user/myTeam?";
+    /**
+     * 转账验证账户
+     */
+    public static final String getTransfer = "/private/transfer/getTransfer?";
+    /**
+     * 确认转账
+     */
+    public static final String postTransfer = "/private/transfer/postTransfer";
+    /**
+     * 转账记录
+     */
+    public static final String record = "/private/transfer/record?";
+
 
     /* 订单详情 */
     public static final String ordershow = "/order/show";

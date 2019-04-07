@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:attrs="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white"
+	android:gravity="center_horizontal"
+	android:orientation="vertical">
+	
+	<RelativeLayout
+		layout="@layout/top_view_white"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/title_height_48"
+		android:background="@color/white">
+		
+		<LinearLayout
+			android:id="@+id/ll_view_back"
+			android:layout_width="@dimen/margin_75"
+			android:layout_height="match_parent"
+			android:layout_marginRight="@dimen/margin_5"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+			
+			<ImageView
+				android:id="@+id/img_back"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="@dimen/margin_10"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/all_icon_back" />
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginLeft="@dimen/margin_5"
+				android:singleLine="true"
+				android:textColor="@color/white"
+				android:textSize="@dimen/text_18" />
+		</LinearLayout>
+		
+		<TextView
+			android:id="@+id/right_view_text"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_alignParentEnd="true"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="20dp"
+			android:gravity="center_vertical"
+			android:singleLine="true"
+			android:text="转账记录"
+			android:textColor="@color/CY_999999"
+			android:textSize="14sp" />
+		
+		<TextView
+			android:id="@+id/top_view_text"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_centerInParent="true"
+			android:drawablePadding="@dimen/margin_5"
+			android:gravity="center_vertical"
+			android:singleLine="true"
+			android:text="转账"
+			android:textColor="@color/CY_101010"
+			android:textSize="@dimen/text_20" />
+	</RelativeLayout>
+	
+	<com.cypal.ming.cypal.view.CircleImageView
+		android:id="@+id/myicon"
+		android:layout_width="44dp"
+		android:layout_height="44dp"
+		android:layout_marginTop="34dp"
+		android:src="@drawable/head"
+		attrs:border_color="@color/white"
+		attrs:border_width="1dp" />
+	
+	<TextView
+		android:id="@+id/tv_pay_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="正在向李大大付款"
+		android:textColor="#ff333333"
+		android:textSize="15sp" />
+	
+	<TextView
+		android:id="@+id/tv_nickname"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="3dp"
+		android:text="138****9343"
+		android:textColor="#ff999999"
+		android:textSize="13sp" />
+	
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="34dp"
+		android:paddingLeft="21dp"
+		android:text="金额："
+		android:textColor="#ff999999"
+		android:textSize="14sp" />
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		
+		<EditText
+			android:id="@+id/et_amount"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="20dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginRight="20dp"
+			android:layout_weight="1"
+			android:gravity="center_vertical"
+			android:hint="0.00"
+			android:inputType="phone"
+			android:paddingLeft="10dp"
+			android:textSize="30sp" />
+		
+		<TextView
+			android:id="@+id/tv_all"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="20dp"
+			android:text="全部"
+			android:textColor="#ff4b8bf9"
+			android:textSize="11sp" />
+	</LinearLayout>
+	
+	<TextView
+		android:id="@+id/tv_amount"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="20dp"
+		android:text="可用余额：3000.00"
+		android:textColor="#ffcccccc"
+		android:layout_marginTop="6dp"
+		android:textSize="11sp" />
+	
+	<Button
+		android:id="@+id/btn_next"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:layout_marginTop="20dp"
+		android:layout_marginRight="20dp"
+		android:background="@drawable/btn_bg"
+		android:gravity="center"
+		android:text="确定转账"
+		android:textColor="@color/white"
+		android:textSize="18sp" />
+
+</LinearLayout>
