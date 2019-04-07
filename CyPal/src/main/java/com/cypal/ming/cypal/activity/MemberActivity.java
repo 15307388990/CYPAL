@@ -2,6 +2,7 @@ package com.cypal.ming.cypal.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -48,6 +49,7 @@ public class MemberActivity extends BaseActivity {
     private TextView tv_text;
     private RelativeLayout rl_layout;
     private RelativeLayout rl_wei;
+    private MemberEntity memberEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,22 @@ public class MemberActivity extends BaseActivity {
 
             }
         });
+        /**
+         * 审核未通过
+         */
+        rl_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (memberEntity.data.certification_status.equals("FAIL")) {
+                    Intent intent = new Intent(MemberActivity.this, CertificationActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("memberEntity", memberEntity);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
     private void deleteOrderDialog() {
@@ -129,6 +147,7 @@ public class MemberActivity extends BaseActivity {
     protected void returnData(String data, String url) {
         if (url.contains(certification)) {
             MemberEntity memberEntity = JSON.parseObject(data, MemberEntity.class);
+            this.memberEntity = memberEntity;
             initDate(memberEntity);
         } else if (url.contains(submitBailMoney)) {
             MarginDialog marginDialog;
@@ -167,10 +186,18 @@ public class MemberActivity extends BaseActivity {
             rl_layout.setVisibility(View.VISIBLE);
             rl_wei.setVisibility(View.GONE);
         } else {
-            //没有完成
-            iv_renzhen.setImageResource(R.drawable.iocn_weitongguo);
-            rl_wei.setVisibility(View.VISIBLE);
-            rl_layout.setVisibility(View.GONE);
+            if (memberEntity.data.certification == null) {
+                //没有完成
+                iv_renzhen.setImageResource(R.drawable.iocn_weitongguo);
+                rl_wei.setVisibility(View.VISIBLE);
+                rl_layout.setVisibility(View.GONE);
+            } else {
+                //没有完成
+                iv_renzhen.setImageResource(R.drawable.iocn_weitongguo);
+                rl_wei.setVisibility(View.GONE);
+                rl_layout.setVisibility(View.VISIBLE);
+            }
+
         }
         //保证金状态
         if (memberEntity.data.bailMoneyRecord_status.equals("SUCCESS")) {

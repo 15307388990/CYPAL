@@ -165,7 +165,12 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
         tv_totalCommision.setText(commissionEntity.data.totalCommision + "");
         tv_todayTeamCommision.setText(commissionEntity.data.todayTeamCommision + "");
         tv_todayCommision.setText(commissionEntity.data.todayCommision + "");
-        list = commissionEntity.data.list.content;
+        if (pageNumber == 1) {
+            list = commissionEntity.data.list.content;
+        } else {
+            list.addAll(commissionEntity.data.list.content);
+        }
+
         commissionAdapter.updateAdapter(list);
         if (pageNumber < commissionEntity.data.list.totalPages) {
             isPage = true;

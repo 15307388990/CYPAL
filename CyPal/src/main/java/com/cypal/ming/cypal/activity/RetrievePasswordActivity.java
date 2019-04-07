@@ -112,7 +112,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
     }
 
     private void initOnclik() {
-        img_back.setOnClickListener( new View.OnClickListener() {
+        ll_view_back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -208,7 +208,12 @@ public class TopUpListActivity extends BaseActivity {
         } else {
             isPage = false;
         }
-        list = topUpListEntity.data.content;
+        if (pageNumber == 1) {
+            list = topUpListEntity.data.content;
+        } else {
+            list.addAll(topUpListEntity.data.content);
+        }
+
         topUpListAdapter.updateAdapter(list);
 
     }

@@ -240,7 +240,12 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
         if (url.contains(Const.otcOrderlist)) {
             springView.onFinishFreshAndLoad();
             OtcOrderListEntity otcOrderListEntity = JSON.parseObject(data, OtcOrderListEntity.class);
-            list = otcOrderListEntity.data.content;
+            if (pageNumber == 1) {
+                list = otcOrderListEntity.data.content;
+            } else {
+                list.addAll(otcOrderListEntity.data.content);
+            }
+
             otcOrderListAdapter.updateAdapter(list, otcOrderListEntity.serverTime);
             if (pageNumber < otcOrderListEntity.data.totalPages) {
                 isPage = true;

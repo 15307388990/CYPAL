@@ -107,5 +107,4 @@ dependencies {
     compile 'com.neovisionaries:nv-websocket-client:2.2'
     compile 'cn.yipianfengye.android:zxing-library:2.2'
     compile 'com.tencent.bugly:crashreport:latest.release'
-
 }

@@ -1,6 +1,8 @@
 package com.cypal.ming.cypal.bean;
 
-public class MemberEntity {
+import java.io.Serializable;
+
+public class MemberEntity implements Serializable {
 
 
     /**
@@ -15,7 +17,7 @@ public class MemberEntity {
     public DataBean data;
     public long serverTime;
 
-    public class DataBean {
+    public class DataBean implements Serializable {
         /**
          * bailMoneyRecord_status : SUCCESS
          * bailMoneyRecord_description : 已成功缴纳保证金
@@ -32,7 +34,7 @@ public class MemberEntity {
         public String certification_description;
         public CertificationBean certification;
 
-        public class CertificationBean {
+        public class CertificationBean implements Serializable {
             /**
              * id : 3
              * createTime : 2019-03-30 00:30:32
