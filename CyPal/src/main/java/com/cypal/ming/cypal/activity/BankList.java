@@ -61,7 +61,7 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
     private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
         map.put( "payAccountEnum", type );
-        mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, this ) );
         loading();
     }
 

@@ -159,7 +159,7 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
 
     private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, mContext) );
     }
 
     private void Use(String account_id) {

@@ -65,7 +65,7 @@ public class FriendsListActivity extends BaseActivity {
         map.put("levelEnum", levelEnum + "");
         map.put("page", pageNumber + "");
         map.put("size", "10");
-        mQueue.add(ParamTools.packParam(Const.myTeam, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.myTeam, this, this, map, Request.Method.GET, this));
         loading();
     }
 

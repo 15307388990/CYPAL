@@ -85,7 +85,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
         }
         map.put("page", pageNumber + "");
         map.put("size", "10");
-        mQueue.add(ParamTools.packParam(Const.otcOrderlist, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.otcOrderlist, this, this, map, Request.Method.GET, this));
         loading();
     }
 

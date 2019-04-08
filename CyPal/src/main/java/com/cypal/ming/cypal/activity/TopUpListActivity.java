@@ -70,7 +70,7 @@ public class TopUpListActivity extends BaseActivity {
         }
         map.put("page", pageNumber + "");
         map.put("size", "10");
-        mQueue.add(ParamTools.packParam(Const.orderlist, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.orderlist, this, this, map, Request.Method.GET, this));
         loading();
     }
 

@@ -54,7 +54,7 @@ public class TransferRecordListActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("page", pageNumber + "");
         map.put("size", "10");
-        mQueue.add(ParamTools.packParam(Const.record, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.record, this, this, map, Request.Method.GET, this));
         loading();
     }
 

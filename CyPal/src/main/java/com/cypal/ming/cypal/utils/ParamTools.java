@@ -20,7 +20,7 @@ public class ParamTools {
     /**
      * 生成参数
      */
-    public static StringRequest packParam(String url, Context context,
+    public static StringRequest packParam(String url, final Context context,
                                           Listener<String> listener, ErrorListener errorListener,
                                           final Map<String, String> map) {
         final SavePreferencesData savePreferencesData = new SavePreferencesData( context );
@@ -39,7 +39,7 @@ public class ParamTools {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put( "os", "android" );
-                map.put( "version", "1001" );
+                map.put( "version",  Tools.packageCode(context) + "" );
                 map.put( "token", savePreferencesData.getStringData( "token" ) );
                 return map;
             }
@@ -86,8 +86,8 @@ public class ParamTools {
      */
     public static StringRequest packParam(String url,
                                           Listener<String> listener, ErrorListener errorListener,
-                                          final Map<String, String> map, int method, final String token) {
-
+                                          final Map<String, String> map, int method, final Context context) {
+        final SavePreferencesData savePreferencesData = new SavePreferencesData( context );
 
         if (!url.contains( "http" )) {
             url = Const.BASE_URL + url;
@@ -107,8 +107,8 @@ public class ParamTools {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put( "os", "android" );
-                map.put( "version", "1001" );
-                map.put( "token", token );
+                map.put( "version",  Tools.packageCode(context) + "" );
+                map.put( "token", savePreferencesData.getStringData( "token" ) );
                 return map;
             }
         };

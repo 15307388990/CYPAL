@@ -128,13 +128,13 @@ public class PersonalActivity extends BaseActivity {
     private void MySetting() {
         Map<String, String> map = new HashMap<>();
         map.put("contactType", "mySetting");
-        mQueue.add(ParamTools.packParam(Const.setIn, this, this, map, com.android.volley.Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.setIn, this, this, map, com.android.volley.Request.Method.GET, this));
         loading();
     }
 
     private void loginOut() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.loginOut, this, this, map, com.android.volley.Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.loginOut, this, this, map, com.android.volley.Request.Method.GET, this));
         loading();
     }
 

@@ -88,7 +88,7 @@ public class MineFragment extends BaseFragment {
     public void setIn() {
         Map<String, String> map = new HashMap<>();
         map.put("contactType", "myInfo");
-        mQueue.add(ParamTools.packParam(Const.setIn, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.setIn, this, this, map, Request.Method.GET, mcontext));
         loading();
 
     }

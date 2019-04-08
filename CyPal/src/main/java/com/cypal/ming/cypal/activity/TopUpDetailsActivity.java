@@ -66,7 +66,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
         if (!TextUtils.isEmpty(orderId)) {
             Map<String, String> map = new HashMap<>();
             map.put("orderId", orderId);
-            mQueue.add(ParamTools.packParam(Const.order, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+            mQueue.add(ParamTools.packParam(Const.order, this, this, map, Request.Method.GET, this));
             loading();
         }
     }

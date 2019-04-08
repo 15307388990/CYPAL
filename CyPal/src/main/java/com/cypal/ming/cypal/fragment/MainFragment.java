@@ -12,6 +12,7 @@ import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,9 +29,11 @@ import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.BaseEntity;
 import com.cypal.ming.cypal.bean.IndexEntity;
+import com.cypal.ming.cypal.bean.VersionEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.AccountDialog;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
+import com.cypal.ming.cypal.dialogfrment.VersionUpgradeDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
@@ -98,6 +101,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     };
     private String method;
     private boolean isStar;
+    private VersionUpgradeDialog versionUpgradeDialog;
 
 
     @Override
@@ -219,15 +223,6 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
             }
         });
-        thread = new Thread() {
-            @Override
-            public void run() {
-                while (isRunning) {
-                    SystemClock.sleep(5000);
-                    handler.sendEmptyMessage(199);
-                }
-            }
-        };
 
 
         tv_quxiao.setOnClickListener(new OnClickListener() {
@@ -260,9 +255,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         if (!TextUtils.isEmpty(mSavePreferencesData.getStringData("indexjson"))) {
             initData(mSavePreferencesData.getStringData("indexjson"));
         }
-/**
- * 跳转至接单记录
- */
+        /**
+         * 跳转至接单记录
+         */
         ll_order.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -274,7 +269,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
     public void orderList() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.mallSetInfo, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.mallSetInfo, this, this, map, Request.Method.GET, mcontext));
     }
 
     /**
@@ -395,6 +390,20 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     }
 
     @Override
+    public void onDestroy() {
+        if (versionUpgradeDialog != null) {
+            if (versionUpgradeDialog.getIshow()) {
+                versionUpgradeDialog.dismissAllowingStateLoss();
+            }
+        }
+        if (thread != null) {
+            thread = null;
+        }
+        super.onDestroy();
+
+    }
+
+    @Override
     protected void returnMsg(String data, String url) {
         if (url.contains(Const.start)) {
             //接单接口返回-2，跳转到认证会员页
@@ -408,12 +417,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private void initData(String data) {
         IndexEntity indexEntity = JSON.parseObject(data, IndexEntity.class);
         noticeListBeanList = indexEntity.data.noticeList;
-        if (!noticeListBeanList.isEmpty()) {
-            if (!thread.isAlive()) {
-                thread.start();
-            }
 
-        }
 
         tv_successratetext.setText(indexEntity.data.successRateText);
         tv_balance.setText("￥" + indexEntity.data.balance);
@@ -468,6 +472,44 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } else {
             ll_wu.setVisibility(View.VISIBLE);
         }
+        if (indexEntity.data.version.updateType != -1) {
+            Log.d("dialog", "弹框");
+            VersionEntity versionBean = new VersionEntity();
+            if (versionUpgradeDialog == null) {
+                versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionBean.getData(indexEntity.data.version));
+            }
+            if (!versionUpgradeDialog.getIshow()) {
+                long quxiaotime = System.currentTimeMillis();
+                if (mSavePreferencesData.getLongData("quxiaotime", 0) == 0) {
+                    versionUpgradeDialog.show(mcontext);
+                } else {
+                    if (mSavePreferencesData.getLongData("quxiaotime", 0) - quxiaotime > 24 * 60 * 1000) {
+                        versionUpgradeDialog.show(mcontext);
+                    }
+                }
+            }
+        }
+        //公告开启
+        if (thread == null) {
+            auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    while (isRunning) {
+                        SystemClock.sleep(5000);
+                        handler.sendEmptyMessage(199);
+                    }
+                }
+            };
+
+            if (!noticeListBeanList.isEmpty()) {
+                if (!thread.isAlive()) {
+                    thread.start();
+                }
+
+            }
+        }
+
 
     }
 }

@@ -65,7 +65,7 @@ public class TabActivity extends BaseActivity {
         Tools.webacts.add(this);
         initView();
         initDate();
-        AppVersion();
+      //  AppVersion();
         ButterKnife.bind(this);
     }
 
@@ -148,11 +148,11 @@ public class TabActivity extends BaseActivity {
     protected void returnData(String data, String url) {
         if (url.contains(Const.check)) {
             VersionEntity versionEntity = JSON.parseObject(data, VersionEntity.class);
-            if (versionEntity.data.updateType != -1) {
-                VersionUpgradeDialog versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionEntity.data);
-
-                versionUpgradeDialog.show(TabActivity.this);
-            }
+//            if (versionEntity.data.updateType != -1) {
+//                VersionUpgradeDialog versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionEntity.data);
+//
+//                versionUpgradeDialog.show(TabActivity.this);
+//            }
 
         }
     }
@@ -224,7 +224,6 @@ public class TabActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mMinFragment.onActivityResult(requestCode, resultCode, data);
     }
 
 }

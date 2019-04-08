@@ -42,7 +42,7 @@ public class AccountListActivity extends BaseActivity implements CategoryAdapter
 
     private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add( ParamTools.packParam( Const.category, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData( "token" ) ) );
+        mQueue.add( ParamTools.packParam( Const.category, this, this, map, Request.Method.GET,this ) );
         loading();
     }
 

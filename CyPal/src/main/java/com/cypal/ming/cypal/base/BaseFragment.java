@@ -94,6 +94,7 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
         rightView = (ImageView) view.findViewById(R.id.right_view_text);
     }
 
+
     @Override
     public void onErrorResponse(VolleyError error) {
         dismissLoading();

@@ -62,13 +62,13 @@ public class RefundActivity extends BaseActivity implements View.OnClickListener
 
     public void refoundBailMoney() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.refoundBailMoney, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.refoundBailMoney, this, this, map, Request.Method.GET, this));
         loading();
     }
 
     public void sureRefoundBailMoney() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.sureRefoundBailMoney, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.sureRefoundBailMoney, this, this, map, Request.Method.GET, this));
         loading();
     }
 

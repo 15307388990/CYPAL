@@ -67,13 +67,13 @@ public class MemberActivity extends BaseActivity {
 
     public void Certification() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(certification, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(certification, this, this, map, Request.Method.GET, this));
         loading();
     }
 
     public void submitBailMoney() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(submitBailMoney, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(submitBailMoney, this, this, map, Request.Method.GET, this));
         loading();
     }
 

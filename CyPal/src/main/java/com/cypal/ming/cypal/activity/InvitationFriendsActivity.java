@@ -56,7 +56,7 @@ public class InvitationFriendsActivity extends BaseActivity {
 
     private void invite() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.invite, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.invite, this, this, map, Request.Method.GET, this));
         loading();
     }
 

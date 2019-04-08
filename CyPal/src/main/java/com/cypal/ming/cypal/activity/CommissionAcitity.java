@@ -83,7 +83,7 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
         map.put("type", currentSelectTab);
         map.put("page", pageNumber + "");
         map.put("size", "10");
-        mQueue.add(ParamTools.packParam(Const.commision, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.commision, this, this, map, Request.Method.GET,this));
         loading();
     }
 

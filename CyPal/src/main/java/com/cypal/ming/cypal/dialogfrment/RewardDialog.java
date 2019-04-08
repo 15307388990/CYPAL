@@ -106,7 +106,7 @@ public class RewardDialog extends CenterDialog implements Response.Listener<Stri
 
     private void description() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.description, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.description, this, this, map, Request.Method.GET, mContext));
     }
 
 

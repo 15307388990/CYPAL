@@ -16,6 +16,16 @@ public class VersionEntity implements Serializable {
     public DataBean data;
     public long serverTime;
 
+    public DataBean getData(IndexEntity.DataBean.VersionBean versionBean) {
+        DataBean dataBean=new DataBean();
+        dataBean.updateType = versionBean.updateType;
+        dataBean.versionName = versionBean.versionName;
+        dataBean.updateUrl = versionBean.updateUrl;
+        dataBean.updateContext = versionBean.updateContext;
+        dataBean.createTime = versionBean.createTime;
+        return dataBean;
+    }
+
     public class DataBean implements Serializable {
         /**
          * id : 4

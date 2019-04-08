@@ -148,18 +148,19 @@ public class TransfercConfirmActivity extends BaseActivity implements View.OnCli
             Toast.makeText(this, "请输入金额", Toast.LENGTH_SHORT).show();
             return;
         }
+        postTransfer();
 
-        try {
-            if (Integer.valueOf(amount) >= 1) {
-                postTransfer();
-            } else {
-                Tools.showToast(TransfercConfirmActivity.this, "转账金额只能为大于0的整数");
-            }
-        } catch (NumberFormatException e) {
-            Tools.showToast(TransfercConfirmActivity.this, "转账金额只能为整数");
-            e.printStackTrace();
-            return;
-        }
+//        try {
+//            if (Integer.valueOf(amount) >= 1) {
+//                postTransfer();
+//            } else {
+//                Tools.showToast(TransfercConfirmActivity.this, "转账金额只能为大于0的整数");
+//            }
+//        } catch (NumberFormatException e) {
+//            Tools.showToast(TransfercConfirmActivity.this, "转账金额只能为整数");
+//            e.printStackTrace();
+//            return;
+//        }
 
 
     }

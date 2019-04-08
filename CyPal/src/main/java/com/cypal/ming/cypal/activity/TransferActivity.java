@@ -51,7 +51,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private void getTransfer() {
         Map<String, String> map = new HashMap<>();
         map.put("account", et_amount.getText().toString().trim());
-        mQueue.add(ParamTools.packParam(Const.getTransfer, this, this, map, Request.Method.GET, mSavePreferencesData.getStringData("token")));
+        mQueue.add(ParamTools.packParam(Const.getTransfer, this, this, map, Request.Method.GET, this));
         loading();
     }
 

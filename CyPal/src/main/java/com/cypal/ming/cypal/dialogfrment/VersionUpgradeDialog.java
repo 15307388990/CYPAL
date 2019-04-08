@@ -83,7 +83,7 @@ public class VersionUpgradeDialog extends CenterDialog {
     private static final String VERSION = "version";
     private UpgradeDialogBinding binding;
     private OnClickListener onClickListener;
-    private ProgressDialog mDialog;
+    private ProgressDialog mProgDialog;
     public SavePreferencesData mSavePreferencesData;
     private VersionEntity.DataBean versionBean;
     private ProgressBar pBar;
@@ -92,6 +92,8 @@ public class VersionUpgradeDialog extends CenterDialog {
     // 下载存储的文件名
     private static final String DOWNLOAD_NAME = "cypay";
     private Context mContext;
+    Dialog dialog;
+    private boolean iShow = false;
 
     /**
      * 定义结果回调接口
@@ -101,18 +103,22 @@ public class VersionUpgradeDialog extends CenterDialog {
 
     }
 
+    public boolean getIshow() {
+        return iShow;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = new Dialog( getActivity(), R.style.DialogStyle );
+        dialog = new Dialog(getActivity(), R.style.DialogStyle);
         if (dialog.getWindow() != null) {
-            dialog.getWindow().setDimAmount( 0.65f );
+            dialog.getWindow().setDimAmount(0.65f);
         }
         ViewDataBinding binding = getLayoutBind();
         View view = binding.getRoot();
-        dialog.setContentView( view );
-        initView( binding );
-        initWindowParams( dialog );
+        dialog.setContentView(view);
+        initView(binding);
+        initWindowParams(dialog);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -124,6 +130,11 @@ public class VersionUpgradeDialog extends CenterDialog {
                 return false;
             }
         });
+        return dialog;
+    }
+
+    @Override
+    public Dialog getDialog() {
         return dialog;
     }
 
@@ -148,7 +159,7 @@ public class VersionUpgradeDialog extends CenterDialog {
     @Override
     public void show(Object object) {
         this.mContext = (Context) object;
-
+        this.iShow = true;
         try {
             super.show(object);
         } catch (IllegalStateException var5) {
@@ -164,9 +175,14 @@ public class VersionUpgradeDialog extends CenterDialog {
         return dialog;
     }
 
+
     @Override
     public void dismiss() {
+        this.iShow = false;
         if (this.getActivity() != null && !this.getActivity().isFinishing()) {
+            //保存这个时间
+            long quxiaotime = System.currentTimeMillis();
+            mSavePreferencesData.putLongData("quxiaotime",quxiaotime);
             super.dismissAllowingStateLoss();
         }
     }
@@ -197,9 +213,9 @@ public class VersionUpgradeDialog extends CenterDialog {
         binding = (UpgradeDialogBinding) dataBinding;
         pBar = binding.pbProgressbar;
         tv_progress = binding.tvProgress;
-        mDialog = new ProgressDialog(VersionUpgradeDialog.this.getActivity());
+        mProgDialog = new ProgressDialog(VersionUpgradeDialog.this.getActivity());
         mSavePreferencesData = new SavePreferencesData(VersionUpgradeDialog.this.getActivity());
-        mDialog.setCancelable(false);
+        mProgDialog.setCancelable(false);
         Bundle bundle = getArguments();
         if (bundle != null) {
             versionBean = (VersionEntity.DataBean) bundle.getSerializable(VERSION);
@@ -365,7 +381,7 @@ public class VersionUpgradeDialog extends CenterDialog {
 //                                   }
 //                        )
 //                        .send();
-               //  申请多个权限。
+                //  申请多个权限。
 
                 Toast.makeText(context, "您未打开SD卡权限" + result, Toast.LENGTH_LONG).show();
             } else {
