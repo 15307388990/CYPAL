@@ -253,7 +253,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             }
         });
         if (!TextUtils.isEmpty(mSavePreferencesData.getStringData("indexjson"))) {
-            initData(mSavePreferencesData.getStringData("indexjson"));
+            IndexEntity indexEntity = JSON.parseObject(mSavePreferencesData.getStringData("indexjson"), IndexEntity.class);
+            initData(indexEntity);
         }
         /**
          * 跳转至接单记录
@@ -380,7 +381,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } else if (url.contains(Const.mallSetInfo)) {
             springView.onFinishFreshAndLoad();
             mSavePreferencesData.putStringData("indexjson", data);
-            initData(data);
+            IndexEntity indexEntity = JSON.parseObject(data, IndexEntity.class);
+            VersionUpdate(indexEntity);
+            initData(indexEntity);
         } else if (url.contains(Const.confirm)) {
             orderList();
         } else if (url.contains(Const.appeal)) {
@@ -414,11 +417,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
     }
 
-    private void initData(String data) {
-        IndexEntity indexEntity = JSON.parseObject(data, IndexEntity.class);
+    private void initData(IndexEntity indexEntity) {
+
         noticeListBeanList = indexEntity.data.noticeList;
-
-
         tv_successratetext.setText(indexEntity.data.successRateText);
         tv_balance.setText("￥" + indexEntity.data.balance);
         tv_todayCommision.setText(indexEntity.data.indexTodayOrderAnalysisResp.todayCommision + "");
@@ -472,6 +473,35 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } else {
             ll_wu.setVisibility(View.VISIBLE);
         }
+
+        //公告开启
+        if (thread == null) {
+            auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    while (isRunning) {
+                        SystemClock.sleep(5000);
+                        handler.sendEmptyMessage(199);
+                    }
+                }
+            };
+
+            if (!noticeListBeanList.isEmpty()) {
+                if (!thread.isAlive()) {
+                    thread.start();
+                }
+
+            }
+        }
+
+
+    }
+
+    /**
+     * 版本更新
+     */
+    private void VersionUpdate(IndexEntity indexEntity) {
         if (indexEntity.data.version != null) {
             if (indexEntity.data.version.updateType != -1) {
                 VersionEntity versionBean = new VersionEntity();
@@ -495,27 +525,5 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 }
             }
         }
-        //公告开启
-        if (thread == null) {
-            auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
-            thread = new Thread() {
-                @Override
-                public void run() {
-                    while (isRunning) {
-                        SystemClock.sleep(5000);
-                        handler.sendEmptyMessage(199);
-                    }
-                }
-            };
-
-            if (!noticeListBeanList.isEmpty()) {
-                if (!thread.isAlive()) {
-                    thread.start();
-                }
-
-            }
-        }
-
-
     }
 }
