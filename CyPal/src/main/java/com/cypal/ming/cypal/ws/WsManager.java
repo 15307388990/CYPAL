@@ -143,6 +143,7 @@ public class WsManager {
         if (ws != null) {
             isConnection = false;
             ws.disconnect();
+            ws = null;
         }
     }
 

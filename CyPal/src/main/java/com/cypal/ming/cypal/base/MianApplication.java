@@ -84,13 +84,14 @@ public class MianApplication extends Application {
         ForegroundCallbacks.init( this ).addListener( new ForegroundCallbacks.Listener() {
             @Override
             public void onBecameForeground() {
-                Log.d( "WsManager", "应用回到前台调用重连方法" );
-                WsManager.getInstance().reconnect();
+//                Log.d( "WsManager", "应用回到前台调用重连方法" );
+//                WsManager.getInstance().reconnect();
             }
 
             @Override
             public void onBecameBackground() {
-
+//                Log.d( "WsManager", "应用回到后台断开连接" );
+//                WsManager.getInstance().disconnect();
             }
         } );
     }
