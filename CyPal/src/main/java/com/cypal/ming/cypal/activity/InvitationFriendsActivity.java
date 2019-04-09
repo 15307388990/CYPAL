@@ -2,6 +2,7 @@ package com.cypal.ming.cypal.activity;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class InvitationFriendsActivity extends BaseActivity {
     private ImageView iv_img;
     private String qrcodeSrc;
     private TextView tv_copy;
+    private LinearLayout ll_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class InvitationFriendsActivity extends BaseActivity {
         });
         tv_copy = (TextView) findViewById(R.id.tv_copy);
         right_view_text = (TextView) findViewById(R.id.right_view_text);
+        ll_layout= (LinearLayout) findViewById(R.id.ll_layout);
         right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +86,12 @@ public class InvitationFriendsActivity extends BaseActivity {
         iv_img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Tools.onSaveBitmap(CodeUtils.createImage(qrcodeSrc, 150, 150, null), InvitationFriendsActivity.this);
+               //
+                ll_layout.setDrawingCacheEnabled(true);//设置能否缓存图片信息（drawing cache）
+                ll_layout.buildDrawingCache();//如果能够缓存图片，则创建图片缓存
+                Bitmap bitmap = ll_layout.getDrawingCache();//如果图片已经缓存，返回一个bitmap
+                Tools.onSaveBitmap(bitmap, InvitationFriendsActivity.this);
+                ll_layout.destroyDrawingCache();//释放缓存占用的资源
                 Tools.showToast(InvitationFriendsActivity.this, "二维码已保存到系统图库");
                 return false;
             }

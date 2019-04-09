@@ -65,6 +65,7 @@
 	</RelativeLayout>
 	
 	<LinearLayout
+		android:id="@+id/ll_layout"
 		android:layout_width="match_parent"
 		android:layout_height="438dp"
 		android:layout_centerInParent="true"
@@ -111,7 +112,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="12dp"
-			android:text="扫一扫， 一起加入D0收款"
+			android:text="扫一扫， 立即注册"
 			android:textColor="#ff4f5f8e"
 			android:textSize="14sp" />
 		

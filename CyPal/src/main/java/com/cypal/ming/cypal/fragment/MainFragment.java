@@ -474,14 +474,13 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
         if (indexEntity.data.version != null) {
             if (indexEntity.data.version.updateType != -1) {
-                Log.d("dialog", "弹框");
                 VersionEntity versionBean = new VersionEntity();
                 if (versionUpgradeDialog == null) {
                     versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionBean.getData(indexEntity.data.version));
                 }
                 if (!versionUpgradeDialog.getIshow()) {
                     long quxiaotime = System.currentTimeMillis();
-                    if (mSavePreferencesData.getLongData("quxiaotime", 0) == 0) {
+                    if (mSavePreferencesData.getLongData("quxiaotime", 0) == 0||indexEntity.data.version.updateType==1) {
                         versionUpgradeDialog.show(mcontext);
                     } else {
                         if (mSavePreferencesData.getLongData("quxiaotime", 0) - quxiaotime > 24 * 60 * 1000) {
