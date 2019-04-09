@@ -472,19 +472,21 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } else {
             ll_wu.setVisibility(View.VISIBLE);
         }
-        if (indexEntity.data.version.updateType != -1) {
-            Log.d("dialog", "弹框");
-            VersionEntity versionBean = new VersionEntity();
-            if (versionUpgradeDialog == null) {
-                versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionBean.getData(indexEntity.data.version));
-            }
-            if (!versionUpgradeDialog.getIshow()) {
-                long quxiaotime = System.currentTimeMillis();
-                if (mSavePreferencesData.getLongData("quxiaotime", 0) == 0) {
-                    versionUpgradeDialog.show(mcontext);
-                } else {
-                    if (mSavePreferencesData.getLongData("quxiaotime", 0) - quxiaotime > 24 * 60 * 1000) {
+        if (indexEntity.data.version != null) {
+            if (indexEntity.data.version.updateType != -1) {
+                Log.d("dialog", "弹框");
+                VersionEntity versionBean = new VersionEntity();
+                if (versionUpgradeDialog == null) {
+                    versionUpgradeDialog = VersionUpgradeDialog.newInstance(versionBean.getData(indexEntity.data.version));
+                }
+                if (!versionUpgradeDialog.getIshow()) {
+                    long quxiaotime = System.currentTimeMillis();
+                    if (mSavePreferencesData.getLongData("quxiaotime", 0) == 0) {
                         versionUpgradeDialog.show(mcontext);
+                    } else {
+                        if (mSavePreferencesData.getLongData("quxiaotime", 0) - quxiaotime > 24 * 60 * 1000) {
+                            versionUpgradeDialog.show(mcontext);
+                        }
                     }
                 }
             }
