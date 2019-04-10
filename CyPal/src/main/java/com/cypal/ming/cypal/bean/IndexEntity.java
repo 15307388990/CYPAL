@@ -162,8 +162,8 @@ public class IndexEntity {
              */
 
             public int todaySuccess;
-            public int todaySuccessMoney;
-            public int todayCommision;
+            public double todaySuccessMoney;
+            public double todayCommision;
         }
 
         public class VersionBean {
