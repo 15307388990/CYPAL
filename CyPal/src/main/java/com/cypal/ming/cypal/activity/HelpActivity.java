@@ -27,6 +27,7 @@ public class HelpActivity extends BaseActivity {
         setContentView(R.layout.activity_help);
         initTitle();
         title.setText("帮助");
+        //测试提交
     }
 
     /* 执行登录操作 */
