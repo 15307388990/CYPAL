@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 android {
     signingConfigs {
-        CCH {
+        mingluo {
+            storeFile file('/Users/luoming/mingluo')
             keyAlias 'luoming'
             keyPassword '3544511'
-            storeFile file('/Users/luoming/Desktop/CHjijidao')
             storePassword '3544511'
         }
     }
@@ -14,7 +14,7 @@ android {
         applicationId "com.cypal.ming.cypal"
         minSdkVersion 19
         targetSdkVersion 25
-        signingConfig signingConfigs.CCH
+        signingConfig signingConfigs.mingluo
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -27,6 +27,9 @@ android {
                 JPUSH_APPKEY : "f307e385664843db29d953fb", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
+
+
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
     sourceSets {
         main {
@@ -61,11 +64,12 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             // 进行混淆
             minifyEnabled false
-            signingConfig signingConfigs.CCH
+            signingConfig signingConfigs.mingluo
         }
         debug {
-            signingConfig signingConfigs.CCH
+            signingConfig signingConfigs.mingluo
             debuggable true
+
         }
     }
     productFlavors {

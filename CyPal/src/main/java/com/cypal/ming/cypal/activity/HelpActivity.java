@@ -15,8 +15,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-
 /**
  * 帮助文档
  */
@@ -27,7 +25,6 @@ public class HelpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-        ButterKnife.bind(this);
         initTitle();
         title.setText("帮助");
     }
