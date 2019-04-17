@@ -41,6 +41,9 @@ public class ParamTools {
                 map.put( "os", "android" );
                 map.put( "version",  Tools.packageCode(context) + "" );
                 map.put( "token", savePreferencesData.getStringData( "token" ) );
+                map.put("brand",Tools.getBrandName());//品牌
+                map.put("brandModel",Tools.getBrandModel());//型号
+                map.put("IMEI",Tools.getImei(context));//型号
                 return map;
             }
         };
@@ -109,6 +112,9 @@ public class ParamTools {
                 map.put( "os", "android" );
                 map.put( "version",  Tools.packageCode(context) + "" );
                 map.put( "token", savePreferencesData.getStringData( "token" ) );
+                map.put("brand",Tools.getBrandName());//品牌
+                map.put("brandModel",Tools.getBrandModel());//型号
+                map.put("IMEI",Tools.getImei(context));//型号
                 return map;
             }
         };

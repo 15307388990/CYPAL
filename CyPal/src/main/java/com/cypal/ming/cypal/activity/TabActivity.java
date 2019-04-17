@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -65,7 +66,7 @@ public class TabActivity extends BaseActivity {
         Tools.webacts.add(this);
         initView();
         initDate();
-      //  AppVersion();
+        //  AppVersion();
         ButterKnife.bind(this);
     }
 
@@ -169,30 +170,30 @@ public class TabActivity extends BaseActivity {
         permissonItems.add(new PermissionItem(Manifest.permission.CAMERA, "相册", R.drawable.permission_ic_storage));
         permissonItems.add(new PermissionItem(Manifest.permission.ACCESS_COARSE_LOCATION, "定位", R.drawable.permission_ic_location));
         permissonItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "文件下载", R.drawable.permission_ic_storage));
-        permissonItems.add( new PermissionItem( Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location ) );
-        HiPermission.create(TabActivity.this).permissions(permissonItems)
-                .checkMutiPermission(new PermissionCallback() {
-                    @Override
-                    public void onClose() {
-                        // showToast("用户关闭权限申请");
-                        Tools.showToast(TabActivity.this, "可能导致有些功能不能正常使用");
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        //showToast("所有权限申请完成");
-                    }
-
-                    @Override
-                    public void onDeny(String permisson, int position) {
-                        // Log.i(TAG, "onDeny");
-                    }
-
-                    @Override
-                    public void onGuarantee(String permisson, int position) {
-                        //Log.i(TAG, "onGuarantee");
-                    }
-                });
+        permissonItems.add(new PermissionItem(Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location));
+//        HiPermission.create(TabActivity.this).permissions(permissonItems)
+//                .checkMutiPermission(new PermissionCallback() {
+//                    @Override
+//                    public void onClose() {
+//                        // showToast("用户关闭权限申请");
+//                        Tools.showToast(TabActivity.this, "可能导致有些功能不能正常使用");
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        //showToast("所有权限申请完成");
+//                    }
+//
+//                    @Override
+//                    public void onDeny(String permisson, int position) {
+//                        // Log.i(TAG, "onDeny");
+//                    }
+//
+//                    @Override
+//                    public void onGuarantee(String permisson, int position) {
+//                        //Log.i(TAG, "onGuarantee");
+//                    }
+//                });
     }
 
     @Override

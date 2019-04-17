@@ -25,9 +25,11 @@ import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
+import com.cypal.ming.cypal.bean.BaseEntity;
 import com.cypal.ming.cypal.bean.LoginEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.CustomDialogActivity;
+import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.service.VersionService;
 import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -61,11 +63,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_login );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         initView();
-        Tools.webacts.add( this );
-        ButterKnife.bind( this );
+        Tools.webacts.add(this);
+        ButterKnife.bind(this);
         // jiebianAppVersion();
     }
 
@@ -73,7 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         PackageManager pm = this.getPackageManager();// context为当前Activity上下
         PackageInfo pi = null;
         try {
-            pi = pm.getPackageInfo( this.getPackageName(), 0 );
+            pi = pm.getPackageInfo(this.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -83,12 +85,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     //检测版本
     private void jiebianAppVersion() {
         HttpParams httpParams = new HttpParams();
-        httpParams.put( "israpp", "1" );
-        VersionParams.Builder builder = new VersionParams.Builder().setRequestMethod( HttpRequestMethod.POST ).setRequestParams( httpParams )
-                .setRequestUrl( Const.BASE_URL + Const.config )
-                .setCustomDownloadActivityClass( CustomDialogActivity.class )
-                .setService( VersionService.class );
-        AllenChecker.startVersionCheck( this, builder.build() );
+        httpParams.put("israpp", "1");
+        VersionParams.Builder builder = new VersionParams.Builder().setRequestMethod(HttpRequestMethod.POST).setRequestParams(httpParams)
+                .setRequestUrl(Const.BASE_URL + Const.config)
+                .setCustomDownloadActivityClass(CustomDialogActivity.class)
+                .setService(VersionService.class);
+        AllenChecker.startVersionCheck(this, builder.build());
 
     }
 
@@ -96,10 +98,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     /* 执行登录操作 */
     public void toLogin(String name, String pwd) {
         Map<String, String> map = new HashMap<>();
-        map.put( "account", name );
-        pwd = MD5Util.getMD5String( pwd );
-        map.put( "password", pwd );
-        mQueue.add( ParamTools.packParam( Const.venderLogin, LoginActivity.this, this, this, map ) );
+        map.put("account", name);
+        pwd = MD5Util.getMD5String(pwd);
+        map.put("password", pwd);
+        mQueue.add(ParamTools.packParam(Const.venderLogin, LoginActivity.this, this, this, map));
         loading();
     }
 
@@ -111,15 +113,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         name = et_login_account.getText().toString();
         pwd = et_login_password.getText().toString();
         if (name == null || name.length() == 0) {
-            tv_account.setVisibility( View.VISIBLE );
+            tv_account.setVisibility(View.VISIBLE);
         } else {
-            tv_account.setVisibility( View.INVISIBLE );
+            tv_account.setVisibility(View.INVISIBLE);
         }
         if (pwd == null || pwd.length() == 0) {
-            tv_password.setVisibility( View.VISIBLE );
+            tv_password.setVisibility(View.VISIBLE);
 
         } else {
-            tv_password.setVisibility( View.INVISIBLE );
+            tv_password.setVisibility(View.INVISIBLE);
         }
         if (name == null || name.length() == 0 || pwd == null || pwd.length() == 0) {
 
@@ -133,34 +135,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void initView() {
-        et_login_account = (EditText) findViewById( R.id.et_login_account );
-        layout_login_account = (LinearLayout) findViewById( R.id.layout_login_account );
-        tv_account = (TextView) findViewById( R.id.tv_account );
-        et_login_password = (EditText) findViewById( R.id.et_login_password );
-        layout_login_password = (LinearLayout) findViewById( R.id.layout_login_password );
-        tv_password = (TextView) findViewById( R.id.tv_password );
-        login = (Button) findViewById( R.id.login );
-        iv_prompt = (TextView) findViewById( R.id.iv_prompt );
-        tv_registered = (TextView) findViewById( R.id.tv_registered );
-        tv_f_password = (TextView) findViewById( R.id.tv_f_password );
+        et_login_account = (EditText) findViewById(R.id.et_login_account);
+        layout_login_account = (LinearLayout) findViewById(R.id.layout_login_account);
+        tv_account = (TextView) findViewById(R.id.tv_account);
+        et_login_password = (EditText) findViewById(R.id.et_login_password);
+        layout_login_password = (LinearLayout) findViewById(R.id.layout_login_password);
+        tv_password = (TextView) findViewById(R.id.tv_password);
+        login = (Button) findViewById(R.id.login);
+        iv_prompt = (TextView) findViewById(R.id.iv_prompt);
+        tv_registered = (TextView) findViewById(R.id.tv_registered);
+        tv_f_password = (TextView) findViewById(R.id.tv_f_password);
 
 
-        tv_f_password.setOnClickListener( this );
-        tv_registered.setOnClickListener( this );
-        login.setOnClickListener( this );
-        tv_change = (CheckBox) findViewById( R.id.tv_change );
-        tv_change.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+        tv_f_password.setOnClickListener(this);
+        tv_registered.setOnClickListener(this);
+        login.setOnClickListener(this);
+        tv_change = (CheckBox) findViewById(R.id.tv_change);
+        tv_change.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    et_login_password.setTransformationMethod( PasswordTransformationMethod.getInstance() );
+                    et_login_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
-                    et_login_password.setTransformationMethod( HideReturnsTransformationMethod.getInstance() );
+                    et_login_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
                 }
 
             }
-        } );
+        });
     }
 
     @Override
@@ -168,14 +170,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.login:
                 if (checkParams()) {
-                    toLogin( name, pwd );
+                    toLogin(name, pwd);
                 }
                 break;
             case R.id.tv_registered:
-                Tools.jump( LoginActivity.this, RegisteredActivity.class, false );
+                Tools.jump(LoginActivity.this, RegisteredActivity.class, false);
                 break;
             case R.id.tv_f_password:
-                Tools.jump( LoginActivity.this, RetrievePasswordActivity.class, false );
+                Tools.jump(LoginActivity.this, RetrievePasswordActivity.class, false);
                 break;
 
         }
@@ -184,11 +186,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void returnData(String data, String url) {
-        LoginEntity loginEntity = JSON.parseObject( data, LoginEntity.class );
-        mSavePreferencesData.putStringData( "token", loginEntity.data.loginToken );
+        LoginEntity loginEntity = JSON.parseObject(data, LoginEntity.class);
+        mSavePreferencesData.putStringData("token", loginEntity.data.loginToken);
         //bug ly记录用户ID
-        CrashReport.setUserId( et_login_account.getText().toString().trim() );
-        Tools.jump( this, TabActivity.class, true );
+        CrashReport.setUserId(et_login_account.getText().toString().trim());
+        Tools.jump(this, TabActivity.class, true);
+    }
+
+    @Override
+    protected void returnMsg(String data, String url) {
+        BaseEntity entity = JSON.parseObject(data, BaseEntity.class);
+        int code = entity.code;
+        String msg = entity.msg;
+        if (code == -1) {
+            CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).show(LoginActivity.this);
+
+        } else if (code == -200) {
+        }
     }
 
     @Override
@@ -201,20 +215,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             // mExitTime = System.currentTimeMillis();}
 
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
-                Toast.makeText( this, "再按一次退出程序", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
 
             } else {
-                Intent intent = new Intent( Intent.ACTION_MAIN );
-                intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );// 注意
-                intent.addCategory( Intent.CATEGORY_HOME );
-                this.startActivity( intent );
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// 注意
+                intent.addCategory(Intent.CATEGORY_HOME);
+                this.startActivity(intent);
                 finish();
             }
             return true;
         }
 
-        return super.onKeyDown( keyCode, event );
+        return super.onKeyDown(keyCode, event);
     }
 
 }

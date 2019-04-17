@@ -3,6 +3,7 @@
  */
 package com.cypal.ming.cypal.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -11,8 +12,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
@@ -70,6 +75,42 @@ public class Tools {
         DatePickerDialog dialog = new DatePickerDialog(context, listener, mycalendar.get(Calendar.YEAR),
                 mycalendar.get(Calendar.MONTH), mycalendar.get(Calendar.DAY_OF_MONTH));
         dialog.show();
+    }
+
+    /**
+     * 获取设备品牌名称
+     */
+    public static String getBrandName() {
+        Build bd = new Build();
+        return bd.BRAND;
+    }
+
+    /**
+     * 获取设备型号
+     */
+    public static String getBrandModel() {
+        Build bd = new Build();
+        return bd.MODEL;
+    }
+
+    /**
+     * 获取手机IMEI
+     */
+    public static String getImei(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService((Context.TELECOM_SERVICE));
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            String imei = telephonyManager.getDeviceId();
+            return imei;
+        }
+        return "";
+
     }
 
     /**

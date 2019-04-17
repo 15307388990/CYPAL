@@ -17,7 +17,7 @@ import org.w3c.dom.Text;
 /**
  * @Author luoming
  * @Date 2019/3/14 10:32 AM
- * 取消交易提示框
+ * 通用提示框
  */
 public class CancelTheDealDialog extends CenterDialog {
 
@@ -25,6 +25,7 @@ public class CancelTheDealDialog extends CenterDialog {
     private CancelTheDealDialogBinding binding;
     private OnClickListener onClickListener;
     private String title, context, qtext, oktext;
+    private boolean isQuBtn = true;
 
 
     /**
@@ -49,6 +50,16 @@ public class CancelTheDealDialog extends CenterDialog {
      */
     public CancelTheDealDialog setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    /**
+     * 是否显示取消按钮
+     *
+     * @return
+     */
+    public CancelTheDealDialog setIsQuBtn(boolean isQuBtn) {
+        this.isQuBtn = isQuBtn;
         return this;
     }
 
@@ -128,6 +139,9 @@ public class CancelTheDealDialog extends CenterDialog {
                 onClickListener.successful();
             }
         });
+        if (!isQuBtn) {
+            binding.tvCancle.setVisibility(View.GONE);
+        }
         binding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
