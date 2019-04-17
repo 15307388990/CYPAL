@@ -246,7 +246,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onFailure(Call call, IOException e) {
                 mDialog.dismiss();
-                // Log.i("lfq" ,"onFailure");
+                // Log.i("lfq" ,"onFailu re");
+                Tools.showToast(CertificationActivity.this, "图片上传失败 请重新上传");
             }
 
             @Override
