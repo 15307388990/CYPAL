@@ -271,8 +271,14 @@
 			android:name="com.cypal.ming.cypal.activity.TransferRecordListActivity"
 			android:screenOrientation="portrait" /><!-- 转账记录 -->
 		<activity
-			android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
-			android:screenOrientation="portrait" /><!-- 冻结金额记录 -->
+		android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
+		android:screenOrientation="portrait" /><!-- 冻结金额记录 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activityTwo.LoginValidationActivity"
+			android:screenOrientation="portrait" /><!-- 登陆验证页面 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activityTwo.LoginPhotoValidationActivity"
+			android:screenOrientation="portrait" /><!-- 登陆验证上传照片身份页面 -->
 		<activity
 			android:name="com.cypal.ming.cypal.wxapi.WXEntryActivity"
 			android:exported="true"

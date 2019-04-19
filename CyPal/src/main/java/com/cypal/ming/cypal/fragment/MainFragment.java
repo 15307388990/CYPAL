@@ -503,6 +503,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
      */
     private void VersionUpdate(IndexEntity indexEntity) {
         if (indexEntity.data.version != null) {
+            Tools.isRound=true;
             if (indexEntity.data.version.updateType != -1) {
                 VersionEntity versionBean = new VersionEntity();
                 if (versionUpgradeDialog != null) {

@@ -20,7 +20,6 @@ import com.cypal.ming.cypal.activity.InvitationFriendsActivity;
 import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.OrderListActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
-import com.cypal.ming.cypal.activity.TabActivity;
 import com.cypal.ming.cypal.activity.TopUpListActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
@@ -61,6 +60,8 @@ public class MineFragment extends BaseFragment {
     private LinearLayout ll_top_up;
     private TextView tv_version;
     private LinearLayout ll_version;
+    private LinearLayout ll_tuandui;
+    private ImageView iv_round_red;//红色圆点
 
     public MineFragment(Activity context) {
         super(context);
@@ -204,6 +205,14 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+        ll_tuandui = (LinearLayout) view.findViewById(R.id.ll_tuandui);
+        ll_tuandui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //团队收益
+            }
+        });
+        iv_round_red = (ImageView) view.findViewById(R.id.iv_round_red);
     }
 
     private void initData(String data) {
@@ -244,7 +253,19 @@ public class MineFragment extends BaseFragment {
             ll_yaoqing.setVisibility(View.GONE);
             v_yaoqing.setVisibility(View.GONE);
         }
+        //是否显示团队收益
+        if (myInformationBeanBean.isShowTeamRecharge) {
+            ll_tuandui.setVisibility(View.VISIBLE);
+        } else {
+            ll_tuandui.setVisibility(View.GONE);
+        }
         tv_creditscore.setText("信用分：" + myInformationBeanBean.creditScore);
+        //是否显示版本更新的红圆点
+        if (Tools.isRound) {
+            iv_round_red.setVisibility(View.VISIBLE);
+        } else {
+            iv_round_red.setVisibility(View.GONE);
+        }
     }
 
 }
