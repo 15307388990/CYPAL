@@ -18,6 +18,7 @@ import com.cypal.ming.cypal.widgets.dialogs.LoadingDialog;
  */
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -113,7 +114,10 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
                 returnData(response, url);
             } else if (stauts == -200) {
                 mSavePreferencesData.putStringData("token", "");
-                Tools.jump(mcontext, LoginActivity.class, true);
+                Intent intent = new Intent(mcontext, LoginActivity.class);
+                intent.putExtra("msg", msg);
+                startActivity(intent);
+                mcontext.finish();
             } else {
                 Tools.showToast(mcontext, msg);
                 returnMsg(response, url);

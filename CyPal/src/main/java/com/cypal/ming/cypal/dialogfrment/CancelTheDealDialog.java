@@ -26,6 +26,7 @@ public class CancelTheDealDialog extends CenterDialog {
     private OnClickListener onClickListener;
     private String title, context, qtext, oktext;
     private boolean isQuBtn = true;
+    private int contextColor = R.color.CY_888888;
 
 
     /**
@@ -50,6 +51,17 @@ public class CancelTheDealDialog extends CenterDialog {
      */
     public CancelTheDealDialog setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    /**
+     * 设置内容字体颜色
+     *
+     * @param contextColor
+     * @return
+     */
+    public CancelTheDealDialog setContextColor(int contextColor) {
+        this.contextColor = contextColor;
         return this;
     }
 
@@ -142,6 +154,7 @@ public class CancelTheDealDialog extends CenterDialog {
         if (!isQuBtn) {
             binding.tvCancle.setVisibility(View.GONE);
         }
+        binding.tvContext.setTextColor(getResources().getColor(contextColor));
         binding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

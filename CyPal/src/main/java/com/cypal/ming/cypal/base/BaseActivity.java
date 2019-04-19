@@ -177,7 +177,11 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
                 this.returnData( response, url );
             } else if (stauts == -200) {
                 mSavePreferencesData.putStringData( "token", "" );
-                Tools.jump( this, LoginActivity.class, true );
+                Intent intent=new Intent(this,LoginActivity.class);
+                intent.putExtra("msg",msg);
+                startActivity(intent);
+                finish();
+                //Tools.jump( this, LoginActivity.class, true );
             } else {
                 Tools.showToast( this, msg );
                 this.returnMsg( response, url );

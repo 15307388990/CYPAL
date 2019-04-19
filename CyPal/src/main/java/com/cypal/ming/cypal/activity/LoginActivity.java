@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
@@ -60,6 +61,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView tv_f_password;
     private CheckBox tv_change;
     private long mExitTime;
+    private String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,29 +70,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         initView();
         Tools.webacts.add(this);
         ButterKnife.bind(this);
-        // jiebianAppVersion();
+        IsMsgDiolg();
     }
 
-    private void loadVersion() {
-        PackageManager pm = this.getPackageManager();// context为当前Activity上下
-        PackageInfo pi = null;
-        try {
-            pi = pm.getPackageInfo(this.getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    /**
+     * 跳转过来是否显示错误提示页
+     */
+    private void IsMsgDiolg() {
+        msg = getIntent().getStringExtra("msg");
+        if (!TextUtils.isEmpty(msg)) {
+            new CancelTheDealDialog().setTitle("温馨提示").setContext(msg).setContextColor(R.color.red).show(this);
         }
-    }
-
-    //检测版本
-    private void jiebianAppVersion() {
-        HttpParams httpParams = new HttpParams();
-        httpParams.put("israpp", "1");
-        VersionParams.Builder builder = new VersionParams.Builder().setRequestMethod(HttpRequestMethod.POST).setRequestParams(httpParams)
-                .setRequestUrl(Const.BASE_URL + Const.config)
-                .setCustomDownloadActivityClass(CustomDialogActivity.class)
-                .setService(VersionService.class);
-        AllenChecker.startVersionCheck(this, builder.build());
 
     }
 
@@ -198,10 +188,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         BaseEntity entity = JSON.parseObject(data, BaseEntity.class);
         int code = entity.code;
         String msg = entity.msg;
-        if (code == -1) {
-            CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).show(LoginActivity.this);
-
-        } else if (code == -200) {
+        if (code == -1 || code == -200) {
+            CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).
+                    setContextColor(R.color.red).show(LoginActivity.this);
         }
     }
 
