@@ -212,13 +212,31 @@ public class Const {
     /**
      * 验证吗登录安全验证
      */
-    public static final String loginVerifyCode ="/public/loginVerifyCode";
+    public static final String loginVerifyCode = "/public/loginVerifyCode";
     /**
      * 高级安全验证
      */
-    public static final String loginAdvancedVerify ="/public/loginAdvancedVerify";
-
-
+    public static final String loginAdvancedVerify = "/public/loginAdvancedVerify";
+    /**
+     * 消息中心
+     */
+    public static final String messageCenter = "/private/index/messageCenter?";
+    /**
+     * 设置支付密码
+     */
+    public static final String setPayPassword = "/private/user/setPayPassword";
+    /**
+     * 发送找回支付密码验证码
+     */
+    public static final String findPayPasswordcode= "/msm/private/findPayPassword?";
+    /**
+     * 找回支付密码
+     */
+    public static final String findPayPassword = "/private/user/findPayPassword";
+    /**
+     * 修改支付密码
+     */
+    public static final String modifyPayPassword = "/private/user/modifyPayPassword ";
 
 
     /* 订单详情 */

@@ -34,6 +34,7 @@ public class IndexEntity {
         public String successRateText;
         public IndexTodayOrderAnalysisRespBean indexTodayOrderAnalysisResp;
         public VersionBean version;
+        public boolean hasPayPassword;
         public OtcBean otc;
         public List<NoticeListBean> noticeList;
         public String usedPayAccount;

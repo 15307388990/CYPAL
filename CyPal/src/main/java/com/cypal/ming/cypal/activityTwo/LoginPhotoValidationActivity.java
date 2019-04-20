@@ -18,6 +18,7 @@ import com.cypal.ming.cypal.activity.TabActivity;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.LoginEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -223,13 +224,15 @@ public class LoginPhotoValidationActivity extends BaseActivity {
 
     @Override
     public void returnData(String data, String url) {
-        LoginEntity loginEntity = JSON.parseObject(data, LoginEntity.class);
-        mSavePreferencesData.putStringData("token", loginEntity.data.loginToken);
-        Tools.exit();
-        Tools.jump(this, TabActivity.class, true);
+        new CancelTheDealDialog().setTitle("温馨提示").
+                setContext("您的审核已成功提交，客服审核通过后会发短信通知您").setIsQuBtn(false).setOktext("知道了").setOnClickListener(new CancelTheDealDialog.OnClickListener() {
+            @Override
+            public void successful() {
+                LoginPhotoValidationActivity.this.finish();
+            }
+        }).show(this);
+
     }
-
-
 
 
 }

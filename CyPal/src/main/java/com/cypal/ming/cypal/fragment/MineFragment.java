@@ -152,6 +152,8 @@ public class MineFragment extends BaseFragment {
         ll_version = (LinearLayout) view.findViewById(R.id.ll_version);
         tv_version = (TextView) view.findViewById(R.id.tv_version);
         tv_creditscore = (TextView) view.findViewById(R.id.tv_creditscore);
+        ll_tuandui = (LinearLayout) view.findViewById(R.id.ll_tuandui);
+        iv_round_red = (ImageView) view.findViewById(R.id.iv_round_red);
         tv_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,14 +207,14 @@ public class MineFragment extends BaseFragment {
             }
         });
 
-        ll_tuandui = (LinearLayout) view.findViewById(R.id.ll_tuandui);
+
         ll_tuandui.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //团队收益
             }
         });
-        iv_round_red = (ImageView) view.findViewById(R.id.iv_round_red);
+
     }
 
     private void initData(String data) {

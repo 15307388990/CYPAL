@@ -39,10 +39,14 @@ import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -73,6 +77,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Tools.acts.add(this);
         ButterKnife.bind(this);
         IsMsgDiolg();
+        initPermission();
     }
 
     /**
@@ -86,6 +91,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
+    /**
+     * 获取手机信息权限
+     */
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_PHONE_STATE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+
+                    }
+                }).
+                start();
+
+    }
 
     /* 执行登录操作 */
     public void toLogin(String name, String pwd) {
@@ -191,18 +217,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         int code = entity.code;
         String msg = entity.msg;
         if (code == -1 || code == -200) {
-            CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).
+            CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).setOktext("知道了").
                     setContextColor(R.color.red).show(LoginActivity.this);
         } else if (code == -201) {
             //短信验证
-            Intent intent=new Intent(this,LoginValidationActivity.class);
-            intent.putExtra("accout",et_login_account.getText().toString().trim());
-            intent.putExtra("pwd",et_login_password.getText().toString().trim());
+            Intent intent = new Intent(this, LoginValidationActivity.class);
+            intent.putExtra("accout", et_login_account.getText().toString().trim());
+            intent.putExtra("pwd", et_login_password.getText().toString().trim());
             startActivity(intent);
         } else if (code == -202) {
             //高级验证
-            Intent intent=new Intent(this,LoginPhotoValidationActivity.class);
-            intent.putExtra("accout",et_login_account.getText().toString().trim());
+            Intent intent = new Intent(this, LoginPhotoValidationActivity.class);
+            intent.putExtra("accout", et_login_account.getText().toString().trim());
             startActivity(intent);
         }
     }

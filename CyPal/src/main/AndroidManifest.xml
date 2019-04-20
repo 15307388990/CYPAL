@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.cypal.ming.cypal"
-	android:versionCode="1"
-	android:versionName="1.0">
+	android:versionCode="10000"
+	android:versionName="2.5">
 	
 	<permission
 		android:name="com.cypal.ming.cypal.permission.JPUSH_MESSAGE"
@@ -271,14 +271,23 @@
 			android:name="com.cypal.ming.cypal.activity.TransferRecordListActivity"
 			android:screenOrientation="portrait" /><!-- 转账记录 -->
 		<activity
-		android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
-		android:screenOrientation="portrait" /><!-- 冻结金额记录 -->
+			android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
+			android:screenOrientation="portrait" /><!-- 冻结金额记录 -->
 		<activity
 			android:name="com.cypal.ming.cypal.activityTwo.LoginValidationActivity"
 			android:screenOrientation="portrait" /><!-- 登陆验证页面 -->
 		<activity
 			android:name="com.cypal.ming.cypal.activityTwo.LoginPhotoValidationActivity"
 			android:screenOrientation="portrait" /><!-- 登陆验证上传照片身份页面 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activityTwo.PayPasswordActivity"
+			android:screenOrientation="portrait" /><!-- 支付密码 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activityTwo.BackPayPasswordActivity"
+			android:screenOrientation="portrait" /><!-- 找回支付密码 -->
+		<activity
+			android:name="com.cypal.ming.cypal.activityTwo.ModifyPayPasswordActivity"
+			android:screenOrientation="portrait" /><!-- 修改支付密码 -->
 		<activity
 			android:name="com.cypal.ming.cypal.wxapi.WXEntryActivity"
 			android:exported="true"

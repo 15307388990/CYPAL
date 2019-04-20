@@ -4,6 +4,7 @@
 package com.cypal.ming.cypal.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -15,7 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -44,6 +44,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.content.Context.TELEPHONY_SERVICE;
+
 /**
  * @author WuJianHua 工具类
  */
@@ -54,7 +56,7 @@ public class Tools {
     public static StoreBean mStoreBean;
     private static DecimalFormat df = new DecimalFormat("0.00");
     public static boolean isaccout = false;//是否需要去添加新账户 false 为不需要
-    public static boolean isRound=false;//是否显示版本更新的圆点
+    public static boolean isRound = false;//是否显示版本更新的圆点
 
 
     public static StoreBean getStoreBean() {
@@ -98,20 +100,9 @@ public class Tools {
      * 获取手机IMEI
      */
     public static String getImei(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService((Context.TELECOM_SERVICE));
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            String imei = telephonyManager.getDeviceId();
-            return imei;
-        }
-        return "";
-
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
+        @SuppressLint("MissingPermission") String szImei = telephonyManager.getDeviceId();
+        return szImei;
     }
 
     /**

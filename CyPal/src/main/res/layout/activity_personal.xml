@@ -236,6 +236,44 @@
         android:layout_height="1px"
         android:background="@color/gray" />
 
+    <LinearLayout
+        android:id="@+id/ll_hasPayPassword"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="支付密码"
+            android:textColor="@color/actionbar_title_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/my_hasPayPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="@color/jiujiujiu" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
 
     <Button
         android:id="@+id/btn_exit"

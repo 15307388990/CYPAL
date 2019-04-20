@@ -53,11 +53,7 @@ public class MeassActivity extends BaseActivity {
     /* 请求消息列表 */
     public void Message() {
         Map<String, String> map = new HashMap<>();
-        map.put("token", mSavePreferencesData.getStringData("token"));
-        map.put("pagesize", pagesize + "");
-        map.put("page", page + "");
-        map.put("israpp", "1");
-        mQueue.add(ParamTools.packParam(Const.message, this, this, map));
+        mQueue.add(ParamTools.packParam(Const.messageCenter, this, this, map));
         loading();
     }
 

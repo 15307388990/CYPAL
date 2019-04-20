@@ -13,12 +13,15 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activityTwo.PayPasswordActivity;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.InfoEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
+import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
 import com.cypal.ming.cypal.utils.ImageLoaderUtil;
 import com.cypal.ming.cypal.utils.ImageUtil;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.CircleImageView;
@@ -32,13 +35,16 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import okhttp3.Call;
@@ -73,6 +79,11 @@ public class PersonalActivity extends BaseActivity {
     private TextView my_name;
     @ViewInject(R.id.my_phone)
     private TextView my_phone;
+    @ViewInject(R.id.my_hasPayPassword)
+    private TextView my_hasPayPassword;
+    @ViewInject(R.id.ll_hasPayPassword)
+    private LinearLayout ll_hasPayPassword;
+
 
     private Button btn_exit;
     ImageLoader imageLoader = ImageLoader.getInstance();
@@ -138,6 +149,16 @@ public class PersonalActivity extends BaseActivity {
         loading();
     }
 
+    /**
+     * 设置支付密码
+     */
+    private void setPayPassword(String payPassword) {
+        Map<String, String> map = new HashMap<>();
+        map.put("payPassword", MD5Util.getMD5String(payPassword));
+        mQueue.add(ParamTools.packParam(Const.setPayPassword, this, this, this, map));
+        loading();
+    }
+
     private void modifyAvatar(String avatar) {
         if (TextUtils.isEmpty(avatar)) {
             Tools.showToast(PersonalActivity.this, "图片地址获取失败");
@@ -185,6 +206,17 @@ public class PersonalActivity extends BaseActivity {
                 deleteOrderDialog();
             }
         });
+        //支付密码
+        ll_hasPayPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mSavePreferencesData.getBooleanData("hasPayPassword")) {
+                    inoutPsw();
+                } else {
+                    Tools.jump(PersonalActivity.this, PayPasswordActivity.class, false);
+                }
+            }
+        });
 
     }
 
@@ -192,11 +224,11 @@ public class PersonalActivity extends BaseActivity {
 
         CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext("您确定要退出登录?").setQtext("取消").setOktext("确定")
                 .setOnClickListener(new CancelTheDealDialog.OnClickListener() {
-            @Override
-            public void successful() {
-                loginOut();
-            }
-        }).show(this);
+                    @Override
+                    public void successful() {
+                        loginOut();
+                    }
+                }).show(this);
     }
 
     @Override
@@ -316,10 +348,34 @@ public class PersonalActivity extends BaseActivity {
             } else {
                 my_accounts.setText("未认证");
             }
+            if (mSavePreferencesData.getBooleanData("hasPayPassword")) {
+                my_hasPayPassword.setText("已设置");
+            } else {
+                my_hasPayPassword.setText("未设置");
+            }
         } else if (url.contains(Const.loginOut)) {
             mSavePreferencesData.putStringData("token", "");
             Tools.jump(PersonalActivity.this, LoginActivity.class, true);
+        } else if (url.contains(Const.setPayPassword)) {
+            my_hasPayPassword.setText("已设置");
+            mSavePreferencesData.putBooleanData("hasPayPassword", true);
         }
     }
+
+    //打开输入密码的对话框
+    public void inoutPsw() {
+        SelectPopupWindow menuWindow = new SelectPopupWindow(this, new SelectPopupWindow.OnPopWindowClickListener() {
+            @Override
+            public void onPopWindowClickListener(String psw, boolean complete) {
+                if (complete)
+                    setPayPassword(psw);
+            }
+        });
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        menuWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+    }
+
 
 }

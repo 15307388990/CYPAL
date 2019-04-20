@@ -66,7 +66,7 @@ public class LoginValidationActivity extends BaseActivity implements View.OnClic
         map.put("account", accout);
         pwd = MD5Util.getMD5String(pwd);
         map.put("password", pwd);
-        map.put("inviteCode", et_code.getText().toString().trim());
+        map.put("verifyCode", et_code.getText().toString().trim());
         mQueue.add(ParamTools.packParam(Const.loginVerifyCode, LoginValidationActivity.this, this, this, map));
         loading();
     }

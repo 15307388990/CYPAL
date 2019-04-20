@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -76,6 +77,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private LinearLayout ll_account;
     private LinearLayout ll_wu;
     private LinearLayout ll_order;
+    private RelativeLayout ll_view_back;//消息中心
     private String pay;//收款账号 字符串
 
     public MainFragment(Activity context) {
@@ -142,6 +144,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         recycleView = (RecyclerView) view.findViewById(R.id.recycleView);
         springView = (SpringView) view.findViewById(R.id.springView);
         tv_number = (TextView) view.findViewById(R.id.tv_number);
+        ll_view_back = (RelativeLayout) view.findViewById(R.id.ll_view_back);
         auto_textview = (AutoVerticalScrollTextView) view.findViewById(R.id.auto_textview);
         orderModels = new ArrayList<IndexEntity.DataBean.UndoOrderBean.ContentBean>();
         sellDetailListAdapter = new SellDetailListAdapter(mcontext, orderModels, this);
@@ -187,6 +190,16 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 //                    Tools.showToast( getActivity(), "没有更多数据了" );
 //                    springView.onFinishFreshAndLoad();
 //                }
+
+            }
+        });
+        /**
+         * 消息中心
+         */
+        ll_view_back.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump(mcontext, MeassActivity.class, false);
 
             }
         });
@@ -494,8 +507,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
             }
         }
-
-
+        //支付密码
+        mSavePreferencesData.putBooleanData("hasPayPassword", indexEntity.data.hasPayPassword);
     }
 
     /**
@@ -503,7 +516,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
      */
     private void VersionUpdate(IndexEntity indexEntity) {
         if (indexEntity.data.version != null) {
-            Tools.isRound=true;
+            Tools.isRound = true;
             if (indexEntity.data.version.updateType != -1) {
                 VersionEntity versionBean = new VersionEntity();
                 if (versionUpgradeDialog != null) {

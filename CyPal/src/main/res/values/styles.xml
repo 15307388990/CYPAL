@@ -66,6 +66,9 @@
 
         <item name="android:backgroundDimAmount">0.65</item>
     </style>
-   
+    <style name="dialog_style" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
 
 </resources>
