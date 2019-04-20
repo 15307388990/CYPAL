@@ -78,4 +78,35 @@
         android:text="短信验证"
         android:textColor="#ff333333"
         android:textSize="20sp" />
+    <TextView
+        android:id="@+id/tv_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已向您的手机尾号1234的手机发送验证码"
+        android:textColor="#ff999999"
+        android:textSize="13sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@null"
+        android:hint="请输入验证码"
+        android:layout_margin="20dp"
+        android:paddingLeft="10dp"
+        android:textSize="@dimen/text_14" />
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
 </LinearLayout>

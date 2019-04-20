@@ -69,13 +69,77 @@
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="29dp"
-        android:src="@drawable/icon_login_vi" />
+        android:src="@drawable/icon_login_validation" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="短信验证"
+        android:text="高级安全验证"
         android:textColor="#ff333333"
         android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="上传手持身份证,客户人工审核"
+        android:textColor="#ff999999"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:id="@+id/iv_shenfen3"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_shenfen3" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="21dp"
+        android:background="@drawable/shenfen_bg"
+        android:gravity="center"
+        android:text="上传手持身份证照片"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="拍摄要求："
+        android:textColor="@color/actionbar_title_color"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="26dp"
+        android:text="1、手持白纸和身份证，并写明仅Cy.Pal上面使用 \n2、拍摄时确保身份证边框完整、脸部清晰，字体清晰，证件全部信息清晰无遮挡"
+        android:textColor="@color/CY_666666"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="49dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>

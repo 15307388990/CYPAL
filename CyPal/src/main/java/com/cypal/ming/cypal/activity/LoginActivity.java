@@ -24,6 +24,8 @@ import com.allenliu.versionchecklib.core.VersionParams;
 import com.allenliu.versionchecklib.core.http.HttpParams;
 import com.allenliu.versionchecklib.core.http.HttpRequestMethod;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activityTwo.LoginPhotoValidationActivity;
+import com.cypal.ming.cypal.activityTwo.LoginValidationActivity;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.bean.BaseEntity;
@@ -68,7 +70,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-        Tools.webacts.add(this);
+        Tools.acts.add(this);
         ButterKnife.bind(this);
         IsMsgDiolg();
     }
@@ -191,6 +193,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (code == -1 || code == -200) {
             CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).
                     setContextColor(R.color.red).show(LoginActivity.this);
+        } else if (code == -201) {
+            //短信验证
+            Intent intent=new Intent(this,LoginValidationActivity.class);
+            intent.putExtra("accout",et_login_account.getText().toString().trim());
+            intent.putExtra("pwd",et_login_password.getText().toString().trim());
+            startActivity(intent);
+        } else if (code == -202) {
+            //高级验证
+            Intent intent=new Intent(this,LoginPhotoValidationActivity.class);
+            intent.putExtra("accout",et_login_account.getText().toString().trim());
+            startActivity(intent);
         }
     }
 

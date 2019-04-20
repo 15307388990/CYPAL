@@ -209,6 +209,16 @@ public class Const {
      * 转账记录
      */
     public static final String record = "/private/transfer/record?";
+    /**
+     * 验证吗登录安全验证
+     */
+    public static final String loginVerifyCode ="/public/loginVerifyCode";
+    /**
+     * 高级安全验证
+     */
+    public static final String loginAdvancedVerify ="/public/loginAdvancedVerify";
+
+
 
 
     /* 订单详情 */
