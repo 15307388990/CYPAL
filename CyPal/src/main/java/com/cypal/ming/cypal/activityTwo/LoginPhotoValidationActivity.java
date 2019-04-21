@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.CertificationActivity;
+import com.cypal.ming.cypal.activity.LoginActivity;
 import com.cypal.ming.cypal.activity.TabActivity;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.LoginEntity;
@@ -23,6 +24,9 @@ import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,14 +90,8 @@ public class LoginPhotoValidationActivity extends BaseActivity {
         iv_shenfen3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginPhotoValidationActivity.this,
-                        MultiImageSelectorActivity.class);
-                intent.putExtra("isUploadIcon", true);
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                        false);
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                        1);
-                startActivityForResult(intent, 1);
+                initPermission();
+
             }
         });
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +100,36 @@ public class LoginPhotoValidationActivity extends BaseActivity {
                 submit();
             }
         });
+    }
+
+    /**
+     * 获取相册权限
+     */
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Intent intent = new Intent(LoginPhotoValidationActivity.this,
+                                MultiImageSelectorActivity.class);
+                        intent.putExtra("isUploadIcon", true);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
+                                false);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
+                                1);
+                        startActivityForResult(intent, 1);
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(LoginPhotoValidationActivity.this, "需要获取相册权限");
+                    }
+                }).
+                start();
+
     }
 
     @Override
@@ -172,7 +200,7 @@ public class LoginPhotoValidationActivity extends BaseActivity {
 
                 } else {
                     mDialog.dismiss();
-                    // Log.i("lfq" ,response.message() + " error : body " + response.body().string());
+                    Tools.showToast(LoginPhotoValidationActivity.this, "图片上传失败 请重新上传");
                 }
             }
         });

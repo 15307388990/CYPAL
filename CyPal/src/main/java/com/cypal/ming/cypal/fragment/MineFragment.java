@@ -21,6 +21,7 @@ import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.OrderListActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.activity.TopUpListActivity;
+import com.cypal.ming.cypal.activityTwo.TeamRerunsActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
 import com.cypal.ming.cypal.bean.SignInEntity;
@@ -32,6 +33,7 @@ import com.cypal.ming.cypal.utils.ImageLoaderUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.CircleImageView;
+import com.cypal.ming.cypal.vm.TeamRerunsHeadVM;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -212,6 +214,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //团队收益
+                Tools.jump(mcontext, TeamRerunsActivity.class, false);
             }
         });
 

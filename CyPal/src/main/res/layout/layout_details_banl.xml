@@ -9,6 +9,9 @@
         <variable
             name="viewModel"
             type="com.cypal.ming.cypal.vm.OderDetailsItemVM" />
+        <variable
+            name="eventHandler"
+            type="com.cypal.ming.cypal.vm.BankItemEventHandler"/>
 
     </data>
 
@@ -63,11 +66,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="right"
                 android:text="@{viewModel.realName}"
                 android:textColor="#ff999999"
                 android:textSize="14sp"
                 tools:text="王庆喜" />
+            <TextView
+                android:layout_width="34dp"
+                android:layout_marginLeft="11dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:background="@drawable/f8f8f8_5dp_bg"
+                android:onClick="@{()->eventHandler.copyName(viewModel)}"
+                android:text="复制"/>
         </LinearLayout>
 
         <LinearLayout
@@ -114,11 +127,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="right"
                 android:text="@{viewModel.accountData}"
                 android:textColor="#ff999999"
                 android:textSize="14sp"
                 tools:text="王庆喜" />
+            <TextView
+                android:layout_width="34dp"
+                android:layout_marginLeft="11dp"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:textSize="11sp"
+                android:background="@drawable/f8f8f8_5dp_bg"
+                android:onClick="@{()->eventHandler.copyCard(viewModel)}"
+                android:text="复制"/>
         </LinearLayout>
 
         <View

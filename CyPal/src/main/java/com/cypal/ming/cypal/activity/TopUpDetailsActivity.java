@@ -1,6 +1,8 @@
 package com.cypal.ming.cypal.activity;
 
 import android.app.AlertDialog;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activityTwo.TeamRerunsActivity;
 import com.cypal.ming.cypal.adapter.BaseClickListener;
 import com.cypal.ming.cypal.adapter.BindingMoreTypeAdapter;
 import com.cypal.ming.cypal.adapter.CategoryAdapter;
@@ -25,6 +28,7 @@ import com.cypal.ming.cypal.dialogfrment.ConfirmPaymentDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.utils.TopUpState;
+import com.cypal.ming.cypal.vm.BankItemEventHandler;
 import com.cypal.ming.cypal.vm.OderDetailsItemVM;
 import com.cypal.ming.cypal.vm.OderDetailsVM;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -40,7 +44,7 @@ import java.util.Map;
 /**
  * 充值详情
  */
-public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapter.OnClickListener, BaseClickListener {
+public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapter.OnClickListener, BaseClickListener, BankItemEventHandler {
 
 
     private LinearLayout ll_view_back;
@@ -263,5 +267,18 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
                     }
                 }).show(this);
     }
+    @Override
+    public void copyName(OderDetailsItemVM viewModel) {
+        ClipboardManager cmb = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(viewModel.getAccountName());
+        Tools.showToast(this,"复制成功");
+    }
 
+    @Override
+    public void copyCard(OderDetailsItemVM viewModel) {
+        ClipboardManager cmb = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(viewModel.getAccountData());
+        Tools.showToast(this,"复制成功");
+
+    }
 }

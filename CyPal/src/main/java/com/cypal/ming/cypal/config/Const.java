@@ -76,7 +76,7 @@ public class Const {
     /**
      * 图片上传
      */
-    public static final String image = "/private/upload/image";
+    public static final String image = "/public/upload/image";
     /**
      * 保存认证资料
      */
@@ -192,11 +192,11 @@ public class Const {
     /**
      * 邀请好友
      */
-    public static final String invite = "/private/user/invite?";
+    public static final String invite = "/private/team/invite?";
     /**
      * 我的团队
      */
-    public static final String myTeam = "/private/user/myTeam?";
+    public static final String myTeam = "/private/team/myTeam?";
     /**
      * 转账验证账户
      */
@@ -237,6 +237,10 @@ public class Const {
      * 修改支付密码
      */
     public static final String modifyPayPassword = "/private/user/modifyPayPassword ";
+    /**
+     * 团队充值-我的银行卡
+     */
+    public static final String teamBankCard = "/private/team/bankCard";
 
 
     /* 订单详情 */

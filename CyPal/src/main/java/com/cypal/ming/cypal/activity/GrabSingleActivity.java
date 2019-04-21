@@ -20,6 +20,7 @@ import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.ContentEntity;
 import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.dialogfrment.GradSingDialog;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -164,7 +165,9 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
     public void returnData(String data, String url) {
         if (url.contains(Const.take)) {
             //抢单成功
-            GradSingDialog.newInstance(amount).show(GrabSingleActivity.this);
+            // GradSingDialog.newInstance(amount).show(GrabSingleActivity.this);
+            new CancelTheDealDialog().setTitle("恭喜您抢单成功").
+                    setContext("¥" + amount).setOktext("继续").show(GrabSingleActivity.this);
             //显示已抢光
             for (int i = 0; i < list.size(); i++) {
                 if (orderId.equals(list.get(i).orderId + "")) {

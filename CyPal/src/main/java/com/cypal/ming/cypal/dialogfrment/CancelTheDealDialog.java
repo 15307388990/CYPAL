@@ -148,7 +148,8 @@ public class CancelTheDealDialog extends CenterDialog {
             @Override
             public void onClick(View v) {
                 dismiss();
-                onClickListener.successful();
+                if (onClickListener != null)
+                    onClickListener.successful();
             }
         });
         if (!isQuBtn) {

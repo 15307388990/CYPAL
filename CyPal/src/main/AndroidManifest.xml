@@ -123,6 +123,9 @@
 			android:name="com.cypal.ming.cypal.activity.OrderListActivity"
 			android:configChanges="orientation|screenSize" /><!-- 接单记录-->
 		<activity
+			android:name="com.cypal.ming.cypal.activityTwo.TeamRerunsActivity"
+			android:configChanges="orientation|screenSize" /><!-- 团队收益-->
+		<activity
 			android:name="com.cypal.ming.cypal.activity.LoginActivity"
 			android:screenOrientation="portrait"></activity>
 		<!--  启动页-->

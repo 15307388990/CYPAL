@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +37,8 @@ import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.AccountDialog;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.dialogfrment.VersionUpgradeDialog;
+import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
@@ -221,9 +225,11 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void onClick(View v) {
                 method = "AUTO";
-                start();
+                inoutPsw();
             }
         });
+
+
         ll_hand.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,7 +237,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 if (isStar) {
                     Tools.jump(mcontext, GrabSingleActivity.class, false);
                 } else {
-                    start();
+                    inoutPsw();
                 }
 
             }
@@ -289,9 +295,11 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     /**
      * 开始接单
      */
-    public void start() {
+    public void start(String payPasswrod) {
         Map<String, String> map = new HashMap<>();
         map.put("method", method);
+        String paypass= MD5Util.getMD5String(payPasswrod);
+        map.put("payPassword", paypass);
         mQueue.add(ParamTools.packParam(Const.start, mcontext, this, this, map));
         loading();
     }
@@ -403,6 +411,21 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             orderList();
         }
 
+    }
+
+    //打开输入密码的对话框
+    public void inoutPsw() {
+        SelectPopupWindow menuWindow = new SelectPopupWindow(mcontext, new SelectPopupWindow.OnPopWindowClickListener() {
+            @Override
+            public void onPopWindowClickListener(String psw, boolean complete) {
+                if (complete)
+                    start(psw);
+            }
+        });
+        Rect rect = new Rect();
+        mcontext.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = mcontext.getWindow().getDecorView().getHeight();
+        menuWindow.showAtLocation(mcontext.getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
     }
 
     @Override

@@ -77,7 +77,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Tools.acts.add(this);
         ButterKnife.bind(this);
         IsMsgDiolg();
-        initPermission();
     }
 
     /**
@@ -86,7 +85,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void IsMsgDiolg() {
         msg = getIntent().getStringExtra("msg");
         if (!TextUtils.isEmpty(msg)) {
-            new CancelTheDealDialog().setTitle("温馨提示").setContext(msg).setContextColor(R.color.red).show(this);
+            new CancelTheDealDialog().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).
+                    setOktext("知道了").setContextColor(R.color.red).show(this);
         }
 
     }
@@ -101,12 +101,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
+                        toLogin(name, pwd);
                     }
                 }).
                 onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-
+                      Tools.showToast(LoginActivity.this,"无法获取手机状态信息，应用无法正常使用");
                     }
                 }).
                 start();
@@ -188,7 +189,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.login:
                 if (checkParams()) {
-                    toLogin(name, pwd);
+                    initPermission();
                 }
                 break;
             case R.id.tv_registered:
