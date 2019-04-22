@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.adapter.MagessListAdapter;
 import com.cypal.ming.cypal.base.BaseActivity;
@@ -53,39 +54,13 @@ public class MeassActivity extends BaseActivity {
     /* 请求消息列表 */
     public void Message() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.messageCenter, this, this, map));
-        loading();
+        mQueue.add(ParamTools.packParam(Const.messageCenter, this, this, map, Request.Method.GET, this));
     }
 
     @Override
-    public void onResponse(String response, String url) {
-        dismissLoading();
-        try {
-            JSONObject json = new JSONObject(response);
-            int stauts = json.optInt("status");
-            String msg = json.optString("msg");
-            if (stauts == 0) {
-                if (url.contains(Const.message)) {
-                    JSONObject jsonObject = json.getJSONObject("data");
-                    massageBeans = JSON.parseArray(jsonObject.optString("data"), MassageBean.class);
-                    if (massageBeans != null) {
-                        magessListAdapter.updateAdapter(massageBeans);
-                    }
-                    springView.onFinishFreshAndLoad();
-                }
-            } else if (stauts == 403) {
-                Tools.showToast(MeassActivity.this, "登录过期请重新登录");
-                mSavePreferencesData.putStringData("token", "");
-                mSavePreferencesData.putStringData("json", "");
-                Tools.jump(MeassActivity.this, LoginActivity.class, true);
-            } else {
-                Tools.showToast(MeassActivity.this, msg);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Tools.showToast(MeassActivity.this, "发生错误,请重试!");
-
-        }
+    protected void returnData(String data, String url) {
+        springView.onFinishFreshAndLoad();
+        super.returnData(data, url);
     }
 
     private void initView() {

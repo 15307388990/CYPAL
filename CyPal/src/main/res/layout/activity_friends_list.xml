@@ -47,7 +47,7 @@
 			android:layout_marginRight="20dp"
 			android:gravity="center_vertical"
 			android:singleLine="true"
-			android:text="转账"
+			android:text="团队充值"
 			android:textColor="@color/CY_999999"
 			android:textSize="14sp" />
 		

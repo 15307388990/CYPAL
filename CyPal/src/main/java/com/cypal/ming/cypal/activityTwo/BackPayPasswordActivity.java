@@ -1,11 +1,13 @@
 package com.cypal.ming.cypal.activityTwo;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,6 +30,7 @@ import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.bean.LoginEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
 import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.MyCountTimer;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -53,8 +56,8 @@ public class BackPayPasswordActivity extends BaseActivity implements BaseView {
     private LinearLayout ll_view_back;
     private EditText et_code;
     private TextView tv_code;
-    private EditText et_new;
-    private EditText et_new2;
+    private TextView et_new;
+    private TextView et_new2;
     private Button btn_next;
 
 
@@ -72,15 +75,15 @@ public class BackPayPasswordActivity extends BaseActivity implements BaseView {
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
         et_code = (EditText) findViewById(R.id.et_code);
         tv_code = (TextView) findViewById(R.id.tv_code);
-        et_new = (EditText) findViewById(R.id.et_new);
-        et_new2 = (EditText) findViewById(R.id.et_new2);
+        et_new = (TextView) findViewById(R.id.et_new);
+        et_new2 = (TextView) findViewById(R.id.et_new2);
         btn_next = (Button) findViewById(R.id.btn_next);
         countTimer = new MyCountTimer(this, tv_code, "发送验证码", R.color.darkgray, R.color.CY_9B9B9B);
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
         et_code = (EditText) findViewById(R.id.et_code);
         tv_code = (TextView) findViewById(R.id.tv_code);
-        et_new = (EditText) findViewById(R.id.et_new);
-        et_new2 = (EditText) findViewById(R.id.et_new2);
+        et_new = (TextView) findViewById(R.id.et_new);
+        et_new2 = (TextView) findViewById(R.id.et_new2);
         btn_next = (Button) findViewById(R.id.btn_next);
 
     }
@@ -105,6 +108,19 @@ public class BackPayPasswordActivity extends BaseActivity implements BaseView {
                 sendPhoneMsg();
             }
         });
+        et_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inoutPsw("设置新密码");
+            }
+        });
+        et_new2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inoutPsw("确认密码");
+            }
+        });
+
     }
 
     //手动输入的手机号
@@ -141,7 +157,7 @@ public class BackPayPasswordActivity extends BaseActivity implements BaseView {
             countTimer.start();// 开启定时器
             tv_code.setVisibility(View.VISIBLE);
         } else if (url.contains(Const.findPayPassword)) {
-            Tools.showToast(BackPayPasswordActivity.this,"修改成功");
+            Tools.showToast(BackPayPasswordActivity.this, "修改成功");
             finish();
 
         }
@@ -170,6 +186,28 @@ public class BackPayPasswordActivity extends BaseActivity implements BaseView {
         findPayPassword();
 
 
+    }
+
+    //打开输入密码的对话框
+    public void inoutPsw(final String title) {
+        SelectPopupWindow menuWindow = new SelectPopupWindow(this, new SelectPopupWindow.OnPopWindowClickListener() {
+            @Override
+            public void onPopWindowClickListener(String psw, boolean complete) {
+                if (complete) {
+                    if ("设置新密码".equals(title)) {
+                        et_new.setText(psw);
+                    } else {
+                        et_new2.setText(psw);
+                    }
+                }
+
+            }
+        });
+        menuWindow.setTitle(title);
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        menuWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
     }
 
 

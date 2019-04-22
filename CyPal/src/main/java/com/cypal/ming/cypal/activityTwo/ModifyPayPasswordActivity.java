@@ -1,8 +1,10 @@
 package com.cypal.ming.cypal.activityTwo;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseView;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
 import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.MyCountTimer;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -35,10 +38,10 @@ public class ModifyPayPasswordActivity extends BaseActivity implements BaseView 
 
 
     private LinearLayout ll_view_back;
-    private EditText et_new;
-    private EditText et_new2;
+    private TextView et_new;
+    private TextView et_new2;
     private Button btn_next;
-    private EditText et_pay;
+    private TextView et_pay;
 
 
     @Override
@@ -53,15 +56,30 @@ public class ModifyPayPasswordActivity extends BaseActivity implements BaseView 
 
     private void initView() {
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
-        et_new = (EditText) findViewById(R.id.et_new);
-        et_new2 = (EditText) findViewById(R.id.et_new2);
         btn_next = (Button) findViewById(R.id.btn_next);
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
-        et_new = (EditText) findViewById(R.id.et_new);
-        et_new2 = (EditText) findViewById(R.id.et_new2);
+        et_new = (TextView) findViewById(R.id.et_new);
+        et_new2 = (TextView) findViewById(R.id.et_new2);
         btn_next = (Button) findViewById(R.id.btn_next);
-
-        et_pay = (EditText) findViewById(R.id.et_pay);
+        et_pay = (TextView) findViewById(R.id.et_pay);
+        et_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inoutPsw("设置新密码");
+            }
+        });
+        et_new2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inoutPsw("确认密码");
+            }
+        });
+        et_pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inoutPsw("输入原支付密码");
+            }
+        });
     }
 
 
@@ -86,7 +104,7 @@ public class ModifyPayPasswordActivity extends BaseActivity implements BaseView 
         Map<String, String> map = new HashMap<>();
         String pwd = MD5Util.getMD5String(et_new.getText().toString().trim());
         String pwd2 = MD5Util.getMD5String(et_new2.getText().toString().trim());
-        String old= MD5Util.getMD5String(et_pay.getText().toString().trim());
+        String old = MD5Util.getMD5String(et_pay.getText().toString().trim());
         map.put("oldPayPassword", old);
         map.put("newPayPassword", pwd);
         map.put("newTwoPayPassword", pwd2);
@@ -97,7 +115,7 @@ public class ModifyPayPasswordActivity extends BaseActivity implements BaseView 
 
     @Override
     public void returnData(String data, String url) {
-       if (url.contains(Const.modifyPayPassword)) {
+        if (url.contains(Const.modifyPayPassword)) {
             Tools.showToast(ModifyPayPasswordActivity.this, "修改成功");
             finish();
 
@@ -123,6 +141,29 @@ public class ModifyPayPasswordActivity extends BaseActivity implements BaseView 
 
     }
 
+    //打开输入密码的对话框
+    public void inoutPsw(final String title) {
+        SelectPopupWindow menuWindow = new SelectPopupWindow(this, new SelectPopupWindow.OnPopWindowClickListener() {
+            @Override
+            public void onPopWindowClickListener(String psw, boolean complete) {
+                if (complete) {
+                    if ("设置新密码".equals(title)) {
+                        et_new.setText(psw);
+                    } else if ("输入原支付密码".equals(title)) {
+                        et_pay.setText(psw);
+                    } else {
+                        et_new2.setText(psw);
+                    }
+                }
+
+            }
+        });
+        menuWindow.setTitle(title);
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        menuWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+    }
 
 
 }

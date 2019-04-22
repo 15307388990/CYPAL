@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.TopUpDetailsActivity;
+import com.cypal.ming.cypal.activity.TransferActivity;
+import com.cypal.ming.cypal.activity.TransfercConfirmActivity;
 import com.cypal.ming.cypal.bean.FriendsListEntity;
 import com.cypal.ming.cypal.bean.TopUpListEntity;
 import com.cypal.ming.cypal.config.Const;
@@ -94,6 +96,14 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
         }
         holder.tv_nickname.setText(contentBean.account);
+        holder.ll_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, TransfercConfirmActivity.class);
+                intent.putExtra("account", contentBean.account);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public int getRealPosition(RecyclerView.ViewHolder holder) {
@@ -116,12 +126,14 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         private CircleImageView myicon;
         private TextView tv_nickname;
         private TextView tv_timer;
+        private LinearLayout ll_item;
 
         public ViewHoler(View itemView) {
             super(itemView);
             tv_nickname = (TextView) itemView.findViewById(R.id.tv_nickname);
             tv_timer = (TextView) itemView.findViewById(R.id.tv_timer);
             myicon = (CircleImageView) itemView.findViewById(R.id.myicon);
+            ll_item = (LinearLayout) itemView.findViewById(R.id.ll_item);
         }
     }
 }

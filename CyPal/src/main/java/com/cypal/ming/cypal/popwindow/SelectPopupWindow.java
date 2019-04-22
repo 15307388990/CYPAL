@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.view.PswView;
@@ -33,9 +34,10 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
     private String mCurrPsw = "";
     //默认输入的密码长度是6位
     private int mPswCount = 6;
+    private TextView tv_title;
     //自定义View之密码框
     private PswView pswView;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -69,9 +71,9 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
 
             public boolean onTouch(View v, MotionEvent event) {
                 int height = mMenuView.findViewById(R.id.pop_layout).getTop();
-                int y = ( int ) event.getY();
-                if ( event.getAction() == MotionEvent.ACTION_UP ) {
-                    if ( y < height ) {
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (y < height) {
                         dismiss();
                     }
                 }
@@ -80,17 +82,22 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         });
     }
 
+    public void setTitle(String title) {
+        tv_title.setText(title);
+    }
+
     private void initViewInputPsw(Activity context) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.layout_popwindow_dialog_input_psw, null);
         GridView gridView = (GridView) mMenuView.findViewById(R.id.gridView);
-        pswView = ( PswView ) mMenuView.findViewById(R.id.pswView);
+        tv_title = mMenuView.findViewById(R.id.tv_title);
+        pswView = (PswView) mMenuView.findViewById(R.id.pswView);
         String[] keys = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "delete"};
         String[] key_engs = new String[]{"", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ", "", "", "delete"};
         //构造数据
         List<KeybordModel> list = new ArrayList<>();
-        for ( int i = 0; i < key_engs.length; i++ ) {
+        for (int i = 0; i < key_engs.length; i++) {
             KeybordModel m = new KeybordModel();
             m.setKey(keys[i]);
             m.setKeyEng(key_engs[i]);
@@ -108,10 +115,10 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //对空按钮不作处理
-                if ( i != 9 ) {
-                    if ( i == 11 ) {
+                if (i != 9) {
+                    if (i == 11) {
                         //删除
-                        if ( mCurrPsw.length() > 0 )
+                        if (mCurrPsw.length() > 0)
                             mCurrPsw = mCurrPsw.substring(0, mCurrPsw.length() - 1);
                         pswView.setDatas(mCurrPsw);
                         listener.onPopWindowClickListener(mCurrPsw, false);
@@ -121,14 +128,14 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
                         //绘制当前密码
                         pswView.setDatas(mCurrPsw);
                         //当长度等于最大长度 表示密码输入完毕 dimiss 接口回调
-                        if ( mCurrPsw.length() == mPswCount ) {
+                        if (mCurrPsw.length() == mPswCount) {
                             listener.onPopWindowClickListener(mCurrPsw, true);
                             new Timer().schedule(new TimerTask() {
                                 @Override
                                 public void run() {
                                     handler.sendEmptyMessage(0);
                                 }
-                            },200);
+                            }, 200);
                         } else {
                             listener.onPopWindowClickListener(mCurrPsw, false);
                         }
@@ -159,11 +166,11 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
 
         @Override
         public void convert(ViewHolders holder, KeybordModel item, int position) {
-            if ( item.getKey().equals("delete") ) {
+            if (item.getKey().equals("delete")) {
                 holder.getView(R.id.iv_delete).setVisibility(View.VISIBLE);
                 holder.getView(R.id.rela_item).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.item_bg_selector_gray));
                 holder.getView(R.id.ll_keys).setVisibility(View.INVISIBLE);
-            } else if ( TextUtils.isEmpty(item.getKey()) ) {
+            } else if (TextUtils.isEmpty(item.getKey())) {
                 holder.getView(R.id.iv_delete).setVisibility(View.GONE);
                 holder.getView(R.id.rela_item).setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.item_bg_selector_gray));
                 holder.getView(R.id.ll_keys).setVisibility(View.INVISIBLE);
@@ -183,7 +190,7 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
 
     public void setmPswCount(int mPswCount) {
         this.mPswCount = mPswCount;
-        if(pswView!=null)
+        if (pswView != null)
             pswView.setmPsw_count(mPswCount);
     }
 }

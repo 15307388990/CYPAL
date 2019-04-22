@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="28dp"
+        android:text="温馨提示： \n1、请确保支付宝已实名认证，并填写真实姓名（请不要填写 呢称） \n2、为了保证顺利提现，30天内不要更换其他账号，否则会 导致提现不通过 \n3、我们承诺不会向任何人透露您的个人信息"
+        android:textColor="@color/CY_999999"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>

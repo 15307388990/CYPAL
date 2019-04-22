@@ -30,7 +30,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="飞毛腿福利日，惊喜等着你"
                 android:textColor="@color/actionbar_title_color"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -69,7 +68,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="@dimen/margin_15"
-            android:text="来自【飞毛腿】"
             android:textColor="@color/jiujiujiu"
             android:textSize="13sp" />
 

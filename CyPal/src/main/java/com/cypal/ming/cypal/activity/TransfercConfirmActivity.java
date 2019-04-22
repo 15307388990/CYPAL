@@ -106,30 +106,35 @@ public class TransfercConfirmActivity extends BaseActivity implements View.OnCli
     }
 
     private void initDate() {
-        String date = getIntent().getStringExtra("data");
-        if (!TextUtils.isEmpty(date)) {
-            transferEntity = JSON.parseObject(date, TransferEntity.class);
-            tv_amount.setText("可用余额：：" + transferEntity.data.balance);
-            if (TextUtils.isEmpty(transferEntity.data.friend.avatar)) {
-                imageLoader.displayImage(Const.USER_DEFAULT_ICON, myicon, options);
-            } else {
-                imageLoader.displayImage(transferEntity.data.friend.avatar, myicon,
-                        options);
-            }
-            tv_pay_name.setText("正在向" + transferEntity.data.friend.nickName + "付款");
-            tv_nickname.setText(transferEntity.data.friend.account);
-        }
-
-
+        String account = getIntent().getStringExtra("account");
+        Map<String, String> map = new HashMap<>();
+        map.put("account", account);
+        mQueue.add(ParamTools.packParam(Const.getTransfer, this, this, map, Request.Method.GET, this));
     }
 
     @Override
     protected void returnData(String data, String url) {
-        Intent intent = new Intent(TransfercConfirmActivity.this, SucceedWithdrawAccessActivity.class);
-        intent.putExtra("title", "转账结果");
-        intent.putExtra("context", "转账成功");
-        startActivity(intent);
-        finish();
+        if (url.contains(Const.postTransfer)) {
+            Intent intent = new Intent(TransfercConfirmActivity.this, SucceedWithdrawAccessActivity.class);
+            intent.putExtra("title", "转账结果");
+            intent.putExtra("context", "转账成功");
+            startActivity(intent);
+            finish();
+        }else if(url.contains(Const.getTransfer)){
+            if (!TextUtils.isEmpty(data)) {
+                transferEntity = JSON.parseObject(data, TransferEntity.class);
+                tv_amount.setText("可用余额：：" + transferEntity.data.balance);
+                if (TextUtils.isEmpty(transferEntity.data.friend.avatar)) {
+                    imageLoader.displayImage(Const.USER_DEFAULT_ICON, myicon, options);
+                } else {
+                    imageLoader.displayImage(transferEntity.data.friend.avatar, myicon,
+                            options);
+                }
+                tv_pay_name.setText("正在向" + transferEntity.data.friend.nickName + "付款");
+                tv_nickname.setText(transferEntity.data.friend.account);
+            }
+
+        }
     }
 
     @Override
