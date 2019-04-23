@@ -12,10 +12,7 @@
         android:id="@+id/springView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginRight="@dimen/divider_height_10"
-        android:layout_marginTop="@dimen/divider_height_10">
+        android:layout_marginBottom="10dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleView"

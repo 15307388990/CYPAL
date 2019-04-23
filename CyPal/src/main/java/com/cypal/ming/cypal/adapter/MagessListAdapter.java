@@ -18,6 +18,7 @@ import com.cypal.ming.cypal.config.Const;
 
 import java.util.List;
 
+
 /**
  * @Author luoming
  * @Date 2018/11/16 3:20 PM
@@ -26,10 +27,10 @@ import java.util.List;
 public class MagessListAdapter extends RecyclerView.Adapter<MagessListAdapter.ViewHoler> {
 
     private final Context mContext;
-    private List<MassageBean> mList;
+    private List<MassageBean.DataBean.ContentBean> mList;
     private String token;
 
-    public MagessListAdapter(Context context, List<MassageBean> list, String token) {
+    public MagessListAdapter(Context context, List<MassageBean.DataBean.ContentBean> list, String token) {
         this.mContext = context;
         this.mList = list;
         this.token = token;
@@ -44,21 +45,23 @@ public class MagessListAdapter extends RecyclerView.Adapter<MagessListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        final MassageBean massageBean = mList.get(position);
-        holder.tv_titler.setText(massageBean.getTitle());
-        holder.tv_timer.setText(massageBean.getSended_at());
-        if (!massageBean.isIsread()) {
-            holder.iv_img.setVisibility(View.INVISIBLE);
-        } else {
-            holder.iv_img.setVisibility(View.VISIBLE);
-        }
+        final MassageBean.DataBean.ContentBean contentBean = mList.get(position);
+        holder.tv_titler.setText(contentBean.title);
+        holder.tv_timer.setText(contentBean.createTime);
+        holder.tv_content.setText(contentBean.content);
+//        if (!MassageBean.DataBean.ContentBean.isIsread()) {
+//            holder.iv_img.setVisibility(View.INVISIBLE);
+//        } else {
+//            holder.iv_img.setVisibility(View.VISIBLE);
+//        }
         holder.ll_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, WebviewActivity.class);
-                intent.putExtra("link_url", Const.BASE_URL + Const.messageshow + "?token=" + token + "&message_uuid=" + massageBean.getUuid());
-                intent.putExtra("link_name", "消息详情");
-                mContext.startActivity(intent);
+//                String url = Const.BASE_URL + "/h5/notice/" + contentBean.id;
+//                Intent intent = new Intent(mContext, WebviewActivity.class);
+//                intent.putExtra("link_url", url);
+//                intent.putExtra("link_name", "消息详情");
+//                mContext.startActivity(intent);
             }
         });
     }
@@ -69,24 +72,21 @@ public class MagessListAdapter extends RecyclerView.Adapter<MagessListAdapter.Vi
         return mList == null ? 0 : mList.size();
     }
 
-    public void updateAdapter(List<MassageBean> mList) {
+    public void updateAdapter(List<MassageBean.DataBean.ContentBean> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
 
     class ViewHoler extends ViewHolder {
-        //订单编号 金额  送达时间  配送信息 商家地址 距离 买家地址 备注
-        public TextView tv_laiyuan, tv_titler, tv_timer;
+        public TextView tv_content, tv_titler, tv_timer;
         private LinearLayout ll_layout;
-        private ImageView iv_img;
 
         public ViewHoler(View itemView) {
             super(itemView);
-            tv_laiyuan = (TextView) itemView.findViewById(R.id.tv_laiyuan);
+            tv_content = (TextView) itemView.findViewById(R.id.tv_content);
             tv_titler = (TextView) itemView.findViewById(R.id.tv_title);
             tv_timer = (TextView) itemView.findViewById(R.id.tv_timer);
             ll_layout = (LinearLayout) itemView.findViewById(R.id.ll_layout);
-            iv_img = (ImageView) itemView.findViewById(R.id.iv_img);
         }
     }
 

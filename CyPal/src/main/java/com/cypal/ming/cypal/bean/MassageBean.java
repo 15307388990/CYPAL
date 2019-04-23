@@ -4,126 +4,106 @@
 package com.cypal.ming.cypal.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
-*
-*  @Author luoming
-*  @Date 2018/11/16 1:52 PM
-*
-*/
+ * @Author luoming
+ * @Date 2018/11/16 1:52 PM
+ */
 public class MassageBean implements Serializable {
 
 
     /**
-     * uuid : 20181116213041sevU8b24562100
-     * mtype : 0
-     * to : 1
-     * title : 撒旦发射点发生
-     * content : dfgsdfgsdfgsdfgsdfgdsgdfg1111
-     * sended_at : 2018-11-16 13:30:29
-     * created_at : 1970-01-01 16:00:00
-     * updated_at : 1970-01-01 16:00:00
-     * deleted_at : null
-     * isread : false
+     * code : 1
+     * msg : success
+     * data : {"content":[{"id":49,"createTime":"2019-04-23 22:58:41","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":44,"createTime":"2019-04-23 01:08:33","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":43,"createTime":"2019-04-23 00:27:37","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":42,"createTime":"2019-04-22 23:57:47","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":32,"createTime":"2019-04-22 23:47:39","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":31,"createTime":"2019-04-22 23:42:20","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":30,"createTime":"2019-04-22 23:41:28","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":29,"createTime":"2019-04-22 23:41:06","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":28,"createTime":"2019-04-22 23:39:49","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":27,"createTime":"2019-04-22 23:37:57","deleted":false,"userId":18,"title":"自动接单","content":"恭喜您自动接单100元,收到款请及时确认，如金额不符请联系客服，未收到款请十分钟后点击申诉。"}],"pageable":{"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false},"number":1,"totalElements":18,"totalPages":2,"first":false,"numberOfElements":10,"last":true,"sort":{"sorted":false,"unsorted":true},"size":10}
+     * serverTime : 1556031526655
      */
-//    uuid 消息编号
-//    mtype 消息类型{0:骑手消息,1:用户消息}
-//    to 接收者
-//    title 标题
-//    content 内容
-//    sended_at 发送时间
-//    created_at 创建时间
-//    updated_at 更新时间
-//    isread 是否已读
 
-    private String uuid;
-    private int mtype;
-    private int to;
-    private String title;
-    private String content;
-    private String sended_at;
-    private String created_at;
-    private String updated_at;
-    private Object deleted_at;
-    private boolean isread;
+    public int code;
+    public String msg;
+    public DataBean data;
+    public long serverTime;
 
-    public String getUuid() {
-        return uuid;
-    }
+    public class DataBean {
+        /**
+         * content : [{"id":49,"createTime":"2019-04-23 22:58:41","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":44,"createTime":"2019-04-23 01:08:33","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":43,"createTime":"2019-04-23 00:27:37","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":42,"createTime":"2019-04-22 23:57:47","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":32,"createTime":"2019-04-22 23:47:39","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":31,"createTime":"2019-04-22 23:42:20","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":30,"createTime":"2019-04-22 23:41:28","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":29,"createTime":"2019-04-22 23:41:06","deleted":false,"userId":18,"title":"充值到账通知","content":"尊敬的会员,您充值的100元现已成功到账,赶紧去接单吧。"},{"id":28,"createTime":"2019-04-22 23:39:49","deleted":false,"userId":18,"title":"转账到账通知","content":"成功收到一笔转账,金额100元"},{"id":27,"createTime":"2019-04-22 23:37:57","deleted":false,"userId":18,"title":"自动接单","content":"恭喜您自动接单100元,收到款请及时确认，如金额不符请联系客服，未收到款请十分钟后点击申诉。"}]
+         * pageable : {"sort":{"sorted":false,"unsorted":true},"pageSize":10,"pageNumber":0,"offset":0,"paged":true,"unpaged":false}
+         * number : 1
+         * totalElements : 18
+         * totalPages : 2
+         * first : false
+         * numberOfElements : 10
+         * last : true
+         * sort : {"sorted":false,"unsorted":true}
+         * size : 10
+         */
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
+        public PageableBean pageable;
+        public int number;
+        public int totalElements;
+        public int totalPages;
+        public boolean first;
+        public int numberOfElements;
+        public boolean last;
+        public SortBeanX sort;
+        public int size;
+        public List<ContentBean> content;
 
-    public int getMtype() {
-        return mtype;
-    }
+        public class PageableBean {
+            /**
+             * sort : {"sorted":false,"unsorted":true}
+             * pageSize : 10
+             * pageNumber : 0
+             * offset : 0
+             * paged : true
+             * unpaged : false
+             */
 
-    public void setMtype(int mtype) {
-        this.mtype = mtype;
-    }
+            public SortBean sort;
+            public int pageSize;
+            public int pageNumber;
+            public int offset;
+            public boolean paged;
+            public boolean unpaged;
 
-    public int getTo() {
-        return to;
-    }
+            public class SortBean {
+                /**
+                 * sorted : false
+                 * unsorted : true
+                 */
 
-    public void setTo(int to) {
-        this.to = to;
-    }
+                public boolean sorted;
+                public boolean unsorted;
+            }
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public class SortBeanX {
+            /**
+             * sorted : false
+             * unsorted : true
+             */
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+            public boolean sorted;
+            public boolean unsorted;
+        }
 
-    public String getContent() {
-        return content;
-    }
+        public class ContentBean {
+            /**
+             * id : 49
+             * createTime : 2019-04-23 22:58:41
+             * deleted : false
+             * userId : 18
+             * title : 转账到账通知
+             * content : 成功收到一笔转账,金额100元
+             */
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getSended_at() {
-        return sended_at;
-    }
-
-    public void setSended_at(String sended_at) {
-        this.sended_at = sended_at;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public Object getDeleted_at() {
-        return deleted_at;
-    }
-
-    public void setDeleted_at(Object deleted_at) {
-        this.deleted_at = deleted_at;
-    }
-
-    public boolean isIsread() {
-        return isread;
-    }
-
-    public void setIsread(boolean isread) {
-        this.isread = isread;
+            public int id;
+            public String createTime;
+            public boolean deleted;
+            public int userId;
+            public String title;
+            public String content;
+        }
     }
 }

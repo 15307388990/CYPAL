@@ -35,14 +35,14 @@ public class MeassActivity extends BaseActivity {
     private SpringView springView;
     private int page = 1;
     private int pagesize = 20;
-    private List<MassageBean> massageBeans;
+    private List<MassageBean.DataBean.ContentBean> massageBeans;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messge);
-        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.darkgray));
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.white));
         initTitle();
         title.setText("消息中心");
         initView();
@@ -60,7 +60,8 @@ public class MeassActivity extends BaseActivity {
     @Override
     protected void returnData(String data, String url) {
         springView.onFinishFreshAndLoad();
-        super.returnData(data, url);
+        MassageBean massageBean = JSON.parseObject(data, MassageBean.class);
+        magessListAdapter.updateAdapter(massageBean.data.content);
     }
 
     private void initView() {
@@ -68,7 +69,7 @@ public class MeassActivity extends BaseActivity {
         springView = (SpringView) findViewById(R.id.springView);
         springView.setHeader(new DefaultHeader(MeassActivity.this));
         springView.setFooter(new DefaultFooter(MeassActivity.this));
-        magessListAdapter = new MagessListAdapter(MeassActivity.this, null,mSavePreferencesData.getStringData("token"));
+        magessListAdapter = new MagessListAdapter(MeassActivity.this, null, mSavePreferencesData.getStringData("token"));
         recycleView.setLayoutManager(new LinearLayoutManager(MeassActivity.this));
         recycleView.setAdapter(magessListAdapter);
         springView.setListener(new SpringView.OnFreshListener() {

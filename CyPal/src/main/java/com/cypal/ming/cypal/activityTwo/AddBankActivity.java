@@ -58,6 +58,7 @@ public class AddBankActivity extends BaseActivity implements View.OnClickListene
         et_card = (EditText) findViewById(R.id.et_card);
         btn_next = (Button) findViewById(R.id.btn_next);
         btn_next.setOnClickListener(this);
+        ll_view_back.setOnClickListener(this);
     }
 
     /* 银行卡列表 */
