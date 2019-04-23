@@ -21,11 +21,9 @@ import com.cypal.ming.cypal.bean.ContentEntity;
 import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
-import com.cypal.ming.cypal.dialogfrment.GradSingDialog;
 import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
-import com.cypal.ming.cypal.ws.WsManager;
 import com.githang.statusbar.StatusBarCompat;
 
 import java.util.ArrayList;
@@ -61,10 +59,10 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
                 if (!TextUtils.isEmpty(text)) {
                     try {
                         ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
-                        ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
                         if (managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
-
+                            ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
                             list.add(contentEntity);
+                            initYou(contentEntity);
                             UpdateAdapter();
                         }
 
@@ -82,7 +80,10 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
 
         }
     };
-
+    private TextView tv_you1;
+    private TextView tv_you2;
+    private TextView tv_you3;
+    String paytype = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,9 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
         recycleView.setAdapter(managerAdapter);
 
         top_view_text = (TextView) findViewById(R.id.top_view_text);
+        tv_you1 = (TextView) findViewById(R.id.tv_you1);
+        tv_you2 = (TextView) findViewById(R.id.tv_you2);
+        tv_you3 = (TextView) findViewById(R.id.tv_you3);
     }
 
     public void initEvent() {
@@ -142,16 +146,19 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
                 if (checkedId == R.id.rd_phone) {
                     currentSelectTab = 0;
                     params.leftMargin = 0;
+                    tv_you1.setVisibility(View.INVISIBLE);
                     cursor.setLayoutParams(params);
 
                 } else if (checkedId == R.id.rd_email) {
                     currentSelectTab = 1;
                     params.leftMargin = (int) cursorWidth;
                     cursor.setLayoutParams(params);
+                    tv_you2.setVisibility(View.INVISIBLE);
                 } else if (checkedId == R.id.rd_yun) {
                     currentSelectTab = 2;
                     params.leftMargin = (int) cursorWidth + cursorWidth;
                     cursor.setLayoutParams(params);
+                    tv_you3.setVisibility(View.INVISIBLE);
                 }
                 UpdateAdapter();
             }
@@ -237,11 +244,26 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
     }
 
     /**
+     * 控制有单显示
+     */
+    private void initYou(ContentEntity contentEntity) {
+        //推送过来订单不是当前类型
+        if (!TextUtils.equals(contentEntity.payType, paytype)) {
+            if (contentEntity.payType.equals("WXPAY")) {
+                tv_you1.setVisibility(View.VISIBLE);
+            } else if (contentEntity.payType.equals("ALIPAY")) {
+                tv_you2.setVisibility(View.VISIBLE);
+            } else {
+                tv_you3.setVisibility(View.VISIBLE);
+            }
+        }
+
+    }
+
+    /**
      * //过滤刷新列表
      */
     private void UpdateAdapter() {
-        String paytype = null;
-
         switch (currentSelectTab) {
             case 0:
                 paytype = "WXPAY";
@@ -253,6 +275,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
                 paytype = "CLOUDPAY";
                 break;
         }
+
         managerAdapter.updateAdapter(getList(paytype));
     }
 
