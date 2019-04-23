@@ -37,6 +37,7 @@ import com.cypal.ming.cypal.service.VersionService;
 import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
+import com.cypal.ming.cypal.ws.WsManager;
 import com.githang.statusbar.StatusBarCompat;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.yanzhenjie.permission.Action;
@@ -83,6 +84,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 跳转过来是否显示错误提示页
      */
     private void IsMsgDiolg() {
+        //断开连接
+        WsManager.getInstance().disconnect();
+        mSavePreferencesData.putStringData("token", "");
         msg = getIntent().getStringExtra("msg");
         if (!TextUtils.isEmpty(msg)) {
             new CancelTheDealDialog().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).
@@ -107,7 +111,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-                      Tools.showToast(LoginActivity.this,"无法获取手机状态信息，应用无法正常使用");
+                        Tools.showToast(LoginActivity.this, "无法获取手机状态信息，应用无法正常使用");
                     }
                 }).
                 start();

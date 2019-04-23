@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.cypal.ming.cypal.BuildConfig;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.activity.TabActivity;
 import com.cypal.ming.cypal.bean.VersionEntity;
 import com.cypal.ming.cypal.config.Const;
@@ -42,6 +43,9 @@ import com.cypal.ming.cypal.service.DownloadService;
 import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 import com.cypal.ming.cypal.utils.Tools;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -182,7 +186,7 @@ public class VersionUpgradeDialog extends CenterDialog {
         if (this.getActivity() != null && !this.getActivity().isFinishing()) {
             //保存这个时间
             long quxiaotime = System.currentTimeMillis();
-            mSavePreferencesData.putLongData("quxiaotime",quxiaotime);
+            mSavePreferencesData.putLongData("quxiaotime", quxiaotime);
             super.dismissAllowingStateLoss();
         }
     }
@@ -226,12 +230,7 @@ public class VersionUpgradeDialog extends CenterDialog {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(versionBean.updateUrl)) {
-                    binding.tvContext.setVisibility(View.GONE);
-                    binding.llProgres.setVisibility(View.VISIBLE);
-                    binding.tvOk.setVisibility(View.GONE);
-                    DownloadTask downloadTask = new DownloadTask(
-                            getActivity());
-                    downloadTask.execute(versionBean.updateUrl);
+                    initPermission();
                 } else {
                     Tools.showToast(getActivity(), "APK下载地址为空");
                 }
@@ -247,6 +246,30 @@ public class VersionUpgradeDialog extends CenterDialog {
             }
         });
 
+
+    }
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        binding.tvContext.setVisibility(View.GONE);
+                        binding.llProgres.setVisibility(View.VISIBLE);
+                        binding.tvOk.setVisibility(View.GONE);
+                        DownloadTask downloadTask = new DownloadTask(
+                                getActivity());
+                        downloadTask.execute(versionBean.updateUrl);
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(getActivity(), "无法获取手机权限，功能无法正常使用");
+                    }
+                }).
+                start();
 
     }
 
@@ -367,21 +390,9 @@ public class VersionUpgradeDialog extends CenterDialog {
             dismiss();
             if (result != null) {
 
-//                // 申请多个权限。大神的界面
-//                AndPermission.with(MainActivity.this)
-//                        .requestCode(REQUEST_CODE_PERMISSION_OTHER)
-//                        .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-//                        // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框，避免用户勾选不再提示。
-//                        .rationale(new RationaleListener() {
-//                                       @Override
-//                                       public void showRequestPermissionRationale(int requestCode, Rationale rationale) {
-//                                           // 这里的对话框可以自定义，只要调用rationale.resume()就可以继续申请。
-//                                           AndPermission.rationaleDialog(MainActivity.this, rationale).show();
-//                                       }
-//                                   }
-//                        )
-//                        .send();
-                //  申请多个权限。
+                // 申请多个权限。大神的界面
+                initPermission();
+
 
                 Toast.makeText(context, "您未打开SD卡权限" + result, Toast.LENGTH_LONG).show();
             } else {

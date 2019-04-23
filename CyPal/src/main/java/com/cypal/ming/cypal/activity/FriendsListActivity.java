@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
+import com.cypal.ming.cypal.activityTwo.TeamTopUpActivity;
 import com.cypal.ming.cypal.adapter.FriendsListAdapter;
 import com.cypal.ming.cypal.adapter.TopUpRecordListAdapter;
 import com.cypal.ming.cypal.base.BaseActivity;
@@ -129,7 +130,7 @@ public class FriendsListActivity extends BaseActivity {
         right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump(FriendsListActivity.this, TransferActivity.class, false);
+                Tools.jump(FriendsListActivity.this, TeamTopUpActivity.class, false);
             }
         });
 

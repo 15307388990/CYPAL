@@ -22,6 +22,7 @@ import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.dialogfrment.GradSingDialog;
+import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.ws.WsManager;
@@ -35,7 +36,7 @@ import java.util.Map;
 /**
  * 手动抢单
  */
-public class GrabSingleActivity extends BaseActivity implements WsManager.IWsManagerActivityView, ManagerAdapter.OnClickListener {
+public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.OnClickListener {
 
 
     private RelativeLayout.LayoutParams params;
@@ -61,10 +62,8 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
                     try {
                         ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
                         ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
-                        if (managerEntity.messageEnum.equals("LOGINOUT")) {
-                            Tools.showToast(GrabSingleActivity.this, "同一账号在别处登录,请退出页面重新登录");
-                            Tools.jump(GrabSingleActivity.this, LoginActivity.class, true);
-                        } else {
+                        if (managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
+
                             list.add(contentEntity);
                             UpdateAdapter();
                         }
@@ -90,7 +89,6 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grab_single);
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
-        WsManager.getInstance().init(mSavePreferencesData.getStringData("token"), GrabSingleActivity.this);
         initView();
         initEvent();
     }
@@ -98,7 +96,7 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        WsManager.getInstance().disconnect();
+        // WsManager.getInstance().disconnect();
     }
 
     /**
@@ -198,6 +196,7 @@ public class GrabSingleActivity extends BaseActivity implements WsManager.IWsMan
 
     @Override
     public void onTextMessage(final String text) {
+        super.onTextMessage(text);
         new Thread() {
             @Override
             public void run() {

@@ -228,7 +228,7 @@ public class Const {
     /**
      * 发送找回支付密码验证码
      */
-    public static final String findPayPasswordcode= "/msm/private/findPayPassword?";
+    public static final String findPayPasswordcode = "/msm/private/findPayPassword?";
     /**
      * 找回支付密码
      */
@@ -240,7 +240,23 @@ public class Const {
     /**
      * 团队充值-我的银行卡
      */
-    public static final String teamBankCard = "/private/team/bankCard";
+    public static final String teamBankCard = "/private/team/bankCard?";
+    /**
+     * 团队充值
+     */
+    public static final String teamRecharge = "/private/team/recharge?";
+    /**
+     * 添加领导人银行卡
+     */
+    public static final String saveBankCard = "/private/team/saveBankCard";
+    /**
+     * 使用领导人银行卡
+     */
+    public static final String useBankCard = "/private/team/useBankCard";
+    /**
+     * 删除导人银行卡
+     */
+    public static final String delBankCard = "/private/team/delBankCard";
 
 
     /* 订单详情 */

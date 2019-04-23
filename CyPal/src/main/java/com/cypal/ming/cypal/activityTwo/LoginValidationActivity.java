@@ -103,4 +103,6 @@ public class LoginValidationActivity extends BaseActivity implements View.OnClic
         loginVerifyCode();
 
     }
+
+
 }

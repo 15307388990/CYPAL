@@ -29,9 +29,12 @@ import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.*;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
+import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.BaseEntity;
+import com.cypal.ming.cypal.bean.ContentEntity;
 import com.cypal.ming.cypal.bean.IndexEntity;
+import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.bean.VersionEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.AccountDialog;
@@ -39,9 +42,12 @@ import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.dialogfrment.VersionUpgradeDialog;
 import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
 import com.cypal.ming.cypal.utils.MD5Util;
+import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.AutoVerticalScrollTextView;
+import com.cypal.ming.cypal.vm.IWsManager;
+import com.cypal.ming.cypal.ws.WsManager;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
@@ -83,6 +89,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private LinearLayout ll_order;
     private RelativeLayout ll_view_back;//消息中心
     private String pay;//收款账号 字符串
+    private TextView top_view_text;
 
     public MainFragment(Activity context) {
         super(context);
@@ -102,7 +109,14 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 auto_textview.next();
                 number++;
                 auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
+            } else if (msg.what == 2) {
+                top_view_text.setText("首页（离线）");
+
+            } else if (msg.what == 3) {
+                top_view_text.setText("首页");
             }
+
+
         }
     };
     private String method;
@@ -139,6 +153,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
+        //  WsManager.getInstance().setmListener(this);
         initView(view);
         return view;
     }
@@ -149,6 +164,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         springView = (SpringView) view.findViewById(R.id.springView);
         tv_number = (TextView) view.findViewById(R.id.tv_number);
         ll_view_back = (RelativeLayout) view.findViewById(R.id.ll_view_back);
+        top_view_text = (TextView) view.findViewById(R.id.top_view_text);
         auto_textview = (AutoVerticalScrollTextView) view.findViewById(R.id.auto_textview);
         orderModels = new ArrayList<IndexEntity.DataBean.UndoOrderBean.ContentBean>();
         sellDetailListAdapter = new SellDetailListAdapter(mcontext, orderModels, this);
@@ -298,7 +314,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     public void start(String payPasswrod) {
         Map<String, String> map = new HashMap<>();
         map.put("method", method);
-        String paypass= MD5Util.getMD5String(payPasswrod);
+        String paypass = MD5Util.getMD5String(payPasswrod);
         map.put("payPassword", paypass);
         mQueue.add(ParamTools.packParam(Const.start, mcontext, this, this, map));
         loading();
@@ -410,18 +426,43 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } else if (url.contains(Const.appeal)) {
             orderList();
         }
+        if (url.contains(Const.setPayPassword)) {
+            Tools.showToast(mcontext, "设置成功");
+            mSavePreferencesData.putBooleanData("hasPayPassword", true);
+        }
 
     }
 
+
+    /**
+     * 设置支付密码
+     */
+    private void setPayPassword(String payPassword) {
+        Map<String, String> map = new HashMap<>();
+        map.put("payPassword", MD5Util.getMD5String(payPassword));
+        mQueue.add(ParamTools.packParam(Const.setPayPassword, mcontext, this, this, map));
+        loading();
+    }
+
+
     //打开输入密码的对话框
     public void inoutPsw() {
+        final boolean hasPayPassword = mSavePreferencesData.getBooleanData("hasPayPassword");
         SelectPopupWindow menuWindow = new SelectPopupWindow(mcontext, new SelectPopupWindow.OnPopWindowClickListener() {
             @Override
             public void onPopWindowClickListener(String psw, boolean complete) {
-                if (complete)
-                    start(psw);
+                if (complete) {
+                    if (hasPayPassword) {
+                        start(psw);
+                    } else {
+                        setPayPassword(psw);
+                    }
+                }
             }
         });
+        if (!hasPayPassword) {
+            menuWindow.setTitle("设置支付密码");
+        }
         Rect rect = new Rect();
         mcontext.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
         int winHeight = mcontext.getWindow().getDecorView().getHeight();
@@ -562,5 +603,32 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 }
             }
         }
+    }
+
+
+
+    /**
+     * 断开连接
+     */
+    public void onDisconnected() {
+        new Thread() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(2);
+            }
+        }.start();
+
+    }
+
+    /**
+     * 连接成功
+     */
+    public void onConnected() {
+        new Thread() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(3);
+            }
+        }.start();
     }
 }

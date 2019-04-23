@@ -25,10 +25,14 @@ import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.view.CircleImageView;
+import com.cypal.ming.cypal.ws.WsManager;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -175,15 +179,8 @@ public class PersonalActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
+                initPermission();
 
-                Intent intent = new Intent(PersonalActivity.this,
-                        MultiImageSelectorActivity.class);
-                intent.putExtra("isUploadIcon", true);
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                        true);
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                        1);
-                startActivityForResult(intent, 0);
             }
         });
         my_accounts.setOnClickListener(new OnClickListener() {
@@ -217,6 +214,34 @@ public class PersonalActivity extends BaseActivity {
                 }
             }
         });
+
+    }
+
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE,
+                        Permission.Group.CAMERA).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Intent intent = new Intent(PersonalActivity.this,
+                                MultiImageSelectorActivity.class);
+                        intent.putExtra("isUploadIcon", true);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
+                                false);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
+                                1);
+                        startActivityForResult(intent, 0);
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(PersonalActivity.this, "无法获取手机权限，功能无法正常使用");
+                    }
+                }).
+                start();
 
     }
 
@@ -356,6 +381,8 @@ public class PersonalActivity extends BaseActivity {
         } else if (url.contains(Const.loginOut)) {
             mSavePreferencesData.putStringData("token", "");
             Tools.jump(PersonalActivity.this, LoginActivity.class, true);
+            //断开连接
+            WsManager.getInstance().disconnect();
         } else if (url.contains(Const.setPayPassword)) {
             my_hasPayPassword.setText("已设置");
             mSavePreferencesData.putBooleanData("hasPayPassword", true);

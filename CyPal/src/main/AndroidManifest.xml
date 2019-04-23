@@ -1,403 +1,411 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.cypal.ming.cypal"
-	android:versionCode="10000"
-	android:versionName="2.5">
-	
-	<permission
-		android:name="com.cypal.ming.cypal.permission.JPUSH_MESSAGE"
-		android:protectionLevel="signature" />
-	<!-- Required  一些系统要求的权限，如访问网络等 -->
-	<uses-permission android:name="com.fmt.ming.paotui.permission.JPUSH_MESSAGE" />
-	<uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取用户设备的IMEI，通过IMEI和mac来唯一的标识用户。 -->
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测联网方式，区分用户设备使用的是2G、3G或是WiFi -->
-	<!-- Optional for location -->
-	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.CALL_PHONE" />
-	<uses-permission android:name="com.android.permission.RECV_XXX" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<!--<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
-	<!-- <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"></uses-permission> -->
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取用户设备的mac地址，在平板设备上，无法通过imei标示设备                     ，我们会将mac地址作为用户的唯一标识 -->
-	<uses-permission android:name="android.permission.ACCESS_GPS" />
-	<uses-permission android:name="android.permission.READ_CONTACTS" />
-	<uses-permission android:name="android.permission.READ_SMS" />
-	<uses-permission android:name="android.permission.SEND_SMS" />
-	<!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.RECORD_AUDIO" />
-	<uses-permission android:name="android.permission.BROADCAST_STICKY" />
-	<!-- 来电消音 -->
-	<uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-	<!-- ShareSDK -->
-	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<!-- 安装权限 -->
-	<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-	<uses-permission android:name="android.permission.FLASHLIGHT" />
-	
-	<!-- 屏蔽HOME键需要的权限 -->
-	<application
-		android:name="com.cypal.ming.cypal.base.MianApplication"
-		android:allowBackup="true"
-		android:authorities="com.fmt.ming.paotui.fileProvider"
-		android:exported="false"
-		android:grantUriPermissions="true"
-		android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name"
-		android:theme="@style/AppBaseTheme"
-		tools:replace="android:name">
-		<meta-data
-			android:name="android.support.FILE_PROVIDER_PATHS"
-			android:resource="@xml/file_paths" />
-		<meta-data
-			
-			android:name="UMENG_APPKEY"
-			android:value="5a1283dbf29d983dfb000182" /> <!-- 友盟数据统计 -->
-		<meta-data
-			android:name="UMENG_CHANNEL"
-			android:value="YinYongBao" /> <!-- 友盟数据统计 -->
-		<meta-data
-			android:name="TencentMapSDK"
-			android:value="IFZBZ-BB6R5-FXWIR-QWJOK-LSG5T-EPBQS" /><!-- 腾讯地图 -->
-		<meta-data
-			android:name="android.max_aspect"
-			android:value="2.1" /> <!-- 适配全面屏 -->
-		<service android:name="com.cypal.ming.cypal.service.DownloadService" />
-		<service
-			android:name="com.cypal.ming.cypal.service.VersionService"
-			android:enabled="true"
-			android:exported="true"></service>
-		
-		<activity
-			android:name="com.cypal.ming.cypal.dialog.CustomDialogActivity"
-			android:theme="@style/versionCheckLibvtransparentTheme" />
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SetPasswordActivity"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TabActivity"
-			android:screenOrientation="portrait" />
-		<activity
-			android:name="com.cypal.ming.cypal.service.NotificationUpdateActivity"
-			android:theme="@style/notitle1"></activity>
-		<activity
-			android:name="com.cypal.ming.cypal.activity.MeassActivity"
-			android:screenOrientation="portrait" /><!-- 消息列表 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.MapWebviewActivity"
-			android:screenOrientation="portrait" /><!-- 地图网页 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SaveAccountAcitity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|stateUnchanged"
-			android:configChanges="orientation|screenSize"/><!-- 添加收款账号-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TopUpDetailsActivity"
-			android:screenOrientation="portrait" /><!-- 充值详情-->
-		<activity
-			android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
-			android:configChanges="orientation|screenSize"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-		<activity
-			android:name="com.cypal.ming.cypal.activity.OrderDetailsActivity"
-			android:configChanges="orientation|screenSize" /><!-- 订单详情-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TopUpListActivity"
-			android:configChanges="orientation|screenSize" /><!-- 订单记录-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.OrderListActivity"
-			android:configChanges="orientation|screenSize" /><!-- 接单记录-->
-		<activity
-			android:name="com.cypal.ming.cypal.activityTwo.TeamRerunsActivity"
-			android:configChanges="orientation|screenSize" /><!-- 团队收益-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.LoginActivity"
-			android:screenOrientation="portrait"></activity>
-		<!--  启动页-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.WelcomeActivity"
-			android:screenOrientation="portrait"
-			android:theme="@style/WelcomeTheme">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity android:name="com.cypal.ming.cypal.activity.PersonCenterActivity" />
-		<activity android:name="com.cypal.ming.cypal.activity.SellDetailActivity" /><!-- 订单明细 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SelectCity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 台卡城市选择 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.ChangePasswordActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 修改密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.RetrievePasswordActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 找回密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.BankList"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 获取支行列表 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.RefundActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 退还保证金 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.MoneyActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!--我的钱包-->
-		<!-- 添加账户 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.AccountListActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 账户列表 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.RegisteredActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 注册 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.HelpActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 帮助-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.MoneyDetailsActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 详情-->
-		<!-- 提现-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.ConditionsActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 条件筛选-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.MobilePhoneActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 验证手机-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.VerifyPaymentPasswordActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 验证支付密码-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SetPayPasswordOneActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置支付密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SetPayPasswordTwoActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置支付密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SucceedWithdrawAccessActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现成功 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.NickNameActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 修改昵称 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.AddAccount2Activity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 添加账户 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.CommissionAcitity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 我的佣金 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.WithdrawalActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提取佣金 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.ApplyWithdrawActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.CertificationActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 申请会员 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.MemberActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 会员管理 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.GrabSingleActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 手动抢单-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.CashAccountListActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 账户列表 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.ComplaintOrderActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 申诉订单 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TransferActivity"
-			android:screenOrientation="portrait" /><!-- 好友转账 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TakeActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 取件AND送达界面-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.SetActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置界面-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.InvitationFriendsActivity"
-			android:screenOrientation="portrait" /><!-- 邀请好友-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.FriendsListActivity"
-			android:screenOrientation="portrait" /><!-- 好友列表-->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.WebviewActivity"
-			android:screenOrientation="portrait" /><!-- 网页 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TransfercConfirmActivity"
-			android:screenOrientation="portrait" /><!-- 确认转账页 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.TransferRecordListActivity"
-			android:screenOrientation="portrait" /><!-- 转账记录 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
-			android:screenOrientation="portrait" /><!-- 冻结金额记录 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activityTwo.LoginValidationActivity"
-			android:screenOrientation="portrait" /><!-- 登陆验证页面 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activityTwo.LoginPhotoValidationActivity"
-			android:screenOrientation="portrait" /><!-- 登陆验证上传照片身份页面 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activityTwo.PayPasswordActivity"
-			android:screenOrientation="portrait" /><!-- 支付密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activityTwo.BackPayPasswordActivity"
-			android:screenOrientation="portrait" /><!-- 找回支付密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activityTwo.ModifyPayPasswordActivity"
-			android:screenOrientation="portrait" /><!-- 修改支付密码 -->
-		<activity
-			android:name="com.cypal.ming.cypal.wxapi.WXEntryActivity"
-			android:exported="true"
-			android:launchMode="singleInstance"
-			android:screenOrientation="portrait" /> <!--微信回调 -->
-		<!-- User defined.  For test only  用户自定义的广播接收器-->
-		<!-- 可配置android:process参数将PushService放在其他进程中 -->
-		<activity
-			android:name="com.cypal.ming.cypal.activity.PersonalActivity"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 个人资料 -->
-		<service
-			android:name="cn.jpush.android.service.PushService"
-			android:exported="false"
-			android:process=":mult">
-			<intent-filter>
-				<action android:name="cn.jpush.android.intent.REGISTER" />
-				<action android:name="cn.jpush.android.intent.REPORT" />
-				<action android:name="cn.jpush.android.intent.PushService" />
-				<action android:name="cn.jpush.android.intent.PUSH_TIME" />
-			</intent-filter>
-		</service>
-		
-		<provider
-			android:name="cn.jpush.android.service.DataProvider"
-			android:authorities="com.cypal.ming.cypal.DataProvider"
-			android:exported="false" />
-		<provider
-			android:name="android.support.v4.content.FileProvider"
-			android:authorities="com.cypal.ming.cypal.fileProvider"
-			android:exported="false"
-			android:grantUriPermissions="true">
-			
-			<meta-data
-				android:name="android.support.FILE_PROVIDER_PATHS"
-				android:resource="@xml/file_paths" />
-		
-		</provider>
-		<!-- Required SDK核心功能-->
-		<receiver
-			android:name="cn.jpush.android.service.PushReceiver"
-			android:enabled="true"
-			android:exported="false">
-			<intent-filter android:priority="1000">
-				<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
-				<category android:name="com.fmt.ming.paotui" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.USER_PRESENT" />
-				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-			</intent-filter>
-			<!-- Optional -->
-			<intent-filter>
-				<action android:name="android.intent.action.PACKAGE_ADDED" />
-				<action android:name="android.intent.action.PACKAGE_REMOVED" />
-				
-				<data android:scheme="package" />
-			</intent-filter>
-		</receiver>
-		<!-- Required SDK核心功能-->
-		<activity
-			android:name="cn.jpush.android.ui.PushActivity"
-			android:configChanges="orientation|keyboardHidden"
-			android:exported="false"
-			android:theme="@android:style/Theme.NoTitleBar">
-			<intent-filter>
-				<action android:name="cn.jpush.android.ui.PushActivity" />
-				
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="com.fmt.ming.paotui" />
-			</intent-filter>
-		</activity>
-		<!-- User defined.  For test only  用户自定义的广播接收器-->
-		<receiver
-			android:name="com.cypal.ming.cypal.service.MyReceiver"
-			android:enabled="true"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
-				<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
-				<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
-				<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
-				<action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
-				<category android:name="com.fmt.ming.paotui" />
-			</intent-filter>
-		</receiver>
-		<!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
-		<receiver android:name="com.cypal.ming.cypal.service.MyJPushMessageReceiver">
-			<intent-filter>
-				<action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-				<category android:name="com.fmt.ming.paotui"></category>
-			</intent-filter>
-		</receiver>
-		<!-- Required SDK核心功能-->
-		<receiver
-			android:name="cn.jpush.android.service.AlarmReceiver"
-			android:exported="false" />
-		
-		<meta-data
-			android:name="JPUSH_CHANNEL"
-			android:value="developer-default" />
-		<meta-data
-			android:name="JPUSH_APPKEY"
-			android:value="f307e385664843db29d953fb" /> <!--  </>值来自开发者平台取得的AppKey-->
-	
-	</application>
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cypal.ming.cypal"
+    android:versionCode="10000"
+    android:versionName="2.5">
+
+    <permission
+        android:name="com.cypal.ming.cypal.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.fmt.ming.paotui.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取用户设备的IMEI，通过IMEI和mac来唯一的标识用户。 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测联网方式，区分用户设备使用的是2G、3G或是WiFi -->
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.android.permission.RECV_XXX" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
+    <!-- <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"></uses-permission> -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取用户设备的mac地址，在平板设备上，无法通过imei标示设备                     ，我们会将mac地址作为用户的唯一标识 -->
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- 来电消音 -->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- ShareSDK -->
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- 安装权限 -->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!-- 屏蔽HOME键需要的权限 -->
+    <application
+        android:name="com.cypal.ming.cypal.base.MianApplication"
+        android:allowBackup="true"
+        android:authorities="com.fmt.ming.paotui.fileProvider"
+        android:exported="false"
+        android:grantUriPermissions="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseTheme"
+        tools:replace="android:name">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+        <meta-data
+
+            android:name="UMENG_APPKEY"
+            android:value="5a1283dbf29d983dfb000182" /> <!-- 友盟数据统计 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="YinYongBao" /> <!-- 友盟数据统计 -->
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="IFZBZ-BB6R5-FXWIR-QWJOK-LSG5T-EPBQS" /><!-- 腾讯地图 -->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" /> <!-- 适配全面屏 -->
+        <service android:name="com.cypal.ming.cypal.service.DownloadService" />
+        <service
+            android:name="com.cypal.ming.cypal.service.VersionService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name="com.cypal.ming.cypal.dialog.CustomDialogActivity"
+            android:theme="@style/versionCheckLibvtransparentTheme" />
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TabActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.cypal.ming.cypal.service.NotificationUpdateActivity"
+            android:theme="@style/notitle1"></activity>
+        <activity
+            android:name="com.cypal.ming.cypal.activity.MeassActivity"
+            android:screenOrientation="portrait" /><!-- 消息列表 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.MapWebviewActivity"
+            android:screenOrientation="portrait" /><!-- 地图网页 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SaveAccountAcitity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /><!-- 添加收款账号-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TopUpDetailsActivity"
+            android:screenOrientation="portrait" /><!-- 充值详情-->
+        <activity
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.cypal.ming.cypal.activity.OrderDetailsActivity"
+            android:configChanges="orientation|screenSize" /><!-- 订单详情-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TopUpListActivity"
+            android:configChanges="orientation|screenSize" /><!-- 订单记录-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.OrderListActivity"
+            android:configChanges="orientation|screenSize" /><!-- 接单记录-->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.TeamRerunsActivity"
+            android:configChanges="orientation|screenSize" /><!-- 团队收益-->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.AddBankActivity"
+            android:configChanges="orientation|screenSize" /><!-- 添加银行卡-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.LoginActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--  启动页-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.cypal.ming.cypal.activity.PersonCenterActivity" />
+        <activity android:name="com.cypal.ming.cypal.activity.SellDetailActivity" /><!-- 订单明细 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SelectCity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 台卡城市选择 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 修改密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.RetrievePasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 找回密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.BankList"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 获取支行列表 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.RefundActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 退还保证金 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.MoneyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!--我的钱包-->
+        <!-- 添加账户 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.AccountListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 账户列表 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.RegisteredActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 注册 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.HelpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 帮助-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.MoneyDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 详情-->
+        <!-- 提现-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.ConditionsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 条件筛选-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.MobilePhoneActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 验证手机-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.VerifyPaymentPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 验证支付密码-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SetPayPasswordOneActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置支付密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SetPayPasswordTwoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置支付密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SucceedWithdrawAccessActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现成功 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.NickNameActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 修改昵称 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.AddAccount2Activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 添加账户 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.CommissionAcitity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 我的佣金 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.WithdrawalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提取佣金 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.ApplyWithdrawActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 提现 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.CertificationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 申请会员 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.MemberActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 会员管理 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.GrabSingleActivity"
+            android:screenOrientation="portrait"
+            android:keepScreenOn="true"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 手动抢单-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.CashAccountListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 账户列表 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.ComplaintOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 申诉订单 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TransferActivity"
+            android:screenOrientation="portrait" /><!-- 好友转账 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TakeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 取件AND送达界面-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.SetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 设置界面-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.InvitationFriendsActivity"
+            android:screenOrientation="portrait" /><!-- 邀请好友-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.FriendsListActivity"
+            android:screenOrientation="portrait" /><!-- 好友列表-->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.WebviewActivity"
+            android:screenOrientation="portrait" /><!-- 网页 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TransfercConfirmActivity"
+            android:screenOrientation="portrait" /><!-- 确认转账页 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.TransferRecordListActivity"
+            android:screenOrientation="portrait" /><!-- 转账记录 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.CashFreezeActivity"
+            android:screenOrientation="portrait" /><!-- 冻结金额记录 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.LoginValidationActivity"
+            android:screenOrientation="portrait" /><!-- 登陆验证页面 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.LoginPhotoValidationActivity"
+            android:screenOrientation="portrait" /><!-- 登陆验证上传照片身份页面 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.PayPasswordActivity"
+            android:screenOrientation="portrait" /><!-- 支付密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.BackPayPasswordActivity"
+            android:screenOrientation="portrait" /><!-- 找回支付密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.ModifyPayPasswordActivity"
+            android:screenOrientation="portrait" /><!-- 修改支付密码 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activityTwo.TeamTopUpActivity"
+            android:screenOrientation="portrait" /><!-- 团队充值 -->
+        <activity
+            android:name="com.cypal.ming.cypal.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" /> <!--微信回调 -->
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <activity
+            android:name="com.cypal.ming.cypal.activity.PersonalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 个人资料 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:exported="false"
+            android:process=":mult">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="com.cypal.ming.cypal.DataProvider"
+            android:exported="false" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.cypal.ming.cypal.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+
+        </provider>
+        <!-- Required SDK核心功能-->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
+                <category android:name="com.fmt.ming.paotui" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <!-- Required SDK核心功能-->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.fmt.ming.paotui" />
+            </intent-filter>
+        </activity>
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <receiver
+            android:name="com.cypal.ming.cypal.service.MyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.fmt.ming.paotui" />
+            </intent-filter>
+        </receiver>
+        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
+        <receiver android:name="com.cypal.ming.cypal.service.MyJPushMessageReceiver">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="com.fmt.ming.paotui"></category>
+            </intent-filter>
+        </receiver>
+        <!-- Required SDK核心功能-->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
+
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="f307e385664843db29d953fb" /> <!--  </>值来自开发者平台取得的AppKey-->
+
+    </application>
 
 </manifest>

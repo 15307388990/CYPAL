@@ -61,8 +61,11 @@ public class WsManager {
         return mInstance;
     }
 
-    public void init(String token, IWsManagerActivityView iWsManagerActivityView) {
-        this.iWsManagerActivityView = iWsManagerActivityView;
+    public void setmListener(IWsManagerActivityView mListener) {
+        this.iWsManagerActivityView = mListener;
+    }
+
+    public void init(String token) {
         try {
             /**
              * configUrl其实是缓存在本地的连接地址
@@ -95,7 +98,9 @@ public class WsManager {
         public void onTextMessage(WebSocket websocket, String text) throws Exception {
             super.onTextMessage(websocket, text);
             String decodedString = new String(Base64.decode(text, Base64.DEFAULT));
-            iWsManagerActivityView.onTextMessage(decodedString);
+            if (iWsManagerActivityView != null) {
+                iWsManagerActivityView.onTextMessage(decodedString);
+            }
             Log.d(TAG, "返回的东西" + decodedString);
         }
 
@@ -105,7 +110,9 @@ public class WsManager {
                 throws Exception {
             super.onConnected(websocket, headers);
             Log.d(TAG, "连接成功");
-            iWsManagerActivityView.onConnected();
+            if (iWsManagerActivityView != null) {
+                iWsManagerActivityView.onConnected();
+            }
             setStatus(WsStatus.CONNECT_SUCCESS);
         }
 
@@ -115,7 +122,10 @@ public class WsManager {
                 throws Exception {
             super.onConnectError(websocket, exception);
             Log.d(TAG, "连接错误");
-            setStatus(WsStatus.CONNECT_FAIL);
+
+            if (iWsManagerActivityView != null) {
+                setStatus(WsStatus.CONNECT_FAIL);
+            }
             reconnect();
         }
 

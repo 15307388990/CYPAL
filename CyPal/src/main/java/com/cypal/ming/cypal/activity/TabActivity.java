@@ -31,6 +31,8 @@ import com.cypal.ming.cypal.fragment.TopUpFragment;
 import com.cypal.ming.cypal.service.VersionService;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
+import com.cypal.ming.cypal.vm.IWsManager;
+import com.cypal.ming.cypal.ws.WsManager;
 import com.githang.statusbar.StatusBarCompat;
 
 import org.json.JSONException;
@@ -64,12 +66,12 @@ public class TabActivity extends BaseActivity {
         setContentView(R.layout.activity_tab);
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
         Tools.webacts.add(this);
+        WsManager.getInstance().init(mSavePreferencesData.getStringData("token"));
         initView();
         initDate();
         //  AppVersion();
         ButterKnife.bind(this);
     }
-
 
     public void initDate() {
         tab_rg_menu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -227,4 +229,22 @@ public class TabActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onConnected() {
+        super.onConnected();
+        if (mMianFragment!=null) {
+            MainFragment mainFragment= (MainFragment) mMianFragment;
+            mainFragment.onConnected();
+        }
+
+    }
+
+    @Override
+    public void onDisconnected() {
+        super.onDisconnected();
+        if (mMianFragment!=null) {
+            MainFragment mainFragment= (MainFragment) mMianFragment;
+            mainFragment.onDisconnected();
+        }
+    }
 }
