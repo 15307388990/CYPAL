@@ -259,7 +259,7 @@ public class MineFragment extends BaseFragment {
             v_yaoqing.setVisibility(View.GONE);
         }
         //是否显示团队收益
-        if (myInformationBeanBean.isShowTeamRecharge) {
+        if (myInformationBeanBean.showTeamRecharge) {
             ll_tuandui.setVisibility(View.VISIBLE);
         } else {
             ll_tuandui.setVisibility(View.GONE);

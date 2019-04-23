@@ -356,7 +356,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:text="邀请好友"
+                android:text="团队收益"
                 android:textColor="@color/actionbar_title_color"
                 android:textSize="15sp" />
 

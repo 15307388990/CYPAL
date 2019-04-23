@@ -72,6 +72,12 @@ public class TeamTopUpAdapter extends RecyclerView.Adapter<TeamTopUpAdapter.View
                 onClickListener.OnClick(contentBean);
             }
         });
+        holder.iv_cb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.OnClick(contentBean);
+            }
+        });
         holder.ll_yout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

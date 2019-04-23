@@ -67,7 +67,7 @@ public class TeamRerunsActivity extends BaseActivity implements CategoryAdapter.
      */
     private void teamBankCard() {
         Map<String, String> map = new HashMap<>();
-        mQueue.add(ParamTools.packParam(Const.teamBankCard, this, this, map, Request.Method.GET, this));
+        mQueue.add(ParamTools.packParam(Const.teamRecharge, this, this, map, Request.Method.GET, this));
         loading();
     }
 
@@ -95,7 +95,7 @@ public class TeamRerunsActivity extends BaseActivity implements CategoryAdapter.
 
     @Override
     protected void returnData(String data, String url) {
-        if (url.contains(Const.order)) {
+        if (url.contains(Const.teamRecharge)) {
             try {
                 list.clear();
                 JSONObject json = new JSONObject(data);
@@ -104,9 +104,9 @@ public class TeamRerunsActivity extends BaseActivity implements CategoryAdapter.
 
                 List<OderDetailsItemVM> itemVMS = JSON.parseArray(datebean, OderDetailsItemVM.class);
                 if (itemVMS.size() > 0) {
-                    teamRerunsHeadVM.setWuVisibility(View.VISIBLE);
-                } else {
                     teamRerunsHeadVM.setWuVisibility(View.GONE);
+                } else {
+                    teamRerunsHeadVM.setWuVisibility(View.VISIBLE);
                 }
                 list.add(teamRerunsHeadVM);
                 for (OderDetailsItemVM oderDetailsItemVM : itemVMS) {

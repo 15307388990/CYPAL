@@ -39,7 +39,7 @@ public class InfoEntity {
             public String account;
             public boolean showInviteFriends;
             public boolean certification;
-            public boolean isShowTeamRecharge;
+            public boolean showTeamRecharge;
         }
     }
 }
