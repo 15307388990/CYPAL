@@ -167,9 +167,6 @@ public class TabActivity extends BaseActivity {
         permissonItems.add(new PermissionItem(Manifest.permission.CALL_PHONE, "打电话", R.drawable.permission_ic_phone));
         permissonItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "拍照", R.drawable.permission_ic_camera));
         permissonItems.add(new PermissionItem(Manifest.permission.CAMERA, "相册", R.drawable.permission_ic_storage));
-        permissonItems.add(new PermissionItem(Manifest.permission.ACCESS_COARSE_LOCATION, "定位", R.drawable.permission_ic_location));
-        permissonItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "文件下载", R.drawable.permission_ic_storage));
-        permissonItems.add( new PermissionItem( Manifest.permission.READ_EXTERNAL_STORAGE, "文件读取", R.drawable.permission_ic_location ) );
         HiPermission.create(TabActivity.this).permissions(permissonItems)
                 .checkMutiPermission(new PermissionCallback() {
                     @Override
