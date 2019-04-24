@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,7 +84,7 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
         map.put("type", currentSelectTab);
         map.put("page", pageNumber + "");
         map.put("size", "10");
-        mQueue.add(ParamTools.packParam(Const.commision, this, this, map, Request.Method.GET,this));
+        mQueue.add(ParamTools.packParam(Const.commision, this, this, map, Request.Method.GET, this));
         loading();
     }
 
@@ -149,9 +150,11 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                Intent intent = new Intent(CommissionAcitity.this, WithdrawalActivity.class);
-                intent.putExtra("amount", commissionEntity.data.myCommisionBalance + "");
-                startActivity(intent);
+                if (!TextUtils.isEmpty(commissionEntity.data.myCommisionBalance + "")) {
+                    Intent intent = new Intent(CommissionAcitity.this, WithdrawalActivity.class);
+                    intent.putExtra("amount", commissionEntity.data.myCommisionBalance + "");
+                    startActivity(intent);
+                }
                 break;
         }
     }

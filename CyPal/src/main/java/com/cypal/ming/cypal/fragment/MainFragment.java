@@ -95,6 +95,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         super(context);
     }
 
+    public MainFragment() {
+    }
+
     private TextView tv_number;
     private List<IndexEntity.DataBean.UndoOrderBean.ContentBean> orderModels;
     private int pageNumber = 1;
@@ -604,7 +607,6 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             }
         }
     }
-
 
 
     /**
