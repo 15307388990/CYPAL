@@ -247,4 +247,13 @@ public class TabActivity extends BaseActivity {
             mainFragment.onDisconnected();
         }
     }
+
+    @Override
+    public void onTextMessage(String text) {
+        super.onTextMessage(text);
+        if (mMianFragment!=null) {
+            MainFragment mainFragment= (MainFragment) mMianFragment;
+            mainFragment.onTextMessage(text);
+        }
+    }
 }

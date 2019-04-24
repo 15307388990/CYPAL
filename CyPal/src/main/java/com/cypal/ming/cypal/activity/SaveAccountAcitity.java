@@ -75,6 +75,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     private View bootomView;
     private AddAccoutAdapter accoutAdapter;
     private int position;
+    private TextView tv_text;
 
 
     @Override
@@ -106,6 +107,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
          * bootomView
          */
         btn_next = (Button) bootomView.findViewById(R.id.btn_next);
+        tv_text = (TextView) bootomView.findViewById(R.id.tv_text);
 
 
         btn_next.setOnClickListener(this);
@@ -166,6 +168,9 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         if (dataBean != null) {
             InitDate(dataBean);
         }
+        tv_text.setText("温馨提示： \n\n 1、请确保" + value + "已实名认证，并填写真实姓名（请不要填写 呢称） \n\n2、为了保证顺利提现，" +
+                "30天内不要更换其他账号，否则会 导致提现不通过 \n\n3.本功能需要上传同一" + value + "14个金额码，请确保码的金额与添加的金额完全对应，否则不会收款到账。" +
+                "\n\n4、我们承诺不会向任何人透露您的个人信息");
         accoutAdapter = new AddAccoutAdapter(this, accountDatas, this);
         accoutAdapter.setHeaderView(headView);
         accoutAdapter.setFooderView(bootomView);
@@ -262,7 +267,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
                 @Override
                 public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
 
-                    accountDatas.get(position - 2).accountData = result;
+                    accountDatas.get(position - 1).accountData = result;
                     accoutAdapter.updateAdapter(accountDatas);
 
                 }

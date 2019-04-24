@@ -117,6 +117,22 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
             } else if (msg.what == 3) {
                 top_view_text.setText("首页");
+            } else if (msg.what == 1) {
+                String text = (String) msg.obj;
+                if (!TextUtils.isEmpty(text)) {
+                    try {
+                        ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
+                        Log.d("WsManager", "接收开始判断类型");
+                        if (!managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
+                            Log.d("WsManager", "通知");
+                            iv_round_red.setVisibility(View.VISIBLE);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Tools.showToast(mcontext, "出现异常，请重新登录");
+                    }
+                }
             }
 
 
@@ -125,6 +141,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private String method;
     private boolean isStar;
     private VersionUpgradeDialog versionUpgradeDialog;
+    private ImageView iv_round_red;
 
 
     @Override
@@ -167,6 +184,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         springView = (SpringView) view.findViewById(R.id.springView);
         tv_number = (TextView) view.findViewById(R.id.tv_number);
         ll_view_back = (RelativeLayout) view.findViewById(R.id.ll_view_back);
+        iv_round_red = (ImageView) view.findViewById(R.id.iv_round_red);
         top_view_text = (TextView) view.findViewById(R.id.top_view_text);
         auto_textview = (AutoVerticalScrollTextView) view.findViewById(R.id.auto_textview);
         orderModels = new ArrayList<IndexEntity.DataBean.UndoOrderBean.ContentBean>();
@@ -222,6 +240,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         ll_view_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                iv_round_red.setVisibility(View.GONE);
                 Tools.jump(mcontext, MeassActivity.class, false);
 
             }
@@ -630,6 +649,21 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void run() {
                 handler.sendEmptyMessage(3);
+            }
+        }.start();
+    }
+
+    /**
+     * 有消息
+     */
+    public void onTextMessage(final String text) {
+        new Thread() {
+            @Override
+            public void run() {
+                Message message = Message.obtain();
+                message.obj = text;
+                message.what = 1;
+                handler.sendMessage(message);
             }
         }.start();
     }
