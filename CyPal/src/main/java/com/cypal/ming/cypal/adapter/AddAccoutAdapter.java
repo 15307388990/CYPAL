@@ -101,6 +101,8 @@ public class AddAccoutAdapter extends RecyclerView.Adapter<AddAccoutAdapter.View
         if (!TextUtils.isEmpty(sellBean.accountData)) {
             Bitmap bitmap = CodeUtils.createImage(sellBean.accountData, 160, 160, null);
             holder.iv_pay1.setImageBitmap(bitmap);
+        } else {
+            holder.iv_pay1.setImageResource(R.drawable.icon_add_bank);
         }
         holder.iv_pay1.setOnClickListener(new View.OnClickListener() {
             @Override
