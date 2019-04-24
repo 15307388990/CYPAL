@@ -262,7 +262,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
                 @Override
                 public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
 
-                    accountDatas.get(position - 1).accountData = result;
+                    accountDatas.get(position - 2).accountData = result;
                     accoutAdapter.updateAdapter(accountDatas);
 
                 }
