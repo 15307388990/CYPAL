@@ -1,6 +1,7 @@
 package com.cypal.ming.cypal.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +44,9 @@ public class ParamTools {
                 map.put("token", savePreferencesData.getStringData("token"));
                 map.put("brand", Tools.getBrandName());//品牌
                 map.put("brandModel", Tools.getBrandModel());//型号
-                map.put("IMEI", Tools.getImei(context));//型号
+                if (!TextUtils.isEmpty(Tools.getImei(context))) {
+                    map.put("IMEI", Tools.getImei(context));//型号
+                }
                 return map;
             }
         };
@@ -80,7 +83,9 @@ public class ParamTools {
                 map.put("token", savePreferencesData.getStringData("token"));
                 map.put("brand", Tools.getBrandName());//品牌
                 map.put("brandModel", Tools.getBrandModel());//型号
-                map.put("IMEI", Tools.getImei(context));//型号
+                if (!TextUtils.isEmpty(Tools.getImei(context))) {
+                    map.put("IMEI", Tools.getImei(context));//型号
+                }
                 return map;
             }
 
@@ -167,7 +172,10 @@ public class ParamTools {
                 map.put("token", savePreferencesData.getStringData("token"));
                 map.put("brand", Tools.getBrandName());//品牌
                 map.put("brandModel", Tools.getBrandModel());//型号
-                map.put("IMEI", Tools.getImei(context));//型号
+                if (!TextUtils.isEmpty(Tools.getImei(context))) {
+                    map.put("IMEI", Tools.getImei(context));//型号
+                }
+
                 return map;
             }
         };

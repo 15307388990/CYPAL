@@ -78,6 +78,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Tools.acts.add(this);
         ButterKnife.bind(this);
         IsMsgDiolg();
+
     }
 
     /**

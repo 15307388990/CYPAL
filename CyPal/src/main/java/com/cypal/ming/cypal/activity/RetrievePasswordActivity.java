@@ -24,11 +24,15 @@ import com.cypal.ming.cypal.utils.MyCountTimer;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -69,6 +73,28 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
         initView();
         initOnclik();
         initEvent();
+        initPermission();
+    }
+    /**
+     * 获取手机信息权限
+     */
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_PHONE_STATE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(RetrievePasswordActivity.this, "无法获取手机状态信息，应用无法正常使用");
+                    }
+                }).
+                start();
+
     }
 
     private void initView() {
