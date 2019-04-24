@@ -41,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cc.shinichi.library.ImagePreview;
+
 /**
  * 充值详情
  */
@@ -226,9 +228,40 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
 
     }
 
+    /**
+     * 保存二维码
+     */
     public void onSaveBitmap(String qrcodeSrc) {
         Tools.onSaveBitmap(CodeUtils.createImage(qrcodeSrc, 150, 150, null), TopUpDetailsActivity.this);
         Tools.showToast(this, "二维码已保存到系统图库");
+    }
+
+    /**
+     * 查看凭证
+     */
+    public void onStartImg(String paymentVoucher) {
+        ImagePreview
+                .getInstance()
+                // 上下文，必须是activity，不需要担心内存泄漏，本框架已经处理好；
+                .setContext(TopUpDetailsActivity.this)
+
+                // 设置从第几张开始看（索引从0开始）
+                // .setIndex(0)
+
+                //=================================================================================================
+                // 有三种设置数据集合的方式，根据自己的需求进行三选一：
+                // 1：第一步生成的imageInfo List
+                //.setImageInfoList(imageInfoList)
+
+                // 2：直接传url List
+                //.setImageList(List<String> imageList)
+
+                // 3：只有一张图片的情况，可以直接传入这张图片的url
+                .setImage(paymentVoucher)
+                //=================================================================================================
+
+                // 开启预览
+                .start();
     }
 
     /**
@@ -267,18 +300,19 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
                     }
                 }).show(this);
     }
+
     @Override
     public void copyName(OderDetailsItemVM viewModel) {
-        ClipboardManager cmb = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(viewModel.getAccountName());
-        Tools.showToast(this,"复制成功");
+        Tools.showToast(this, "复制成功");
     }
 
     @Override
     public void copyCard(OderDetailsItemVM viewModel) {
-        ClipboardManager cmb = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(viewModel.getAccountData());
-        Tools.showToast(this,"复制成功");
+        Tools.showToast(this, "复制成功");
 
     }
 }

@@ -10,6 +10,10 @@
             name="viewModel"
             type="com.cypal.ming.cypal.vm.OderDetailsVM" />
 
+        <variable
+            name="eventHandler"
+            type="com.cypal.ming.cypal.activity.TopUpDetailsActivity" />
+
     </data>
 
     <LinearLayout
@@ -131,20 +135,32 @@
                 tools:text="王庆喜" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="付款凭证"
+            android:visibility="@{viewModel.paymentVoucherVisibility}"
+            android:onClick="@{() -> eventHandler.onStartImg(viewModel.paymentVoucher)}"
+            android:textColor="#ff3776fb"
+            android:textSize="15sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="11dp"
             android:background="@drawable/line_bg" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="center"
+            android:layout_height="25dp"
             android:text="商家收款帐号"
-            android:textColor="#ff999999"
-            android:textSize="15sp" />
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ff333333"
+            android:textSize="18sp"
+            />
     </LinearLayout>
 
 </layout>

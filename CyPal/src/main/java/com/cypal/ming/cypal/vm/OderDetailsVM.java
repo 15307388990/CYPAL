@@ -4,6 +4,8 @@ import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.databinding.Observable;
 import android.databinding.PropertyChangeRegistry;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cypal.ming.cypal.BR;
@@ -44,7 +46,9 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
     private int rechargeUserId;
     private String payAccountJson;
     private String remark;
+    private String paymentVoucher;
     private String statusEnum;
+    private int paymentVoucherVisibility = View.GONE;//付款凭证
     private transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
 
     @Override
@@ -52,13 +56,13 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
         if (propertyChangeRegistry == null) {
             propertyChangeRegistry = new PropertyChangeRegistry();
         }
-        propertyChangeRegistry.add( callback );
+        propertyChangeRegistry.add(callback);
     }
 
     @Override
     public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
         if (propertyChangeRegistry != null) {
-            propertyChangeRegistry.remove( callback );
+            propertyChangeRegistry.remove(callback);
         }
     }
 
@@ -74,7 +78,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setAmount(String amount) {
         this.amount = amount;
-        notifyChange( BR.amount );
+        notifyChange(BR.amount);
     }
 
     @Bindable
@@ -84,14 +88,14 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
-        notifyChange( BR.orderNo );
+        notifyChange(BR.orderNo);
     }
 
     private synchronized void notifyChange(int propertyId) {
         if (propertyChangeRegistry == null) {
             propertyChangeRegistry = new PropertyChangeRegistry();
         }
-        propertyChangeRegistry.notifyChange( this, propertyId );
+        propertyChangeRegistry.notifyChange(this, propertyId);
     }
 
     @Bindable
@@ -101,7 +105,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setId(int id) {
         this.id = id;
-        notifyChange( BR.id );
+        notifyChange(BR.id);
     }
 
     @Bindable
@@ -111,7 +115,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-        notifyChange( BR.createTime );
+        notifyChange(BR.createTime);
     }
 
     @Bindable
@@ -121,7 +125,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        notifyChange( BR.deleted );
+        notifyChange(BR.deleted);
     }
 
     @Bindable
@@ -131,7 +135,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setRwpId(int rwpId) {
         this.rwpId = rwpId;
-        notifyChange( BR.rwpId );
+        notifyChange(BR.rwpId);
     }
 
     @Bindable
@@ -141,7 +145,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setWithdrawUserId(int withdrawUserId) {
         this.withdrawUserId = withdrawUserId;
-        notifyChange( BR.withdrawUserId );
+        notifyChange(BR.withdrawUserId);
     }
 
     @Bindable
@@ -151,7 +155,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setWithdrawUserNickName(String withdrawUserNickName) {
         this.withdrawUserNickName = withdrawUserNickName;
-        notifyChange( BR.withdrawUserNickName );
+        notifyChange(BR.withdrawUserNickName);
     }
 
     @Bindable
@@ -161,7 +165,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setRechargeUserId(int rechargeUserId) {
         this.rechargeUserId = rechargeUserId;
-        notifyChange( BR.rechargeUserId );
+        notifyChange(BR.rechargeUserId);
     }
 
     @Bindable
@@ -171,7 +175,7 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setPayAccountJson(String payAccountJson) {
         this.payAccountJson = payAccountJson;
-        notifyChange( BR.payAccountJson );
+        notifyChange(BR.payAccountJson);
     }
 
     @Bindable
@@ -181,26 +185,26 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setRemark(String remark) {
         this.remark = remark;
-        notifyChange( BR.remark );
+        notifyChange(BR.remark);
     }
 
     @BindingAdapter(value = {"state"})
     public static void setStateTextView(TextView textView, String state) {
-        if (state.equals( TopUpState.TRADING.toString())) {
-            textView.setText( "未付款" );
-            textView.setBackgroundResource( R.drawable.toup_ff9901_bg );
-        } else if (state.equals( TopUpState.CANCEL.toString() )) {
-            textView.setText( "已取消" );
-            textView.setBackgroundResource( R.drawable.toup_bbbbbb_bg );
-        } else if (state.equals( TopUpState.SERVICE.toString() )) {
-            textView.setText( "申诉中" );
-            textView.setBackgroundResource( R.drawable.toup_3776fb_bg );
-        } else if (state.equals( TopUpState.SUCCESS.toString() )) {
-            textView.setText( "已完成" );
-            textView.setBackgroundResource( R.drawable.toup_00bd00_bg );
+        if (state.equals(TopUpState.TRADING.toString())) {
+            textView.setText("未付款");
+            textView.setBackgroundResource(R.drawable.toup_ff9901_bg);
+        } else if (state.equals(TopUpState.CANCEL.toString())) {
+            textView.setText("已取消");
+            textView.setBackgroundResource(R.drawable.toup_bbbbbb_bg);
+        } else if (state.equals(TopUpState.SERVICE.toString())) {
+            textView.setText("申诉中");
+            textView.setBackgroundResource(R.drawable.toup_3776fb_bg);
+        } else if (state.equals(TopUpState.SUCCESS.toString())) {
+            textView.setText("已完成");
+            textView.setBackgroundResource(R.drawable.toup_00bd00_bg);
         } else {
-            textView.setText( "待确认" );
-            textView.setBackgroundResource( R.drawable.toup_ff9901_bg );
+            textView.setText("待确认");
+            textView.setBackgroundResource(R.drawable.toup_ff9901_bg);
         }
 
     }
@@ -212,6 +216,30 @@ public class OderDetailsVM implements BindingAdapterItemType, Observable {
 
     public void setStatusEnum(String statusEnum) {
         this.statusEnum = statusEnum;
-        notifyChange( BR.statusEnum );
+        notifyChange(BR.statusEnum);
+    }
+
+    @Bindable
+    public String getPaymentVoucher() {
+        return paymentVoucher;
+    }
+
+    public void setPaymentVoucher(String paymentVoucher) {
+        this.paymentVoucher = paymentVoucher;
+        notifyChange(BR.paymentVoucher);
+    }
+
+    @Bindable
+    public int getPaymentVoucherVisibility() {
+        if (TextUtils.isEmpty(paymentVoucher)) {
+            return View.GONE;
+        } else {
+            return View.VISIBLE;
+        }
+    }
+
+    public void setPaymentVoucherVisibility(int paymentVoucherVisibility) {
+        this.paymentVoucherVisibility = paymentVoucherVisibility;
+        notifyChange(BR.paymentVoucherVisibility);
     }
 }

@@ -29,6 +29,7 @@ import com.cypal.ming.cypal.bean.AccountEntity;
 import com.cypal.ming.cypal.bean.AccountListEntity;
 import com.cypal.ming.cypal.bean.PayAccoutBobyEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
 import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.MD5Util;
@@ -120,25 +121,12 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SaveAccountAcitity.this);
-                builder.setMessage("确定删除该账号?");
-                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-
+                new CancelTheDealDialog().setTitle("确定删除该账号?").setOktext("确定").setQtext("取消").setOnClickListener(new CancelTheDealDialog.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void successful() {
                         del();
-
                     }
-                });
-                builder.create().show();
+                }).show(this);
 
             }
         });
