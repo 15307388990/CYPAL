@@ -1,5 +1,8 @@
 package com.cypal.ming.cypal.activity;
 
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -64,6 +67,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
                             list.add(contentEntity);
                             initYou(contentEntity);
                             UpdateAdapter();
+                            Play();
                         }
 
                     } catch (Exception e) {
@@ -296,5 +300,12 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
         this.orderId = orderId;
         this.amount = amount;
         take();
+    }
+
+    private void Play() {
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone rt = RingtoneManager.getRingtone(getApplicationContext(), uri);
+        rt.play();
+
     }
 }
