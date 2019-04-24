@@ -20,6 +20,9 @@ import com.cypal.ming.cypal.databinding.ConfirmPaymentDialogBinding;
 import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.SavePreferencesData;
 import com.cypal.ming.cypal.utils.Tools;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,8 +85,8 @@ public class ConfirmPaymentDialog extends CenterDialog {
     public static ConfirmPaymentDialog newInstance(String url) {
         ConfirmPaymentDialog dialog = new ConfirmPaymentDialog();
         Bundle bundle = new Bundle();
-        bundle.putString( URL, url );
-        dialog.setArguments( bundle );
+        bundle.putString(URL, url);
+        dialog.setArguments(bundle);
         return dialog;
     }
 
@@ -99,7 +102,7 @@ public class ConfirmPaymentDialog extends CenterDialog {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss( dialog );
+        super.onDismiss(dialog);
     }
 
     @Override
@@ -109,29 +112,29 @@ public class ConfirmPaymentDialog extends CenterDialog {
 
     @Override
     public int getWindowWidth() {
-        return (int) (Tools.getScreenWidth( getActivity() ) * 0.75);
+        return (int) (Tools.getScreenWidth(getActivity()) * 0.75);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult( requestCode, resultCode, data );
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                resultList = data.getExtras().getStringArrayList( "select_result" );
+                resultList = data.getExtras().getStringArrayList("select_result");
                 bitmapInfos = new ArrayList<Bitmap>();
                 filePaths = new ArrayList<String>();
                 icon_ids = new ArrayList<String>();
 
                 for (int k = 0; k < resultList.size(); k++) {
-                    Bitmap bitmap = ImageUtil.decodeImage( resultList.get( k ) );
-                    bitmapInfos.add( bitmap );
-                    filePaths.add( resultList.get( k ) );
+                    Bitmap bitmap = ImageUtil.decodeImage(resultList.get(k));
+                    bitmapInfos.add(bitmap);
+                    filePaths.add(resultList.get(k));
                 }
                 Map<String, String> map = new HashMap<>();
-                map.put( "uploadEnum", "pay" );
-                File file = new File( filePaths.get( 0 ) );
-                imageView.setImageBitmap( bitmapInfos.get( 0 ) );
-                post_file( map, file );
+                map.put("uploadEnum", "pay");
+                File file = new File(filePaths.get(0));
+                imageView.setImageBitmap(bitmapInfos.get(0));
+                post_file(map, file);
 
 
             }
@@ -142,65 +145,58 @@ public class ConfirmPaymentDialog extends CenterDialog {
     public void initView(ViewDataBinding dataBinding) {
         binding = (ConfirmPaymentDialogBinding) dataBinding;
         imageView = binding.ivImg;
-        mDialog = new ProgressDialog( ConfirmPaymentDialog.this.getActivity() );
-        mSavePreferencesData = new SavePreferencesData( ConfirmPaymentDialog.this.getActivity() );
-        mDialog.setCancelable( false );
+        mDialog = new ProgressDialog(ConfirmPaymentDialog.this.getActivity());
+        mSavePreferencesData = new SavePreferencesData(ConfirmPaymentDialog.this.getActivity());
+        mDialog.setCancelable(false);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String buildUrl = bundle.getString( URL );
+            String buildUrl = bundle.getString(URL);
         }
-        binding.ivImg.setOnClickListener( new View.OnClickListener() {
+        binding.ivImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( ConfirmPaymentDialog.this.getActivity(),
-                        MultiImageSelectorActivity.class );
-                intent.putExtra( "isUploadIcon", true );
-                intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                        false );
-                intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                        1 );
-                startActivityForResult( intent, 1 );
+                initPermission();
             }
-        } );
-        binding.tvOk.setOnClickListener( new View.OnClickListener() {
+        });
+        binding.tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.successful( paymentVoucher );
+                onClickListener.successful(paymentVoucher);
                 dismiss();
             }
-        } );
-        binding.tvCancle.setOnClickListener( new View.OnClickListener() {
+        });
+        binding.tvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
-        } );
+        });
     }
 
     protected void post_file(final Map<String, String> map, File file) {
-        mDialog.setMessage( "图片上传中..." );
+        mDialog.setMessage("图片上传中...");
         mDialog.show();
         OkHttpClient client = new OkHttpClient();
         // form 表单形式上传
-        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType( MultipartBody.FORM );
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (file != null) {
             // MediaType.parse() 里面是上传的文件类型。
-            RequestBody body = RequestBody.create( MediaType.parse( "image/*" ), file );
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
             String filename = file.getName();
             // 参数分别为， 请求key ，文件名称 ， RequestBody
-            requestBody.addFormDataPart( "file", file.getName(), body );
+            requestBody.addFormDataPart("file", file.getName(), body);
         }
         if (map != null) {
             // map 里面是请求中所需要的 key 和 value
             for (Map.Entry entry : map.entrySet()) {
-                requestBody.addFormDataPart( valueOf( entry.getKey() ), valueOf( entry.getValue() ) );
+                requestBody.addFormDataPart(valueOf(entry.getKey()), valueOf(entry.getValue()));
             }
         }
-        Request request = new Request.Builder().url( Const.BASE_URL + Const.image ).post( requestBody.build() ).tag( this ).
-                build().newBuilder().addHeader( "token", mSavePreferencesData.getStringData( "token" ) ).
-                addHeader( "os", "android" ).addHeader( "version", "1001" ).build();
+        Request request = new Request.Builder().url(Const.BASE_URL + Const.image).post(requestBody.build()).tag(this).
+                build().newBuilder().addHeader("token", mSavePreferencesData.getStringData("token")).
+                addHeader("os", "android").addHeader("version", "1001").build();
         // readTimeout("请求超时时间" , 时间单位);
-        client.newBuilder().readTimeout( 5000, TimeUnit.MILLISECONDS ).build().newCall( request ).enqueue( new Callback() {
+        client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 mDialog.dismiss();
@@ -211,7 +207,7 @@ public class ConfirmPaymentDialog extends CenterDialog {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String str = response.body().string();
-                    changejson( str );
+                    changejson(str);
 
                     mDialog.dismiss();
                     // Log.i("lfq", response.message() + " , body " + str);
@@ -221,27 +217,57 @@ public class ConfirmPaymentDialog extends CenterDialog {
                     // Log.i("lfq" ,response.message() + " error : body " + response.body().string());
                 }
             }
-        } );
+        });
+
+    }
+
+    /**
+     * 获取相册权限
+     */
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Intent intent = new Intent(ConfirmPaymentDialog.this.getActivity(),
+                                MultiImageSelectorActivity.class);
+                        intent.putExtra("isUploadIcon", true);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
+                                false);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
+                                1);
+                        startActivityForResult(intent, 1);
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(ConfirmPaymentDialog.this.getActivity(), "需要获取相册权限");
+                    }
+                }).
+                start();
 
     }
 
     private void changejson(String response) {
         try {
-            JSONObject json = new JSONObject( response );
-            int stauts = json.optInt( "code" );
-            String msg = json.optString( "msg" );
+            JSONObject json = new JSONObject(response);
+            int stauts = json.optInt("code");
+            String msg = json.optString("msg");
             if (stauts == 1) {
-                String data = json.optString( "data" );
-                List<String> list = JSON.parseArray( data, String.class );
-                paymentVoucher = list.get( 0 );
+                String data = json.optString("data");
+                List<String> list = JSON.parseArray(data, String.class);
+                paymentVoucher = list.get(0);
 
             } else {
-                Tools.showToast( getActivity(), msg );
+                Tools.showToast(getActivity(), msg);
             }
         } catch (
                 JSONException e) {
             e.printStackTrace();
-            Tools.showToast( getActivity(), "数据格式不对" );
+            Tools.showToast(getActivity(), "数据格式不对");
         }
 
     }
