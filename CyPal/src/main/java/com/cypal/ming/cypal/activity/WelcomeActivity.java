@@ -9,6 +9,12 @@ import android.widget.LinearLayout;
 
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.utils.Tools;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
+import java.util.List;
 
 public class WelcomeActivity extends BaseActivity {
     private LinearLayout view;
@@ -42,15 +48,7 @@ public class WelcomeActivity extends BaseActivity {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            Intent intent = new Intent();
-            String auth_token = mSavePreferencesData.getStringData("token");
-            if (auth_token != null && !auth_token.equals("")) {
-                intent.setClass(WelcomeActivity.this, TabActivity.class);
-            } else {
-                intent.setClass(WelcomeActivity.this, LoginActivity.class);
-            }
-            startActivity(intent);
-            WelcomeActivity.this.finish();
+            initPermission();
         }
 
         @Override
@@ -59,7 +57,36 @@ public class WelcomeActivity extends BaseActivity {
         }
 
     }
+    /**
+     * 获取手机信息权限
+     */
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_PHONE_STATE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Intent intent = new Intent();
+                        String auth_token = mSavePreferencesData.getStringData("token");
+                        if (auth_token != null && !auth_token.equals("")) {
+                            intent.setClass(WelcomeActivity.this, TabActivity.class);
+                        } else {
+                            intent.setClass(WelcomeActivity.this, LoginActivity.class);
+                        }
+                        startActivity(intent);
+                        WelcomeActivity.this.finish();
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(WelcomeActivity.this, "无法获取手机状态信息，应用无法正常使用");
+                    }
+                }).
+                start();
 
+    }
 
     @Override
     public void onResponse(String response, String url) {
