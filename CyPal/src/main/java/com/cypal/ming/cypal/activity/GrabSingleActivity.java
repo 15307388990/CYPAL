@@ -57,31 +57,33 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
     private String amount;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            if (msg.what == 1) {
-                String text = (String) msg.obj;
-                if (!TextUtils.isEmpty(text)) {
-                    try {
-                        ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
-                        if (managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
-                            ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
-                            list.add(contentEntity);
-                            initYou(contentEntity);
-                            UpdateAdapter();
-                            Play();
+            if (!GrabSingleActivity.this.isFinishing()) {
+                if (msg.what == 1) {
+                    String text = (String) msg.obj;
+                    if (!TextUtils.isEmpty(text)) {
+                        try {
+                            ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
+                            if (managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
+                                ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
+                                list.add(contentEntity);
+                                initYou(contentEntity);
+                                UpdateAdapter();
+                                Play();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Tools.showToast(GrabSingleActivity.this, "出现异常，请重新登录");
                         }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Tools.showToast(GrabSingleActivity.this, "出现异常，请重新登录");
                     }
+                } else if (msg.what == 2) {
+                    top_view_text.setText("手动抢单（离线）");
+
+                } else if (msg.what == 3) {
+                    top_view_text.setText("手动抢单");
                 }
-            } else if (msg.what == 2) {
-                top_view_text.setText("手动抢单（离线）");
 
-            } else if (msg.what == 3) {
-                top_view_text.setText("手动抢单");
             }
-
         }
     };
     private TextView tv_you1;
@@ -101,7 +103,6 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // WsManager.getInstance().disconnect();
     }
 
     /**
@@ -176,6 +177,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
             //抢单成功
             // GradSingDialog.newInstance(amount).show(GrabSingleActivity.this);
             new CancelTheDealDialog().setTitle("恭喜您抢单成功").
+                    setIsQuBtn(false).
                     setContext("¥" + amount).setOktext("继续").show(GrabSingleActivity.this);
             //显示已抢光
             for (int i = 0; i < list.size(); i++) {

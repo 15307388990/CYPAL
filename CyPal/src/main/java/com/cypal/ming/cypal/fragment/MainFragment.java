@@ -351,6 +351,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         loading();
     }
 
+
+
     /**
      * 确认收款
      */
@@ -447,8 +449,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             orderList();
         } else if (url.contains(Const.appeal)) {
             orderList();
-        }
-        if (url.contains(Const.setPayPassword)) {
+        } else if (url.contains(Const.setPayPassword)) {
             Tools.showToast(mcontext, "设置成功");
             mSavePreferencesData.putBooleanData("hasPayPassword", true);
         }

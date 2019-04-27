@@ -5,9 +5,11 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ import com.cypal.ming.cypal.bindingdata.BindingAdapterItemType;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.dialogfrment.ConfirmPaymentDialog;
+import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.cypal.ming.cypal.utils.TopUpState;
@@ -42,6 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 import cc.shinichi.library.ImagePreview;
+
+import static com.cypal.ming.cypal.config.Const.start;
 
 /**
  * 充值详情
@@ -95,12 +101,14 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     /**
      * 确认付款
      */
-    private void rwconfirm(String paymentVoucher) {
+    private void rwconfirm(String paymentVoucher, String pwd) {
         if (!TextUtils.isEmpty(orderId)) {
             Map<String, String> map = new HashMap<>();
             map.put("orderId", orderId);
             map.put("paymentVoucher", paymentVoucher);
             map.put("remark", "dasd");
+            String paypass = MD5Util.getMD5String(pwd);
+            map.put("payPassword", paypass);
             mQueue.add(ParamTools.packParam(Const.rwconfirm, this, this, this, map));
             loading();
         }
@@ -166,7 +174,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
                     ConfirmPaymentDialog.newInstance("").setOnClickListener(new ConfirmPaymentDialog.OnClickListener() {
                         @Override
                         public void successful(String paymentVoucher) {
-                            rwconfirm(paymentVoucher);
+                            inoutPsw(paymentVoucher);
                         }
                     }).show(TopUpDetailsActivity.this);
 
@@ -179,6 +187,40 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
                 }
             }
         });
+    }
+
+    //打开输入密码的对话框
+    public void inoutPsw(final String paymentVoucher) {
+        final boolean hasPayPassword = mSavePreferencesData.getBooleanData("hasPayPassword");
+        SelectPopupWindow menuWindow = new SelectPopupWindow(this, new SelectPopupWindow.OnPopWindowClickListener() {
+            @Override
+            public void onPopWindowClickListener(String psw, boolean complete) {
+                if (complete) {
+                    if (hasPayPassword) {
+                        rwconfirm(paymentVoucher, psw);
+                    } else {
+                        setPayPassword(psw);
+                    }
+                }
+            }
+        });
+        if (!hasPayPassword) {
+            menuWindow.setTitle("设置支付密码");
+        }
+        Rect rect = new Rect();
+        this.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = this.getWindow().getDecorView().getHeight();
+        menuWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+    }
+
+    /**
+     * 设置支付密码
+     */
+    private void setPayPassword(String payPassword) {
+        Map<String, String> map = new HashMap<>();
+        map.put("payPassword", MD5Util.getMD5String(payPassword));
+        mQueue.add(ParamTools.packParam(Const.setPayPassword, this, this, this, map));
+        loading();
     }
 
     @Override
@@ -214,6 +256,9 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
             order();
         } else if (url.contains(Const.service)) {
             order();
+        } else if (url.contains(Const.setPayPassword)) {
+            Tools.showToast(this, "设置成功");
+            mSavePreferencesData.putBooleanData("hasPayPassword", true);
         }
 
 

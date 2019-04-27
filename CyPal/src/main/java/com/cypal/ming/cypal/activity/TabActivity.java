@@ -256,4 +256,10 @@ public class TabActivity extends BaseActivity {
             mainFragment.onTextMessage(text);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        WsManager.getInstance().disconnect();
+    }
 }

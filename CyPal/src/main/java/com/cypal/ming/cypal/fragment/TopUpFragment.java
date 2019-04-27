@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     private boolean isxia = true;
     List<TopUpEntity.DataBean.ContentBean> list;
     private TextView right_view_text;
+    private LinearLayout ll_wu;
 
     public TopUpFragment(Activity context) {
         super(context);
@@ -67,6 +69,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
         recycleView = (RecyclerView) view.findViewById(R.id.recycleView);
         springView = (SpringView) view.findViewById(R.id.springView);
         rl_layout = (RelativeLayout) view.findViewById(R.id.rl_layout);
+        ll_wu=(LinearLayout)view.findViewById(R.id.ll_wu);
         list = new ArrayList<>();
         topUpListAdapter = new TopUpListAdapter(mcontext, list, this);
         recycleView.setLayoutManager(new LinearLayoutManager(mcontext));
@@ -169,6 +172,11 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     public void initData(String data) {
         TopUpEntity topUpEntity = JSON.parseObject(data, TopUpEntity.class);
         list = topUpEntity.data.content;
+        if (pageNumber==1&&list.size()<1){
+            springView.setVisibility(View.GONE);
+            ll_wu.setVisibility(View.VISIBLE);
+        }
+
         if (pageNumber < topUpEntity.data.totalPages) {
             isxia = true;
         } else {

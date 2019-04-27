@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -120,11 +121,21 @@ public class RewardDialog extends CenterDialog implements Response.Listener<Stri
             if (stauts == 1) {
                 if (url.contains(Const.description)) {
                     DescmisionEntity descmisionEntity = JSON.parseObject(response, DescmisionEntity.class);
-                    binding.tvWx.setText("微信接单可获得交易金额的" + descmisionEntity.data.WXPAY + "的佣金");
-                    binding.tvAli.setText("微信接单可获得交易金额的" + descmisionEntity.data.ALIPAY + "的佣金");
-                    binding.tvClou.setText("微信接单可获得交易金额的" + descmisionEntity.data.CLOUDPAY + "的佣金");
-                    binding.tvSeconnod.setText("微信接单可获得交易金额的" + descmisionEntity.data.SECONDS + "的佣金");
-                    binding.tvFirst.setText("微信接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
+                    if (!TextUtils.isEmpty(descmisionEntity.data.WXPAY)) {
+                        binding.tvWx.setText("微信接单可获得交易金额的" + descmisionEntity.data.WXPAY + "的佣金");
+                    }
+                    if (!TextUtils.isEmpty(descmisionEntity.data.ALIPAY)) {
+                        binding.tvAli.setText("微信接单可获得交易金额的" + descmisionEntity.data.ALIPAY + "的佣金");
+                    }
+                    if (!TextUtils.isEmpty(descmisionEntity.data.CLOUDPAY)) {
+                        binding.tvClou.setText("微信接单可获得交易金额的" + descmisionEntity.data.CLOUDPAY + "的佣金");
+                    }
+                    if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
+                        binding.tvSeconnod.setText("微信接单可获得交易金额的" + descmisionEntity.data.SECONDS + "的佣金");
+                    }
+                    if (!TextUtils.isEmpty(descmisionEntity.data.FIRST)) {
+                        binding.tvFirst.setText("微信接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
+                    }
                 }
 
             } else if (stauts == -2) {

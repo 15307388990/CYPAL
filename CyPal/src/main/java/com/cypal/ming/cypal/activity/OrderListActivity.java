@@ -61,6 +61,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
     private SpringView springView;
     private int pageNumber = 1;
     boolean isPage = true;
+    private LinearLayout ll_wu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
     private void initView() {
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
         recycleView = (RecyclerView) findViewById(R.id.recycleView);
+        ll_wu = (LinearLayout) findViewById(R.id.ll_wu);
         ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,6 +244,13 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
             OtcOrderListEntity otcOrderListEntity = JSON.parseObject(data, OtcOrderListEntity.class);
             if (pageNumber == 1) {
                 list = otcOrderListEntity.data.content;
+                if (list.size() < 1) {
+                    springView.setVisibility(View.GONE);
+                    ll_wu.setVisibility(View.VISIBLE);
+                }else {
+                    ll_wu.setVisibility(View.GONE);
+                    springView.setVisibility(View.VISIBLE);
+                }
             } else {
                 list.addAll(otcOrderListEntity.data.content);
             }

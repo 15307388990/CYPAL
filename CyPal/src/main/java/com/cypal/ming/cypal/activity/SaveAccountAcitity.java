@@ -9,20 +9,17 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.cypal.ming.cypal.R;
-import com.cypal.ming.cypal.activityTwo.LoginPhotoValidationActivity;
 import com.cypal.ming.cypal.adapter.AddAccoutAdapter;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.AccountEntity;
@@ -121,12 +118,14 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CancelTheDealDialog().setTitle("确定删除该账号?").setOktext("确定").setQtext("取消").setOnClickListener(new CancelTheDealDialog.OnClickListener() {
-                    @Override
-                    public void successful() {
-                        del();
-                    }
-                }).show(this);
+
+                CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext("确定删除该账号?").setQtext("取消").setOktext("确定")
+                        .setOnClickListener(new CancelTheDealDialog.OnClickListener() {
+                            @Override
+                            public void successful() {
+                                del();
+                            }
+                        }).show(SaveAccountAcitity.this);
 
             }
         });

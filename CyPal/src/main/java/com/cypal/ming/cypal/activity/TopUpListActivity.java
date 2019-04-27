@@ -54,6 +54,8 @@ public class TopUpListActivity extends BaseActivity {
     private SpringView springView;
     private int pageNumber = 1;
     boolean isPage = true;
+    private LinearLayout ll_wu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class TopUpListActivity extends BaseActivity {
     private void initView() {
         ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
         recycleView = (RecyclerView) findViewById(R.id.recycleView);
+        ll_wu = (LinearLayout) findViewById(R.id.ll_wu);
         ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +213,14 @@ public class TopUpListActivity extends BaseActivity {
         }
         if (pageNumber == 1) {
             list = topUpListEntity.data.content;
+            if (list.size() < 1) {
+                springView.setVisibility(View.GONE);
+                ll_wu.setVisibility(View.VISIBLE);
+            }else {
+                ll_wu.setVisibility(View.GONE);
+                springView.setVisibility(View.VISIBLE);
+            }
+
         } else {
             list.addAll(topUpListEntity.data.content);
         }
