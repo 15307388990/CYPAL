@@ -122,7 +122,7 @@ public class WsManager {
                 throws Exception {
             super.onConnectError(websocket, exception);
             Log.d(TAG, "连接错误");
-
+            iWsManagerActivityView.onDisconnected();
             if (iWsManagerActivityView != null) {
                 setStatus(WsStatus.CONNECT_FAIL);
             }

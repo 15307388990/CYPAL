@@ -154,9 +154,10 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         }
         if (dataBean != null) {
             InitDate(dataBean);
+
         }
-        tv_text.setText("温馨提示： \n\n 1、请确保" + value + "已实名认证，并填写真实姓名（请不要填写 呢称） \n\n2、为了保证顺利提现，" +
-                "30天内不要更换其他账号，否则会 导致提现不通过 \n\n3.本功能需要上传同一" + value + "14个金额码，请确保码的金额与添加的金额完全对应，否则不会收款到账。" +
+        tv_text.setText("温馨提示： \n\n 1、请确保" + value + "已实名认证，并填写真实姓名（请不要填写 呢称） \n\n  2.请不要使用异常的收款码接单,如发现收款码异常" +
+                ",请立即取消接单并更换收款二维码。\n\n3.本功能需要上传同一" + value + "14个金额码，请确保码的金额与添加的金额完全对应，否则不会收款到账。" +
                 "\n\n4、我们承诺不会向任何人透露您的个人信息");
         accoutAdapter = new AddAccoutAdapter(this, accountDatas, this);
         accoutAdapter.setHeaderView(headView);

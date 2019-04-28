@@ -239,7 +239,7 @@ public class MineFragment extends BaseFragment {
             tv_text.setVisibility(View.GONE);
         } else {
             iv_renzhen.setImageResource(R.drawable.label_no);
-            tv_creditscore.setVisibility(View.GONE);
+            tv_creditscore.setVisibility(View.VISIBLE);
             tv_text.setVisibility(View.VISIBLE);
         }
         //是否签到

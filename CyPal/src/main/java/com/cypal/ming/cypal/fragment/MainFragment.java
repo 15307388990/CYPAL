@@ -263,7 +263,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void onClick(View v) {
                 method = "AUTO";
-                inoutPsw();
+                inoutPsw(null);
             }
         });
 
@@ -275,7 +275,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 if (isStar) {
                     Tools.jump(mcontext, GrabSingleActivity.class, false);
                 } else {
-                    inoutPsw();
+                    inoutPsw(null);
                 }
 
             }
@@ -352,15 +352,16 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     }
 
 
-
     /**
      * 确认收款
      */
-    public void confirm(String orderId) {
+    public void confirm(String orderId, String payPasswrod) {
+
         Map<String, String> map = new HashMap<>();
         map.put("orderId", orderId);
+        String paypass = MD5Util.getMD5String(payPasswrod);
+        map.put("payPassword", paypass);
         mQueue.add(ParamTools.packParam(Const.confirm, mcontext, this, this, map));
-        loading();
     }
 
     /**
@@ -415,7 +416,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                     @Override
                     public void successful() {
                         if (text.equals("收款")) {
-                            confirm(order_uuid);
+                            inoutPsw( order_uuid);
 
                         } else if (text.equals("申诉订单")) {
                             appeal(order_uuid);
@@ -469,14 +470,20 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
 
     //打开输入密码的对话框
-    public void inoutPsw() {
+    public void inoutPsw(final String order_uuid) {
         final boolean hasPayPassword = mSavePreferencesData.getBooleanData("hasPayPassword");
         SelectPopupWindow menuWindow = new SelectPopupWindow(mcontext, new SelectPopupWindow.OnPopWindowClickListener() {
             @Override
             public void onPopWindowClickListener(String psw, boolean complete) {
                 if (complete) {
                     if (hasPayPassword) {
-                        start(psw);
+                        if (TextUtils.isEmpty(order_uuid)) {
+                            start(psw);
+                        } else {
+                            confirm(order_uuid, psw);
+                        }
+
+
                     } else {
                         setPayPassword(psw);
                     }

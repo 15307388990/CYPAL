@@ -248,10 +248,11 @@ public class VersionUpgradeDialog extends CenterDialog {
 
 
     }
+
     private void initPermission() {
-        AndPermission.with(this)
+        AndPermission.with(getActivity())
                 .runtime()
-                .permission(Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE).
+                .permission(Permission.WRITE_EXTERNAL_STORAGE,Permission.READ_EXTERNAL_STORAGE).
                 onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
@@ -281,7 +282,7 @@ public class VersionUpgradeDialog extends CenterDialog {
     class DownloadTask extends AsyncTask<String, Integer, String> {
 
         private Context context;
-        private PowerManager.WakeLock mWakeLock;
+        // private PowerManager.WakeLock mWakeLock;
 
         public DownloadTask(Context context) {
             this.context = context;
@@ -366,11 +367,11 @@ public class VersionUpgradeDialog extends CenterDialog {
             super.onPreExecute();
             // take CPU lock to prevent CPU from going off if the user
             // presses the power button during download
-            PowerManager pm = (PowerManager) context
-                    .getSystemService(Context.POWER_SERVICE);
-            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                    getClass().getName());
-            mWakeLock.acquire();
+//            PowerManager pm = (PowerManager) context
+//                    .getSystemService(Context.POWER_SERVICE);
+//            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+//                    getClass().getName());
+//            mWakeLock.acquire();
         }
 
         @Override
@@ -386,12 +387,12 @@ public class VersionUpgradeDialog extends CenterDialog {
 
         @Override
         protected void onPostExecute(String result) {
-            mWakeLock.release();
+            //mWakeLock.release();
             dismiss();
             if (result != null) {
 
                 // 申请多个权限。大神的界面
-                initPermission();
+              //  initPermission();
 
 
                 Toast.makeText(context, "您未打开SD卡权限" + result, Toast.LENGTH_LONG).show();
@@ -414,26 +415,31 @@ public class VersionUpgradeDialog extends CenterDialog {
         if (!apkfile.exists()) {
             return;
         }
-        //安装应用
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        //判断是否是AndroidN以及更高的版本
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileProvider", apkfile);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            intent.setDataAndType(Uri.fromFile(new File(Environment
-                    .getExternalStorageDirectory(), DOWNLOAD_NAME)), "application/vnd.android.package-archive");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-
-        try {
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AndPermission.with(getActivity())
+                .install()
+                .file(apkfile)
+                .start();
+//        //安装应用
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        //判断是否是AndroidN以及更高的版本
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            Uri contentUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileProvider", apkfile);
+//            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+//        } else {
+//            intent.setDataAndType(Uri.fromFile(new File(Environment
+//                    .getExternalStorageDirectory(), DOWNLOAD_NAME)), "application/vnd.android.package-archive");
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        }
+//
+//        try {
+//            startActivity(intent);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 
     }
+
 
 }

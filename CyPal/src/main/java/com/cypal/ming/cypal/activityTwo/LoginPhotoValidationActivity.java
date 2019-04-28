@@ -106,6 +106,7 @@ public class LoginPhotoValidationActivity extends BaseActivity {
                 finish();
             }
         });
+        tv_text.setText("1、手持白纸和身份证，并写明仅" + getString(R.string.app_name) + "上面使用 \n2、拍摄时确保身份证边框完整、脸部清晰，字体清晰，证件全部信息清晰无遮挡");
     }
 
     /**

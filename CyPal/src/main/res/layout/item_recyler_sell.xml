@@ -144,7 +144,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="申诉订单"
+                android:text="没有收到钱"
                 android:textColor="@color/CY_007AFF"
                 android:textSize="15sp" />
         </LinearLayout>
