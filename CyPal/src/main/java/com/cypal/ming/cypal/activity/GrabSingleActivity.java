@@ -23,6 +23,7 @@ import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.ContentEntity;
 import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.CancelNoCloseDialog;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -176,7 +177,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
         if (url.contains(Const.take)) {
             //抢单成功
             // GradSingDialog.newInstance(amount).show(GrabSingleActivity.this);
-            new CancelTheDealDialog().setTitle("恭喜您抢单成功").
+            CancelNoCloseDialog.newInstance().setTitle("恭喜您抢单成功").
                     setIsQuBtn(false).
                     setContext("¥" + amount).setOktext("继续").show(GrabSingleActivity.this);
             //显示已抢光
