@@ -101,22 +101,25 @@ public class TeamRerunsActivity extends BaseActivity implements CategoryAdapter.
                 JSONObject json = new JSONObject(data);
                 String datebean = json.optString("data");
                 TeamRerunsHeadVM teamRerunsHeadVM = new TeamRerunsHeadVM();
-
-                List<OderDetailsItemVM> itemVMS = JSON.parseArray(datebean, OderDetailsItemVM.class);
-                if (itemVMS.size() > 0) {
+                if (!TextUtils.isEmpty(datebean) && !TextUtils.equals(datebean, "[]") && !TextUtils.equals(datebean, "[null]")) {
+                    List<OderDetailsItemVM> itemVMS = JSON.parseArray(datebean, OderDetailsItemVM.class);
                     teamRerunsHeadVM.setWuVisibility(View.GONE);
+                    list.add(teamRerunsHeadVM);
+
+                    for (OderDetailsItemVM oderDetailsItemVM : itemVMS) {
+                        if (oderDetailsItemVM.getAccountType().equals("BANKCARD")) {
+                            oderDetailsItemVM.setViewType(R.layout.layout_details_banl);
+                        } else {
+                            oderDetailsItemVM.setViewType(R.layout.layout_details_pay);
+                        }
+                        list.add(oderDetailsItemVM);
+                    }
+
                 } else {
                     teamRerunsHeadVM.setWuVisibility(View.VISIBLE);
+                    list.add(teamRerunsHeadVM);
                 }
-                list.add(teamRerunsHeadVM);
-                for (OderDetailsItemVM oderDetailsItemVM : itemVMS) {
-                    if (oderDetailsItemVM.getAccountType().equals("BANKCARD")) {
-                        oderDetailsItemVM.setViewType(R.layout.layout_details_banl);
-                    } else {
-                        oderDetailsItemVM.setViewType(R.layout.layout_details_pay);
-                    }
-                    list.add(oderDetailsItemVM);
-                }
+
                 bindingMoreTypeAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
@@ -140,16 +143,16 @@ public class TeamRerunsActivity extends BaseActivity implements CategoryAdapter.
 
     @Override
     public void copyName(OderDetailsItemVM viewModel) {
-        ClipboardManager cmb = (ClipboardManager)TeamRerunsActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb = (ClipboardManager) TeamRerunsActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(viewModel.getAccountName());
-        Tools.showToast(this,"复制成功");
+        Tools.showToast(this, "复制成功");
     }
 
     @Override
     public void copyCard(OderDetailsItemVM viewModel) {
-        ClipboardManager cmb = (ClipboardManager)TeamRerunsActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb = (ClipboardManager) TeamRerunsActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(viewModel.getAccountData());
-        Tools.showToast(this,"复制成功");
+        Tools.showToast(this, "复制成功");
 
     }
 }
