@@ -349,7 +349,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     @Override
     public void copyName(OderDetailsItemVM viewModel) {
         ClipboardManager cmb = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
-        cmb.setText(viewModel.getAccountName());
+        cmb.setText(viewModel.getRealName());
         Tools.showToast(this, "复制成功");
     }
 
