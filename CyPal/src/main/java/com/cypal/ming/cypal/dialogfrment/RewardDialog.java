@@ -122,19 +122,19 @@ public class RewardDialog extends CenterDialog implements Response.Listener<Stri
                 if (url.contains(Const.description)) {
                     DescmisionEntity descmisionEntity = JSON.parseObject(response, DescmisionEntity.class);
                     if (!TextUtils.isEmpty(descmisionEntity.data.WXPAY)) {
-                        binding.tvWx.setText("微信接单可获得交易金额的" + descmisionEntity.data.WXPAY + "的佣金");
+                        binding.tvWx.setText("1:微信接单可获得交易金额" + descmisionEntity.data.WXPAY + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.ALIPAY)) {
-                        binding.tvAli.setText("微信接单可获得交易金额的" + descmisionEntity.data.ALIPAY + "的佣金");
+                        binding.tvAli.setText("2:支付宝接单可获得交易金额" + descmisionEntity.data.ALIPAY + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.CLOUDPAY)) {
-                        binding.tvClou.setText("微信接单可获得交易金额的" + descmisionEntity.data.CLOUDPAY + "的佣金");
+                        binding.tvClou.setText("3:云闪付接单可获得交易金额" + descmisionEntity.data.CLOUDPAY + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
-                        binding.tvSeconnod.setText("微信接单可获得交易金额的" + descmisionEntity.data.SECONDS + "的佣金");
+                        binding.tvSeconnod.setText("4:A级好友接单可获得交易金额" + descmisionEntity.data.SECONDS + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.FIRST)) {
-                        binding.tvFirst.setText("微信接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
+                        binding.tvFirst.setText("5:B级好友接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
                     }
                 }
 

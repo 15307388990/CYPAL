@@ -3,6 +3,7 @@ package com.cypal.ming.cypal.base;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -48,7 +49,12 @@ public class MianApplication extends Application {
         //bugly
         // CrashReport.initCrashReport( getApplicationContext(), "a22c426082", false );
         Bugly.init(getApplicationContext(), "a22c426082", false);
-
+        /**
+         *    适配7。0拍照 url 不能用的问题
+         */
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         initAppStatusListener();
     }
 

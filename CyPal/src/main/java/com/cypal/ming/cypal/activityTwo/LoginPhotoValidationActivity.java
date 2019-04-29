@@ -3,7 +3,10 @@ package com.cypal.ming.cypal.activityTwo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -71,11 +74,13 @@ public class LoginPhotoValidationActivity extends BaseActivity {
     private List<String> resultList = null;
     private List<String> icon_ids = null;
     private List<String> filePaths = null;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitity_login_photo_validation);
+        path = getExternalCacheDir().getAbsolutePath() + File.separator + "222.png";
         initView();
     }
 
@@ -115,24 +120,21 @@ public class LoginPhotoValidationActivity extends BaseActivity {
     private void initPermission() {
         AndPermission.with(this)
                 .runtime()
-                .permission(Permission.READ_EXTERNAL_STORAGE).
+                .permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.CAMERA).
                 onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-                        Intent intent = new Intent(LoginPhotoValidationActivity.this,
-                                MultiImageSelectorActivity.class);
-                        intent.putExtra("isUploadIcon", true);
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                                false);
-                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                                1);
-                        startActivityForResult(intent, 1);
+                        Intent intent = new Intent();
+                        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
+                        startActivityForResult(intent, 300);
+
                     }
                 }).
                 onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-                        Tools.showToast(LoginPhotoValidationActivity.this, "需要获取相册权限");
+                        Tools.showToast(LoginPhotoValidationActivity.this, "需要获取拍照权限");
                     }
                 }).
                 start();
@@ -144,29 +146,50 @@ public class LoginPhotoValidationActivity extends BaseActivity {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (data != null) {
-                resultList = data.getExtras().getStringArrayList("select_result");
-                bitmapInfos = new ArrayList<Bitmap>();
-                filePaths = new ArrayList<String>();
-                icon_ids = new ArrayList<String>();
 
-                for (int k = 0; k < resultList.size(); k++) {
-                    Bitmap bitmap = ImageUtil.decodeImage(resultList.get(k));
-                    bitmapInfos.add(bitmap);
-                    filePaths.add(resultList.get(k));
-                }
-                Map<String, String> map = new HashMap<>();
-                map.put("uploadEnum", "loginVerify");
-                File file = new File(filePaths.get(0));
+            BitmapFactory.Options options = new BitmapFactory.Options();
+//            2.对于属性进行设置，需要解锁边缘
+            options.inJustDecodeBounds = true;
+//            3.对于图片进行编码处理
+            BitmapFactory.decodeFile(path, options);
+//            4.获取原来图片的宽度和高度
+            int outHeight = options.outHeight;
+            int outWidth = options.outWidth;
+//            5.200,200  获得要压缩的比例
+            int sampleHeight = outHeight / 200;  //2
+            int sampleWidth = outWidth / 200;    //1.5
+//            6.获取较大的比例
+            int size = Math.max(sampleHeight, sampleWidth);
+//            7.设置图片压缩的比例
+            options.inSampleSize = size;
+            /**图片的质量   1个字节是8位
+             * ARGB_8888  32位     4字节   100*100*4 = 40000 个字节
+             * ARGB_4444  16位     2字节   100*100*2 = 20000 个字节
+             * RGB_565    16位      2字节  100*100*2 = 20000 个字节
+             * Alpha_8    8位       1字节  100*100*1 = 10000 个字节
+             *
+             * 100px*100px  的图片
+             * */
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;   //设置图片的质量类型
+//            8.锁定边缘
+            options.inJustDecodeBounds = false;
+            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
 
-                iv_shenfen3.setImageBitmap(bitmapInfos.get(0));
+            Map<String, String> map = new HashMap<>();
+            map.put("uploadEnum", "loginVerify");
 
-                post_file(map, file, requestCode);
+            iv_shenfen3.setImageBitmap(bitmap);
+            try {
+                Tools.saveBitmap(bitmap, path);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            File file = new File(path);
+            post_file(map, file);
         }
     }
 
-    protected void post_file(final Map<String, String> map, File file, final int requestCode) {
+    protected void post_file(final Map<String, String> map, File file) {
         mDialog.setMessage("图片上传中...");
         mDialog.show();
         OkHttpClient client = new OkHttpClient();
