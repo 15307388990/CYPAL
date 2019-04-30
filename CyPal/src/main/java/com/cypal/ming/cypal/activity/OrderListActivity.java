@@ -3,9 +3,12 @@ package com.cypal.ming.cypal.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -22,6 +25,8 @@ import com.cypal.ming.cypal.bean.OtcOrderListEntity;
 import com.cypal.ming.cypal.bean.TopUpListEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
+import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.OrderListState;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -220,11 +225,12 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
     /**
      * 确认收款
      */
-    public void confirm(String orderId) {
+    public void confirm(String orderId, String payPasswrod) {
         Map<String, String> map = new HashMap<>();
         map.put("orderId", orderId);
+        String paypass = MD5Util.getMD5String(payPasswrod);
+        map.put("payPassword", paypass);
         mQueue.add(ParamTools.packParam(Const.confirm, this, this, this, map));
-        loading();
     }
 
     /**
@@ -247,7 +253,7 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
                 if (list.size() < 1) {
                     springView.setVisibility(View.GONE);
                     ll_wu.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     ll_wu.setVisibility(View.GONE);
                     springView.setVisibility(View.VISIBLE);
                 }
@@ -265,10 +271,22 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
             orderlist();
         } else if (url.contains(Const.appeal)) {
             orderlist();
+        }else if (url.contains(Const.setPayPassword)) {
+            Tools.showToast(this, "设置成功");
+            mSavePreferencesData.putBooleanData("hasPayPassword", true);
         }
 
     }
 
+    /**
+     * 设置支付密码
+     */
+    private void setPayPassword(String payPassword) {
+        Map<String, String> map = new HashMap<>();
+        map.put("payPassword", MD5Util.getMD5String(payPassword));
+        mQueue.add(ParamTools.packParam(Const.setPayPassword, this, this, this, map));
+        loading();
+    }
     @Override
     public void ConfirmReceipt(String order_uuid) {
         //确认付款
@@ -287,12 +305,37 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
                     @Override
                     public void successful() {
                         if (text.equals("收款")) {
-                            confirm(order_uuid);
+                            inoutPsw(order_uuid);
+
 
                         } else if (text.equals("申诉订单")) {
                             appeal(order_uuid);
                         }
                     }
                 }).show(this);
+    }
+
+    //打开输入密码的对话框
+    public void inoutPsw(final String order_uuid) {
+        final boolean hasPayPassword = mSavePreferencesData.getBooleanData("hasPayPassword");
+        SelectPopupWindow menuWindow = new SelectPopupWindow(this, new SelectPopupWindow.OnPopWindowClickListener() {
+            @Override
+            public void onPopWindowClickListener(String psw, boolean complete) {
+                if (complete) {
+                    if (hasPayPassword) {
+                        confirm(order_uuid, psw);
+                    } else {
+                        setPayPassword(psw);
+                    }
+                }
+            }
+        });
+        if (!hasPayPassword) {
+            menuWindow.setTitle("设置支付密码");
+        }
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        menuWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
     }
 }

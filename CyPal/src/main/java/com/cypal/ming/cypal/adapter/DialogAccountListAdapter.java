@@ -1,6 +1,7 @@
 package com.cypal.ming.cypal.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +112,14 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
 
     public void updateAdapter(List<AccountListEntity.DataBean> mList) {
         this.mList = mList;
-        notifyDataSetChanged();
+        Handler handler = new Handler();
+        final Runnable r = new Runnable() {
+            public void run() {
+                notifyDataSetChanged();
+            }
+        };
+        handler.post(r);
+
     }
 
     class ViewHoler extends RecyclerView.ViewHolder {

@@ -31,6 +31,7 @@ import com.cypal.ming.cypal.utils.Tools;
 import com.githang.statusbar.StatusBarCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -288,7 +289,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
 
     private List<ContentEntity> getList(String payType) {
         List<ContentEntity> contentEntities = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = list.size()-1; i >= 0; i--) {
             if (list.get(i).payType.equals(payType)) {
                 contentEntities.add(list.get(i));
             }

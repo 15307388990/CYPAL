@@ -150,10 +150,14 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next:
-                if (!TextUtils.isEmpty(commissionEntity.data.myCommisionBalance + "")) {
-                    Intent intent = new Intent(CommissionAcitity.this, WithdrawalActivity.class);
-                    intent.putExtra("amount", commissionEntity.data.myCommisionBalance + "");
-                    startActivity(intent);
+                try {
+                    if (!TextUtils.isEmpty(commissionEntity.data.myCommisionBalance + "")) {
+                        Intent intent = new Intent(CommissionAcitity.this, WithdrawalActivity.class);
+                        intent.putExtra("amount", commissionEntity.data.myCommisionBalance + "");
+                        startActivity(intent);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }
