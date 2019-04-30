@@ -73,6 +73,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:hint="请输入您的昵称"
+        android:maxLength="11"
         android:paddingLeft="31dp"
         android:textSize="15sp" />
 
