@@ -53,6 +53,7 @@ public class FriendsListActivity extends BaseActivity {
     private RadioButton rd_a;
     private RadioButton rd_b;
     private RadioGroup rg_top;
+    private TextView tv_zhuan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class FriendsListActivity extends BaseActivity {
         rd_a = (RadioButton) findViewById(R.id.rd_a);
         rd_b = (RadioButton) findViewById(R.id.rd_b);
         rg_top = (RadioGroup) findViewById(R.id.rg_top);
+        tv_zhuan=(TextView)findViewById(R.id.tv_zhuan);
         ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,12 +135,18 @@ public class FriendsListActivity extends BaseActivity {
                 Tools.jump(FriendsListActivity.this, TeamTopUpActivity.class, false);
             }
         });
+        tv_zhuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump(FriendsListActivity.this, TransferActivity.class, false);
+            }
+        });
 
     }
 
     public void initEvent() {
         params = (LinearLayout.LayoutParams) cursor.getLayoutParams();
-        cursorWidth = params.width = Tools.getScreenWidth(FriendsListActivity.this) / 2;
+        cursorWidth = params.width = (Tools.getScreenWidth(FriendsListActivity.this)-Tools.dip2px(this,100)) / 2;
         cursor.setLayoutParams(params);
         topUpState = TopUpState.SUCCESS;
         params.leftMargin = 0;

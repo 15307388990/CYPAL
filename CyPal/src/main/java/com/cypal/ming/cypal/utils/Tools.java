@@ -57,8 +57,7 @@ public class Tools {
     private static DecimalFormat df = new DecimalFormat("0.00");
     public static boolean isaccout = false;//是否需要去添加新账户 false 为不需要
     public static boolean isRound = false;//是否显示版本更新的圆点
-    public static boolean isOnline=false;//是否链接
-
+    public static boolean isOnline = false;//是否链接
 
     public static StoreBean getStoreBean() {
         if (mStoreBean == null) {
@@ -130,13 +129,14 @@ public class Tools {
         return false;
     }
 
-    /**保存图片
+    /**
+     * 保存图片
      *
      * @param bitmap
      * @param bitName
      * @throws IOException
      */
-    public static  void saveBitmap(Bitmap bitmap, String bitName) throws IOException {
+    public static void saveBitmap(Bitmap bitmap, String bitName) throws IOException {
         File file = new File(bitName);
         if (file.exists()) {
             file.delete();
@@ -168,6 +168,8 @@ public class Tools {
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
         return dm.heightPixels;
     }
+
+
 
     /**
      * 将List<String>集合 转化为String
