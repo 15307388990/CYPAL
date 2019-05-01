@@ -27,7 +27,7 @@ public class WsManager {
      * WebSocket config
      */
     private static final int FRAME_QUEUE_SIZE = 5;
-    private static final int CONNECT_TIMEOUT = 5000;
+    private static final int CONNECT_TIMEOUT = 500000;
     private static final String DEF_RELEASE_URL = "ws://111.230.242.115:88?token=";//正式服默认地址
     private String url;
 
@@ -114,6 +114,7 @@ public class WsManager {
                 iWsManagerActivityView.onConnected();
             }
             setStatus(WsStatus.CONNECT_SUCCESS);
+            cancelReconnect();
         }
 
 
@@ -165,7 +166,6 @@ public class WsManager {
 
 
     public void reconnect() {
-        reconnectCount = 0;
 //        if (!isConnection) {
 //            Log.d(TAG, "退出页面不重连了");
 //            return;
@@ -176,17 +176,18 @@ public class WsManager {
         if (ws != null &&
                 !ws.isOpen() &&//当前连接断开了
                 getStatus() != WsStatus.CONNECTING) {//不是正在重连状态
-
+//            //重联之前先断开上次链接
+//            ws.disconnect();
+//            Log.d(TAG, "断开上次连接");
             reconnectCount++;
             setStatus(WsStatus.CONNECTING);
-
             long reconnectTime = minInterval;
             if (reconnectCount > 3) {
                 url = url;
                 long temp = minInterval * (reconnectCount - 2);
                 reconnectTime = temp > maxInterval ? maxInterval : temp;
             }
-            Log.d(TAG, "准备开始第%d次重连,重连间隔%d -- url:%s");
+            Log.d(TAG, "准备开始第" + reconnectCount + "+次重连,重连间隔" + reconnectTime + " -- url" + url);
             mHandler.postDelayed(mReconnectTask, reconnectTime);
         }
     }

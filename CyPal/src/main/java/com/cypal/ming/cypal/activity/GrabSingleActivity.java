@@ -79,10 +79,12 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
                         }
                     }
                 } else if (msg.what == 2) {
-                    top_view_text.setText("手动抢单（离线）");
+                    Tools.isOnline=false;
+                    setText();
 
                 } else if (msg.what == 3) {
-                    top_view_text.setText("手动抢单");
+                    Tools.isOnline=true;
+                    setText();
                 }
 
             }
@@ -100,6 +102,16 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
         StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
         initView();
         initEvent();
+    }
+    /**
+     * 设置首页文字
+     */
+    private void setText() {
+        if (Tools.isOnline) {
+            top_view_text.setText("手动抢单");
+        } else {
+            top_view_text.setText("手动抢单（离线）");
+        }
     }
 
     @Override

@@ -113,10 +113,12 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 number++;
                 auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
             } else if (msg.what == 2) {
-                top_view_text.setText("首页（离线）");
+                Tools.isOnline=false;
+                setText();
 
             } else if (msg.what == 3) {
-                top_view_text.setText("首页");
+                Tools.isOnline=true;
+                setText();
             } else if (msg.what == 1) {
                 String text = (String) msg.obj;
                 if (!TextUtils.isEmpty(text)) {
@@ -169,6 +171,17 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
     }
 
+    /**
+     * 设置首页文字
+     */
+    private void setText() {
+        if (Tools.isOnline) {
+            top_view_text.setText("首页");
+        } else {
+            top_view_text.setText("首页（离线）");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -214,6 +227,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         recycleView.setLayoutManager(new LinearLayoutManager(mcontext));
         springView.setHeader(new DefaultHeader(mcontext));
         springView.setFooter(new DefaultFooter(mcontext));
+        setText();
+
         springView.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
@@ -416,7 +431,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                     @Override
                     public void successful() {
                         if (text.equals("收款")) {
-                            inoutPsw( order_uuid);
+                            inoutPsw(order_uuid);
 
                         } else if (text.equals("申诉订单")) {
                             appeal(order_uuid);

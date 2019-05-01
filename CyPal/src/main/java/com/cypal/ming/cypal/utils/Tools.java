@@ -57,6 +57,7 @@ public class Tools {
     private static DecimalFormat df = new DecimalFormat("0.00");
     public static boolean isaccout = false;//是否需要去添加新账户 false 为不需要
     public static boolean isRound = false;//是否显示版本更新的圆点
+    public static boolean isOnline=false;//是否链接
 
 
     public static StoreBean getStoreBean() {

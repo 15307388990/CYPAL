@@ -296,6 +296,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
             //bug ly记录用户ID
             CrashReport.setUserId(et_iphone.getText().toString().trim());
             Tools.jump(this, TabActivity.class, true);
+            Tools.exit();
         }
 
     }
