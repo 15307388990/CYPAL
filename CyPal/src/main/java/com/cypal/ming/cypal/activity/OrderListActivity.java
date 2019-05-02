@@ -145,11 +145,11 @@ public class OrderListActivity extends BaseActivity implements OtcOrderListAdapt
                     params.leftMargin = (int) cursorWidth;
                     cursor.setLayoutParams(params);
                 } else if (checkedId == R.id.rd_yi) {
-                    orderListState = OrderListState.B_BEAPPEAL;
+                    orderListState = OrderListState.C_APPEAL;
                     params.leftMargin = (int) cursorWidth * 2;
                     cursor.setLayoutParams(params);
                 } else if (checkedId == R.id.rd_shen) {
-                    orderListState = OrderListState.C_APPEAL;
+                    orderListState = OrderListState.B_BEAPPEAL;
                     params.leftMargin = (int) cursorWidth * 3;
                     cursor.setLayoutParams(params);
                 }
