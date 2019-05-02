@@ -287,11 +287,11 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                         break;
                 }
             } else {
-                Tools.showToast(this, msg);
+                //Tools.showToast(this, msg);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Tools.showToast(this, "数据格式不对");
+           // Tools.showToast(this, "数据格式不对");
         }
 
     }

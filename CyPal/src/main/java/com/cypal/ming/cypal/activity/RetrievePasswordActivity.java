@@ -232,7 +232,7 @@ public class RetrievePasswordActivity extends BaseActivity implements View.OnCli
         }
 
         String new1 = et_new.getText().toString().trim();
-        if (TextUtils.isEmpty(new1)) {
+        if (!Tools.isPassword(new1)) {
             Toast.makeText(this, "请输入6～18位英文数字组合密码", Toast.LENGTH_SHORT).show();
             return;
         }

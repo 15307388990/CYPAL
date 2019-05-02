@@ -32,6 +32,7 @@ import com.cypal.ming.cypal.bean.BaseEntity;
 import com.cypal.ming.cypal.bean.LoginEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialog.CustomDialogActivity;
+import com.cypal.ming.cypal.dialogfrment.CancelNoCloseDialog;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
 import com.cypal.ming.cypal.service.VersionService;
 import com.cypal.ming.cypal.utils.MD5Util;
@@ -90,7 +91,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mSavePreferencesData.putStringData("token", "");
         msg = getIntent().getStringExtra("msg");
         if (!TextUtils.isEmpty(msg)) {
-            new CancelTheDealDialog().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).
+            CancelNoCloseDialog.newInstance().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).
                     setOktext("知道了").setContextColor(R.color.red).show(this);
         }
 
@@ -126,7 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         pwd = MD5Util.getMD5String(pwd);
         map.put("password", pwd);
         mQueue.add(ParamTools.packParam(Const.venderLogin, LoginActivity.this, this, this, map));
-        loading();
+        loginloading();
     }
 
 
@@ -193,6 +194,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
+
                 if (checkParams()) {
                     initPermission();
                 }
@@ -210,6 +212,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void returnData(String data, String url) {
+        dismissLoading();
         LoginEntity loginEntity = JSON.parseObject(data, LoginEntity.class);
         mSavePreferencesData.putStringData("token", loginEntity.data.loginToken);
         //bug ly记录用户ID
@@ -223,7 +226,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         int code = entity.code;
         String msg = entity.msg;
         if (code == -1 || code == -200) {
-            CancelTheDealDialog.newInstance().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).setOktext("知道了").
+            CancelNoCloseDialog.newInstance().setTitle("温馨提示").setContext(msg).setIsQuBtn(false).setOktext("知道了").
                     setContextColor(R.color.red).show(LoginActivity.this);
         } else if (code == -201) {
             //短信验证

@@ -23,9 +23,15 @@ import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 import static com.cypal.ming.cypal.config.Const.certification;
 import static com.cypal.ming.cypal.config.Const.submitBailMoney;
@@ -100,7 +106,7 @@ public class MemberActivity extends BaseActivity {
         rl_wei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.jump(MemberActivity.this, CertificationActivity.class, false);
+                initPermission();
             }
         });
         tv_text.setOnClickListener(new View.OnClickListener() {
@@ -120,16 +126,38 @@ public class MemberActivity extends BaseActivity {
         rl_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (memberEntity.data.certification_status.equals("FAIL")) {
-                    Intent intent = new Intent(MemberActivity.this, CertificationActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("memberEntity", memberEntity);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
+                initPermission();
 
             }
         });
+    }
+
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        if (memberEntity.data.certification_status.equals("FAIL")) {
+                            Intent intent = new Intent(MemberActivity.this, CertificationActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("memberEntity", memberEntity);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        } else {
+                            Tools.jump(MemberActivity.this, CertificationActivity.class, false);
+                        }
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(MemberActivity.this, "无法获取手机权限，功能无法正常使用");
+                    }
+                }).
+                start();
+
     }
 
     private void deleteOrderDialog() {

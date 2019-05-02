@@ -68,7 +68,7 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
                         if (managerEntity.messageEnum.equals(MessageEnum.LOGINOUT.toString())) {
                             Log.d("WsManager", "强制离线");
                             goLogin(managerEntity);
-                        } else if (!managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
+                        } else if (!managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString()) && !managerEntity.messageEnum.equals(MessageEnum.IM.toString())) {
                             Log.d("WsManager", "通知");
                             goNotice(managerEntity);
                         }
@@ -171,6 +171,20 @@ public abstract class BaseActivity<T> extends Activity implements Listener<Strin
             loading.dismiss();
         }
         // loading.show();// 由于客户不喜欢弹框样式,顾先隐藏
+    }
+
+    /**
+     * 弹出等待框
+     */
+    public void loginloading() {
+        if (loading == null) {
+            loading = new LoadingDialog(this, "请稍候...");
+            loading.setCanceledOnTouchOutside(false);
+        }
+        if (loading.isShowing()) {
+            loading.dismiss();
+        }
+        loading.show();// 由于客户不喜欢弹框样式,顾先隐藏
     }
 
     /**

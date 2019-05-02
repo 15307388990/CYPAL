@@ -265,7 +265,7 @@ public class RegisteredActivity extends BaseActivity implements View.OnClickList
         }
 
         String new1 = et_new2.getText().toString().trim();
-        if (TextUtils.isEmpty(new1)) {
+        if (!Tools.isPassword(new1)) {
             Toast.makeText(this, "请输入6～18位英文数字组合密码", Toast.LENGTH_SHORT).show();
             return;
         }

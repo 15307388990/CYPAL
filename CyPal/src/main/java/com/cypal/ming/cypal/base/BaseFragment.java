@@ -116,7 +116,7 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
                 mSavePreferencesData.putStringData("token", "");
                 Intent intent = new Intent(mcontext, LoginActivity.class);
                 intent.putExtra("msg", msg);
-                startActivity(intent);
+                mcontext.startActivity(intent);
                 mcontext.finish();
             } else {
                 Tools.showToast(mcontext, msg);

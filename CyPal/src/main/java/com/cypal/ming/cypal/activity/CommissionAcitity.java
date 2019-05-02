@@ -58,7 +58,7 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
 
     private List<CommissionEntity.DataBean.ListBean.ContentBean> list;
     private CommissionAdapter commissionAdapter;
-
+    private LinearLayout ll_wu;
     private SpringView springView;
     private int pageNumber = 1;
     boolean isPage = true;
@@ -100,6 +100,7 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
         springView = (SpringView) findViewById(R.id.springView);
         right_view_text = (ImageView) findViewById(R.id.right_view_text);
         btn_next = (TextView) findViewById(R.id.btn_next);
+        ll_wu=(LinearLayout)findViewById(R.id.ll_wu);
         btn_next.setOnClickListener(this);
         rd_phone = (RadioButton) findViewById(R.id.rd_phone);
         rd_email = (RadioButton) findViewById(R.id.rd_email);
@@ -174,6 +175,13 @@ public class CommissionAcitity extends BaseActivity implements View.OnClickListe
         tv_todayCommision.setText(commissionEntity.data.todayCommision + "");
         if (pageNumber == 1) {
             list = commissionEntity.data.list.content;
+            if (pageNumber==1&&list.size()<1){
+                springView.setVisibility(View.GONE);
+                ll_wu.setVisibility(View.VISIBLE);
+            }else {
+                ll_wu.setVisibility(View.GONE);
+                springView.setVisibility(View.VISIBLE);
+            }
         } else {
             list.addAll(commissionEntity.data.list.content);
         }

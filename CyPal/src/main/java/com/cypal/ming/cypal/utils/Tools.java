@@ -349,6 +349,14 @@ public class Tools {
         System.out.println(m.matches() + "---");
         return m.matches();
     }
+    /**
+     * 密码正则表达式 密码要求6-18位 字母+数字，
+     */
+    public static boolean isPassword(String mobiles) {
+        String passRegex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$";
+        return !TextUtils.isEmpty(mobiles) && mobiles.matches(passRegex);
+    }
+
 
     public static String readTextFile(InputStream inputStream) {
         InputStreamReader inputStreamReader = null;
