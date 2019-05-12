@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +19,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
+import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.bean.MemberEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.utils.ImageLoaderUtil;
 import com.cypal.ming.cypal.utils.ImageUtil;
+import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -74,9 +79,22 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     private String shenfen2 = null;
     private String shenfen3 = null;
 
+    private String str;
+
     private MemberEntity memberEntity;
     ImageLoader imageLoader = ImageLoader.getInstance();
     DisplayImageOptions options = ImageLoaderUtil.getOptions();
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                changejson();
+            } else if (msg.what == 1) {
+                Tools.showToast(CertificationActivity.this, "图片上传失败 请重新上传");
+            }
+
+        }
+    };
+    int requestCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,20 +224,13 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                 Map<String, String> map = new HashMap<>();
                 map.put("uploadEnum", "certification");
                 File file = new File(filePaths.get(0));
-                if (requestCode == 0) {
-                    iv_shenfen1.setImageBitmap(bitmapInfos.get(0));
-                } else if (requestCode == 1) {
-                    iv_shenfen2.setImageBitmap(bitmapInfos.get(0));
-                } else if (requestCode == 2) {
-                    iv_shenfen3.setImageBitmap(bitmapInfos.get(0));
-                }
-
-                post_file(map, file, requestCode);
+                this.requestCode = requestCode;
+                post_file(map, file);
             }
         }
     }
 
-    protected void post_file(final Map<String, String> map, File file, final int requestCode) {
+    protected void post_file(final Map<String, String> map, File file) {
         mDialog.setMessage("图片上传中...");
         mDialog.show();
         OkHttpClient client = new OkHttpClient();
@@ -246,52 +257,54 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onFailure(Call call, IOException e) {
                 mDialog.dismiss();
-                // Log.i("lfq" ,"onFailu re");
+                handler.sendEmptyMessage(1);
                 Tools.showToast(CertificationActivity.this, "图片上传失败 请重新上传");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String str = response.body().string();
-                    changejson(str, requestCode);
+                    str = response.body().string();
                     mDialog.dismiss();
-                    // Log.i("lfq", response.message() + " , body " + str);
+                    handler.sendEmptyMessage(0);
 
                 } else {
                     mDialog.dismiss();
-                    // Log.i("lfq" ,response.message() + " error : body " + response.body().string());
                 }
             }
         });
 
     }
 
-    private void changejson(String response, int requestCode) {
+    private void changejson() {
         try {
-            JSONObject json = new JSONObject(response);
+            JSONObject json = new JSONObject(str);
             int stauts = json.optInt("code");
             String msg = json.optString("msg");
             if (stauts == 1) {
                 String data = json.optString("data");
                 List<String> list = JSON.parseArray(data, String.class);
+
                 switch (requestCode) {
                     case 0:
                         shenfen1 = list.get(0);
+                        iv_shenfen1.setImageBitmap(bitmapInfos.get(0));
                         break;
                     case 1:
                         shenfen2 = list.get(0);
+                        iv_shenfen2.setImageBitmap(bitmapInfos.get(0));
                         break;
                     case 2:
                         shenfen3 = list.get(0);
+                        iv_shenfen3.setImageBitmap(bitmapInfos.get(0));
                         break;
                 }
             } else {
-                //Tools.showToast(this, msg);
+                Tools.showToast(this, msg);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-           // Tools.showToast(this, "数据格式不对");
+            Tools.showToast(this, "数据格式不对");
         }
 
     }

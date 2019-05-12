@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cypal.ming.cypal"
-    android:versionCode="20460"
+    android:versionCode="20000"
     android:versionName="2.5">
 
     <permission

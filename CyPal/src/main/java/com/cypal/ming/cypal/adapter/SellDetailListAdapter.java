@@ -18,8 +18,9 @@ import com.lidroid.xutils.db.table.Id;
 import java.util.List;
 
 /**
- * Created by wood121 on 2017/12/12.
- */
+ * @author luoming
+ *created at 2019/5/12 11:18 AM
+*/
 
 public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAdapter.ViewHoler> {
     public static final int TYPE_HEADER = 0;
@@ -27,7 +28,6 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     private final Context mContext;
     private List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList;
     private OnClickListener onClickListener;
-    private SavePreferencesData mSavePreferencesData;
     private View mHeaderView;
     private long serverTime;
 
@@ -35,7 +35,6 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
         this.mContext = context;
         this.mList = list;
         this.onClickListener = onClickListener;
-        mSavePreferencesData = new SavePreferencesData( context );
     }
 
     /**

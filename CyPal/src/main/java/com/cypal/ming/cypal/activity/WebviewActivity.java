@@ -48,8 +48,8 @@ public class WebviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+        StatusBarCompat.setStatusBarColor(this, getResources().getColor(R.color.top_background));
         setContentView( R.layout.activity_webview );
-        StatusBarCompat.setStatusBarColor( this, getResources().getColor( R.color.white ) );
         ViewUtils.inject( this );
         Tools.webacts.add( this );
         Tools.acts.add( this );
@@ -117,7 +117,6 @@ public class WebviewActivity extends BaseActivity {
             // 开启 DOM storage API 功能
             webSettings.setDomStorageEnabled( true );
             // 开启 database storage API 功能
-            webSettings.setDatabaseEnabled( true );
             String appCachePath = getApplicationContext().getCacheDir()
                     .getAbsolutePath();
             // String cacheDirPath =

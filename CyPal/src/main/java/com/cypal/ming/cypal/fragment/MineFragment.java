@@ -68,7 +68,8 @@ public class MineFragment extends BaseFragment {
     public MineFragment(Activity context) {
         super(context);
     }
-
+    public MineFragment() {
+    }
     ImageLoader imageLoader = ImageLoader.getInstance();
     DisplayImageOptions options = ImageLoaderUtil.getOptions();
 
