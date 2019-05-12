@@ -109,15 +109,19 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 199) {
-                auto_textview.next();
-                number++;
-                auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
+                if (noticeListBeanList!=null) {
+                    if (!noticeListBeanList.isEmpty()) {
+                        auto_textview.next();
+                        number++;
+                        auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
+                    }
+                }
             } else if (msg.what == 2) {
-                Tools.isOnline=false;
+                Tools.isOnline = false;
                 setText();
 
             } else if (msg.what == 3) {
-                Tools.isOnline=true;
+                Tools.isOnline = true;
                 setText();
             } else if (msg.what == 1) {
                 String text = (String) msg.obj;
@@ -598,22 +602,22 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
         //公告开启
         if (thread == null) {
-            auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
-            thread = new Thread() {
-                @Override
-                public void run() {
-                    while (isRunning) {
-                        SystemClock.sleep(5000);
-                        handler.sendEmptyMessage(199);
+            if (noticeListBeanList!=null) {
+                if (!noticeListBeanList.isEmpty()) {
+                    auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
+                    thread = new Thread() {
+                        @Override
+                        public void run() {
+                            while (isRunning) {
+                                SystemClock.sleep(5000);
+                                handler.sendEmptyMessage(199);
+                            }
+                        }
+                    };
+                    if (!thread.isAlive()) {
+                        thread.start();
                     }
                 }
-            };
-
-            if (!noticeListBeanList.isEmpty()) {
-                if (!thread.isAlive()) {
-                    thread.start();
-                }
-
             }
         }
         //支付密码
