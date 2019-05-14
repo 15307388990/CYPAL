@@ -258,7 +258,6 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
             public void onFailure(Call call, IOException e) {
                 mDialog.dismiss();
                 handler.sendEmptyMessage(1);
-                Tools.showToast(CertificationActivity.this, "图片上传失败 请重新上传");
             }
 
             @Override

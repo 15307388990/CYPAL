@@ -86,8 +86,9 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
 
     }
 
-    public void setOnClickListener(OnClickListener onClickListener) {
+    public AccountDialog setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
+        return this;
     }
 
     @Override

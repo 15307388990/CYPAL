@@ -56,6 +56,9 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
         super(context);
     }
 
+    public TopUpFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,7 +72,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
         recycleView = (RecyclerView) view.findViewById(R.id.recycleView);
         springView = (SpringView) view.findViewById(R.id.springView);
         rl_layout = (RelativeLayout) view.findViewById(R.id.rl_layout);
-        ll_wu=(LinearLayout)view.findViewById(R.id.ll_wu);
+        ll_wu = (LinearLayout) view.findViewById(R.id.ll_wu);
         list = new ArrayList<>();
         topUpListAdapter = new TopUpListAdapter(mcontext, list, this);
         recycleView.setLayoutManager(new LinearLayoutManager(mcontext));
@@ -172,7 +175,7 @@ public class TopUpFragment extends BaseFragment implements OnClickListener, TopU
     public void initData(String data) {
         TopUpEntity topUpEntity = JSON.parseObject(data, TopUpEntity.class);
         list = topUpEntity.data.content;
-        if (pageNumber==1&&list.size()<1){
+        if (pageNumber == 1 && list.size() < 1) {
             springView.setVisibility(View.GONE);
             ll_wu.setVisibility(View.VISIBLE);
         }

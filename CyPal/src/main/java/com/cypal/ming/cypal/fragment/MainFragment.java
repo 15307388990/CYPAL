@@ -109,7 +109,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 199) {
-                if (noticeListBeanList!=null) {
+                if (noticeListBeanList != null) {
                     if (!noticeListBeanList.isEmpty()) {
                         auto_textview.next();
                         number++;
@@ -314,15 +314,13 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(pay) && !"[]".equals(pay)) {
-                    AccountDialog accountDialog = AccountDialog.newInstance();
-                    accountDialog.setOnClickListener(new AccountDialog.OnClickListener() {
+                    AccountDialog.newInstance().setOnClickListener(new AccountDialog.OnClickListener() {
                         @Override
                         public void successful() {
                             //设置成功刷新数据
                             orderList();
                         }
-                    });
-                    accountDialog.show(mcontext);
+                    }).show(mcontext);
                 } else {
                     Tools.jump(mcontext, AccountListActivity.class, false);
                 }
@@ -602,7 +600,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
 
         //公告开启
         if (thread == null) {
-            if (noticeListBeanList!=null) {
+            if (noticeListBeanList != null) {
                 if (!noticeListBeanList.isEmpty()) {
                     auto_textview.setText(noticeListBeanList.get(number % noticeListBeanList.size()).title);
                     thread = new Thread() {

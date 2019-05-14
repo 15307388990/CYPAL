@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +47,7 @@ import java.text.DecimalFormat;
 /**
  * @author 罗富贵 Activity 基类
  */
-public abstract class BaseActivity<T> extends Activity implements Listener<String>, ErrorListener, WsManager.IWsManagerActivityView {
+public abstract class BaseActivity<T> extends AppCompatActivity implements Listener<String>, ErrorListener, WsManager.IWsManagerActivityView {
     public View rl_title_bar;
     public View ll_view_back; // 返回
     public TextView title; // 标题

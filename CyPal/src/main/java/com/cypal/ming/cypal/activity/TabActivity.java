@@ -1,12 +1,11 @@
 package com.cypal.ming.cypal.activity;
 
 import android.Manifest;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -79,7 +78,7 @@ public class TabActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // TOD
-                FragmentTransaction transaction = getFragmentManager()
+                FragmentTransaction transaction = getSupportFragmentManager()
                         .beginTransaction();
                 hideAllFragment(transaction);
                 switch (checkedId) {
@@ -232,8 +231,8 @@ public class TabActivity extends BaseActivity {
     @Override
     public void onConnected() {
         super.onConnected();
-        if (mMianFragment!=null) {
-            MainFragment mainFragment= (MainFragment) mMianFragment;
+        if (mMianFragment != null) {
+            MainFragment mainFragment = (MainFragment) mMianFragment;
             mainFragment.onConnected();
         }
 
@@ -242,8 +241,8 @@ public class TabActivity extends BaseActivity {
     @Override
     public void onDisconnected() {
         super.onDisconnected();
-        if (mMianFragment!=null) {
-            MainFragment mainFragment= (MainFragment) mMianFragment;
+        if (mMianFragment != null) {
+            MainFragment mainFragment = (MainFragment) mMianFragment;
             mainFragment.onDisconnected();
         }
     }
@@ -251,8 +250,8 @@ public class TabActivity extends BaseActivity {
     @Override
     public void onTextMessage(String text) {
         super.onTextMessage(text);
-        if (mMianFragment!=null) {
-            MainFragment mainFragment= (MainFragment) mMianFragment;
+        if (mMianFragment != null) {
+            MainFragment mainFragment = (MainFragment) mMianFragment;
             mainFragment.onTextMessage(text);
         }
     }
@@ -261,5 +260,8 @@ public class TabActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         WsManager.getInstance().disconnect();
+        mMianFragment = null;
+        mMinFragment = null;
+        topUpFragment = null;
     }
 }

@@ -146,7 +146,7 @@ public class TradingDialog extends CenterDialog implements Response.Listener<Str
             if (stauts == 1) {
                 dismiss();
                 String orderId = json.getJSONObject( "data" ).getString( "orderId" );
-                Intent intent = new Intent( mContext, TopUpDetailsActivity.class );
+                Intent intent = new Intent( TradingDialog.this.getActivity(), TopUpDetailsActivity.class );
                 intent.putExtra( "orderId", orderId );
                 startActivity( intent );
 

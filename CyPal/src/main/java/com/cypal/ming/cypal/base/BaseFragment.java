@@ -17,8 +17,8 @@ import com.cypal.ming.cypal.widgets.dialogs.LoadingDialog;
  * @author 罗富贵 Activity 基类
  */
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,23 +41,11 @@ public abstract class BaseFragment extends Fragment implements Listener<String>,
         this.mcontext = context;
         mSavePreferencesData = new SavePreferencesData(context);
         mQueue = Volley.newRequestQueue(context);
-        initAdmin();
     }
 
     public BaseFragment() {
     }
 
-    public void initAdmin() {
-        storeBean = new StoreBean();
-        String mallSet = mSavePreferencesData.getStringData("json");
-        if (mallSet != null) {
-            try {
-                storeBean = JSON.parseObject(mallSet, StoreBean.class);
-            } catch (Exception e) {
-                mSavePreferencesData.putStringData("json", "");
-            }
-        }
-    }
 
 
     /**
