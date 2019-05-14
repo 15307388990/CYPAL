@@ -46,9 +46,9 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:text="删除"
+            android:visibility="gone"
             android:textColor="@color/CY_999999"
-            android:textSize="14sp"
-            android:visibility="gone" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/top_view_text"
@@ -63,13 +63,112 @@
             android:textSize="@dimen/text_20" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:scrollbars="none" />
+    <TextView
+        android:id="@+id/tv_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="支付宝账号"
+        android:textColor="@color/actionbar_title_color"
+        android:textSize="14sp" />
 
+    <EditText
+        android:id="@+id/et_accout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="11dp"
+        android:background="@null"
+        android:hint="请输入支付宝账号"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="28dp"
+        android:background="#EEEEEE" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        android:text="真实姓名"
+        android:textColor="@color/actionbar_title_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="11dp"
+        android:background="@null"
+        android:hint="请输入真实姓名"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="28dp"
+        android:background="#EEEEEE" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="18dp"
+        android:text="上传您的收款二维码"
+        android:textColor="@color/actionbar_title_color"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="189dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="33dp"
+        android:background="@color/gray">
+
+        <ImageView
+            android:id="@+id/iv_shang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_shangchuan" />
+
+        <ImageView
+            android:id="@+id/iv_xia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="28dp"
+        android:text="温馨提示： \n1、请确保支付宝已实名认证，并填写真实姓名（请不要填写 呢称） \n2、为了保证顺利提现，30天内不要更换其他账号，否则会 导致提现不通过 \n3、我们承诺不会向任何人透露您的个人信息"
+        android:textColor="@color/CY_999999"
+        android:textSize="12sp" />
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_bg"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
 </LinearLayout>
