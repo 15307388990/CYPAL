@@ -23,6 +23,9 @@ import com.cypal.ming.cypal.utils.ImageUtil;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -118,15 +121,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         iv_shang.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                accountData = null;
-                Intent intent = new Intent( SaveAccountAcitity.this,
-                        MultiImageSelectorActivity.class );
-                intent.putExtra( "isUploadIcon", true );
-                intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                        false );
-                intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                        1 );
-                startActivityForResult( intent, 1 );
+                initPermission();
             }
         } );
         tv_account = (TextView) findViewById( R.id.tv_account );
@@ -193,7 +188,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
                 Map<String, String> map = new HashMap<>();
                 map.put( "uploadEnum", "certification" );
                 File file = new File( filePaths.get( 0 ) );
-                iv_xia.setImageBitmap( bitmapInfos.get( 0 ) );
+
                 parseInfoFromBitmap( filePaths.get( 0 ) );
 
 
@@ -206,26 +201,8 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
             CodeUtils.analyzeBitmap( path, new CodeUtils.AnalyzeCallback() {
                 @Override
                 public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-//                    String key = "";
-//                    String text = "";
-//                    if (type.equals( "ALIPAY" )) {
-//                        // 支付宝
-//                        key = "HTTPS://QR.ALIPAY.COM";
-//                        text = "支付宝";
-//                    } else if (type.equals( "WXPAY" )) {
-//                        //微信
-//                        key = "wxp://";
-//                        text = "微信";
-//                    } else {
-//                        //云闪付
-//                        key = "https://qr.95516.com/";
-//                        text = "云闪付";
-//                    }
-//                    if (result.contains( key )) {
                     accountData = result;
-//                    } else {
-//                        Tools.showToast( SaveAccountAcitity.this, "该收款二维码不是" + text + "支付二维码，请重新选择" );
-//                    }
+                    iv_xia.setImageBitmap( bitmapInfos.get( 0 ) );
                 }
 
                 @Override
@@ -274,5 +251,35 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     protected void returnData(String data, String url) {
         Toast.makeText( this, "成功", Toast.LENGTH_SHORT ).show();
         finish();
+    }
+    /**
+     * 获取相册权限
+     */
+    private void initPermission() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.READ_EXTERNAL_STORAGE).
+                onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        accountData = null;
+                        Intent intent = new Intent( SaveAccountAcitity.this,
+                                MultiImageSelectorActivity.class );
+                        intent.putExtra( "isUploadIcon", true );
+                        intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
+                                false );
+                        intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
+                                1 );
+                        startActivityForResult( intent, 1 );
+                    }
+                }).
+                onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        Tools.showToast(SaveAccountAcitity.this, "需要获取相册权限");
+                    }
+                }).
+                start();
+
     }
 }

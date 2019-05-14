@@ -69,27 +69,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:scrollbars="none" />
-    <LinearLayout
-        android:id="@+id/ll_add"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="添加二维码"
-            android:textColor="#ff3776fb"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="17dp"
-            android:src="@drawable/icon_more" />
-    </LinearLayout>
 </LinearLayout>

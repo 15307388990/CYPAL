@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -76,7 +77,7 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
         ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
         top_view_text = (TextView) findViewById( R.id.top_view_text );
         recycleView = (RecyclerView) findViewById( R.id.recycleView );
-        ll_add = (LinearLayout) findViewById( R.id.ll_add );
+
         ll_view_back.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +87,11 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
         type = getIntent().getStringExtra( "type" );
         value = getIntent().getStringExtra( "value" );
         top_view_text.setText( value );
+
+        list = new ArrayList<>();
+        accountListAdapter = new AccountListAdapter( this, list, this );
+        View bottomView = LayoutInflater.from(this).inflate(R.layout.account_list_bottom_item, null);
+        ll_add = (LinearLayout) bottomView.findViewById( R.id.ll_add );
         ll_add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +101,7 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
                 startActivity( intent );
             }
         } );
-        list = new ArrayList<>();
-        accountListAdapter = new AccountListAdapter( this, list, this );
+        accountListAdapter.setBottomView(bottomView);
         recycleView.setAdapter( accountListAdapter );
         recycleView.setLayoutManager( new LinearLayoutManager( this ) );
     }

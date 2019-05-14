@@ -94,6 +94,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="B级"
+            android:visibility="gone"
             android:textColor="@color/coupon_color"
             android:textSize="@dimen/text_14" />
 
