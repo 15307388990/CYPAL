@@ -417,10 +417,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     }
 
 
-
     @Override
     public void ConfirmReceipt(String order_uuid, String amount) {
-        deleteOrderDialog("收款"+amount, order_uuid);
+        deleteOrderDialog("收款" + amount, order_uuid);
     }
 
     @Override
@@ -433,14 +432,13 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 .setOnClickListener(new CancelTheDealDialog.OnClickListener() {
                     @Override
                     public void successful() {
-                        if (text.equals("收款")) {
-                            inoutPsw(order_uuid);
-
-                        } else if (text.equals("申诉订单")) {
+                        if (text.equals("申诉订单")) {
                             appeal(order_uuid);
+                        } else {
+                            inoutPsw(order_uuid);
                         }
                     }
-                }).show(this);
+                }).show(mcontext);
     }
 
     /**
