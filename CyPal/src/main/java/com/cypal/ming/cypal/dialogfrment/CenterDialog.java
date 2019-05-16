@@ -3,12 +3,12 @@ package com.cypal.ming.cypal.dialogfrment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -94,7 +94,7 @@ public abstract class CenterDialog extends DialogFragment {
 
     public void show(Object object, String tag) {
         if (object instanceof Activity) {
-            android.app.FragmentManager manager = ((Activity) object).getFragmentManager();
+            FragmentManager manager = ((Activity) object).getFragmentManager();
             if (isAdded()) {
                 dismiss();
             }
