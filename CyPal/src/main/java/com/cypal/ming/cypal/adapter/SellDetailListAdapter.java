@@ -19,8 +19,8 @@ import java.util.List;
 
 /**
  * @author luoming
- *created at 2019/5/12 11:18 AM
-*/
+ * created at 2019/5/12 11:18 AM
+ */
 
 public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAdapter.ViewHoler> {
     public static final int TYPE_HEADER = 0;
@@ -42,7 +42,7 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
      */
     public interface OnClickListener {
         //确认收款
-        void ConfirmReceipt(String order_uuid);
+        void ConfirmReceipt(String order_uuid, String amount);
 
         //申诉订单
         void Complaint(String order_uuid);
@@ -51,7 +51,7 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
 
     public void setHeaderView(View headerView) {
         mHeaderView = headerView;
-        notifyItemInserted( 0 );
+        notifyItemInserted(0);
     }
 
     public View getHeaderView() {
@@ -69,70 +69,70 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new ViewHoler( mHeaderView );
-        View itemView = LayoutInflater.from( mContext ).inflate( R.layout.item_recyler_sell, parent, false );
-        return new ViewHoler( itemView );
+            return new ViewHoler(mHeaderView);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_recyler_sell, parent, false);
+        return new ViewHoler(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        if (getItemViewType( position ) == TYPE_HEADER) return;
-        int pos = getRealPosition( holder );
-        final IndexEntity.DataBean.UndoOrderBean.ContentBean sellBean = mList.get( pos );
-        holder.tv_amount.setText( "￥" + sellBean.amount );
-        holder.tv_timer.setText( sellBean.takeTime );
-        holder.tv_staus.setText( sellBean.statusDesc );
-        if (sellBean.payType.equals( "WXPAY" )) {
-            holder.tv_paytype.setText( "微信" );
-        } else if (sellBean.payType.equals( "ALIPAY" )) {
-            holder.tv_paytype.setText( "支付宝" );
+        if (getItemViewType(position) == TYPE_HEADER) return;
+        int pos = getRealPosition(holder);
+        final IndexEntity.DataBean.UndoOrderBean.ContentBean sellBean = mList.get(pos);
+        holder.tv_amount.setText("￥" + sellBean.amount);
+        holder.tv_timer.setText(sellBean.takeTime);
+        holder.tv_staus.setText(sellBean.statusDesc);
+        if (sellBean.payType.equals("WXPAY")) {
+            holder.tv_paytype.setText("微信");
+        } else if (sellBean.payType.equals("ALIPAY")) {
+            holder.tv_paytype.setText("支付宝");
         } else {
-            holder.tv_paytype.setText( "云闪付" );
+            holder.tv_paytype.setText("云闪付");
         }
-        holder.tv_number.setText( sellBean.orderNo );
-        holder.btn_ok.setOnClickListener( new View.OnClickListener() {
+        holder.tv_number.setText(sellBean.orderNo);
+        holder.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.ConfirmReceipt( sellBean.id + "" );
+                onClickListener.ConfirmReceipt(sellBean.id + "", sellBean.amount + "元");
             }
-        } );
-        holder.btn_shen.setOnClickListener( new View.OnClickListener() {
+        });
+        holder.btn_shen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.Complaint( sellBean.id + "" );
+                onClickListener.Complaint(sellBean.id + "");
             }
-        } );
+        });
 //                A_PROCESS,//处理中，
 //                B_BEAPPEAL,//被申诉
 //                C_APPEAL,//主动申诉
 //                D_SUCCESS,//支付成功
 //                E_FAIL //失败取消
-        holder.btn_ok.setVisibility( View.GONE );
-        holder.btn_shen.setVisibility( View.GONE );
-        if (sellBean.status.equals( OrderListState.A_PROCESS.toString() )) {
-            holder.btn_ok.setVisibility( View.VISIBLE );
-            holder.btn_shen.setVisibility( View.VISIBLE );
-            holder.tv_staus.setText( "待确认" );
-            holder.btn_shen.setTextColor( mContext.getResources( ).getColor(  R.color.CY_888888 ) );
-            holder.btn_shen.setEnabled( false );
+        holder.btn_ok.setVisibility(View.GONE);
+        holder.btn_shen.setVisibility(View.GONE);
+        if (sellBean.status.equals(OrderListState.A_PROCESS.toString())) {
+            holder.btn_ok.setVisibility(View.VISIBLE);
+            holder.btn_shen.setVisibility(View.VISIBLE);
+            holder.tv_staus.setText("待确认");
+            holder.btn_shen.setTextColor(mContext.getResources().getColor(R.color.CY_888888));
+            holder.btn_shen.setEnabled(false);
             // 判断订单是否超时
-            if (serverTime - Tools.getLongformat( sellBean.createTime ) > 600000) {
-                holder.tv_staus.setText( "超时等待中" );
-                holder.btn_ok.setVisibility( View.VISIBLE );
-                holder.btn_shen.setVisibility( View.VISIBLE );
-                holder.btn_shen.setTextColor( mContext.getResources( ).getColor(  R.color.CY_3776FB ) );
-                holder.btn_shen.setEnabled( true );
+            if (serverTime - Tools.getLongformat(sellBean.createTime) > 600000) {
+                holder.tv_staus.setText("超时等待中");
+                holder.btn_ok.setVisibility(View.VISIBLE);
+                holder.btn_shen.setVisibility(View.VISIBLE);
+                holder.btn_shen.setTextColor(mContext.getResources().getColor(R.color.CY_3776FB));
+                holder.btn_shen.setEnabled(true);
             }
-        } else if (sellBean.status.equals( OrderListState.B_BEAPPEAL.toString() )) {
-            holder.btn_ok.setVisibility( View.VISIBLE );
-            holder.tv_staus.setText( "被申诉" );
-        } else if (sellBean.status.equals( OrderListState.C_APPEAL.toString() )) {
-            holder.btn_ok.setVisibility( View.VISIBLE );
-            holder.tv_staus.setText( "申诉中" );
-        } else if (sellBean.status.equals( OrderListState.D_SUCCESS.toString() )) {
-            holder.tv_staus.setText( "支付成功" );
-        } else if (sellBean.status.equals( OrderListState.E_FAIL.toString() )) {
-            holder.tv_staus.setText( "失败取消" );
+        } else if (sellBean.status.equals(OrderListState.B_BEAPPEAL.toString())) {
+            holder.btn_ok.setVisibility(View.VISIBLE);
+            holder.tv_staus.setText("被申诉");
+        } else if (sellBean.status.equals(OrderListState.C_APPEAL.toString())) {
+            holder.btn_ok.setVisibility(View.VISIBLE);
+            holder.tv_staus.setText("申诉中");
+        } else if (sellBean.status.equals(OrderListState.D_SUCCESS.toString())) {
+            holder.tv_staus.setText("支付成功");
+        } else if (sellBean.status.equals(OrderListState.E_FAIL.toString())) {
+            holder.tv_staus.setText("失败取消");
         }
 
     }
@@ -148,7 +148,7 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
     }
 
 
-    public void updateAdapter(List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList,long serverTime) {
+    public void updateAdapter(List<IndexEntity.DataBean.UndoOrderBean.ContentBean> mList, long serverTime) {
         this.mList = mList;
         this.serverTime = serverTime;
         notifyDataSetChanged();
@@ -164,14 +164,14 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
         private TextView btn_shen;
 
         public ViewHoler(View itemView) {
-            super( itemView );
-            tv_amount = (TextView) itemView.findViewById( R.id.tv_amount );
-            tv_staus = (TextView) itemView.findViewById( R.id.tv_staus );
-            tv_paytype = (TextView) itemView.findViewById( R.id.tv_paytype );
-            tv_number = (TextView) itemView.findViewById( R.id.tv_number );
-            tv_timer = (TextView) itemView.findViewById( R.id.tv_timer );
-            btn_ok = (TextView) itemView.findViewById( R.id.btn_ok );
-            btn_shen = (TextView) itemView.findViewById( R.id.btn_shen );
+            super(itemView);
+            tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
+            tv_staus = (TextView) itemView.findViewById(R.id.tv_staus);
+            tv_paytype = (TextView) itemView.findViewById(R.id.tv_paytype);
+            tv_number = (TextView) itemView.findViewById(R.id.tv_number);
+            tv_timer = (TextView) itemView.findViewById(R.id.tv_timer);
+            btn_ok = (TextView) itemView.findViewById(R.id.btn_ok);
+            btn_shen = (TextView) itemView.findViewById(R.id.btn_shen);
         }
     }
 }

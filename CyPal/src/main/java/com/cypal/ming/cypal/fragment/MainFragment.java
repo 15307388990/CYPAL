@@ -417,9 +417,10 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     }
 
 
+
     @Override
-    public void ConfirmReceipt(String order_uuid) {
-        deleteOrderDialog("收款", order_uuid);
+    public void ConfirmReceipt(String order_uuid, String amount) {
+        deleteOrderDialog("收款"+amount, order_uuid);
     }
 
     @Override
