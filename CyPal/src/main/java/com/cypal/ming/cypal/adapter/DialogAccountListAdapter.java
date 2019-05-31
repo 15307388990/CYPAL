@@ -65,19 +65,19 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
         final AccountListEntity.DataBean contentBean = mList.get( position );
         //支付类型
         if (contentBean.accountType.equals( "WXPAY" )) {
-            holder.tv_account.setText( "微信账号：" + contentBean.accountName );
+            holder.tv_account.setText( "微信账号：" + contentBean.realName+"+"+contentBean.accountName );
             holder.tv_type_pay.setText( "微信" );
             holder.tv_type.setText( "微信" );
             holder.iv_img.setImageResource( R.drawable.icon_weixin );
 
         } else if (contentBean.accountType.equals( "ALIPAY" )) {
             holder.iv_img.setImageResource( R.drawable.icon_zhifubao );
-            holder.tv_account.setText( "支付宝账号：" + contentBean.accountName );
+            holder.tv_account.setText( "支付宝账号："  +contentBean.realName+"+"+ contentBean.accountName );
             holder.tv_type_pay.setText( "支付宝" );
             holder.tv_type.setText( "支付宝" );
         } else {
             holder.iv_img.setImageResource( R.drawable.icon_yun );
-            holder.tv_account.setText( "云闪付账号：" + contentBean.accountName );
+            holder.tv_account.setText( "云闪付账号：" + contentBean.realName+"+"+ contentBean.accountName );
             holder.tv_type_pay.setText( "云闪付" );
             holder.tv_type.setText( "云闪付" );
         }
