@@ -65,7 +65,7 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
         final CommissionEntity.DataBean.ListBean.ContentBean contentBean = mList.get(position);
-        if (!TextUtils.isEmpty(contentBean.payType)) {
+        if (!TextUtils.isEmpty(contentBean.commisionEnum)) {
             if (contentBean.commisionEnum.equals("OTC")) {
                 if (contentBean.payType.equals("WXPAY")) {
                     holder.tv_type.setText("接单分佣：微信");

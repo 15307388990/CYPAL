@@ -159,9 +159,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
 
             }
         });
-        if (dataBean != null) {
-            InitDate(dataBean);
-        }
+
         tv_pid.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG );
         et_pid = (EditText) findViewById(R.id.et_pid);
         ll_pid = (LinearLayout) findViewById(R.id.ll_pid);
@@ -183,6 +181,9 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
                 startActivity(intent);
             }
         });
+        if (dataBean != null) {
+            InitDate(dataBean);
+        }
     }
 
     private void InitDate(AccountListEntity.DataBean dataBean) {
@@ -193,6 +194,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         accountId = dataBean.id + "";
         Bitmap bitmap = CodeUtils.createImage(dataBean.accountData, 166, 167, null);
         iv_xia.setImageBitmap(bitmap);
+        et_pid.setText(accountData);
     }
 
     @Override
