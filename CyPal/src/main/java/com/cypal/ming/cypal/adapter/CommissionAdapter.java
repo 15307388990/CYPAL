@@ -66,12 +66,18 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
     public void onBindViewHolder(ViewHoler holder, int position) {
         final CommissionEntity.DataBean.ListBean.ContentBean contentBean = mList.get(position);
         if (!TextUtils.isEmpty(contentBean.payType)) {
-            if (contentBean.payType.equals("WXPAY")) {
-                holder.tv_type.setText("交易方式：微信");
-            } else if (contentBean.payType.equals("ALIPAY")) {
-                holder.tv_type.setText("交易方式：支付宝");
-            } else {
-                holder.tv_type.setText("交易方式：云闪付");
+            if (contentBean.commisionEnum.equals("OTC")) {
+                if (contentBean.payType.equals("WXPAY")) {
+                    holder.tv_type.setText("接单分佣：微信");
+                } else if (contentBean.payType.equals("ALIPAY")) {
+                    holder.tv_type.setText("接单分佣：支付宝");
+                } else {
+                    holder.tv_type.setText("接单分佣：云闪付");
+                }
+            } else if (contentBean.commisionEnum.equals("ATEAM")) {
+                holder.tv_type.setText("A级好友接单的分佣");
+            } else if (contentBean.commisionEnum.equals("BTEAM")) {
+                holder.tv_type.setText("B级好友接单的分佣");
             }
             holder.tv_type.setVisibility(View.VISIBLE);
             holder.tv_amount.setText("交易金额：" + contentBean.amount);
