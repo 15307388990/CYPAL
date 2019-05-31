@@ -63,6 +63,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     private LinearLayout ll_pid;
     private LinearLayout ll_code;
     private TextView tv_pid;
+    private TextView tv_text;
 
 
     @Override
@@ -122,7 +123,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         iv_shang = (ImageView) findViewById(R.id.iv_shang);
         iv_xia = (ImageView) findViewById(R.id.iv_xia);
         btn_next = (Button) findViewById(R.id.btn_next);
-        tv_pid=(TextView)findViewById(R.id.tv_pid);
+        tv_pid = (TextView) findViewById(R.id.tv_pid);
         btn_next.setOnClickListener(this);
         iv_shang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +132,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
             }
         });
         tv_account = (TextView) findViewById(R.id.tv_account);
+        tv_text = (TextView) findViewById(R.id.tv_text);
         tv_account.setText(value + "账号");
         et_accout.setHint("请输入" + value + "账号");
         right_view_text = (TextView) findViewById(R.id.right_view_text);
@@ -159,8 +161,8 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
 
             }
         });
-
-        tv_pid.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG );
+        tv_text.setText("温馨提示： \n1、请确保" + value + "已实名认证，并填写真实姓名（请不要填写 呢称） \n2、为了保证顺利提现，30天内不要更换其他账号，否则会 导致提现不通过 \n3、我们承诺不会向任何人透露您的个人信息");
+        tv_pid.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         et_pid = (EditText) findViewById(R.id.et_pid);
         ll_pid = (LinearLayout) findViewById(R.id.ll_pid);
         ll_code = (LinearLayout) findViewById(R.id.ll_code);
@@ -174,7 +176,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         tv_pid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SaveAccountAcitity.this,WebviewActivity.class);
+                Intent intent = new Intent(SaveAccountAcitity.this, WebviewActivity.class);
                 String url = Const.BASE_URL + "/h5/pid";
                 intent.putExtra("link_url", url);
                 intent.putExtra("link_name", "PID获取图文教程");
@@ -268,7 +270,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         }
         if (value.equals("支付宝")) {
             String pid = et_pid.getText().toString().trim();
-            accountData =pid;
+            accountData = pid;
             if (TextUtils.isEmpty(pid)) {
                 Toast.makeText(this, "请输入支付宝PID", Toast.LENGTH_SHORT).show();
                 return;
