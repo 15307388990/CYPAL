@@ -101,14 +101,12 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
     /**
      * 确认付款
      */
-    private void rwconfirm(String paymentVoucher, String pwd) {
+    private void rwconfirm(String paymentVoucher) {
         if (!TextUtils.isEmpty(orderId)) {
             Map<String, String> map = new HashMap<>();
             map.put("orderId", orderId);
             map.put("paymentVoucher", paymentVoucher);
             map.put("remark", "dasd");
-            String paypass = MD5Util.getMD5String(pwd);
-            map.put("payPassword", paypass);
             mQueue.add(ParamTools.packParam(Const.rwconfirm, this, this, this, map));
             loading();
         }
@@ -174,7 +172,8 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
                     ConfirmPaymentDialog.newInstance("").setOnClickListener(new ConfirmPaymentDialog.OnClickListener() {
                         @Override
                         public void successful(String paymentVoucher) {
-                            inoutPsw(paymentVoucher);
+                            //inoutPsw(paymentVoucher);
+                            rwconfirm(paymentVoucher);
                         }
                     }).show(TopUpDetailsActivity.this);
 
@@ -197,7 +196,7 @@ public class TopUpDetailsActivity extends BaseActivity implements CategoryAdapte
             public void onPopWindowClickListener(String psw, boolean complete) {
                 if (complete) {
                     if (hasPayPassword) {
-                        rwconfirm(paymentVoucher, psw);
+                       // rwconfirm(paymentVoucher, psw);
                     } else {
                         setPayPassword(psw);
                     }
