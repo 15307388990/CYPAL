@@ -46,9 +46,9 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:text="删除"
-            android:visibility="gone"
             android:textColor="@color/CY_999999"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/top_view_text"
@@ -118,46 +118,102 @@
         android:layout_marginRight="28dp"
         android:background="#EEEEEE" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="18dp"
-        android:text="上传您的收款二维码"
-        android:textColor="@color/actionbar_title_color"
-        android:textSize="14sp" />
-
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ll_pid"
         android:layout_width="match_parent"
-        android:layout_height="189dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="33dp"
-        android:background="@color/gray">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_shang"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/icon_shangchuan" />
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="18dp"
+            android:text="支付宝签约PID"
+            android:textColor="@color/actionbar_title_color"
+            android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/iv_xia"
+        <EditText
+            android:id="@+id/et_pid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="11dp"
+            android:background="@null"
+            android:hint="请输入支付宝PID"
+            android:inputType="phone"
+            android:textSize="14sp" />
 
-    <TextView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="28dp"
+            android:text="温馨提示 \n1、请确保支付宝已实名认证.\n2、请确保PID正确无误否则收不到钱，请使用电脑登录支付宝官网获取PID\n3、我们承诺不会向任何人透露您的个人信息。"
+            android:textColor="@color/CY_999999"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/tv_pid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="28dp"
+            android:text="获取PID图文教程"
+            android:textColor="@color/CY_007AFF"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="28dp"
-        android:text="温馨提示： \n1、请确保支付宝已实名认证，并填写真实姓名（请不要填写 呢称） \n2、为了保证顺利提现，30天内不要更换其他账号，否则会 导致提现不通过 \n3、我们承诺不会向任何人透露您的个人信息"
-        android:textColor="@color/CY_999999"
-        android:textSize="12sp" />
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="18dp"
+            android:text="上传您的收款二维码"
+            android:textColor="@color/actionbar_title_color"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="189dp"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="33dp"
+            android:background="@color/gray">
+
+            <ImageView
+                android:id="@+id/iv_shang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_shangchuan" />
+
+            <ImageView
+                android:id="@+id/iv_xia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="28dp"
+            android:text="温馨提示： \n1、请确保支付宝已实名认证，并填写真实姓名（请不要填写 呢称） \n2、为了保证顺利提现，30天内不要更换其他账号，否则会 导致提现不通过 \n3、我们承诺不会向任何人透露您的个人信息"
+            android:textColor="@color/CY_999999"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"

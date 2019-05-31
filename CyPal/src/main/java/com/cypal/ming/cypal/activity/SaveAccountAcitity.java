@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,13 +59,17 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     private AccountListEntity.DataBean dataBean;
     private TextView right_view_text;
     private String accountId;
+    private EditText et_pid;
+    private LinearLayout ll_pid;
+    private LinearLayout ll_code;
+    private TextView tv_pid;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.acitity_save_account );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.acitity_save_account);
         initView();
     }
 
@@ -72,124 +77,145 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        Log.d( "SelectCity", "onResume" );
+        Log.d("SelectCity", "onResume");
     }
 
     private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
-        map.put( "accountName", et_accout.getText().toString().trim() );
-        map.put( "realName", et_name.getText().toString().trim() );
-        map.put( "accountType", type );
-        map.put( "accountData", accountData );
-        if (!TextUtils.isEmpty( accountId )) {
-            map.put( "id", accountId );
+        map.put("accountName", et_accout.getText().toString().trim());
+        map.put("realName", et_name.getText().toString().trim());
+        map.put("accountType", type);
+        map.put("accountData", accountData);
+        if (!TextUtils.isEmpty(accountId)) {
+            map.put("id", accountId);
         }
-        mQueue.add( ParamTools.packParam( Const.payAccountSave, this, this, this, map ) );
+        mQueue.add(ParamTools.packParam(Const.payAccountSave, this, this, this, map));
         loading();
     }
 
     private void del() {
         Map<String, String> map = new HashMap<>();
-        if (!TextUtils.isEmpty( accountId )) {
-            map.put( "account_id", accountId );
+        if (!TextUtils.isEmpty(accountId)) {
+            map.put("account_id", accountId);
         }
-        mQueue.add( ParamTools.packParam( Const.del, this, this, this, map ) );
+        mQueue.add(ParamTools.packParam(Const.del, this, this, this, map));
         loading();
     }
 
 
     private void initView() {
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        top_view_text = (TextView) findViewById( R.id.top_view_text );
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        top_view_text = (TextView) findViewById(R.id.top_view_text);
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
-        type = getIntent().getStringExtra( "type" );
-        value = getIntent().getStringExtra( "value" );
-        dataBean = (AccountListEntity.DataBean) getIntent().getSerializableExtra( "date" );
-        top_view_text.setText( "添加" + value + "二维码" );
-        top_view_text = (TextView) findViewById( R.id.top_view_text );
-        et_accout = (EditText) findViewById( R.id.et_accout );
-        et_name = (EditText) findViewById( R.id.et_name );
-        iv_shang = (ImageView) findViewById( R.id.iv_shang );
-        iv_xia = (ImageView) findViewById( R.id.iv_xia );
-        btn_next = (Button) findViewById( R.id.btn_next );
-        btn_next.setOnClickListener( this );
-        iv_shang.setOnClickListener( new View.OnClickListener() {
+        });
+        type = getIntent().getStringExtra("type");
+        value = getIntent().getStringExtra("value");
+        dataBean = (AccountListEntity.DataBean) getIntent().getSerializableExtra("date");
+        top_view_text.setText("添加" + value + "二维码");
+        top_view_text = (TextView) findViewById(R.id.top_view_text);
+        et_accout = (EditText) findViewById(R.id.et_accout);
+        et_name = (EditText) findViewById(R.id.et_name);
+        iv_shang = (ImageView) findViewById(R.id.iv_shang);
+        iv_xia = (ImageView) findViewById(R.id.iv_xia);
+        btn_next = (Button) findViewById(R.id.btn_next);
+        tv_pid=(TextView)findViewById(R.id.tv_pid);
+        btn_next.setOnClickListener(this);
+        iv_shang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initPermission();
             }
-        } );
-        tv_account = (TextView) findViewById( R.id.tv_account );
-        tv_account.setText( value + "账号" );
-        et_accout.setHint( "请输入" + value + "账号" );
-        right_view_text = (TextView) findViewById( R.id.right_view_text );
-        right_view_text.setOnClickListener( new View.OnClickListener() {
+        });
+        tv_account = (TextView) findViewById(R.id.tv_account);
+        tv_account.setText(value + "账号");
+        et_accout.setHint("请输入" + value + "账号");
+        right_view_text = (TextView) findViewById(R.id.right_view_text);
+        right_view_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder( SaveAccountAcitity.this );
-                builder.setMessage( "确定删除该账号?" );
-                builder.setPositiveButton( "取消", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SaveAccountAcitity.this);
+                builder.setMessage("确定删除该账号?");
+                builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
-                } );
+                });
 
-                builder.setNegativeButton( "确定", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         del();
 
                     }
-                } );
+                });
                 builder.create().show();
 
             }
-        } );
+        });
         if (dataBean != null) {
-            InitDate( dataBean );
+            InitDate(dataBean);
         }
-
+        tv_pid.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG );
+        et_pid = (EditText) findViewById(R.id.et_pid);
+        ll_pid = (LinearLayout) findViewById(R.id.ll_pid);
+        ll_code = (LinearLayout) findViewById(R.id.ll_code);
+        if (value.equals("支付宝")) {
+            ll_pid.setVisibility(View.VISIBLE);
+            ll_code.setVisibility(View.GONE);
+        } else {
+            ll_code.setVisibility(View.VISIBLE);
+            ll_pid.setVisibility(View.GONE);
+        }
+        tv_pid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(SaveAccountAcitity.this,WebviewActivity.class);
+                String url = Const.BASE_URL + "/h5/pid";
+                intent.putExtra("link_url", url);
+                intent.putExtra("link_name", "PID获取图文教程");
+                startActivity(intent);
+            }
+        });
     }
 
     private void InitDate(AccountListEntity.DataBean dataBean) {
-        right_view_text.setVisibility( View.VISIBLE );
-        et_name.setText( dataBean.realName );
-        et_accout.setText( dataBean.accountName );
+        right_view_text.setVisibility(View.VISIBLE);
+        et_name.setText(dataBean.realName);
+        et_accout.setText(dataBean.accountName);
         accountData = dataBean.accountData;
         accountId = dataBean.id + "";
-        Bitmap bitmap = CodeUtils.createImage( dataBean.accountData, 166, 167, null );
-        iv_xia.setImageBitmap( bitmap );
+        Bitmap bitmap = CodeUtils.createImage(dataBean.accountData, 166, 167, null);
+        iv_xia.setImageBitmap(bitmap);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
-        super.onActivityResult( requestCode, resultCode, data );
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (data != null) {
-                resultList = data.getExtras().getStringArrayList( "select_result" );
+                resultList = data.getExtras().getStringArrayList("select_result");
                 bitmapInfos = new ArrayList<Bitmap>();
                 filePaths = new ArrayList<String>();
                 icon_ids = new ArrayList<String>();
 
                 for (int k = 0; k < resultList.size(); k++) {
-                    Bitmap bitmap = ImageUtil.decodeImage( resultList.get( k ) );
-                    bitmapInfos.add( bitmap );
-                    filePaths.add( resultList.get( k ) );
+                    Bitmap bitmap = ImageUtil.decodeImage(resultList.get(k));
+                    bitmapInfos.add(bitmap);
+                    filePaths.add(resultList.get(k));
                 }
                 Map<String, String> map = new HashMap<>();
-                map.put( "uploadEnum", "certification" );
-                File file = new File( filePaths.get( 0 ) );
+                map.put("uploadEnum", "certification");
+                File file = new File(filePaths.get(0));
 
-                parseInfoFromBitmap( filePaths.get( 0 ) );
+                parseInfoFromBitmap(filePaths.get(0));
 
 
             }
@@ -198,18 +224,18 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
 
     public void parseInfoFromBitmap(String path) {
         try {
-            CodeUtils.analyzeBitmap( path, new CodeUtils.AnalyzeCallback() {
+            CodeUtils.analyzeBitmap(path, new CodeUtils.AnalyzeCallback() {
                 @Override
                 public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
                     accountData = result;
-                    iv_xia.setImageBitmap( bitmapInfos.get( 0 ) );
+                    iv_xia.setImageBitmap(bitmapInfos.get(0));
                 }
 
                 @Override
                 public void onAnalyzeFailed() {
-                    Tools.showToast( SaveAccountAcitity.this, "无法解析图片二维码，请重新选择" );
+                    Tools.showToast(SaveAccountAcitity.this, "无法解析图片二维码，请重新选择");
                 }
-            } );
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -227,21 +253,30 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
     }
 
     private void submit() {
-        // validate
         String accout = et_accout.getText().toString().trim();
-        if (TextUtils.isEmpty( accout )) {
-            Toast.makeText( this, "请输入" + value + "账号", Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(accout)) {
+            Toast.makeText(this, "请输入" + value + "账号", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String name = et_name.getText().toString().trim();
-        if (TextUtils.isEmpty( name )) {
-            Toast.makeText( this, "请输入真实姓名", Toast.LENGTH_SHORT ).show();
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "请输入真实姓名", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty( accountData )) {
-            Toast.makeText( this, "请先上传正确的收款二维码", Toast.LENGTH_SHORT ).show();
-            return;
+        if (value.equals("支付宝")) {
+            String pid = et_pid.getText().toString().trim();
+            accountData =pid;
+            if (TextUtils.isEmpty(pid)) {
+                Toast.makeText(this, "请输入支付宝PID", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+        } else {
+            if (TextUtils.isEmpty(accountData)) {
+                Toast.makeText(this, "请先上传正确的收款二维码", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         getBankBranchsByCityCode();
 
@@ -249,9 +284,10 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void returnData(String data, String url) {
-        Toast.makeText( this, "成功", Toast.LENGTH_SHORT ).show();
+        Toast.makeText(this, "成功", Toast.LENGTH_SHORT).show();
         finish();
     }
+
     /**
      * 获取相册权限
      */
@@ -263,14 +299,14 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onAction(List<String> data) {
                         accountData = null;
-                        Intent intent = new Intent( SaveAccountAcitity.this,
-                                MultiImageSelectorActivity.class );
-                        intent.putExtra( "isUploadIcon", true );
-                        intent.putExtra( MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
-                                false );
-                        intent.putExtra( MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
-                                1 );
-                        startActivityForResult( intent, 1 );
+                        Intent intent = new Intent(SaveAccountAcitity.this,
+                                MultiImageSelectorActivity.class);
+                        intent.putExtra("isUploadIcon", true);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA,
+                                false);
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT,
+                                1);
+                        startActivityForResult(intent, 1);
                     }
                 }).
                 onDenied(new Action<List<String>>() {
@@ -282,4 +318,5 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
                 start();
 
     }
+
 }

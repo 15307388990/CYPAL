@@ -79,7 +79,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         } else {
             holder.iv_img.setImageResource(R.drawable.icon_yun);
         }
-        holder.tv_account.setText(contentBean.accountName);
+        holder.tv_account.setText(contentBean.realName+"+"+contentBean.accountName);
         if (contentBean.used) {
             holder.tv_qie.setVisibility(View.GONE);
             holder.tv_staus.setVisibility(View.VISIBLE);
