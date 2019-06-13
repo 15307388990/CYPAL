@@ -226,6 +226,11 @@ public class TabActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==RESULT_OK){
+            if (data!=null){
+                mMianFragment.onActivityResult(requestCode,resultCode,data);
+            }
+        }
     }
 
     @Override

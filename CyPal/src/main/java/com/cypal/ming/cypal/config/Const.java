@@ -257,6 +257,12 @@ public class Const {
      * 删除导人银行卡
      */
     public static final String delBankCard = "/private/team/delBankCard";
+    /**
+     * 城市列表
+     */
+    public static final String city = "/private/index/city";
+
+
 
 
     /* 订单详情 */

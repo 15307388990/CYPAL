@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.*;
+import com.cypal.ming.cypal.activityTwo.SelectCityActivity;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
@@ -90,6 +92,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private RelativeLayout ll_view_back;//消息中心
     private String pay;//收款账号 字符串
     private TextView top_view_text;
+    private String cityName;
 
     public MainFragment(Activity context) {
         super(context);
@@ -282,7 +285,10 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
             @Override
             public void onClick(View v) {
                 method = "AUTO";
-                inoutPsw(null);
+                //城市选择
+                Intent intent = new Intent(mcontext, SelectCityActivity.class);
+                startActivityForResult(intent, 1);
+                //inoutPsw(null);
             }
         });
 
@@ -294,7 +300,10 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
                 if (isStar) {
                     Tools.jump(mcontext, GrabSingleActivity.class, false);
                 } else {
-                    inoutPsw(null);
+                    //inoutPsw(null);
+                    //城市选择
+                    Intent intent = new Intent(mcontext, SelectCityActivity.class);
+                    startActivityForResult(intent, 1);
                 }
 
             }
@@ -355,6 +364,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         map.put("method", method);
         String paypass = MD5Util.getMD5String(payPasswrod);
         map.put("payPassword", paypass);
+        map.put("otcCity", cityName);
         mQueue.add(ParamTools.packParam(Const.start, mcontext, this, this, map));
         loading();
     }
@@ -403,6 +413,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
+                cityName = data.getStringExtra("cityName");
+                inoutPsw(null);
             }
 
         }

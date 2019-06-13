@@ -303,6 +303,9 @@
             android:name="com.cypal.ming.cypal.activityTwo.TeamTopUpActivity"
             android:screenOrientation="portrait" /><!-- 团队充值 -->
         <activity
+            android:name="com.cypal.ming.cypal.activityTwo.SelectCityActivity"
+            android:screenOrientation="portrait" /><!-- 城市列表 -->
+        <activity
             android:name="com.cypal.ming.cypal.wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleInstance"

@@ -21,6 +21,8 @@ import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.cypal.ming.cypal.bean.StoreBean;
@@ -401,7 +403,10 @@ public class Tools {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
-
+    public static void openKeyBoard(Context context, View editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager)context.getSystemService("input_method");
+        inputMethodManager.showSoftInput(editText, 2);
+    }
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
