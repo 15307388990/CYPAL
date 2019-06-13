@@ -89,11 +89,6 @@ public class SelectCityActivity extends BaseActivity implements View.OnClickList
                 finish();
             }
         });
-        List<CityEntity> cityEntities=new ArrayList<>();
-        CityEntity cityEntity=new CityEntity();
-        cityEntity.setCityName("全部");
-        cityEntities.add(cityEntity);
-        indexableLayout.addHeaderAdapter(new SimpleHeaderAdapter(selectCityAapter,"#","#",cityEntities));
         search_name.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -115,6 +110,7 @@ public class SelectCityActivity extends BaseActivity implements View.OnClickList
             }
         });
     }
+
     /**
      * 根据输入框中的值来过滤数据并更新ListView
      *
@@ -152,12 +148,21 @@ public class SelectCityActivity extends BaseActivity implements View.OnClickList
     }
 
 
-
     @Override
     protected void returnData(String data, String url) {
         if (url.contains(Const.city)) {
-            SelectCityEntity entity=JSON.parseObject(data,SelectCityEntity.class);
-            city_data=entity.getData();
+            List<CityEntity> cityEntities = new ArrayList<>();
+            CityEntity cityEntity = new CityEntity();
+            cityEntity.setCityName("全部");
+            cityEntities.add(cityEntity);
+
+            SelectCityEntity entity = JSON.parseObject(data, SelectCityEntity.class);
+            city_data = entity.getData();
+            if (city_data.get(0).getCityName().equals("全部")) {
+                indexableLayout.addHeaderAdapter(new SimpleHeaderAdapter(selectCityAapter, "#", "#", cityEntities));
+                city_data.remove(0);
+            }
+
             selectCityAapter.setDatas(city_data);
             selectCityAapter.notifyDataSetChanged();
         }
@@ -173,7 +178,6 @@ public class SelectCityActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
-
 
 
 }

@@ -261,6 +261,10 @@ public class Const {
      * 城市列表
      */
     public static final String city = "/private/index/city";
+    /**
+     * 余额明细
+     */
+    public static final String balance = "/private/index/balance?";
 
 
 

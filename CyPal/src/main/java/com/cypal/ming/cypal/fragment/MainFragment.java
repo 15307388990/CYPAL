@@ -29,6 +29,7 @@ import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.activity.*;
+import com.cypal.ming.cypal.activityTwo.AmountDetailActivity;
 import com.cypal.ming.cypal.activityTwo.SelectCityActivity;
 import com.cypal.ming.cypal.adapter.SellDetailListAdapter;
 import com.cypal.ming.cypal.base.BaseActivity;
@@ -608,7 +609,12 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         } else {
             ll_wu.setVisibility(View.VISIBLE);
         }
-
+        tv_balance.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump(mcontext, AmountDetailActivity.class, false);
+            }
+        });
         //公告开启
         if (thread == null) {
             if (noticeListBeanList != null) {
