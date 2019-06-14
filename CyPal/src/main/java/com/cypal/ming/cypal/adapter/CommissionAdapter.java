@@ -67,9 +67,9 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
         final CommissionEntity.DataBean.ListBean.ContentBean contentBean = mList.get(position);
         if (!TextUtils.isEmpty(contentBean.commisionEnum)) {
             if (contentBean.commisionEnum.equals("OTC")) {
-                if (contentBean.payType.equals("WXPAY")) {
+                if (TextUtils.equals(contentBean.payType,"WXPAY")) {
                     holder.tv_type.setText("接单分佣：微信");
-                } else if (contentBean.payType.equals("ALIPAY")) {
+                } else if (TextUtils.equals(contentBean.payType,"ALIPAY")) {
                     holder.tv_type.setText("接单分佣：支付宝");
                 } else {
                     holder.tv_type.setText("接单分佣：云闪付");
