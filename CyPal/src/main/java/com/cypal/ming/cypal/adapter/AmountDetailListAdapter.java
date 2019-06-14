@@ -46,12 +46,14 @@ public class AmountDetailListAdapter extends RecyclerView.Adapter<AmountDetailLi
         holder.tv_timer.setText(contentBean.getCreateTime());
         holder.tv_balance.setText("余额：" + contentBean.getBalance());
         holder.tv_description.setText("描述：" + contentBean.getDescription());
-        holder.tv_amount.setText(contentBean.getAmount()+"");
+
         if (contentBean.getAmount() > 0) {
             holder.tv_amount.setTextColor(mContext.getResources().getColor(R.color.point_cash_green));
+            holder.tv_amount.setText(contentBean.getAmount()+"");
 
         } else {
             holder.tv_amount.setTextColor(mContext.getResources().getColor(R.color.red));
+            holder.tv_amount.setText("-"+contentBean.getAmount());
         }
 
 

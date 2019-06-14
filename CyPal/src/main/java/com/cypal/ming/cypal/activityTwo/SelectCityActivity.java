@@ -30,6 +30,8 @@ import com.cypal.ming.cypal.bean.BaseEntity;
 import com.cypal.ming.cypal.bean.CityEntity;
 import com.cypal.ming.cypal.bean.SelectCityEntity;
 import com.cypal.ming.cypal.config.Const;
+import com.cypal.ming.cypal.dialogfrment.CancelNoCloseDialog;
+import com.cypal.ming.cypal.dialogfrment.CenterDialog;
 import com.cypal.ming.cypal.popwindow.SelectPopupWindow;
 import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -64,6 +66,7 @@ public class SelectCityActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.address_select_city_activity);
+        PromptBox();
         initView();
         getCityList();
     }
@@ -168,6 +171,16 @@ public class SelectCityActivity extends BaseActivity implements View.OnClickList
         }
 
 
+    }
+
+    //弹个温馨提示框
+    private void PromptBox() {
+        CancelNoCloseDialog.newInstance().setTitle("温馨提示").setContext("1.选择区域后只能接收到对应区域的订单\n" +
+                "\n" +
+                "2.选择\"全部\"，代表着接所有地区的订单\n" +
+                "\n" +
+                "3.该功能只是为了降低风控，请各位用户保护好自己\n" +
+                " 的二维码合理选择接单区域").setIsQuBtn(false).setOktext("知道了").show(this);
     }
 
     @Override
