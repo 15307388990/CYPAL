@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/CY_353535"
-            android:textSize="@dimen/text_16"
+            android:textSize="14dp"
             tools:text="转账" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/CY_353535"
-            android:textSize="@dimen/text_16"
+            android:textSize="14dp"
             tools:text="2019-06-03" />
     </LinearLayout>
 
@@ -49,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/CY_353535"
+                android:textSize="12dp"
                 tools:text="余额：￥400" />
 
             <TextView
@@ -57,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/CY_353535"
+                android:textSize="12dp"
                 tools:text="描述：" />
         </LinearLayout>
 
@@ -65,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/CY_353535"
-            android:textSize="30sp"
+            android:textSize="28sp"
             tools:text="-500" />
     </LinearLayout>
 
