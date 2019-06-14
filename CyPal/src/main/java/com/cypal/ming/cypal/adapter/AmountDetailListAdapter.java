@@ -49,11 +49,11 @@ public class AmountDetailListAdapter extends RecyclerView.Adapter<AmountDetailLi
 
         if (contentBean.getAmount() > 0) {
             holder.tv_amount.setTextColor(mContext.getResources().getColor(R.color.point_cash_green));
-            holder.tv_amount.setText(contentBean.getAmount()+"");
+            holder.tv_amount.setText("+"+contentBean.getAmount());
 
         } else {
             holder.tv_amount.setTextColor(mContext.getResources().getColor(R.color.red));
-            holder.tv_amount.setText("-"+contentBean.getAmount());
+            holder.tv_amount.setText(contentBean.getAmount()+"");
         }
 
 
