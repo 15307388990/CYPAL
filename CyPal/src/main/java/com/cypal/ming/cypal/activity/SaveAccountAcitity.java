@@ -116,7 +116,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         type = getIntent().getStringExtra("type");
         value = getIntent().getStringExtra("value");
         dataBean = (AccountListEntity.DataBean) getIntent().getSerializableExtra("date");
-        top_view_text.setText("添加" + value + "二维码");
+        top_view_text.setText("添加" + value);
         top_view_text = (TextView) findViewById(R.id.top_view_text);
         et_accout = (EditText) findViewById(R.id.et_accout);
         et_name = (EditText) findViewById(R.id.et_name);
@@ -166,7 +166,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         et_pid = (EditText) findViewById(R.id.et_pid);
         ll_pid = (LinearLayout) findViewById(R.id.ll_pid);
         ll_code = (LinearLayout) findViewById(R.id.ll_code);
-        if (value.equals("支付宝")) {
+        if (value.equals("支付宝PID")) {
             ll_pid.setVisibility(View.VISIBLE);
             ll_code.setVisibility(View.GONE);
         } else {
