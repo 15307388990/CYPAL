@@ -70,7 +70,7 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
             holder.tv_type.setText( "微信" );
             holder.iv_img.setImageResource( R.drawable.icon_weixin );
 
-        } else if (contentBean.accountType.equals( "ALIPAY" )) {
+        } else if (contentBean.accountType.equals( "ALIPAY" )||contentBean.accountType.equals("ALIPAY_PID")) {
             holder.iv_img.setImageResource( R.drawable.icon_zhifubao );
             holder.tv_account.setText( "支付宝账号："  +contentBean.realName+"+"+ contentBean.accountName );
             holder.tv_type_pay.setText( "支付宝" );

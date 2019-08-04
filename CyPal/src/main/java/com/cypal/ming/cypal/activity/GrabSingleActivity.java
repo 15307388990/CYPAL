@@ -302,7 +302,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
     private List<ContentEntity> getList(String payType) {
         List<ContentEntity> contentEntities = new ArrayList<>();
         for (int i = list.size()-1; i >= 0; i--) {
-            if (list.get(i).payType.equals(payType)) {
+            if (list.get(i).payType.contains(payType)) {
                 contentEntities.add(list.get(i));
             }
 
