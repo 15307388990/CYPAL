@@ -268,7 +268,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
             Toast.makeText(this, "请输入真实姓名", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (value.equals("支付宝")) {
+        if (value.equals("支付宝PID")) {
             String pid = et_pid.getText().toString().trim();
             accountData = pid;
             if (TextUtils.isEmpty(pid)) {
