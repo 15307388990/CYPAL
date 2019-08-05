@@ -60,7 +60,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     @Override
     public ViewHoler onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_BOTTOM && bottomView != null) {
-         return  new ViewHoler(bottomView);
+            return new ViewHoler(bottomView);
         }
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.account_list_item, parent, false);
         return new ViewHoler(itemView);
@@ -68,18 +68,20 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHoler holder, int position) {
-        if (position==mList.size())
+        if (position == mList.size())
             return;
         final AccountListEntity.DataBean contentBean = mList.get(position);
         //支付类型
         if (contentBean.accountType.equals("WXPAY")) {
             holder.iv_img.setImageResource(R.drawable.icon_weixin);
-        } else if (contentBean.accountType.contains("ALIPAY")) {
+        } else if (contentBean.accountType.equals("ALIPAY")) {
+            holder.iv_img.setImageResource(R.drawable.icon_zhifubao);
+        } else if (contentBean.accountType.equals("ALIPAY_PID")) {
             holder.iv_img.setImageResource(R.drawable.icon_zhifubao);
         } else {
             holder.iv_img.setImageResource(R.drawable.icon_yun);
         }
-        holder.tv_account.setText(contentBean.realName+"+"+contentBean.accountName);
+        holder.tv_account.setText(contentBean.realName + "+" + contentBean.accountName);
         if (contentBean.used) {
             holder.tv_qie.setVisibility(View.GONE);
             holder.tv_staus.setVisibility(View.VISIBLE);
@@ -107,7 +109,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         if (mList == null) {
             return 1;
         } else {
-            return mList.size()+1;
+            return mList.size() + 1;
         }
     }
 
