@@ -271,7 +271,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
         if (!TextUtils.equals(contentEntity.payType, paytype)) {
             if (contentEntity.payType.equals("WXPAY")) {
                 tv_you1.setVisibility(View.VISIBLE);
-            } else if (contentEntity.payType.equals("ALIPAY")) {
+            } else if (contentEntity.payType.contains("ALIPAY")) {
                 tv_you2.setVisibility(View.VISIBLE);
             } else {
                 tv_you3.setVisibility(View.VISIBLE);
