@@ -86,6 +86,8 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
             holder.tv_paytype.setText("微信");
         } else if (sellBean.payType.equals("ALIPAY")) {
             holder.tv_paytype.setText("支付宝");
+        } else if (sellBean.payType.equals("ALIPAY_PID")) {
+            holder.tv_paytype.setText("支付宝PID");
         } else {
             holder.tv_paytype.setText("云闪付");
         }
