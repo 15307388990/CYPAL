@@ -166,7 +166,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
         et_pid = (EditText) findViewById(R.id.et_pid);
         ll_pid = (LinearLayout) findViewById(R.id.ll_pid);
         ll_code = (LinearLayout) findViewById(R.id.ll_code);
-        if (value.equals("支付宝PID")) {
+        if (type.equals("ALIPAY_PID")) {
             ll_pid.setVisibility(View.VISIBLE);
             ll_code.setVisibility(View.GONE);
         } else {
@@ -268,7 +268,7 @@ public class SaveAccountAcitity extends BaseActivity implements View.OnClickList
             Toast.makeText(this, "请输入真实姓名", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (value.equals("支付宝PID")) {
+        if (type.equals("ALIPAY_PID")) {
             String pid = et_pid.getText().toString().trim();
             accountData = pid;
             if (TextUtils.isEmpty(pid)) {
