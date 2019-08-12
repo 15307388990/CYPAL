@@ -94,6 +94,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private String pay;//收款账号 字符串
     private TextView top_view_text;
     private String cityName;
+    private ImageView iv_pdd;
 
     public MainFragment(Activity context) {
         super(context);
@@ -206,6 +207,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         tv_number = (TextView) view.findViewById(R.id.tv_number);
         ll_view_back = (RelativeLayout) view.findViewById(R.id.ll_view_back);
         iv_round_red = (ImageView) view.findViewById(R.id.iv_round_red);
+
         top_view_text = (TextView) view.findViewById(R.id.top_view_text);
         auto_textview = (AutoVerticalScrollTextView) view.findViewById(R.id.auto_textview);
         orderModels = new ArrayList<IndexEntity.DataBean.UndoOrderBean.ContentBean>();
@@ -215,6 +217,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         iv_alipay = (ImageView) headView.findViewById(R.id.iv_alipay);
         iv_banl = (ImageView) headView.findViewById(R.id.iv_banl);
         iv_yun = (ImageView) headView.findViewById(R.id.iv_yun);
+        iv_pdd = (ImageView) headView.findViewById(R.id.iv_pdd);
         ll_auto = (LinearLayout) headView.findViewById(R.id.ll_auto);
         ll_hand = (LinearLayout) headView.findViewById(R.id.ll_hand);
         ll_layout = (LinearLayout) headView.findViewById(R.id.ll_layout);
@@ -577,6 +580,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
         if (pay.contains("BANKCARD")) {
             iv_banl.setVisibility(View.VISIBLE);
+        }
+        if (pay.contains("PDD")) {
+             iv_pdd.setVisibility(View.VISIBLE);
         }
         IndexEntity.DataBean.OtcBean otcBean = indexEntity.data.otc;
         isStar = otcBean.start;

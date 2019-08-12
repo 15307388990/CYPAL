@@ -270,6 +270,19 @@ public class AccountDialog extends CenterDialog implements Response.Listener<Str
                 wxlist.add( dataBean );
             }
         }
+        isx = true;
+        for (AccountListEntity.DataBean dataBean : dataBeanList) {
+            if (dataBean.accountType.equals( "PDD" )) {
+                if (isx) {
+                    dataBean.isx = isx;
+                    isx = false;
+                }
+                if (dataBean.used) {
+                    ids.add( dataBean.id + "" );
+                }
+                wxlist.add( dataBean );
+            }
+        }
         return wxlist;
     }
 

@@ -16,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.android.volley.toolbox.JsonRequest;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.base.BaseActivity;
 import com.cypal.ming.cypal.bean.AccountListEntity;
@@ -27,6 +30,8 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,7 +86,7 @@ public class SavePddAccountAcitity extends BaseActivity implements View.OnClickL
         map.put("accountName", et_accout.getText().toString().trim());
         map.put("realName", et_name.getText().toString().trim());
         map.put("accountType", type);
-        map.put("accountData", et_pid.getText().toString().trim());
+        map.put("accountData", accountData);
         if (!TextUtils.isEmpty(accountId)) {
             map.put("id", accountId);
         }
@@ -166,9 +171,8 @@ public class SavePddAccountAcitity extends BaseActivity implements View.OnClickL
         et_accout.setText(dataBean.accountName);
         accountData = dataBean.accountData;
         accountId = dataBean.id + "";
-        Bitmap bitmap = CodeUtils.createImage(dataBean.accountData, 166, 167, null);
-        iv_xia.setImageBitmap(bitmap);
-        et_pid.setText(accountData);
+        PddBean pddBean = JSON.parseObject(accountData, PddBean.class);
+        et_pid.setText(pddBean.mall_id + "");
     }
 
     @Override
@@ -244,6 +248,12 @@ public class SavePddAccountAcitity extends BaseActivity implements View.OnClickL
             Toast.makeText(this, "请先上传正确的店铺编码", Toast.LENGTH_SHORT).show();
             return;
         }
+        PddBean pddBean = new PddBean();
+        pddBean.mall_id = et_pid.getText().toString().trim();
+        pddBean.group_id = "";
+        pddBean.goods_id = "";
+        pddBean.sku_id = "";
+        accountData = JSON.toJSONString(pddBean, SerializerFeature.WriteMapNullValue);
         getBankBranchsByCityCode();
 
     }
@@ -285,4 +295,13 @@ public class SavePddAccountAcitity extends BaseActivity implements View.OnClickL
 
     }
 
+    static class PddBean {
+
+        public String mall_id; //店铺id
+        public String group_id;//商品品类id
+        public String goods_id;//商品id
+        public String sku_id; //库存id
+
+    }
 }
+
