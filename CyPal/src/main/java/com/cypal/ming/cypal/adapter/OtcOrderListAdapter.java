@@ -89,6 +89,8 @@ public class OtcOrderListAdapter extends RecyclerView.Adapter<OtcOrderListAdapte
             holder.tv_paytype.setText("支付宝");
         } else if (sellBean.payType.equals("ALIPAY_PID")) {
             holder.tv_paytype.setText("支付宝PID");
+        } else if (sellBean.payType.equals("PDD")) {
+            holder.tv_paytype.setText("拼多多");
         } else {
             holder.tv_paytype.setText("云闪付");
         }

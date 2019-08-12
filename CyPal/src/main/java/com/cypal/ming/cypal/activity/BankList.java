@@ -46,8 +46,8 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.banl_list );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.banl_list);
         initView();
         getBankBranchsByCityCode();
     }
@@ -61,77 +61,87 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
 
     private void getBankBranchsByCityCode() {
         Map<String, String> map = new HashMap<>();
-        map.put( "payAccountEnum", type );
-        mQueue.add( ParamTools.packParam( Const.payAccount, this, this, map, Request.Method.GET, this ) );
+        map.put("payAccountEnum", type);
+        mQueue.add(ParamTools.packParam(Const.payAccount, this, this, map, Request.Method.GET, this));
         loading();
     }
 
     private void Use(String account_id) {
         Map<String, String> map = new HashMap<>();
-        map.put( "ids", account_id );
-        mQueue.add( ParamTools.packParam( Const.use, this, this, this, map ) );
+        map.put("ids", account_id);
+        mQueue.add(ParamTools.packParam(Const.use, this, this, this, map));
         loading();
     }
 
     private void initView() {
-        ll_view_back = (LinearLayout) findViewById( R.id.ll_view_back );
-        top_view_text = (TextView) findViewById( R.id.top_view_text );
-        recycleView = (RecyclerView) findViewById( R.id.recycleView );
+        ll_view_back = (LinearLayout) findViewById(R.id.ll_view_back);
+        top_view_text = (TextView) findViewById(R.id.top_view_text);
+        recycleView = (RecyclerView) findViewById(R.id.recycleView);
 
-        ll_view_back.setOnClickListener( new View.OnClickListener() {
+        ll_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        } );
-        type = getIntent().getStringExtra( "type" );
-        value = getIntent().getStringExtra( "value" );
-        top_view_text.setText( value );
+        });
+        type = getIntent().getStringExtra("type");
+        value = getIntent().getStringExtra("value");
+        top_view_text.setText(value);
 
         list = new ArrayList<>();
-        accountListAdapter = new AccountListAdapter( this, list, this );
+        accountListAdapter = new AccountListAdapter(this, list, this);
         View bottomView = LayoutInflater.from(this).inflate(R.layout.account_list_bottom_item, null);
-        ll_add = (LinearLayout) bottomView.findViewById( R.id.ll_add );
-        ll_add.setOnClickListener( new View.OnClickListener() {
+        ll_add = (LinearLayout) bottomView.findViewById(R.id.ll_add);
+        ll_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( BankList.this, SaveAccountAcitity.class );
-                intent.putExtra( "type", type );
-                intent.putExtra( "value", value );
-                startActivity( intent );
+                Intent intent;
+                if (type.equals("PDD")) {
+                    intent = new Intent(BankList.this, SavePddAccountAcitity.class);
+                } else {
+                    intent = new Intent(BankList.this, SaveAccountAcitity.class);
+                }
+                intent.putExtra("type", type);
+                intent.putExtra("value", value);
+                startActivity(intent);
             }
-        } );
+        });
         accountListAdapter.setBottomView(bottomView);
-        recycleView.setAdapter( accountListAdapter );
-        recycleView.setLayoutManager( new LinearLayoutManager( this ) );
+        recycleView.setAdapter(accountListAdapter);
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     protected void returnData(String data, String url) {
-        if (url.contains( Const.payAccount )) {
-            AccountListEntity accountListEntity = JSON.parseObject( data, AccountListEntity.class );
-            accountListAdapter.updateAdapter( accountListEntity.data );
+        if (url.contains(Const.payAccount)) {
+            AccountListEntity accountListEntity = JSON.parseObject(data, AccountListEntity.class);
+            accountListAdapter.updateAdapter(accountListEntity.data);
 
-        } else if (url.contains( Const.use )) {
+        } else if (url.contains(Const.use)) {
             getBankBranchsByCityCode();
         }
     }
 
     @Override
     public void UseQie(String id) {
-        Use( id );
+        Use(id);
 
     }
 
     @Override
     public void OnClick(AccountListEntity.DataBean dataBean) {
-        Intent intent = new Intent( BankList.this, SaveAccountAcitity.class );
-        intent.putExtra( "type", type );
-        intent.putExtra( "value", value );
+        Intent intent;
+        if (type.equals("PDD")) {
+            intent = new Intent(BankList.this, SavePddAccountAcitity.class);
+        } else {
+            intent = new Intent(BankList.this, SaveAccountAcitity.class);
+        }
+        intent.putExtra("type", type);
+        intent.putExtra("value", value);
         Bundle bundle = new Bundle();
-        bundle.putSerializable( "date", dataBean );
-        intent.putExtras( bundle );
-        startActivity( intent );
+        bundle.putSerializable("date", dataBean);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
     }
 }

@@ -80,7 +80,13 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
             holder.tv_account.setText("支付宝账号：" + contentBean.realName + "+" + contentBean.accountName);
             holder.tv_type_pay.setText("支付宝PID");
             holder.tv_type.setText("支付宝");
-        } else {
+        }else if ( contentBean.accountType.equals("PDD")) {
+            holder.iv_img.setImageResource(R.drawable.icon_pdd);
+            holder.tv_account.setText("拼多多账号：" + contentBean.realName + "+" + contentBean.accountName);
+            holder.tv_type_pay.setText("拼多多");
+            holder.tv_type.setText("拼多多");
+        }
+        else {
             holder.iv_img.setImageResource(R.drawable.icon_yun);
             holder.tv_account.setText("云闪付账号：" + contentBean.realName + "+" + contentBean.accountName);
             holder.tv_type_pay.setText("云闪付");
