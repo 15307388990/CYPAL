@@ -131,10 +131,13 @@ public class RewardDialog extends CenterDialog implements Response.Listener<Stri
                         binding.tvClou.setText("3:云闪付接单可获得交易金额" + descmisionEntity.data.CLOUDPAY + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
-                        binding.tvSeconnod.setText("4:A级好友接单可获得交易金额" + descmisionEntity.data.SECONDS + "的佣金");
+                        binding.tvPdd.setText("4:拼多多接单可获得交易金额" + descmisionEntity.data.PDD + "的佣金");
+                    }
+                    if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
+                        binding.tvSeconnod.setText("5:A级好友接单可获得交易金额" + descmisionEntity.data.SECONDS + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.FIRST)) {
-                        binding.tvFirst.setText("5:B级好友接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
+                        binding.tvFirst.setText("6:B级好友接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
                     }
                 }
 

@@ -29,5 +29,6 @@ public class DescmisionEntity {
         public String CLOUDPAY;
         public String SECONDS;
         public String FIRST;
+        public String PDD;
     }
 }

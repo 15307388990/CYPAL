@@ -47,6 +47,13 @@
                 android:layout_marginTop="12dp"
                 android:textColor="@color/CY_666666"
                 android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tv_pdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/CY_666666"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_seconnod"
