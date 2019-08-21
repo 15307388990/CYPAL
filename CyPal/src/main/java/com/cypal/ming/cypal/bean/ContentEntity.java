@@ -9,7 +9,7 @@ public class ContentEntity {
 
     public int amount;
     public String payType;
-    public int orderId;
+    public String orderId;
     public boolean isQian = false;
     public String Text = "已抢光";
 }
