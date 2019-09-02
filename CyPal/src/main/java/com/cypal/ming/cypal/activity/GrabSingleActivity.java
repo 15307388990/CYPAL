@@ -26,6 +26,7 @@ import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelNoCloseDialog;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
+import com.cypal.ming.cypal.utils.EncryptUtil;
 import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
@@ -68,7 +69,8 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
                         try {
                             ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
                             if (managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString())) {
-                                ContentEntity contentEntity = JSON.parseObject(managerEntity.content, ContentEntity.class);
+                                String content = EncryptUtil.decryptAES(managerEntity.content, "bc7cff29995970aaee5ca6de775d69f1c8468303d0e9820dddf8ae13eec2f5efd3e752f0b7ed313afb383f7fca003fa2");
+                                ContentEntity contentEntity = JSON.parseObject(content, ContentEntity.class);
                                 list.add(contentEntity);
                                 initYou(contentEntity);
                                 UpdateAdapter();
@@ -133,7 +135,7 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
         sign.append(mSavePreferencesData.getStringData("token"));
         sign.append(timeStamp);
         sign.append(orderId);
-        map.put("sign", sign.toString());
+        map.put("sign",MD5Util.getMD5String(sign.toString()) );
         mQueue.add(ParamTools.packParam(Const.take, this, this, this, map));
         loading();
     }

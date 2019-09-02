@@ -100,11 +100,10 @@ public class WsManager {
         public void onTextMessage(WebSocket websocket, String text) throws Exception {
             super.onTextMessage(websocket, text);
             String decodedString = new String(Base64.decode(text, Base64.DEFAULT));
-            String finaltext = EncryptUtil.decryptAES(decodedString, "bc7cff29995970aaee5ca6de775d69f1c8468303d0e9820dddf8ae13eec2f5efd3e752f0b7ed313afb383f7fca003fa2");
-            if (iWsManagerActivityView != null) {
-                iWsManagerActivityView.onTextMessage(finaltext);
+             if (iWsManagerActivityView != null) {
+                iWsManagerActivityView.onTextMessage(decodedString);
             }
-            Log.d(TAG, "返回的东西" + finaltext);
+            Log.d(TAG, "返回的东西" + decodedString);
         }
 
 

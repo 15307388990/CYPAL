@@ -123,5 +123,4 @@ dependencies {
     implementation 'com.github.SherlockGougou:BigImageViewPager:v4_4.0.2'
     //城市选择
     api 'me.yokeyword:indexablerecyclerview:1.3.0'
-    implementation files('libs/commons-codec-1.13.jar')
 }
