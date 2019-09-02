@@ -71,7 +71,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         if (position == mList.size())
             return;
         final AccountListEntity.DataBean contentBean = mList.get(position);
-        //支付类型
+        //支付类型r
         if (contentBean.accountType.equals("WXPAY")) {
             holder.iv_img.setImageResource(R.drawable.icon_weixin);
         } else if (contentBean.accountType.equals("ALIPAY")) {

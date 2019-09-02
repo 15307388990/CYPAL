@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -25,6 +26,7 @@ import com.cypal.ming.cypal.bean.ManagerEntity;
 import com.cypal.ming.cypal.config.Const;
 import com.cypal.ming.cypal.dialogfrment.CancelNoCloseDialog;
 import com.cypal.ming.cypal.dialogfrment.CancelTheDealDialog;
+import com.cypal.ming.cypal.utils.MD5Util;
 import com.cypal.ming.cypal.utils.MessageEnum;
 import com.cypal.ming.cypal.utils.ParamTools;
 import com.cypal.ming.cypal.utils.Tools;
@@ -125,6 +127,13 @@ public class GrabSingleActivity extends BaseActivity implements ManagerAdapter.O
     public void take() {
         Map<String, String> map = new HashMap<>();
         map.put("orderId", orderId);
+        String timeStamp= System.currentTimeMillis()+"";
+        map.put("timeStamp", timeStamp);
+        StringBuilder sign = new StringBuilder();
+        sign.append(mSavePreferencesData.getStringData("token"));
+        sign.append(timeStamp);
+        sign.append(orderId);
+        map.put("sign", sign.toString());
         mQueue.add(ParamTools.packParam(Const.take, this, this, this, map));
         loading();
     }

@@ -8,6 +8,8 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.cypal.ming.cypal.base.MianApplication;
+import com.cypal.ming.cypal.fragment.MainFragment;
+import com.cypal.ming.cypal.utils.EncryptUtil;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
@@ -98,10 +100,11 @@ public class WsManager {
         public void onTextMessage(WebSocket websocket, String text) throws Exception {
             super.onTextMessage(websocket, text);
             String decodedString = new String(Base64.decode(text, Base64.DEFAULT));
+            String finaltext = EncryptUtil.decryptAES(decodedString, "bc7cff29995970aaee5ca6de775d69f1c8468303d0e9820dddf8ae13eec2f5efd3e752f0b7ed313afb383f7fca003fa2");
             if (iWsManagerActivityView != null) {
-                iWsManagerActivityView.onTextMessage(decodedString);
+                iWsManagerActivityView.onTextMessage(finaltext);
             }
-            Log.d(TAG, "返回的东西" + decodedString);
+            Log.d(TAG, "返回的东西" + finaltext);
         }
 
 
@@ -203,6 +206,7 @@ public class WsManager {
                         .setMissingCloseFrameAllowed(false)//设置不允许服务端关闭连接却未发送关闭帧
                         .addListener(mListener = new WsListener())//添加回调监听
                         .connectAsynchronously();//异步连接
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
