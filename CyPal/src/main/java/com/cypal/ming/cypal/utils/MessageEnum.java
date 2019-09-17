@@ -8,5 +8,6 @@ public enum MessageEnum {
     OTCAUTO,//自动接单接到单了，通知栏通知一下
     TRANSFER,//转账消息,通知栏通知一下
     RECHARGE,//充值成功消息，通知栏通知一下
-    IM;//IM消息
+    IM,//IM消息
+    PING;//心跳测试
 }

@@ -65,11 +65,11 @@ public abstract class BaseActivity<T> extends AppCompatActivity implements Liste
                 if (!TextUtils.isEmpty(text)) {
                     try {
                         ManagerEntity managerEntity = JSON.parseObject(text, ManagerEntity.class);
-                        Log.d("WsManager", "接收开始判断类型");
+                        Log.d("WsManager", "接 收开始判断类型");
                         if (managerEntity.messageEnum.equals(MessageEnum.LOGINOUT.toString())) {
                             Log.d("WsManager", "强制离线");
                             goLogin(managerEntity);
-                        } else if (!managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString()) && !managerEntity.messageEnum.equals(MessageEnum.IM.toString())) {
+                        } else if (!managerEntity.messageEnum.equals(MessageEnum.OTCHAND.toString()) && !managerEntity.messageEnum.equals(MessageEnum.IM.toString()) && !managerEntity.messageEnum.equals(MessageEnum.PING.toString())) {
                             Log.d("WsManager", "通知");
                             goNotice(managerEntity);
                         }
