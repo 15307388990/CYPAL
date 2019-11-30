@@ -572,6 +572,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         iv_yun.setVisibility(View.GONE);
         iv_banl.setVisibility(View.GONE);
         iv_cnp.setVisibility(View.GONE);
+        iv_pdd.setVisibility(View.GONE);
         if (pay.contains("WXPAY")) {
             iv_wexin.setVisibility(View.VISIBLE);
         }

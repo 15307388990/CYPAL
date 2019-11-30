@@ -167,11 +167,11 @@ public class SaveCnpAccountAcitity extends BaseActivity implements View.OnClickL
         et_accout.setText(dataBean.accountName);
         et_pid.setText(dataBean.accountData);
         accountId = dataBean.id + "";
-        PddBean pddBean = JSON.parseObject(accountData, PddBean.class);
-        et_pid.setText(pddBean.mall_id + "");
-        if (dataBean.enable) {
-            btn_next.setVisibility(View.GONE);
-        }
+        //    PddBean pddBean = JSON.parseObject(accountData, PddBean.class);
+//        et_pid.setText(pddBean.mall_id + "");
+//        if (dataBean.enable) {
+//            btn_next.setVisibility(View.GONE);
+//        }
     }
 
     @Override
