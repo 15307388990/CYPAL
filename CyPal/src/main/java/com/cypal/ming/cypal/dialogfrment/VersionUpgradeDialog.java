@@ -59,22 +59,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
-import me.weyye.hipermission.HiPermission;
-import me.weyye.hipermission.PermissionItem;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-import static java.lang.String.valueOf;
 
 
 /**

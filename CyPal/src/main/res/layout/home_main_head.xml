@@ -202,6 +202,13 @@
                     android:layout_marginLeft="7dp"
                     android:src="@drawable/icon_pdd"
                     android:visibility="gone" />
+                <ImageView
+                    android:id="@+id/iv_cnp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:src="@drawable/cnp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

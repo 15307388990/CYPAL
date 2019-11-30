@@ -116,6 +116,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /><!-- 添加拼多多收款账号-->
         <activity
+            android:name="com.cypal.ming.cypal.activity.SaveCnpAccountAcitity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /><!-- 添加吹牛皮收款账号-->
+        <activity
             android:name="com.cypal.ming.cypal.activity.TopUpDetailsActivity"
             android:screenOrientation="portrait" /><!-- 充值详情-->
         <activity
@@ -249,8 +254,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 会员管理 -->
         <activity
             android:name="com.cypal.ming.cypal.activity.GrabSingleActivity"
-            android:screenOrientation="portrait"
             android:keepScreenOn="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 手动抢单-->
         <activity
             android:name="com.cypal.ming.cypal.activity.CashAccountListActivity"

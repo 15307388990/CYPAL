@@ -95,6 +95,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private TextView top_view_text;
     private String cityName;
     private ImageView iv_pdd;
+    private ImageView iv_cnp;
 
     public MainFragment(Activity context) {
         super(context);
@@ -218,6 +219,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         iv_banl = (ImageView) headView.findViewById(R.id.iv_banl);
         iv_yun = (ImageView) headView.findViewById(R.id.iv_yun);
         iv_pdd = (ImageView) headView.findViewById(R.id.iv_pdd);
+        iv_cnp= (ImageView) headView.findViewById(R.id.iv_cnp);
         ll_auto = (LinearLayout) headView.findViewById(R.id.ll_auto);
         ll_hand = (LinearLayout) headView.findViewById(R.id.ll_hand);
         ll_layout = (LinearLayout) headView.findViewById(R.id.ll_layout);
@@ -583,6 +585,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
         if (pay.contains("PDD")) {
              iv_pdd.setVisibility(View.VISIBLE);
+        }
+        if (pay.contains("CNP")) {
+            iv_cnp.setVisibility(View.VISIBLE);
         }
         IndexEntity.DataBean.OtcBean otcBean = indexEntity.data.otc;
         isStar = otcBean.start;
