@@ -244,7 +244,7 @@ public class SaveCnpAccountAcitity extends BaseActivity implements View.OnClickL
         }
 
         if (TextUtils.isEmpty(et_pid.getText().toString().trim())) {
-            Toast.makeText(this, "请先上传正确的店铺编码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请先上传正确的吹牛皮账号", Toast.LENGTH_SHORT).show();
             return;
         }
         PddBean pddBean = new PddBean();
