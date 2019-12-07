@@ -21,6 +21,7 @@ import com.cypal.ming.cypal.activity.MemberActivity;
 import com.cypal.ming.cypal.activity.OrderListActivity;
 import com.cypal.ming.cypal.activity.PersonalActivity;
 import com.cypal.ming.cypal.activity.TopUpListActivity;
+import com.cypal.ming.cypal.activity.WbhbListActivity;
 import com.cypal.ming.cypal.activityTwo.TeamRerunsActivity;
 import com.cypal.ming.cypal.base.BaseFragment;
 import com.cypal.ming.cypal.bean.InfoEntity;
@@ -64,12 +65,15 @@ public class MineFragment extends BaseFragment {
     private LinearLayout ll_version;
     private LinearLayout ll_tuandui;
     private ImageView iv_round_red;//红色圆点
+    private LinearLayout ll_wbhb;//微博红包
 
     public MineFragment(Activity context) {
         super(context);
     }
+
     public MineFragment() {
     }
+
     ImageLoader imageLoader = ImageLoader.getInstance();
     DisplayImageOptions options = ImageLoaderUtil.getOptions();
 
@@ -156,6 +160,7 @@ public class MineFragment extends BaseFragment {
         tv_version = (TextView) view.findViewById(R.id.tv_version);
         tv_creditscore = (TextView) view.findViewById(R.id.tv_creditscore);
         ll_tuandui = (LinearLayout) view.findViewById(R.id.ll_tuandui);
+        ll_wbhb = (LinearLayout) view.findViewById(R.id.ll_wbhb);
         iv_round_red = (ImageView) view.findViewById(R.id.iv_round_red);
         tv_text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +221,13 @@ public class MineFragment extends BaseFragment {
             public void onClick(View v) {
                 //团队收益
                 Tools.jump(mcontext, TeamRerunsActivity.class, false);
+            }
+        });
+        ll_wbhb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.jump(mcontext, WbhbListActivity.class, false);
+
             }
         });
 

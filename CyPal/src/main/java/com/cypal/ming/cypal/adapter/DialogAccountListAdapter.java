@@ -90,6 +90,11 @@ public class DialogAccountListAdapter extends RecyclerView.Adapter<DialogAccount
             holder.tv_account.setText("吹牛皮账号：" + contentBean.realName + "+" + contentBean.accountName);
             holder.tv_type_pay.setText("吹牛皮");
             holder.tv_type.setText("吹牛皮");
+        }else if ( contentBean.accountType.equals("WBHB")) {
+            holder.iv_img.setImageResource(R.drawable.wbhb);
+            holder.tv_account.setText("微博账号：" + contentBean.realName + "+" + contentBean.accountName);
+            holder.tv_type_pay.setText("微博红包");
+            holder.tv_type.setText("微博红包");
         }
         else {
             holder.iv_img.setImageResource(R.drawable.icon_yun);

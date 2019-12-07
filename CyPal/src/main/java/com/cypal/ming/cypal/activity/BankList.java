@@ -100,7 +100,9 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
                     intent = new Intent(BankList.this, SavePddAccountAcitity.class);
                 } else if (type.equals("CNP")) {
                     intent = new Intent(BankList.this, SaveCnpAccountAcitity.class);
-                }else {
+                } else if (type.equals("WBHB")) {
+                    intent = new Intent(BankList.this, SaveWbhbAccountAcitity.class);
+                } else {
                     intent = new Intent(BankList.this, SaveAccountAcitity.class);
                 }
                 intent.putExtra("type", type);
@@ -137,6 +139,8 @@ public class BankList extends BaseActivity implements AccountListAdapter.OnClick
             intent = new Intent(BankList.this, SavePddAccountAcitity.class);
         } else if (type.equals("CNP")) {
             intent = new Intent(BankList.this, SaveCnpAccountAcitity.class);
+        } else if (type.equals("WBHB")) {
+            intent = new Intent(BankList.this, SaveWbhbAccountAcitity.class);
         } else {
             intent = new Intent(BankList.this, SaveAccountAcitity.class);
         }

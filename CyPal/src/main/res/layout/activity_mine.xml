@@ -165,9 +165,9 @@
                     android:layout_below="@+id/tv_text"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
+                    android:background="@drawable/min_number_bg"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:background="@drawable/min_number_bg"
                     android:text="信用分：100"
                     android:textColor="@color/white"
                     android:textSize="10sp"
@@ -299,6 +299,39 @@
                     android:layout_marginLeft="15dp"
                     android:layout_weight="1"
                     android:text="收款帐号"
+                    android:textColor="@color/actionbar_title_color"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_15"
+                    android:src="@drawable/icon_more" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:id="@+id/ll_wbhb"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:src="@drawable/weibo_hongbao_3x" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="微博红包"
                     android:textColor="@color/actionbar_title_color"
                     android:textSize="15sp" />
 

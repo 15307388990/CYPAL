@@ -31,6 +31,7 @@ public class DescmisionEntity {
         public String FIRST;
         public String PDD;
         public String CNP;
+        public String WBHB;
 
     }
 }

@@ -387,4 +387,10 @@ public class Const {
      * 15、冻结金额  财务首页
      */
     public static final String freezeList = "/api/shop/finance/index";
+    /**
+     * 微博红包
+     */
+    public static final String wbhbList = "/private/weibo/list";
+
+
 }

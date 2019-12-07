@@ -82,6 +82,8 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             holder.iv_img.setImageResource(R.drawable.icon_pdd);
         } else if (contentBean.accountType.equals("CNP")) {
             holder.iv_img.setImageResource(R.drawable.cnp);
+        } else if (contentBean.accountType.equals("WBHB")) {
+            holder.iv_img.setImageResource(R.drawable.wbhb);
         } else {
             holder.iv_img.setImageResource(R.drawable.icon_yun);
         }
