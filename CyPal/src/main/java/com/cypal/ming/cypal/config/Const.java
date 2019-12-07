@@ -390,7 +390,7 @@ public class Const {
     /**
      * 微博红包
      */
-    public static final String wbhbList = "/private/weibo/list";
+    public static final String wbhbList = "/private/weibo/list?";
 
 
 }

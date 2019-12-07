@@ -137,7 +137,7 @@ public class RewardDialog extends CenterDialog implements Response.Listener<Stri
                         binding.tvCnp.setText("5:吹牛皮接单可获得交易金额" + descmisionEntity.data.CNP + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.WBHB)) {
-                        binding.tvWbhb.setText("6:微博红包接单可获得交易金额" + descmisionEntity.data.CNP + "的佣金");
+                        binding.tvWbhb.setText("6:微博红包接单可获得交易金额" + descmisionEntity.data.WBHB + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
                         binding.tvSeconnod.setText("7:A级好友接单可获得交易金额" + descmisionEntity.data.SECONDS + "的佣金");
