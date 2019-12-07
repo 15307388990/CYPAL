@@ -113,6 +113,7 @@ public class WbhbListActivity extends BaseActivity {
     @Override
     protected void returnData(String data, String url) {
         if (url.contains(Const.wbhbList)) {
+            springView.onFinishFreshAndLoad();
             WbhbListEntity wbhbListEntity = JSON.parseObject(data, WbhbListEntity.class);
             if (pageNumber < wbhbListEntity.getData().getTotalPages()) {
                 isPage = true;
