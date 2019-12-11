@@ -1,5 +1,6 @@
 package com.cypal.ming.cypal.adapter;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.cypal.ming.cypal.R;
 import com.cypal.ming.cypal.bean.AccountListEntity;
 import com.cypal.ming.cypal.bean.WbhbListEntity;
+import com.cypal.ming.cypal.utils.Tools;
 
 import java.util.List;
 
@@ -53,11 +55,15 @@ public class WbhbListAdapter extends RecyclerView.Adapter<WbhbListAdapter.ViewHo
         holder.tv_kou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction("android.intent.action.VIEW");
-                Uri url = Uri.parse(contentBean.getTakeUrl());
-                intent.setData(url);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setAction("android.intent.action.VIEW");
+//                Uri url = Uri.parse(contentBean.getTakeUrl());
+//                intent.setClassName("com.uc.browser", "com.uc.browser.ActivityUpdate");
+//                intent.setData(url);
+//                mContext.startActivity(intent);
+                ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                cmb.setText(contentBean.getTakeUrl());
+                Tools.showToast(mContext,"复制成功，请在UC，或者系统浏览器中打开");
             }
         });
 
