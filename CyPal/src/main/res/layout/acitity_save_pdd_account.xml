@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"
-        android:text="真实姓名"
+        android:text="商品金额"
         android:textColor="@color/actionbar_title_color"
         android:textSize="14sp" />
 
@@ -107,7 +107,8 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="11dp"
         android:background="@null"
-        android:hint="请输入真实姓名"
+        android:hint="请输入要绑定的商品的真实金额"
+        android:inputType="phone"
         android:textSize="14sp" />
 
     <View
@@ -153,31 +154,34 @@
             android:text="温馨提示"
             android:textColor="@color/actionbar_title_color"
             android:textSize="12sp" />
+
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="28dp"
-            android:layout_height="wrap_content"
+            android:text="1.店铺编号(ID)获取方式：下载拼多多商家版APP版APP —>点击 我的 —>点击 头像 —>店铺编号"
             android:textColor="@color/red"
-            android:textSize="12sp"
-            android:text="1.店铺编号(ID)获取方式：下载拼多多商家版APP版APP —>点击 我的 —>点击 头像 —>店铺编号"/>
+            android:textSize="12sp" />
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:text="2.保存成功后，2小时内客服会对该店铺进行审核，审核通过后即可使用。"/>
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="28dp"
+            android:text="2.保存成功后，2小时内客服会对该店铺进行审核，审核通过后即可使用。"
+            android:textSize="12sp" />
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:text="3.我们承诺不会向任何人透露您的个人信息。"/>
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="28dp"
+            android:text="3.我们承诺不会向任何人透露您的个人信息。"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
