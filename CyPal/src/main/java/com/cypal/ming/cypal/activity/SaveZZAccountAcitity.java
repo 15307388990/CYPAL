@@ -164,9 +164,9 @@ public class SaveZZAccountAcitity extends BaseActivity implements View.OnClickLi
         accountId = dataBean.id + "";
 
         if (dataBean.enable) {
-            btn_next.setText("已失效");
-        } else {
             btn_next.setText("未失效");
+        } else {
+            btn_next.setText("已失效");
         }
         btn_next.setEnabled(false);
         ll_code.setVisibility(View.GONE);

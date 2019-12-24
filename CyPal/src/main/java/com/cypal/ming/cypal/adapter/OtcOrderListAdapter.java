@@ -95,6 +95,8 @@ public class OtcOrderListAdapter extends RecyclerView.Adapter<OtcOrderListAdapte
             holder.tv_paytype.setText("吹牛皮");
         }else if (sellBean.payType.equals("WBHB")) {
             holder.tv_paytype.setText("微博红包");
+        } else if (sellBean.payType.equals("ZZ")) {
+            holder.tv_paytype.setText("转转");
         }  else {
             holder.tv_paytype.setText("云闪付");
         }

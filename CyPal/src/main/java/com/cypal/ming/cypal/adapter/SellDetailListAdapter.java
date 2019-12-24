@@ -92,6 +92,8 @@ public class SellDetailListAdapter extends RecyclerView.Adapter<SellDetailListAd
             holder.tv_paytype.setText("拼多多");
         } else if (sellBean.payType.equals("CNP")) {
             holder.tv_paytype.setText("吹牛皮");
+        }else if (sellBean.payType.equals("ZZ")) {
+            holder.tv_paytype.setText("转转");
         }else if (sellBean.payType.equals("WBHB")) {
             holder.tv_paytype.setText("微博红包");
         }else {

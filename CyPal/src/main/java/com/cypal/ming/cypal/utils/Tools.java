@@ -173,7 +173,6 @@ public class Tools {
     }
 
 
-
     /**
      * 将List<String>集合 转化为String
      * 如{"aaa","bbb"} To 'aaa','bbb'
@@ -347,11 +346,13 @@ public class Tools {
      * 手机正则表达式
      */
     public static boolean isMobileNum(String mobiles) {
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,1-9])|(17[0,1-9])|(14[0,1-9]))\\d{8}$");
-        Matcher m = p.matcher(mobiles);
-        System.out.println(m.matches() + "---");
-        return m.matches();
+//        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,1-9])|(17[0,1-9])|(14[0,1-9]))\\d{8}$");
+//        Matcher m = p.matcher(mobiles);
+//        System.out.println(m.matches() + "---");
+//        return m.matches();
+        return true;
     }
+
     /**
      * 密码正则表达式 密码要求6-18位 字母+数字，
      */
@@ -403,10 +404,12 @@ public class Tools {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
     public static void openKeyBoard(Context context, View editText) {
-        InputMethodManager inputMethodManager = (InputMethodManager)context.getSystemService("input_method");
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService("input_method");
         inputMethodManager.showSoftInput(editText, 2);
     }
+
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
