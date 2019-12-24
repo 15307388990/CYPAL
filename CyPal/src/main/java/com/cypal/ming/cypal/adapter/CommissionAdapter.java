@@ -75,6 +75,8 @@ public class CommissionAdapter extends RecyclerView.Adapter<CommissionAdapter.Vi
                     holder.tv_type.setText("接单分佣：拼多多");
                 } else if (TextUtils.equals(contentBean.payType, "CNP")) {
                     holder.tv_type.setText("接单分佣：吹牛皮");
+                } else if (TextUtils.equals(contentBean.payType, "ZZ")) {
+                    holder.tv_type.setText("接单分佣：转转");
                 }else if (TextUtils.equals(contentBean.payType, "WBHB")) {
                     holder.tv_type.setText("接单分佣：微博红包");
                 }else {

@@ -54,6 +54,10 @@ public class Const {
      **/
     public static final String forgetPassword = "/msm/forgetPassword?";
     /**
+     * 发送转转验证码
+     **/
+    public static final String zzSendCode = "/private/payAccount/zzSendCode?";
+    /**
      * 首页
      */
     public static final String mallSetInfo = "/private/index/";
@@ -265,8 +269,6 @@ public class Const {
      * 余额明细
      */
     public static final String balance = "/private/index/balance?";
-
-
 
 
     /* 订单详情 */

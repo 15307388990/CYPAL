@@ -96,6 +96,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
     private String cityName;
     private ImageView iv_pdd;
     private ImageView iv_cnp;
+    private ImageView iv_zz;
     private ImageView iv_wbhb;
 
     public MainFragment(Activity context) {
@@ -222,6 +223,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         iv_pdd = (ImageView) headView.findViewById(R.id.iv_pdd);
         iv_cnp = (ImageView) headView.findViewById(R.id.iv_cnp);
         iv_wbhb = (ImageView) headView.findViewById(R.id.iv_wbhb);
+        iv_zz = (ImageView) headView.findViewById(R.id.iv_zz);
         ll_auto = (LinearLayout) headView.findViewById(R.id.ll_auto);
         ll_hand = (LinearLayout) headView.findViewById(R.id.ll_hand);
         ll_layout = (LinearLayout) headView.findViewById(R.id.ll_layout);
@@ -575,6 +577,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         iv_banl.setVisibility(View.GONE);
         iv_cnp.setVisibility(View.GONE);
         iv_pdd.setVisibility(View.GONE);
+        iv_zz.setVisibility(View.GONE);
         iv_wbhb.setVisibility(View.GONE);
         if (pay.contains("WXPAY")) {
             iv_wexin.setVisibility(View.VISIBLE);
@@ -596,6 +599,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, SellD
         }
         if (pay.contains("WBHB")) {
             iv_wbhb.setVisibility(View.VISIBLE);
+        }
+        if (pay.contains("ZZ")) {
+            iv_zz.setVisibility(View.VISIBLE);
         }
         IndexEntity.DataBean.OtcBean otcBean = indexEntity.data.otc;
         isStar = otcBean.start;

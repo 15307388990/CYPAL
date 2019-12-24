@@ -210,6 +210,13 @@
                     android:src="@drawable/cnp"
                     android:visibility="gone" />
                 <ImageView
+                    android:id="@+id/iv_zz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:src="@drawable/icon_zz"
+                    android:visibility="gone" />
+                <ImageView
                     android:id="@+id/iv_wbhb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

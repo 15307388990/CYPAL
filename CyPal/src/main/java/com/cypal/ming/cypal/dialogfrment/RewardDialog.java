@@ -133,17 +133,20 @@ public class RewardDialog extends CenterDialog implements Response.Listener<Stri
                     if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
                         binding.tvPdd.setText("4:拼多多接单可获得交易金额" + descmisionEntity.data.PDD + "的佣金");
                     }
+                    if (!TextUtils.isEmpty(descmisionEntity.data.ZZ)) {
+                        binding.tvZz.setText("5:转转接单可获得交易金额" + descmisionEntity.data.ZZ + "的佣金");
+                    }
                     if (!TextUtils.isEmpty(descmisionEntity.data.CNP)) {
-                        binding.tvCnp.setText("5:吹牛皮接单可获得交易金额" + descmisionEntity.data.CNP + "的佣金");
+                        binding.tvCnp.setText("6:吹牛皮接单可获得交易金额" + descmisionEntity.data.CNP + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.WBHB)) {
-                        binding.tvWbhb.setText("6:微博红包接单可获得交易金额" + descmisionEntity.data.WBHB + "的佣金");
+                        binding.tvWbhb.setText("7:微博红包接单可获得交易金额" + descmisionEntity.data.WBHB + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.SECONDS)) {
-                        binding.tvSeconnod.setText("7:A级好友接单可获得交易金额" + descmisionEntity.data.SECONDS + "的佣金");
+                        binding.tvSeconnod.setText("8:A级好友接单可获得交易金额" + descmisionEntity.data.SECONDS + "的佣金");
                     }
                     if (!TextUtils.isEmpty(descmisionEntity.data.FIRST)) {
-                        binding.tvFirst.setText("8:B级好友接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
+                        binding.tvFirst.setText("9:B级好友接单可获得交易金额的" + descmisionEntity.data.FIRST + "的佣金");
                     }
                 }
 
