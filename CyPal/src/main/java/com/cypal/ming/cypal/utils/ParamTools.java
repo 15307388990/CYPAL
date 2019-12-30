@@ -44,8 +44,8 @@ public class ParamTools {
                 map.put("token", savePreferencesData.getStringData("token"));
                 map.put("brand", Tools.getBrandName());//品牌
                 map.put("brandModel", Tools.getBrandModel());//型号
-                if (!TextUtils.isEmpty(Tools.getImei(context))) {
-                    map.put("IMEI", Tools.getImei(context));//型号
+                if (!TextUtils.isEmpty(Tools.getUUID())) {
+                    map.put("IMEI", Tools.getUUID());//设备唯一ID
                 }
                 return map;
             }
@@ -83,8 +83,8 @@ public class ParamTools {
                 map.put("token", savePreferencesData.getStringData("token"));
                 map.put("brand", Tools.getBrandName());//品牌
                 map.put("brandModel", Tools.getBrandModel());//型号
-                if (!TextUtils.isEmpty(Tools.getImei(context))) {
-                    map.put("IMEI", Tools.getImei(context));//型号
+                if (!TextUtils.isEmpty(Tools.getUUID())) {
+                    map.put("IMEI", Tools.getUUID());//设备唯一ID
                 }
                 return map;
             }
@@ -172,8 +172,8 @@ public class ParamTools {
                 map.put("token", savePreferencesData.getStringData("token"));
                 map.put("brand", Tools.getBrandName());//品牌
                 map.put("brandModel", Tools.getBrandModel());//型号
-                if (!TextUtils.isEmpty(Tools.getImei(context))) {
-                    map.put("IMEI", Tools.getImei(context));//型号
+                if (!TextUtils.isEmpty(Tools.getUUID())) {
+                    map.put("IMEI", Tools.getUUID());//设备唯一ID
                 }
 
                 return map;

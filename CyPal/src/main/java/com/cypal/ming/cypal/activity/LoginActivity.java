@@ -101,23 +101,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 获取手机信息权限
      */
     private void initPermission() {
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.READ_PHONE_STATE).
-                onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> data) {
-                        toLogin(name, pwd);
-                    }
-                }).
-                onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> data) {
-                        Tools.showToast(LoginActivity.this, "无法获取手机状态信息，应用无法正常使用");
-                    }
-                }).
-                start();
-
+//        AndPermission.with(this)
+//                .runtime()
+//                .permission(Permission.READ_PHONE_STATE).
+//                onGranted(new Action<List<String>>() {
+//                    @Override
+//                    public void onAction(List<String> data) {
+//                        toLogin(name, pwd);
+//                    }
+//                }).
+//                onDenied(new Action<List<String>>() {
+//                    @Override
+//                    public void onAction(List<String> data) {
+//                        Tools.showToast(LoginActivity.this, "无法获取手机状态信息，应用无法正常使用");
+//                    }
+//                }).
+//                start();
+        toLogin(name, pwd);
     }
 
     /* 执行登录操作 */

@@ -1,6 +1,7 @@
 package com.cypal.ming.cypal.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -61,30 +62,51 @@ public class WelcomeActivity extends BaseActivity {
      * 获取手机信息权限
      */
     private void initPermission() {
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.READ_PHONE_STATE).
-                onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> data) {
-                        Intent intent = new Intent();
-                        String auth_token = mSavePreferencesData.getStringData("token");
-                        if (auth_token != null && !auth_token.equals("")) {
-                            intent.setClass(WelcomeActivity.this, TabActivity.class);
-                        } else {
-                            intent.setClass(WelcomeActivity.this, LoginActivity.class);
-                        }
-                        startActivity(intent);
-                        WelcomeActivity.this.finish();
-                    }
-                }).
-                onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> data) {
-                        Tools.showToast(WelcomeActivity.this, "无法获取手机状态信息，应用无法正常使用");
-                    }
-                }).
-                start();
+//        AndPermission.with(this)
+//                .runtime()
+//                .permission(Permission.READ_PHONE_STATE).
+//                onGranted(new Action<List<String>>() {
+//                    @Override
+//                    public void onAction(List<String> data) {
+//                        Intent intent = new Intent();
+//                        String auth_token = mSavePreferencesData.getStringData("token");
+//                        if (auth_token != null && !auth_token.equals("")) {
+//                            intent.setClass(WelcomeActivity.this, TabActivity.class);
+//                        } else {
+//                            intent.setClass(WelcomeActivity.this, LoginActivity.class);
+//                        }
+//                        startActivity(intent);
+//                        WelcomeActivity.this.finish();
+//                    }
+//                }).
+//                onDenied(new Action<List<String>>() {
+//                    @Override
+//                    public void onAction(List<String> data) {
+//                        if (Build.VERSION.SDK_INT >=29) {
+//                            Intent intent = new Intent();
+//                            String auth_token = mSavePreferencesData.getStringData("token");
+//                            if (auth_token != null && !auth_token.equals("")) {
+//                                intent.setClass(WelcomeActivity.this, TabActivity.class);
+//                            } else {
+//                                intent.setClass(WelcomeActivity.this, LoginActivity.class);
+//                            }
+//                            startActivity(intent);
+//                            WelcomeActivity.this.finish();
+//                        } else {
+//                            Tools.showToast(WelcomeActivity.this, "无法获取手机状态信息，应用无法正常使用");
+//                        }
+//                    }
+//                }).
+//                start();
+        Intent intent = new Intent();
+        String auth_token = mSavePreferencesData.getStringData("token");
+        if (auth_token != null && !auth_token.equals("")) {
+            intent.setClass(WelcomeActivity.this, TabActivity.class);
+        } else {
+            intent.setClass(WelcomeActivity.this, LoginActivity.class);
+        }
+        startActivity(intent);
+        WelcomeActivity.this.finish();
 
     }
 
